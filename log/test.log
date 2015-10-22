@@ -1,0 +1,388 @@
+Started GET "/" for 127.0.0.1 at 2015-10-22 08:49:07 +0000
+Started GET "/" for 127.0.0.1 at 2015-10-22 08:51:51 +0000
+Processing by ApplicationController#root as JSON
+Completed 200 OK in 15ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2015-10-22 08:53:50 +0000
+Processing by ApplicationController#root as JSON
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 09:00:51 +0000
+Processing by V1::ContainersController#create as JSON
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 09:04:35 +0000
+Error occurred while parsing request parameters.
+Contents:
+
+container[image_repo]=overshard%2Fminecraft
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 09:05:42 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"image_repo"=>"overshard/minecraft"}}
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 09:11:39 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 09:34:39 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 09:35:41 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 500 Internal Server Error in 42ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 09:36:11 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 500 Internal Server Error in 38ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 09:36:24 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 500 Internal Server Error in 37ms (Views: 0.6ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 09:37:08 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 09:38:05 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 09:38:40 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:12:17 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 500 Internal Server Error in 84ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:12:37 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 500 Internal Server Error in 55ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:13:19 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:14:45 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 500 Internal Server Error in 52ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:15:31 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:17:02 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 500 Internal Server Error in 49ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:17:17 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:18:58 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 47ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:24:00 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 62ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:35:59 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 49ms (Views: 0.6ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:40:13 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 52ms (Views: 0.4ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:41:22 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 49ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:48:36 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 49ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/3f11173d1e5aa083fd9188c5256e5ddd092e2f9e2603b34fa3dd1adc15558513/start" for 127.0.0.1 at 2015-10-22 11:48:37 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"3f11173d1e5aa083fd9188c5256e5ddd092e2f9e2603b34fa3dd1adc15558513"}
+Completed 200 OK in 153ms (Views: 3.9ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:50:44 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 54ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/67c9c47d595471cd6ff2f06ec1a26137ec358462ae71687daca148a3973a921e/start" for 127.0.0.1 at 2015-10-22 11:50:44 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"67c9c47d595471cd6ff2f06ec1a26137ec358462ae71687daca148a3973a921e"}
+Completed 200 OK in 147ms (Views: 6.6ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:51:15 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 53ms (Views: 0.4ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/6834c743891d1e658d08e4f947a31977aab7f096eb01ce45a8b3dde1f7d87333/start" for 127.0.0.1 at 2015-10-22 11:51:15 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"6834c743891d1e658d08e4f947a31977aab7f096eb01ce45a8b3dde1f7d87333"}
+Completed 200 OK in 137ms (Views: 4.9ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:51:50 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 56ms (Views: 0.4ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/f04e3f60424333790f2bff19004d4552f310c7f8b0c4ab3176a3765257ae3a78/start" for 127.0.0.1 at 2015-10-22 11:51:50 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"f04e3f60424333790f2bff19004d4552f310c7f8b0c4ab3176a3765257ae3a78"}
+Completed 200 OK in 136ms (Views: 5.6ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:52:18 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 57ms (Views: 0.8ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/097c4c1b4c5bdace9d158346885390120ea3776e9246317a062ae8a2485b703c/start" for 127.0.0.1 at 2015-10-22 11:52:19 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"097c4c1b4c5bdace9d158346885390120ea3776e9246317a062ae8a2485b703c"}
+Completed 200 OK in 139ms (Views: 6.7ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:55:02 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 49ms (Views: 0.6ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/6cb3583e4b7305dd35b69ad306b5f50c585d83874d96103019436793498203ab/start" for 127.0.0.1 at 2015-10-22 11:55:02 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"6cb3583e4b7305dd35b69ad306b5f50c585d83874d96103019436793498203ab"}
+Completed 200 OK in 133ms (Views: 7.9ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/6cb3583e4b7305dd35b69ad306b5f50c585d83874d96103019436793498203ab/restart" for 127.0.0.1 at 2015-10-22 11:55:02 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"6cb3583e4b7305dd35b69ad306b5f50c585d83874d96103019436793498203ab"}
+Completed 200 OK in 368ms (Views: 2.3ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:55:28 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 59ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/470ae56a55ad36c16e82e930606b23a606acbdb69558e3f5efc3a4b58d78b403/start" for 127.0.0.1 at 2015-10-22 11:55:28 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"470ae56a55ad36c16e82e930606b23a606acbdb69558e3f5efc3a4b58d78b403"}
+Completed 200 OK in 133ms (Views: 2.8ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/470ae56a55ad36c16e82e930606b23a606acbdb69558e3f5efc3a4b58d78b403/restart" for 127.0.0.1 at 2015-10-22 11:55:28 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"470ae56a55ad36c16e82e930606b23a606acbdb69558e3f5efc3a4b58d78b403"}
+Completed 200 OK in 366ms (Views: 4.0ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:56:17 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 57ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/bbaad98ddbd1855211cfa64ab1695407d9f1b48b6955c0e023bfa4c8c3e83361/start" for 127.0.0.1 at 2015-10-22 11:56:17 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"bbaad98ddbd1855211cfa64ab1695407d9f1b48b6955c0e023bfa4c8c3e83361"}
+Completed 200 OK in 155ms (Views: 3.4ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/bbaad98ddbd1855211cfa64ab1695407d9f1b48b6955c0e023bfa4c8c3e83361/restart" for 127.0.0.1 at 2015-10-22 11:56:17 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"bbaad98ddbd1855211cfa64ab1695407d9f1b48b6955c0e023bfa4c8c3e83361"}
+Completed 200 OK in 373ms (Views: 3.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/bbaad98ddbd1855211cfa64ab1695407d9f1b48b6955c0e023bfa4c8c3e83361/restart" for 127.0.0.1 at 2015-10-22 11:56:17 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"bbaad98ddbd1855211cfa64ab1695407d9f1b48b6955c0e023bfa4c8c3e83361"}
+Completed 200 OK in 353ms (Views: 3.1ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 11:57:26 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 56ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/d3cdbf3db09f05f05cfd91b72512af70e0f7e0a7296fd527872095c3b54806db/start" for 127.0.0.1 at 2015-10-22 11:57:26 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"d3cdbf3db09f05f05cfd91b72512af70e0f7e0a7296fd527872095c3b54806db"}
+Completed 200 OK in 138ms (Views: 7.8ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/d3cdbf3db09f05f05cfd91b72512af70e0f7e0a7296fd527872095c3b54806db/restart" for 127.0.0.1 at 2015-10-22 11:57:26 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"d3cdbf3db09f05f05cfd91b72512af70e0f7e0a7296fd527872095c3b54806db"}
+Completed 200 OK in 361ms (Views: 3.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/d3cdbf3db09f05f05cfd91b72512af70e0f7e0a7296fd527872095c3b54806db/restart" for 127.0.0.1 at 2015-10-22 11:57:27 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"d3cdbf3db09f05f05cfd91b72512af70e0f7e0a7296fd527872095c3b54806db"}
+Completed 200 OK in 371ms (Views: 3.0ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 12:01:19 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 60ms (Views: 0.8ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/b9a90381d750bcdf9553730452a4a1e3fd5e2291bb92b9b0e288e942e18668b7/start" for 127.0.0.1 at 2015-10-22 12:01:19 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"b9a90381d750bcdf9553730452a4a1e3fd5e2291bb92b9b0e288e942e18668b7"}
+Completed 500 Internal Server Error in 147ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/b9a90381d750bcdf9553730452a4a1e3fd5e2291bb92b9b0e288e942e18668b7/restart" for 127.0.0.1 at 2015-10-22 12:01:19 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"b9a90381d750bcdf9553730452a4a1e3fd5e2291bb92b9b0e288e942e18668b7"}
+Completed 500 Internal Server Error in 366ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 12:01:55 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 64ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/fdc41ef8ef5a21f8693a3fd5f4581a915ab040b1e400dc5aa3a29a0512450b8d/start" for 127.0.0.1 at 2015-10-22 12:01:55 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"fdc41ef8ef5a21f8693a3fd5f4581a915ab040b1e400dc5aa3a29a0512450b8d"}
+Completed 200 OK in 20738ms (Views: 2.7ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 12:02:37 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 60ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/714951ff17d4d88237fcad16819fb4b840c7074184d1bdc6026c7c64d26f2e99/start" for 127.0.0.1 at 2015-10-22 12:02:37 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"714951ff17d4d88237fcad16819fb4b840c7074184d1bdc6026c7c64d26f2e99"}
+Completed 200 OK in 20729ms (Views: 9.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 12:04:52 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 54ms (Views: 0.7ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/108bd353a1cd53a69bd30687bbc94027c8607a101f3009ddf15c73fcd9d87408/start" for 127.0.0.1 at 2015-10-22 12:04:52 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"108bd353a1cd53a69bd30687bbc94027c8607a101f3009ddf15c73fcd9d87408"}
+Completed 200 OK in 20718ms (Views: 3.4ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/108bd353a1cd53a69bd30687bbc94027c8607a101f3009ddf15c73fcd9d87408/restart" for 127.0.0.1 at 2015-10-22 12:05:13 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"108bd353a1cd53a69bd30687bbc94027c8607a101f3009ddf15c73fcd9d87408"}
+Completed 200 OK in 20891ms (Views: 2.9ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/108bd353a1cd53a69bd30687bbc94027c8607a101f3009ddf15c73fcd9d87408/restart" for 127.0.0.1 at 2015-10-22 12:05:34 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"108bd353a1cd53a69bd30687bbc94027c8607a101f3009ddf15c73fcd9d87408"}
+Completed 200 OK in 20895ms (Views: 8.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 12:07:35 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 60ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/708100f6c00d5b0bb1c7d1340594149706cb63ddda1331fef6e664c8c09afc5f/start" for 127.0.0.1 at 2015-10-22 12:07:35 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"708100f6c00d5b0bb1c7d1340594149706cb63ddda1331fef6e664c8c09afc5f"}
+Completed 200 OK in 20750ms (Views: 13.9ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/708100f6c00d5b0bb1c7d1340594149706cb63ddda1331fef6e664c8c09afc5f/restart" for 127.0.0.1 at 2015-10-22 12:07:55 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"708100f6c00d5b0bb1c7d1340594149706cb63ddda1331fef6e664c8c09afc5f"}
+Completed 200 OK in 20888ms (Views: 3.7ms | ActiveRecord: 0.0ms)
+Started DELETE "/v1/containers/708100f6c00d5b0bb1c7d1340594149706cb63ddda1331fef6e664c8c09afc5f" for 127.0.0.1 at 2015-10-22 12:08:16 +0000
+Processing by V1::ContainersController#destroy as JSON
+  Parameters: {"id"=>"708100f6c00d5b0bb1c7d1340594149706cb63ddda1331fef6e664c8c09afc5f"}
+Completed 500 Internal Server Error in 30ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 12:10:23 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 54ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/4f6a86f5dc9bc4414518eac9c8cc22a8ec8ab12333dbbe9b306c373b3648f5a7/start" for 127.0.0.1 at 2015-10-22 12:10:23 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"4f6a86f5dc9bc4414518eac9c8cc22a8ec8ab12333dbbe9b306c373b3648f5a7"}
+Completed 200 OK in 20732ms (Views: 9.6ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/4f6a86f5dc9bc4414518eac9c8cc22a8ec8ab12333dbbe9b306c373b3648f5a7/restart" for 127.0.0.1 at 2015-10-22 12:10:44 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"4f6a86f5dc9bc4414518eac9c8cc22a8ec8ab12333dbbe9b306c373b3648f5a7"}
+Completed 200 OK in 20882ms (Views: 3.5ms | ActiveRecord: 0.0ms)
+Started GET "/v1/containers/4f6a86f5dc9bc4414518eac9c8cc22a8ec8ab12333dbbe9b306c373b3648f5a7" for 127.0.0.1 at 2015-10-22 12:11:05 +0000
+Processing by V1::ContainersController#show as JSON
+  Parameters: {"id"=>"4f6a86f5dc9bc4414518eac9c8cc22a8ec8ab12333dbbe9b306c373b3648f5a7"}
+Completed 200 OK in 12ms (Views: 9.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 12:11:45 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 52ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/aa50bd41a08ac02f236869cae8a315f419c4ae36ce45d636841da6cba5d10b15/start" for 127.0.0.1 at 2015-10-22 12:11:45 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"aa50bd41a08ac02f236869cae8a315f419c4ae36ce45d636841da6cba5d10b15"}
+Completed 200 OK in 20728ms (Views: 5.0ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/aa50bd41a08ac02f236869cae8a315f419c4ae36ce45d636841da6cba5d10b15/restart" for 127.0.0.1 at 2015-10-22 12:12:06 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"aa50bd41a08ac02f236869cae8a315f419c4ae36ce45d636841da6cba5d10b15"}
+Completed 200 OK in 20881ms (Views: 2.9ms | ActiveRecord: 0.0ms)
+Started GET "/v1/containers/aa50bd41a08ac02f236869cae8a315f419c4ae36ce45d636841da6cba5d10b15" for 127.0.0.1 at 2015-10-22 12:12:27 +0000
+Processing by V1::ContainersController#show as JSON
+  Parameters: {"id"=>"aa50bd41a08ac02f236869cae8a315f419c4ae36ce45d636841da6cba5d10b15"}
+Completed 200 OK in 11ms (Views: 1.9ms | ActiveRecord: 0.0ms)
+Started DELETE "/v1/containers/aa50bd41a08ac02f236869cae8a315f419c4ae36ce45d636841da6cba5d10b15" for 127.0.0.1 at 2015-10-22 12:12:27 +0000
+Processing by V1::ContainersController#destroy as JSON
+  Parameters: {"id"=>"aa50bd41a08ac02f236869cae8a315f419c4ae36ce45d636841da6cba5d10b15"}
+Started POST "/v1/containers" for 127.0.0.1 at 2015-10-22 12:15:31 +0000
+Processing by V1::ContainersController#create as JSON
+  Parameters: {"container"=>{"game"=>"minecraft"}}
+Completed 200 OK in 56ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/f2b4e329e3b3e7c4e559c2a2aeffb3961a60d355887166d98ba7a57eb5341b69/start" for 127.0.0.1 at 2015-10-22 12:15:31 +0000
+Processing by V1::ContainersController#start as JSON
+  Parameters: {"id"=>"f2b4e329e3b3e7c4e559c2a2aeffb3961a60d355887166d98ba7a57eb5341b69"}
+Completed 200 OK in 20736ms (Views: 6.4ms | ActiveRecord: 0.0ms)
+Started POST "/v1/containers/f2b4e329e3b3e7c4e559c2a2aeffb3961a60d355887166d98ba7a57eb5341b69/restart" for 127.0.0.1 at 2015-10-22 12:15:52 +0000
+Processing by V1::ContainersController#restart as JSON
+  Parameters: {"id"=>"f2b4e329e3b3e7c4e559c2a2aeffb3961a60d355887166d98ba7a57eb5341b69"}
+Completed 200 OK in 20869ms (Views: 2.9ms | ActiveRecord: 0.0ms)
+Started GET "/v1/containers/f2b4e329e3b3e7c4e559c2a2aeffb3961a60d355887166d98ba7a57eb5341b69" for 127.0.0.1 at 2015-10-22 12:16:13 +0000
+Processing by V1::ContainersController#show as JSON
+  Parameters: {"id"=>"f2b4e329e3b3e7c4e559c2a2aeffb3961a60d355887166d98ba7a57eb5341b69"}
+Completed 200 OK in 14ms (Views: 5.6ms | ActiveRecord: 0.0ms)
+Started DELETE "/v1/containers/f2b4e329e3b3e7c4e559c2a2aeffb3961a60d355887166d98ba7a57eb5341b69" for 127.0.0.1 at 2015-10-22 12:16:13 +0000
+Processing by V1::ContainersController#destroy as JSON
+  Parameters: {"id"=>"f2b4e329e3b3e7c4e559c2a2aeffb3961a60d355887166d98ba7a57eb5341b69"}
+Completed 200 OK in 12ms (Views: 1.9ms | ActiveRecord: 0.0ms)
+2015-10-22 12:38:31.466 - INFO - #5814 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 12:38:31 +0000
+2015-10-22 12:38:31.492 - INFO - #5814 - Processing by V1::ContainersController#create as JSON
+2015-10-22 12:38:31.493 - INFO - #5814 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 12:38:31.531 - DEBUG - #5814 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start"}
+2015-10-22 12:38:31.549 - INFO - #5814 - Completed 200 OK in 56ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+2015-10-22 12:38:31.564 - INFO - #5814 - [0;1;34mStarted POST [0m"/v1/containers/2e0ed0d6a385c3529e35f14df5a6aecca011312a5fe9590d7111b015d056e313/start" for 127.0.0.1 at 2015-10-22 12:38:31 +0000
+2015-10-22 12:38:31.566 - INFO - #5814 - Processing by V1::ContainersController#start as JSON
+2015-10-22 12:38:31.566 - INFO - #5814 -   Parameters: {"id"=>"2e0ed0d6a385c3529e35f14df5a6aecca011312a5fe9590d7111b015d056e313"}
+2015-10-22 12:38:31.570 - DEBUG - #5814 - Starting container(2e0ed0d6a385c3529e35f14df5a6aecca011312a5fe9590d7111b015d056e313)
+2015-10-22 12:38:52.297 - INFO - #5814 - Completed 200 OK in 20731ms (Views: 8.9ms | ActiveRecord: 0.0ms)
+2015-10-22 12:38:52.325 - INFO - #5814 - [0;1;34mStarted POST [0m"/v1/containers/2e0ed0d6a385c3529e35f14df5a6aecca011312a5fe9590d7111b015d056e313/restart" for 127.0.0.1 at 2015-10-22 12:38:52 +0000
+2015-10-22 12:38:52.338 - INFO - #5814 - Processing by V1::ContainersController#restart as JSON
+2015-10-22 12:38:52.338 - INFO - #5814 -   Parameters: {"id"=>"2e0ed0d6a385c3529e35f14df5a6aecca011312a5fe9590d7111b015d056e313"}
+2015-10-22 12:38:52.343 - DEBUG - #5814 - Restarting container(2e0ed0d6a385c3529e35f14df5a6aecca011312a5fe9590d7111b015d056e313)
+2015-10-22 12:39:13.210 - INFO - #5814 - Completed 200 OK in 20872ms (Views: 2.9ms | ActiveRecord: 0.0ms)
+2015-10-22 12:39:13.247 - INFO - #5814 - [0;1;34mStarted GET [0m"/v1/containers/2e0ed0d6a385c3529e35f14df5a6aecca011312a5fe9590d7111b015d056e313" for 127.0.0.1 at 2015-10-22 12:39:13 +0000
+2015-10-22 12:39:13.251 - INFO - #5814 - Processing by V1::ContainersController#show as JSON
+2015-10-22 12:39:13.252 - INFO - #5814 -   Parameters: {"id"=>"2e0ed0d6a385c3529e35f14df5a6aecca011312a5fe9590d7111b015d056e313"}
+2015-10-22 12:39:13.263 - INFO - #5814 - Completed 200 OK in 10ms (Views: 5.6ms | ActiveRecord: 0.0ms)
+2015-10-22 12:39:13.277 - INFO - #5814 - [0;1;34mStarted DELETE [0m"/v1/containers/2e0ed0d6a385c3529e35f14df5a6aecca011312a5fe9590d7111b015d056e313" for 127.0.0.1 at 2015-10-22 12:39:13 +0000
+2015-10-22 12:39:13.279 - INFO - #5814 - Processing by V1::ContainersController#destroy as JSON
+2015-10-22 12:39:13.280 - INFO - #5814 -   Parameters: {"id"=>"2e0ed0d6a385c3529e35f14df5a6aecca011312a5fe9590d7111b015d056e313"}
+2015-10-22 12:39:13.292 - INFO - #5814 - Completed 200 OK in 12ms (Views: 3.0ms | ActiveRecord: 0.0ms)
+2015-10-22 12:46:51.848 - INFO - #6053 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 12:46:51 +0000
+2015-10-22 12:46:51.872 - INFO - #6053 - Processing by V1::ContainersController#create as JSON
+2015-10-22 12:46:51.872 - INFO - #6053 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 12:46:51.909 - DEBUG - #6053 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start"}
+2015-10-22 12:46:51.927 - INFO - #6053 - Completed 500 Internal Server Error in 54ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+2015-10-22 12:47:36.664 - INFO - #6058 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 12:47:36 +0000
+2015-10-22 12:47:36.688 - INFO - #6058 - Processing by V1::ContainersController#create as JSON
+2015-10-22 12:47:36.688 - INFO - #6058 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 12:47:36.731 - DEBUG - #6058 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start"}
+2015-10-22 12:47:36.749 - INFO - #6058 - Completed 500 Internal Server Error in 61ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+2015-10-22 12:48:06.394 - INFO - #6062 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 12:48:06 +0000
+2015-10-22 12:48:06.422 - INFO - #6062 - Processing by V1::ContainersController#create as JSON
+2015-10-22 12:48:06.423 - INFO - #6062 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 12:48:15.162 - DEBUG - #6062 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start"}
+2015-10-22 12:48:38.937 - INFO - #6066 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 12:48:38 +0000
+2015-10-22 12:48:38.961 - INFO - #6066 - Processing by V1::ContainersController#create as JSON
+2015-10-22 12:48:38.961 - INFO - #6066 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 12:48:39.001 - DEBUG - #6066 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start"}
+2015-10-22 12:49:04.524 - DEBUG - #6066 - Container has created
+2015-10-22 12:49:04.533 - INFO - #6066 - Completed 200 OK in 25571ms (Views: 4.7ms | ActiveRecord: 0.0ms)
+2015-10-22 12:49:04.583 - INFO - #6066 - [0;1;34mStarted POST [0m"/v1/containers/6dac4179ed6f786dc5d31f34ffd9f9078e52c9a4a145845aaa8136e4847d5c7d/start" for 127.0.0.1 at 2015-10-22 12:49:04 +0000
+2015-10-22 12:49:04.587 - INFO - #6066 - Processing by V1::ContainersController#start as JSON
+2015-10-22 12:49:04.587 - INFO - #6066 -   Parameters: {"id"=>"6dac4179ed6f786dc5d31f34ffd9f9078e52c9a4a145845aaa8136e4847d5c7d"}
+2015-10-22 12:49:04.594 - DEBUG - #6066 - Starting container(6dac4179ed6f786dc5d31f34ffd9f9078e52c9a4a145845aaa8136e4847d5c7d)
+2015-10-22 12:49:25.328 - DEBUG - #6066 - Container(6dac4179ed6f786dc5d31f34ffd9f9078e52c9a4a145845aaa8136e4847d5c7d) has started
+2015-10-22 12:49:25.381 - INFO - #6066 - Completed 200 OK in 20793ms (Views: 52.0ms | ActiveRecord: 0.0ms)
+2015-10-22 12:49:25.395 - INFO - #6066 - [0;1;34mStarted POST [0m"/v1/containers/6dac4179ed6f786dc5d31f34ffd9f9078e52c9a4a145845aaa8136e4847d5c7d/restart" for 127.0.0.1 at 2015-10-22 12:49:25 +0000
+2015-10-22 12:49:25.400 - INFO - #6066 - Processing by V1::ContainersController#restart as JSON
+2015-10-22 12:49:25.400 - INFO - #6066 -   Parameters: {"id"=>"6dac4179ed6f786dc5d31f34ffd9f9078e52c9a4a145845aaa8136e4847d5c7d"}
+2015-10-22 12:49:25.411 - DEBUG - #6066 - Restarting container(6dac4179ed6f786dc5d31f34ffd9f9078e52c9a4a145845aaa8136e4847d5c7d)
+2015-10-22 12:49:46.240 - DEBUG - #6066 - Container(6dac4179ed6f786dc5d31f34ffd9f9078e52c9a4a145845aaa8136e4847d5c7d) has restarted
+2015-10-22 12:49:46.269 - INFO - #6066 - Completed 200 OK in 20868ms (Views: 26.2ms | ActiveRecord: 0.0ms)
+2015-10-22 12:49:46.311 - INFO - #6066 - [0;1;34mStarted GET [0m"/v1/containers/6dac4179ed6f786dc5d31f34ffd9f9078e52c9a4a145845aaa8136e4847d5c7d" for 127.0.0.1 at 2015-10-22 12:49:46 +0000
+2015-10-22 12:49:46.314 - INFO - #6066 - Processing by V1::ContainersController#show as JSON
+2015-10-22 12:49:46.315 - INFO - #6066 -   Parameters: {"id"=>"6dac4179ed6f786dc5d31f34ffd9f9078e52c9a4a145845aaa8136e4847d5c7d"}
+2015-10-22 12:49:46.336 - INFO - #6066 - Completed 200 OK in 20ms (Views: 13.0ms | ActiveRecord: 0.0ms)
+2015-10-22 12:49:46.361 - INFO - #6066 - [0;1;34mStarted DELETE [0m"/v1/containers/6dac4179ed6f786dc5d31f34ffd9f9078e52c9a4a145845aaa8136e4847d5c7d" for 127.0.0.1 at 2015-10-22 12:49:46 +0000
+2015-10-22 12:49:46.364 - INFO - #6066 - Processing by V1::ContainersController#destroy as JSON
+2015-10-22 12:49:46.365 - INFO - #6066 -   Parameters: {"id"=>"6dac4179ed6f786dc5d31f34ffd9f9078e52c9a4a145845aaa8136e4847d5c7d"}
+2015-10-22 12:49:46.395 - INFO - #6066 - Completed 200 OK in 30ms (Views: 16.8ms | ActiveRecord: 0.0ms)
+2015-10-22 12:49:59.699 - INFO - #6190 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 12:49:59 +0000
+2015-10-22 12:49:59.725 - INFO - #6190 - Processing by V1::ContainersController#create as JSON
+2015-10-22 12:49:59.726 - INFO - #6190 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 12:49:59.762 - DEBUG - #6190 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start"}
+2015-10-22 12:49:59.780 - DEBUG - #6190 - Container(af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5) has created
+2015-10-22 12:49:59.781 - INFO - #6190 - Completed 200 OK in 55ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+2015-10-22 12:49:59.796 - INFO - #6190 - [0;1;34mStarted POST [0m"/v1/containers/af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5/start" for 127.0.0.1 at 2015-10-22 12:49:59 +0000
+2015-10-22 12:49:59.797 - INFO - #6190 - Processing by V1::ContainersController#start as JSON
+2015-10-22 12:49:59.797 - INFO - #6190 -   Parameters: {"id"=>"af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5"}
+2015-10-22 12:49:59.801 - DEBUG - #6190 - Starting container(af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5)
+2015-10-22 12:50:20.534 - DEBUG - #6190 - Container(af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5) has started
+2015-10-22 12:50:20.538 - INFO - #6190 - Completed 200 OK in 20740ms (Views: 3.1ms | ActiveRecord: 0.0ms)
+2015-10-22 12:50:20.553 - INFO - #6190 - [0;1;34mStarted POST [0m"/v1/containers/af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5/restart" for 127.0.0.1 at 2015-10-22 12:50:20 +0000
+2015-10-22 12:50:20.564 - INFO - #6190 - Processing by V1::ContainersController#restart as JSON
+2015-10-22 12:50:20.564 - INFO - #6190 -   Parameters: {"id"=>"af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5"}
+2015-10-22 12:50:20.581 - DEBUG - #6190 - Restarting container(af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5)
+2015-10-22 12:50:41.455 - DEBUG - #6190 - Container(af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5) has restarted
+2015-10-22 12:50:41.458 - INFO - #6190 - Completed 200 OK in 20889ms (Views: 2.3ms | ActiveRecord: 0.0ms)
+2015-10-22 12:50:41.495 - INFO - #6190 - [0;1;34mStarted GET [0m"/v1/containers/af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5" for 127.0.0.1 at 2015-10-22 12:50:41 +0000
+2015-10-22 12:50:41.496 - INFO - #6190 - Processing by V1::ContainersController#show as JSON
+2015-10-22 12:50:41.496 - INFO - #6190 -   Parameters: {"id"=>"af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5"}
+2015-10-22 12:50:41.504 - INFO - #6190 - Completed 200 OK in 6ms (Views: 2.8ms | ActiveRecord: 0.0ms)
+2015-10-22 12:50:41.521 - INFO - #6190 - [0;1;34mStarted DELETE [0m"/v1/containers/af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5" for 127.0.0.1 at 2015-10-22 12:50:41 +0000
+2015-10-22 12:50:41.522 - INFO - #6190 - Processing by V1::ContainersController#destroy as JSON
+2015-10-22 12:50:41.524 - INFO - #6190 -   Parameters: {"id"=>"af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5"}
+2015-10-22 12:50:41.539 - INFO - #6190 - Completed 200 OK in 15ms (Views: 2.0ms | ActiveRecord: 0.0ms)
