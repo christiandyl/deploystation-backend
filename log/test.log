@@ -386,3 +386,632 @@ Completed 200 OK in 12ms (Views: 1.9ms | ActiveRecord: 0.0ms)
 2015-10-22 12:50:41.522 - INFO - #6190 - Processing by V1::ContainersController#destroy as JSON
 2015-10-22 12:50:41.524 - INFO - #6190 -   Parameters: {"id"=>"af0621092d28fd580f04685a046887a5508d1a5f39847680a7063a551619c9d5"}
 2015-10-22 12:50:41.539 - INFO - #6190 - Completed 200 OK in 15ms (Views: 2.0ms | ActiveRecord: 0.0ms)
+2015-10-22 13:08:03.913 - INFO - #6351 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:08:03 +0000
+2015-10-22 13:08:03.936 - INFO - #6351 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:08:03.937 - INFO - #6351 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:08:03.971 - DEBUG - #6351 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"25565"}]}}
+2015-10-22 13:08:03.988 - DEBUG - #6351 - Container(6fde3cd2e298d793de8db089e59eeddfd3eb5a0ef72308d81478313e4ab3b0f0) has created
+2015-10-22 13:08:03.989 - INFO - #6351 - Completed 200 OK in 52ms (Views: 0.7ms | ActiveRecord: 0.0ms)
+2015-10-22 13:08:04.002 - INFO - #6351 - [0;1;34mStarted DELETE [0m"/v1/containers/6fde3cd2e298d793de8db089e59eeddfd3eb5a0ef72308d81478313e4ab3b0f0" for 127.0.0.1 at 2015-10-22 13:08:04 +0000
+2015-10-22 13:08:04.004 - INFO - #6351 - Processing by V1::ContainersController#destroy as JSON
+2015-10-22 13:08:04.004 - INFO - #6351 -   Parameters: {"id"=>"6fde3cd2e298d793de8db089e59eeddfd3eb5a0ef72308d81478313e4ab3b0f0"}
+2015-10-22 13:08:04.040 - INFO - #6351 - Completed 200 OK in 35ms (Views: 9.7ms | ActiveRecord: 0.0ms)
+2015-10-22 13:08:51.374 - INFO - #6367 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:08:51 +0000
+2015-10-22 13:08:51.397 - INFO - #6367 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:08:51.397 - INFO - #6367 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:08:51.433 - DEBUG - #6367 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"25565"}]}}
+2015-10-22 13:08:51.451 - DEBUG - #6367 - Container(306263cc6ec596758e7d26c848dc21abd569d74906710440b3c76a5e82623897) has created
+2015-10-22 13:08:51.453 - INFO - #6367 - Completed 200 OK in 54ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+2015-10-22 13:08:51.467 - INFO - #6367 - [0;1;34mStarted POST [0m"/v1/containers/306263cc6ec596758e7d26c848dc21abd569d74906710440b3c76a5e82623897/start" for 127.0.0.1 at 2015-10-22 13:08:51 +0000
+2015-10-22 13:08:51.469 - INFO - #6367 - Processing by V1::ContainersController#start as JSON
+2015-10-22 13:08:51.469 - INFO - #6367 -   Parameters: {"id"=>"306263cc6ec596758e7d26c848dc21abd569d74906710440b3c76a5e82623897"}
+2015-10-22 13:08:51.472 - DEBUG - #6367 - Starting container(306263cc6ec596758e7d26c848dc21abd569d74906710440b3c76a5e82623897)
+2015-10-22 13:09:12.243 - DEBUG - #6367 - Container(306263cc6ec596758e7d26c848dc21abd569d74906710440b3c76a5e82623897) has started
+2015-10-22 13:09:12.250 - INFO - #6367 - Completed 200 OK in 20781ms (Views: 5.8ms | ActiveRecord: 0.0ms)
+2015-10-22 13:09:12.277 - INFO - #6367 - [0;1;34mStarted DELETE [0m"/v1/containers/306263cc6ec596758e7d26c848dc21abd569d74906710440b3c76a5e82623897" for 127.0.0.1 at 2015-10-22 13:09:12 +0000
+2015-10-22 13:09:12.281 - INFO - #6367 - Processing by V1::ContainersController#destroy as JSON
+2015-10-22 13:09:12.283 - INFO - #6367 -   Parameters: {"id"=>"306263cc6ec596758e7d26c848dc21abd569d74906710440b3c76a5e82623897"}
+2015-10-22 13:09:12.297 - INFO - #6367 - Completed 200 OK in 14ms (Views: 2.6ms | ActiveRecord: 0.0ms)
+2015-10-22 13:13:45.783 - INFO - #6600 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:13:45 +0000
+2015-10-22 13:13:45.806 - INFO - #6600 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:13:45.806 - INFO - #6600 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:13:45.843 - INFO - #6600 - Completed 500 Internal Server Error in 36ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+2015-10-22 13:14:45.865 - INFO - #6602 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:14:45 +0000
+2015-10-22 13:14:45.888 - INFO - #6602 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:14:45.889 - INFO - #6602 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:14:45.925 - DEBUG - #6602 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "Volumes"=>{:"/data"=>"/mnt/662871a3-e1ac-42c9-aae2-96fde0807781"}, "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"25565"}]}}
+2015-10-22 13:14:45.930 - INFO - #6602 - Completed 500 Internal Server Error in 41ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+2015-10-22 13:15:13.941 - INFO - #6604 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:15:13 +0000
+2015-10-22 13:15:13.963 - INFO - #6604 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:15:13.963 - INFO - #6604 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:15:13.998 - DEBUG - #6604 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "Volumes"=>{:"/data"=>"/mnt/ae9d82aa-783a-45fd-9e77-f6f6c80ff146"}, "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"25565"}]}}
+2015-10-22 13:15:14.003 - INFO - #6604 - Completed 500 Internal Server Error in 39ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+2015-10-22 13:16:23.646 - INFO - #6607 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:16:23 +0000
+2015-10-22 13:16:23.668 - INFO - #6607 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:16:23.669 - INFO - #6607 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:16:23.715 - DEBUG - #6607 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "Volumes"=>{:"/data"=>"/mnt/846f8444-9199-40ec-882a-761c78c3e91b"}, "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"25565"}]}}
+2015-10-22 13:19:06.985 - INFO - #6613 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:19:06 +0000
+2015-10-22 13:19:07.007 - INFO - #6613 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:19:07.007 - INFO - #6613 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:19:07.046 - DEBUG - #6613 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "Volumes"=>{:"/data"=>"/mnt/b8219472-7d28-4c81-bb81-7778ead3c507"}, "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"25565"}]}}
+2015-10-22 13:19:07.050 - ERROR - #6613 - Exception caught caused return 500 : json: cannot unmarshal string into Go value of type struct {}
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/docker-api-1.22.4/lib/docker/connection.rb:50:in `rescue in request'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/docker-api-1.22.4/lib/docker/connection.rb:38:in `request'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/docker-api-1.22.4/lib/docker/connection.rb:65:in `block (2 levels) in <class:Connection>'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/docker-api-1.22.4/lib/docker/container.rb:234:in `create'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /vagrant/app/models/container.rb:11:in `create'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /vagrant/app/models/container_minecraft.rb:11:in `create'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /vagrant/app/controllers/v1/containers_controller.rb:10:in `create'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/base.rb:198:in `process_action'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rendering.rb:10:in `process_action'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/callbacks.rb:20:in `block in process_action'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:117:in `call'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:117:in `call'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:505:in `call'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:505:in `call'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:92:in `__run_callbacks__'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+2015-10-22 13:19:07.051 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:81:in `run_callbacks'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/callbacks.rb:19:in `process_action'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rescue.rb:29:in `process_action'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications.rb:164:in `block in instrument'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications.rb:164:in `instrument'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/base.rb:137:in `process'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionview-4.2.4/lib/action_view/rendering.rb:30:in `process'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal.rb:196:in `dispatch'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal.rb:237:in `block in action'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:76:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:76:in `dispatch'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:45:in `serve'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:43:in `block in serve'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:30:in `each'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:30:in `serve'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:821:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/etag.rb:24:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/conditionalget.rb:38:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/head.rb:13:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/query_cache.rb:36:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:88:in `__run_callbacks__'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:778:in `_run_call_callbacks'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:81:in `run_callbacks'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:38:in `call_app'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:20:in `block in call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:68:in `block in tagged'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:26:in `tagged'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:68:in `tagged'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:20:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/request_id.rb:21:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/runtime.rb:18:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/static.rb:116:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/engine.rb:518:in `call'
+2015-10-22 13:19:07.052 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/application.rb:165:in `call'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/mock_session.rb:30:in `request'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/test.rb:244:in `process_request'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/test.rb:124:in `request'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:297:in `process'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:38:in `post'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:346:in `block (2 levels) in <module:Runner>'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /vagrant/spec/support/base_helper.rb:14:in `call'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /vagrant/spec/support/base_helper.rb:14:in `send'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /vagrant/spec/api/v1/containers_spec.rb:14:in `block (2 levels) in <top (required)>'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:206:in `instance_exec'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:206:in `block in run'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:430:in `block in with_around_and_singleton_context_hooks'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:388:in `block in with_around_example_hooks'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:478:in `block in run'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:618:in `block in run_around_example_hooks_for'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-rails-3.3.3/lib/rspec/rails/adapters.rb:127:in `block (2 levels) in <module:MinitestLifecycleAdapter>'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:378:in `instance_exec'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:378:in `instance_exec'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:389:in `execute_with'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:620:in `block (2 levels) in run_around_example_hooks_for'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:621:in `run_around_example_hooks_for'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:478:in `run'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:388:in `with_around_example_hooks'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:430:in `with_around_and_singleton_context_hooks'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:203:in `run'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:559:in `block in run_examples'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:555:in `map'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:555:in `run_examples'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:521:in `run'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `block (3 levels) in run_specs'
+2015-10-22 13:19:07.053 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `map'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `block (2 levels) in run_specs'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/configuration.rb:1627:in `with_suite_hooks'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:114:in `block in run_specs'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/reporter.rb:77:in `report'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:113:in `run_specs'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:89:in `run'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:73:in `run'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:41:in `invoke'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/exe/rspec:4:in `<top (required)>'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/rspec:23:in `load'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/rspec:23:in `<main>'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `eval'
+2015-10-22 13:19:07.054 - DEBUG - #6613 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `<main>'
+2015-10-22 13:19:07.055 - INFO - #6613 - Completed 500 Internal Server Error in 48ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+2015-10-22 13:19:34.818 - INFO - #6616 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:19:34 +0000
+2015-10-22 13:19:34.839 - INFO - #6616 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:19:34.839 - INFO - #6616 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:19:34.879 - DEBUG - #6616 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "Volumes"=>{:"/data"=>"/mnt/5a799b85-948b-496f-a06c-d44a16d343b9"}, "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"25565"}]}}
+2015-10-22 13:20:26.783 - INFO - #6618 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:20:26 +0000
+2015-10-22 13:20:26.806 - INFO - #6618 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:20:26.807 - INFO - #6618 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:20:26.843 - DEBUG - #6618 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"25565"}]}}
+2015-10-22 13:30:42.791 - INFO - #6822 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:30:42 +0000
+2015-10-22 13:30:42.820 - INFO - #6822 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:30:42.821 - INFO - #6822 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:30:42.859 - DEBUG - #6822 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "HostConfig"=>{"Binds"=>["/mnt/0a31ebbf-f2df-40fd-8caf-a6ba60ef6968:/data"]}, "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"25565"}]}}
+2015-10-22 13:30:55.955 - DEBUG - #6822 - Container(b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc) has created
+2015-10-22 13:30:55.959 - INFO - #6822 - Completed 200 OK in 13137ms (Views: 2.2ms | ActiveRecord: 0.0ms)
+2015-10-22 13:30:55.993 - INFO - #6822 - [0;1;34mStarted POST [0m"/v1/containers/b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc/start" for 127.0.0.1 at 2015-10-22 13:30:55 +0000
+2015-10-22 13:30:55.997 - INFO - #6822 - Processing by V1::ContainersController#start as JSON
+2015-10-22 13:30:55.997 - INFO - #6822 -   Parameters: {"id"=>"b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc"}
+2015-10-22 13:30:56.005 - DEBUG - #6822 - Starting container(b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc)
+2015-10-22 13:31:16.729 - DEBUG - #6822 - Container(b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc) has started
+2015-10-22 13:31:16.781 - INFO - #6822 - Completed 200 OK in 20783ms (Views: 48.1ms | ActiveRecord: 0.0ms)
+2015-10-22 13:31:16.801 - INFO - #6822 - [0;1;34mStarted POST [0m"/v1/containers/b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc/restart" for 127.0.0.1 at 2015-10-22 13:31:16 +0000
+2015-10-22 13:31:16.811 - INFO - #6822 - Processing by V1::ContainersController#restart as JSON
+2015-10-22 13:31:16.811 - INFO - #6822 -   Parameters: {"id"=>"b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc"}
+2015-10-22 13:31:16.819 - DEBUG - #6822 - Restarting container(b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc)
+2015-10-22 13:31:37.653 - DEBUG - #6822 - Container(b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc) has restarted
+2015-10-22 13:31:37.692 - INFO - #6822 - Completed 200 OK in 20879ms (Views: 35.0ms | ActiveRecord: 0.0ms)
+2015-10-22 13:31:37.728 - INFO - #6822 - [0;1;34mStarted GET [0m"/v1/containers/b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc" for 127.0.0.1 at 2015-10-22 13:31:37 +0000
+2015-10-22 13:31:37.732 - INFO - #6822 - Processing by V1::ContainersController#show as JSON
+2015-10-22 13:31:37.732 - INFO - #6822 -   Parameters: {"id"=>"b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc"}
+2015-10-22 13:31:37.753 - INFO - #6822 - Completed 200 OK in 20ms (Views: 14.7ms | ActiveRecord: 0.0ms)
+2015-10-22 13:31:37.766 - INFO - #6822 - [0;1;34mStarted DELETE [0m"/v1/containers/b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc" for 127.0.0.1 at 2015-10-22 13:31:37 +0000
+2015-10-22 13:31:37.770 - INFO - #6822 - Processing by V1::ContainersController#destroy as JSON
+2015-10-22 13:31:37.771 - INFO - #6822 -   Parameters: {"id"=>"b7d1fe207ebd8e4d2efda03a3dcf79425133b993309e473154ae3cc334a030cc"}
+2015-10-22 13:31:37.797 - INFO - #6822 - Completed 200 OK in 26ms (Views: 13.2ms | ActiveRecord: 0.0ms)
+2015-10-22 13:31:47.950 - INFO - #7089 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:31:47 +0000
+2015-10-22 13:31:47.972 - INFO - #7089 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:31:47.973 - INFO - #7089 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:31:48.008 - DEBUG - #7089 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "HostConfig"=>{"Binds"=>["/mnt/71939a49-b389-45e0-9b40-ad8ee38c4115:/data"]}, "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"25565"}]}}
+2015-10-22 13:31:48.031 - DEBUG - #7089 - Container(9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63) has created
+2015-10-22 13:32:59.071 - INFO - #7089 - Completed 200 OK in 71098ms (Views: 2.4ms | ActiveRecord: 0.0ms)
+2015-10-22 13:32:59.120 - INFO - #7089 - [0;1;34mStarted POST [0m"/v1/containers/9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63/start" for 127.0.0.1 at 2015-10-22 13:32:59 +0000
+2015-10-22 13:32:59.126 - INFO - #7089 - Processing by V1::ContainersController#start as JSON
+2015-10-22 13:32:59.128 - INFO - #7089 -   Parameters: {"id"=>"9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63"}
+2015-10-22 13:32:59.138 - DEBUG - #7089 - Starting container(9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63)
+2015-10-22 13:33:19.876 - DEBUG - #7089 - Container(9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63) has started
+2015-10-22 13:33:19.934 - INFO - #7089 - Completed 200 OK in 20805ms (Views: 55.5ms | ActiveRecord: 0.0ms)
+2015-10-22 13:33:19.950 - INFO - #7089 - [0;1;34mStarted POST [0m"/v1/containers/9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63/restart" for 127.0.0.1 at 2015-10-22 13:33:19 +0000
+2015-10-22 13:33:19.955 - INFO - #7089 - Processing by V1::ContainersController#restart as JSON
+2015-10-22 13:33:19.956 - INFO - #7089 -   Parameters: {"id"=>"9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63"}
+2015-10-22 13:33:19.966 - DEBUG - #7089 - Restarting container(9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63)
+2015-10-22 13:33:40.826 - DEBUG - #7089 - Container(9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63) has restarted
+2015-10-22 13:33:40.869 - INFO - #7089 - Completed 200 OK in 20913ms (Views: 32.1ms | ActiveRecord: 0.0ms)
+2015-10-22 13:33:40.903 - INFO - #7089 - [0;1;34mStarted GET [0m"/v1/containers/9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63" for 127.0.0.1 at 2015-10-22 13:33:40 +0000
+2015-10-22 13:33:40.907 - INFO - #7089 - Processing by V1::ContainersController#show as JSON
+2015-10-22 13:33:40.907 - INFO - #7089 -   Parameters: {"id"=>"9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63"}
+2015-10-22 13:33:40.923 - INFO - #7089 - Completed 200 OK in 15ms (Views: 8.7ms | ActiveRecord: 0.0ms)
+2015-10-22 13:33:40.945 - INFO - #7089 - [0;1;34mStarted DELETE [0m"/v1/containers/9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63" for 127.0.0.1 at 2015-10-22 13:33:40 +0000
+2015-10-22 13:33:40.950 - INFO - #7089 - Processing by V1::ContainersController#destroy as JSON
+2015-10-22 13:33:40.951 - INFO - #7089 -   Parameters: {"id"=>"9fc5a4e4b978785b6661c5e7dfe6ff651d9eea7774d45ace59d7fa514858bf63"}
+2015-10-22 13:33:40.980 - INFO - #7089 - Completed 200 OK in 29ms (Views: 16.0ms | ActiveRecord: 0.0ms)
+2015-10-22 13:38:35.924 - INFO - #7259 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:38:35 +0000
+2015-10-22 13:38:35.949 - INFO - #7259 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:38:35.950 - INFO - #7259 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:39:40.668 - INFO - #7262 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:39:40 +0000
+2015-10-22 13:39:40.691 - INFO - #7262 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:39:40.691 - INFO - #7262 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:43:14.471 - INFO - #7399 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:43:14 +0000
+2015-10-22 13:43:14.494 - INFO - #7399 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:43:14.494 - INFO - #7399 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:43:14.530 - DEBUG - #7399 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "HostConfig"=>{"Binds"=>["/mnt/60a825c0-d79b-4384-b6e8-f1c48e3adcf5:/data"]}, "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>46708}]}}
+2015-10-22 13:43:14.535 - ERROR - #7399 - Exception caught caused return 500 : json: cannot unmarshal number into Go value of type string
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/docker-api-1.22.4/lib/docker/connection.rb:50:in `rescue in request'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/docker-api-1.22.4/lib/docker/connection.rb:38:in `request'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/docker-api-1.22.4/lib/docker/connection.rb:65:in `block (2 levels) in <class:Connection>'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/docker-api-1.22.4/lib/docker/container.rb:234:in `create'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /vagrant/app/models/container.rb:18:in `create'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /vagrant/app/models/container_minecraft.rb:14:in `create'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /vagrant/app/controllers/v1/containers_controller.rb:10:in `create'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/base.rb:198:in `process_action'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rendering.rb:10:in `process_action'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/callbacks.rb:20:in `block in process_action'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:117:in `call'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:117:in `call'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:505:in `call'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:505:in `call'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:92:in `__run_callbacks__'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:81:in `run_callbacks'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/callbacks.rb:19:in `process_action'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rescue.rb:29:in `process_action'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications.rb:164:in `block in instrument'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications.rb:164:in `instrument'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/base.rb:137:in `process'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionview-4.2.4/lib/action_view/rendering.rb:30:in `process'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal.rb:196:in `dispatch'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal.rb:237:in `block in action'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:76:in `call'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:76:in `dispatch'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:45:in `serve'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:43:in `block in serve'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:30:in `each'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:30:in `serve'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:821:in `call'
+2015-10-22 13:43:14.536 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/etag.rb:24:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/conditionalget.rb:38:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/head.rb:13:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/query_cache.rb:36:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:88:in `__run_callbacks__'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:778:in `_run_call_callbacks'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:81:in `run_callbacks'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:38:in `call_app'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:20:in `block in call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:68:in `block in tagged'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:26:in `tagged'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:68:in `tagged'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:20:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/request_id.rb:21:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/runtime.rb:18:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/static.rb:116:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/engine.rb:518:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/application.rb:165:in `call'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/mock_session.rb:30:in `request'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/test.rb:244:in `process_request'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/test.rb:124:in `request'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:297:in `process'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:38:in `post'
+2015-10-22 13:43:14.537 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:346:in `block (2 levels) in <module:Runner>'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /vagrant/spec/support/base_helper.rb:14:in `call'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /vagrant/spec/support/base_helper.rb:14:in `send'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /vagrant/spec/api/v1/containers_spec.rb:14:in `block (2 levels) in <top (required)>'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:206:in `instance_exec'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:206:in `block in run'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:430:in `block in with_around_and_singleton_context_hooks'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:388:in `block in with_around_example_hooks'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:478:in `block in run'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:618:in `block in run_around_example_hooks_for'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-rails-3.3.3/lib/rspec/rails/adapters.rb:127:in `block (2 levels) in <module:MinitestLifecycleAdapter>'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:378:in `instance_exec'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:378:in `instance_exec'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:389:in `execute_with'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:620:in `block (2 levels) in run_around_example_hooks_for'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:621:in `run_around_example_hooks_for'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:478:in `run'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:388:in `with_around_example_hooks'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:430:in `with_around_and_singleton_context_hooks'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:203:in `run'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:559:in `block in run_examples'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:555:in `map'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:555:in `run_examples'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:521:in `run'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `block (3 levels) in run_specs'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `map'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `block (2 levels) in run_specs'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/configuration.rb:1627:in `with_suite_hooks'
+2015-10-22 13:43:14.538 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:114:in `block in run_specs'
+2015-10-22 13:43:14.539 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/reporter.rb:77:in `report'
+2015-10-22 13:43:14.539 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:113:in `run_specs'
+2015-10-22 13:43:14.539 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:89:in `run'
+2015-10-22 13:43:14.539 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:73:in `run'
+2015-10-22 13:43:14.539 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:41:in `invoke'
+2015-10-22 13:43:14.539 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/exe/rspec:4:in `<top (required)>'
+2015-10-22 13:43:14.539 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/rspec:23:in `load'
+2015-10-22 13:43:14.539 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/rspec:23:in `<main>'
+2015-10-22 13:43:14.539 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `eval'
+2015-10-22 13:43:14.539 - DEBUG - #7399 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `<main>'
+2015-10-22 13:43:14.540 - INFO - #7399 - Completed 500 Internal Server Error in 45ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+2015-10-22 13:43:32.532 - INFO - #7412 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:43:32 +0000
+2015-10-22 13:43:32.552 - INFO - #7412 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:43:32.552 - INFO - #7412 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:43:32.589 - DEBUG - #7412 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "HostConfig"=>{"Binds"=>["/mnt/87438771-80f9-4e11-9c8d-d716ae916724:/data"]}, "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>54016}]}}
+2015-10-22 13:43:32.594 - ERROR - #7412 - Exception caught caused return 500 : json: cannot unmarshal number into Go value of type string
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/docker-api-1.22.4/lib/docker/connection.rb:50:in `rescue in request'
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/docker-api-1.22.4/lib/docker/connection.rb:38:in `request'
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/docker-api-1.22.4/lib/docker/connection.rb:65:in `block (2 levels) in <class:Connection>'
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/docker-api-1.22.4/lib/docker/container.rb:234:in `create'
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /vagrant/app/models/container.rb:18:in `create'
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /vagrant/app/models/container_minecraft.rb:14:in `create'
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /vagrant/app/controllers/v1/containers_controller.rb:10:in `create'
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/base.rb:198:in `process_action'
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rendering.rb:10:in `process_action'
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/callbacks.rb:20:in `block in process_action'
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:117:in `call'
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:117:in `call'
+2015-10-22 13:43:32.594 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:505:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:505:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:92:in `__run_callbacks__'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:81:in `run_callbacks'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/callbacks.rb:19:in `process_action'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rescue.rb:29:in `process_action'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications.rb:164:in `block in instrument'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications.rb:164:in `instrument'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/base.rb:137:in `process'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionview-4.2.4/lib/action_view/rendering.rb:30:in `process'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal.rb:196:in `dispatch'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal.rb:237:in `block in action'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:76:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:76:in `dispatch'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:45:in `serve'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:43:in `block in serve'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:30:in `each'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:30:in `serve'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:821:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/etag.rb:24:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/conditionalget.rb:38:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/head.rb:13:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/query_cache.rb:36:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:88:in `__run_callbacks__'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:778:in `_run_call_callbacks'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:81:in `run_callbacks'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:38:in `call_app'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:20:in `block in call'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:68:in `block in tagged'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:26:in `tagged'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:68:in `tagged'
+2015-10-22 13:43:32.595 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:20:in `call'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/request_id.rb:21:in `call'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/runtime.rb:18:in `call'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/static.rb:116:in `call'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/engine.rb:518:in `call'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/application.rb:165:in `call'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/mock_session.rb:30:in `request'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/test.rb:244:in `process_request'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/test.rb:124:in `request'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:297:in `process'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:38:in `post'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:346:in `block (2 levels) in <module:Runner>'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /vagrant/spec/support/base_helper.rb:14:in `call'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /vagrant/spec/support/base_helper.rb:14:in `send'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /vagrant/spec/api/v1/containers_spec.rb:14:in `block (2 levels) in <top (required)>'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:206:in `instance_exec'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:206:in `block in run'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:430:in `block in with_around_and_singleton_context_hooks'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:388:in `block in with_around_example_hooks'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:478:in `block in run'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:618:in `block in run_around_example_hooks_for'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-rails-3.3.3/lib/rspec/rails/adapters.rb:127:in `block (2 levels) in <module:MinitestLifecycleAdapter>'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:378:in `instance_exec'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:378:in `instance_exec'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:389:in `execute_with'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:620:in `block (2 levels) in run_around_example_hooks_for'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:621:in `run_around_example_hooks_for'
+2015-10-22 13:43:32.596 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:478:in `run'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:388:in `with_around_example_hooks'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:430:in `with_around_and_singleton_context_hooks'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:203:in `run'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:559:in `block in run_examples'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:555:in `map'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:555:in `run_examples'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:521:in `run'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `block (3 levels) in run_specs'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `map'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `block (2 levels) in run_specs'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/configuration.rb:1627:in `with_suite_hooks'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:114:in `block in run_specs'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/reporter.rb:77:in `report'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:113:in `run_specs'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:89:in `run'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:73:in `run'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:41:in `invoke'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/exe/rspec:4:in `<top (required)>'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/rspec:23:in `load'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/rspec:23:in `<main>'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `eval'
+2015-10-22 13:43:32.597 - DEBUG - #7412 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `<main>'
+2015-10-22 13:43:32.599 - INFO - #7412 - Completed 500 Internal Server Error in 46ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+2015-10-22 13:44:05.468 - INFO - #7414 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:44:05 +0000
+2015-10-22 13:44:05.494 - INFO - #7414 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:44:05.494 - INFO - #7414 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:44:05.551 - DEBUG - #7414 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "HostConfig"=>{"Binds"=>["/mnt/3007ec93-d7d6-4952-92df-b69e00bb5e2f:/data"]}, "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"43460"}]}}
+2015-10-22 13:44:05.570 - DEBUG - #7414 - Container(55e427ef985e0fe079fc98578866215bced86b27e30bc54bc50e48676becc83e) has created
+2015-10-22 13:44:05.573 - ERROR - #7414 - Exception caught caused return 500 : undefined local variable or method `container' for #<V1::ContainersController:0x000000041d5ea8>
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /vagrant/app/controllers/v1/containers_controller.rb:12:in `create'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/base.rb:198:in `process_action'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rendering.rb:10:in `process_action'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/callbacks.rb:20:in `block in process_action'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:117:in `call'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:117:in `call'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:505:in `call'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:505:in `call'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:92:in `__run_callbacks__'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:81:in `run_callbacks'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/callbacks.rb:19:in `process_action'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rescue.rb:29:in `process_action'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications.rb:164:in `block in instrument'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications.rb:164:in `instrument'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/base.rb:137:in `process'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionview-4.2.4/lib/action_view/rendering.rb:30:in `process'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal.rb:196:in `dispatch'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal.rb:237:in `block in action'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:76:in `call'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:76:in `dispatch'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:45:in `serve'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:43:in `block in serve'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:30:in `each'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:30:in `serve'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:821:in `call'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/etag.rb:24:in `call'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/conditionalget.rb:38:in `call'
+2015-10-22 13:44:05.574 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/head.rb:13:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/query_cache.rb:36:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:88:in `__run_callbacks__'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:778:in `_run_call_callbacks'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:81:in `run_callbacks'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:38:in `call_app'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:20:in `block in call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:68:in `block in tagged'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:26:in `tagged'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:68:in `tagged'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:20:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/request_id.rb:21:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/runtime.rb:18:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/static.rb:116:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/engine.rb:518:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/application.rb:165:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/mock_session.rb:30:in `request'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/test.rb:244:in `process_request'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/test.rb:124:in `request'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:297:in `process'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:38:in `post'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:346:in `block (2 levels) in <module:Runner>'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /vagrant/spec/support/base_helper.rb:14:in `call'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /vagrant/spec/support/base_helper.rb:14:in `send'
+2015-10-22 13:44:05.575 - DEBUG - #7414 - /vagrant/spec/api/v1/containers_spec.rb:14:in `block (2 levels) in <top (required)>'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:206:in `instance_exec'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:206:in `block in run'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:430:in `block in with_around_and_singleton_context_hooks'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:388:in `block in with_around_example_hooks'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:478:in `block in run'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:618:in `block in run_around_example_hooks_for'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-rails-3.3.3/lib/rspec/rails/adapters.rb:127:in `block (2 levels) in <module:MinitestLifecycleAdapter>'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:378:in `instance_exec'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:378:in `instance_exec'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:389:in `execute_with'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:620:in `block (2 levels) in run_around_example_hooks_for'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:621:in `run_around_example_hooks_for'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:478:in `run'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:388:in `with_around_example_hooks'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:430:in `with_around_and_singleton_context_hooks'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:203:in `run'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:559:in `block in run_examples'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:555:in `map'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:555:in `run_examples'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:521:in `run'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `block (3 levels) in run_specs'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `map'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `block (2 levels) in run_specs'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/configuration.rb:1627:in `with_suite_hooks'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:114:in `block in run_specs'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/reporter.rb:77:in `report'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:113:in `run_specs'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:89:in `run'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:73:in `run'
+2015-10-22 13:44:05.576 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:41:in `invoke'
+2015-10-22 13:44:05.577 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/exe/rspec:4:in `<top (required)>'
+2015-10-22 13:44:05.577 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/rspec:23:in `load'
+2015-10-22 13:44:05.577 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/rspec:23:in `<main>'
+2015-10-22 13:44:05.577 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `eval'
+2015-10-22 13:44:05.577 - DEBUG - #7414 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `<main>'
+2015-10-22 13:44:05.581 - INFO - #7414 - Completed 500 Internal Server Error in 86ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+2015-10-22 13:44:35.051 - INFO - #7418 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:44:35 +0000
+2015-10-22 13:44:35.074 - INFO - #7418 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:44:35.075 - INFO - #7418 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:44:35.117 - DEBUG - #7418 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "HostConfig"=>{"Binds"=>["/mnt/7befcd53-5161-4bc0-80af-3d39910e75e7:/data"]}, "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"58257"}]}}
+2015-10-22 13:44:35.135 - DEBUG - #7418 - Container(1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe) has created
+2015-10-22 13:44:35.136 - INFO - #7418 - Completed 200 OK in 60ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+2015-10-22 13:46:12.372 - INFO - #7418 - [0;1;34mStarted POST [0m"/v1/containers/1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe/start" for 127.0.0.1 at 2015-10-22 13:46:12 +0000
+2015-10-22 13:46:12.382 - INFO - #7418 - Processing by V1::ContainersController#start as JSON
+2015-10-22 13:46:12.383 - INFO - #7418 -   Parameters: {"id"=>"1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe"}
+2015-10-22 13:46:12.395 - DEBUG - #7418 - Starting container(1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe)
+2015-10-22 13:46:33.128 - DEBUG - #7418 - Container(1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe) has started
+2015-10-22 13:46:33.185 - INFO - #7418 - Completed 200 OK in 20788ms (Views: 42.1ms | ActiveRecord: 0.0ms)
+2015-10-22 13:46:33.199 - INFO - #7418 - [0;1;34mStarted POST [0m"/v1/containers/1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe/restart" for 127.0.0.1 at 2015-10-22 13:46:33 +0000
+2015-10-22 13:46:33.202 - INFO - #7418 - Processing by V1::ContainersController#restart as JSON
+2015-10-22 13:46:33.203 - INFO - #7418 -   Parameters: {"id"=>"1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe"}
+2015-10-22 13:46:33.209 - DEBUG - #7418 - Restarting container(1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe)
+2015-10-22 13:46:54.061 - DEBUG - #7418 - Container(1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe) has restarted
+2015-10-22 13:46:54.110 - INFO - #7418 - Completed 200 OK in 20906ms (Views: 42.8ms | ActiveRecord: 0.0ms)
+2015-10-22 13:46:54.129 - INFO - #7418 - [0;1;34mStarted GET [0m"/v1/containers/1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe" for 127.0.0.1 at 2015-10-22 13:46:54 +0000
+2015-10-22 13:46:54.137 - INFO - #7418 - Processing by V1::ContainersController#show as JSON
+2015-10-22 13:46:54.138 - INFO - #7418 -   Parameters: {"id"=>"1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe"}
+2015-10-22 13:46:54.152 - INFO - #7418 - Completed 200 OK in 14ms (Views: 7.9ms | ActiveRecord: 0.0ms)
+2015-10-22 13:46:54.177 - INFO - #7418 - [0;1;34mStarted DELETE [0m"/v1/containers/1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe" for 127.0.0.1 at 2015-10-22 13:46:54 +0000
+2015-10-22 13:46:54.182 - INFO - #7418 - Processing by V1::ContainersController#destroy as JSON
+2015-10-22 13:46:54.182 - INFO - #7418 -   Parameters: {"id"=>"1781813936cc6694767e499ee69a0013411a2020d5a9b3ffbaea61a1cb42ffbe"}
+2015-10-22 13:46:54.209 - INFO - #7418 - Completed 200 OK in 26ms (Views: 12.8ms | ActiveRecord: 0.0ms)
+2015-10-22 13:50:57.930 - INFO - #7538 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-22 13:50:57 +0000
+2015-10-22 13:50:57.954 - INFO - #7538 - Processing by V1::ContainersController#create as JSON
+2015-10-22 13:50:57.954 - INFO - #7538 -   Parameters: {"container"=>{"game"=>"minecraft"}}
+2015-10-22 13:50:57.989 - DEBUG - #7538 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "HostConfig"=>{"Binds"=>["/mnt/7826da2d-ca96-4500-8bbc-1c0a2643d950:/data"]}, "PortBindings"=>{:"25565/tcp"=>[{:HostPort=>"57876"}]}}
+2015-10-22 13:50:58.007 - DEBUG - #7538 - Container(dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c) has created
+2015-10-22 13:50:58.008 - INFO - #7538 - Completed 200 OK in 54ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+2015-10-22 13:50:58.022 - INFO - #7538 - [0;1;34mStarted POST [0m"/v1/containers/dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c/start" for 127.0.0.1 at 2015-10-22 13:50:58 +0000
+2015-10-22 13:50:58.023 - INFO - #7538 - Processing by V1::ContainersController#start as JSON
+2015-10-22 13:50:58.024 - INFO - #7538 -   Parameters: {"id"=>"dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c"}
+2015-10-22 13:50:58.029 - DEBUG - #7538 - Starting container(dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c)
+2015-10-22 13:51:18.753 - DEBUG - #7538 - Container(dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c) has started
+2015-10-22 13:51:18.758 - INFO - #7538 - Completed 200 OK in 20734ms (Views: 3.9ms | ActiveRecord: 0.0ms)
+2015-10-22 13:51:18.785 - INFO - #7538 - [0;1;34mStarted POST [0m"/v1/containers/dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c/restart" for 127.0.0.1 at 2015-10-22 13:51:18 +0000
+2015-10-22 13:51:18.798 - INFO - #7538 - Processing by V1::ContainersController#restart as JSON
+2015-10-22 13:51:18.801 - INFO - #7538 -   Parameters: {"id"=>"dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c"}
+2015-10-22 13:51:18.811 - DEBUG - #7538 - Restarting container(dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c)
+2015-10-22 13:51:39.667 - DEBUG - #7538 - Container(dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c) has restarted
+2015-10-22 13:51:39.675 - INFO - #7538 - Completed 200 OK in 20873ms (Views: 7.1ms | ActiveRecord: 0.0ms)
+2015-10-22 13:51:39.704 - INFO - #7538 - [0;1;34mStarted GET [0m"/v1/containers/dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c" for 127.0.0.1 at 2015-10-22 13:51:39 +0000
+2015-10-22 13:51:39.707 - INFO - #7538 - Processing by V1::ContainersController#show as JSON
+2015-10-22 13:51:39.712 - INFO - #7538 -   Parameters: {"id"=>"dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c"}
+2015-10-22 13:51:39.726 - INFO - #7538 - Completed 200 OK in 14ms (Views: 5.3ms | ActiveRecord: 0.0ms)
+2015-10-22 13:51:39.736 - INFO - #7538 - [0;1;34mStarted DELETE [0m"/v1/containers/dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c" for 127.0.0.1 at 2015-10-22 13:51:39 +0000
+2015-10-22 13:51:39.737 - INFO - #7538 - Processing by V1::ContainersController#destroy as JSON
+2015-10-22 13:51:39.738 - INFO - #7538 -   Parameters: {"id"=>"dc587dcd8d31ee62c0e22a88b6d8c3b0fcf7f67a8be3a7e0d23be9b4fd9df59c"}
+2015-10-22 13:51:39.752 - INFO - #7538 - Completed 200 OK in 14ms (Views: 3.0ms | ActiveRecord: 0.0ms)

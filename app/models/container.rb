@@ -5,8 +5,16 @@ class Container < Docker::Container
 
   attr_api [:id, :info]
   
+  def self.get_free_port
+    server = TCPServer.new('127.0.0.1', 0)
+    port = server.addr[1]
+    
+    return port.to_s
+  end
+  
   def self.create opts
     Rails.logger.debug "Creating container with params: #{opts.to_s}"
+
     container = super(opts)
     unless ASYNC
       container.wait

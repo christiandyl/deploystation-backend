@@ -27,17 +27,17 @@ describe 'Containers API', :type => :request do
   
   it 'Allows to start container' do
     send :post, start_v1_container_path(@context.container_id)
- 
+
     expect(response.status).to eq(200)
     obj = JSON.parse(response.body)
-    
+
     expect(obj['success']).to be(true)
     expect(obj["result"]["id"]).not_to be_empty
-    
+
     container = Container.get(@context.container_id) rescue nil
     expect(container).not_to be_nil
   end
-  
+
   it 'Allows to restart container' do
     send :post, restart_v1_container_path(@context.container_id)
 
@@ -50,7 +50,7 @@ describe 'Containers API', :type => :request do
     container = Container.get(@context.container_id) rescue nil
     expect(container).not_to be_nil
   end
-  
+
   it 'Allows to show container info' do
     send :get, v1_container_path(@context.container_id)
 

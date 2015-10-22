@@ -64,10 +64,15 @@ class ApplicationController < ActionController::API
   # Render helpers
 
   def render_error(e)
+    Rails.logger.error "Exception caught caused return 500 : #{e.message}"
+    Rails.logger.debug e.backtrace.join("\n")
+    
     render json: {success: false, error: [e.message]}, status: 500
   end
 
   def render_permission_denied e
+    Rails.logger.error "Exception permission denied return 550 : #{e.message}"
+    
     render json: {success: false, error: [e.message]}, status: 550
   end
 
