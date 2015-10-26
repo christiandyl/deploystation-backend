@@ -1,0 +1,417 @@
+2015-10-26 08:59:43.537 - DEBUG - #5532 -   [1m[36mUser Load (0.9ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+2015-10-26 08:59:43.541 - ERROR - #5532 - PG::UndefinedTable: ERROR:  relation "users" does not exist
+2015-10-26 08:59:43.542 - ERROR - #5532 - LINE 1: SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LI...
+2015-10-26 08:59:43.542 - ERROR - #5532 -                                ^
+2015-10-26 08:59:43.542 - ERROR - #5532 - : SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1
+2015-10-26 08:59:55.665 - DEBUG - #5537 -   [1m[36m (4.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+2015-10-26 08:59:55.669 - DEBUG - #5537 -   [1m[35m (1.4ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+2015-10-26 08:59:55.672 - DEBUG - #5537 -   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 08:59:55.679 - INFO - #5537 - Migrating to CreateUsers (20151025112105)
+2015-10-26 08:59:55.682 - DEBUG - #5537 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-26 08:59:55.689 - DEBUG - #5537 -   [1m[36m (4.1ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-10-26 08:59:55.715 - DEBUG - #5537 -   [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151025112105"]]
+2015-10-26 08:59:55.716 - DEBUG - #5537 -   [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+2015-10-26 08:59:55.716 - INFO - #5537 - Migrating to CreateConnects (20151025112312)
+2015-10-26 08:59:55.719 - DEBUG - #5537 -   [1m[35m (0.2ms)[0m  BEGIN
+2015-10-26 08:59:55.726 - DEBUG - #5537 -   [1m[36m (4.9ms)[0m  [1mCREATE TABLE "connects" ("id" serial primary key, "user_id" integer, "partner" character varying, "partner_id" character varying, "partner_auth_data" character varying, "partner_expire" timestamp, "partner_data" text, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-10-26 08:59:55.730 - DEBUG - #5537 -   [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151025112312"]]
+2015-10-26 08:59:55.731 - DEBUG - #5537 -   [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+2015-10-26 08:59:55.752 - DEBUG - #5537 -   [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 08:59:55.767 - DEBUG - #5537 -   [1m[36m (3.5ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 08:59:55.767 - DEBUG - #5537 - FROM pg_constraint c
+2015-10-26 08:59:55.767 - DEBUG - #5537 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 08:59:55.767 - DEBUG - #5537 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 08:59:55.767 - DEBUG - #5537 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 08:59:55.767 - DEBUG - #5537 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 08:59:55.767 - DEBUG - #5537 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 08:59:55.767 - DEBUG - #5537 - WHERE c.contype = 'f'
+2015-10-26 08:59:55.767 - DEBUG - #5537 -   AND t1.relname = 'connects'
+2015-10-26 08:59:55.767 - DEBUG - #5537 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 08:59:55.767 - DEBUG - #5537 - ORDER BY c.conname
+2015-10-26 08:59:55.767 - DEBUG - #5537 - [0m
+2015-10-26 08:59:55.771 - DEBUG - #5537 -   [1m[35m (2.2ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 08:59:55.771 - DEBUG - #5537 - FROM pg_constraint c
+2015-10-26 08:59:55.771 - DEBUG - #5537 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 08:59:55.771 - DEBUG - #5537 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 08:59:55.771 - DEBUG - #5537 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 08:59:55.771 - DEBUG - #5537 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 08:59:55.771 - DEBUG - #5537 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 08:59:55.771 - DEBUG - #5537 - WHERE c.contype = 'f'
+2015-10-26 08:59:55.771 - DEBUG - #5537 -   AND t1.relname = 'users'
+2015-10-26 08:59:55.771 - DEBUG - #5537 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 08:59:55.771 - DEBUG - #5537 - ORDER BY c.conname
+2015-10-26 10:11:06.963 - DEBUG - #4253 - Starting container(0c63a7d9d790945a4d4f14b90804246084819f10357da7247351b9613bfb0967)
+2015-10-26 10:11:13.754 - DEBUG - #4253 - Container(0c63a7d9d790945a4d4f14b90804246084819f10357da7247351b9613bfb0967) has started
+2015-10-26 10:11:22.960 - DEBUG - #4253 - Stopping container(0c63a7d9d790945a4d4f14b90804246084819f10357da7247351b9613bfb0967)
+2015-10-26 10:49:29.019 - DEBUG - #5976 -   [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 10:49:29.034 - INFO - #5976 - Migrating to CreateContainers (20151026104630)
+2015-10-26 10:49:29.038 - DEBUG - #5976 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-26 10:49:29.062 - DEBUG - #5976 -   [1m[36m (21.0ms)[0m  [1mCREATE TABLE "containers" ("id" serial primary key, "docker_id" character varying, "user_id" character varying, "status" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-10-26 10:49:29.081 - DEBUG - #5976 -   [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151026104630"]]
+2015-10-26 10:49:29.082 - DEBUG - #5976 -   [1m[36m (0.9ms)[0m  [1mCOMMIT[0m
+2015-10-26 10:49:29.099 - DEBUG - #5976 -   [1m[35mActiveRecord::SchemaMigration Load (0.5ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 10:49:29.126 - DEBUG - #5976 -   [1m[36m (2.3ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 10:49:29.126 - DEBUG - #5976 - FROM pg_constraint c
+2015-10-26 10:49:29.126 - DEBUG - #5976 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 10:49:29.126 - DEBUG - #5976 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 10:49:29.126 - DEBUG - #5976 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 10:49:29.126 - DEBUG - #5976 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 10:49:29.126 - DEBUG - #5976 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 10:49:29.126 - DEBUG - #5976 - WHERE c.contype = 'f'
+2015-10-26 10:49:29.126 - DEBUG - #5976 -   AND t1.relname = 'connects'
+2015-10-26 10:49:29.126 - DEBUG - #5976 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 10:49:29.126 - DEBUG - #5976 - ORDER BY c.conname
+2015-10-26 10:49:29.126 - DEBUG - #5976 - [0m
+2015-10-26 10:49:29.129 - DEBUG - #5976 -   [1m[35m (2.1ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 10:49:29.129 - DEBUG - #5976 - FROM pg_constraint c
+2015-10-26 10:49:29.129 - DEBUG - #5976 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 10:49:29.129 - DEBUG - #5976 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 10:49:29.129 - DEBUG - #5976 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 10:49:29.129 - DEBUG - #5976 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 10:49:29.129 - DEBUG - #5976 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 10:49:29.129 - DEBUG - #5976 - WHERE c.contype = 'f'
+2015-10-26 10:49:29.129 - DEBUG - #5976 -   AND t1.relname = 'containers'
+2015-10-26 10:49:29.129 - DEBUG - #5976 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 10:49:29.129 - DEBUG - #5976 - ORDER BY c.conname
+2015-10-26 10:49:29.132 - DEBUG - #5976 -   [1m[36m (2.5ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 10:49:29.133 - DEBUG - #5976 - FROM pg_constraint c
+2015-10-26 10:49:29.133 - DEBUG - #5976 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 10:49:29.133 - DEBUG - #5976 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 10:49:29.133 - DEBUG - #5976 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 10:49:29.133 - DEBUG - #5976 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 10:49:29.133 - DEBUG - #5976 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 10:49:29.133 - DEBUG - #5976 - WHERE c.contype = 'f'
+2015-10-26 10:49:29.133 - DEBUG - #5976 -   AND t1.relname = 'users'
+2015-10-26 10:49:29.133 - DEBUG - #5976 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 10:49:29.133 - DEBUG - #5976 - ORDER BY c.conname
+2015-10-26 10:49:29.133 - DEBUG - #5976 - [0m
+2015-10-26 10:53:33.171 - DEBUG - #5993 -   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 10:53:33.190 - DEBUG - #5993 -   [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 10:53:33.191 - INFO - #5993 - Migrating to CreateContainers (20151026104630)
+2015-10-26 10:53:33.194 - DEBUG - #5993 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-10-26 10:53:33.221 - DEBUG - #5993 -   [1m[35m (9.7ms)[0m  DROP TABLE "containers"
+2015-10-26 10:53:33.272 - DEBUG - #5993 -   [1m[36mSQL (0.7ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20151026104630"]]
+2015-10-26 10:53:33.274 - DEBUG - #5993 -   [1m[35m (1.7ms)[0m  COMMIT
+2015-10-26 10:53:33.304 - DEBUG - #5993 -   [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 10:53:33.326 - DEBUG - #5993 -   [1m[35m (2.7ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 10:53:33.326 - DEBUG - #5993 - FROM pg_constraint c
+2015-10-26 10:53:33.326 - DEBUG - #5993 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 10:53:33.326 - DEBUG - #5993 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 10:53:33.327 - DEBUG - #5993 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 10:53:33.327 - DEBUG - #5993 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 10:53:33.327 - DEBUG - #5993 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 10:53:33.327 - DEBUG - #5993 - WHERE c.contype = 'f'
+2015-10-26 10:53:33.327 - DEBUG - #5993 -   AND t1.relname = 'connects'
+2015-10-26 10:53:33.327 - DEBUG - #5993 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 10:53:33.327 - DEBUG - #5993 - ORDER BY c.conname
+2015-10-26 10:53:33.333 - DEBUG - #5993 -   [1m[36m (4.7ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 10:53:33.333 - DEBUG - #5993 - FROM pg_constraint c
+2015-10-26 10:53:33.333 - DEBUG - #5993 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 10:53:33.333 - DEBUG - #5993 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 10:53:33.333 - DEBUG - #5993 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 10:53:33.333 - DEBUG - #5993 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 10:53:33.333 - DEBUG - #5993 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 10:53:33.333 - DEBUG - #5993 - WHERE c.contype = 'f'
+2015-10-26 10:53:33.333 - DEBUG - #5993 -   AND t1.relname = 'users'
+2015-10-26 10:53:33.333 - DEBUG - #5993 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 10:53:33.333 - DEBUG - #5993 - ORDER BY c.conname
+2015-10-26 10:53:33.333 - DEBUG - #5993 - [0m
+2015-10-26 10:53:47.531 - DEBUG - #5997 -   [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 10:53:47.541 - INFO - #5997 - Migrating to CreateContainers (20151026104630)
+2015-10-26 10:53:47.544 - DEBUG - #5997 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-26 10:53:47.553 - DEBUG - #5997 -   [1m[36m (5.7ms)[0m  [1mCREATE TABLE "containers" ("id" serial primary key, "docker_id" character varying, "user_id" character varying, "type" character varying, "status" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-10-26 10:53:47.569 - DEBUG - #5997 -   [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151026104630"]]
+2015-10-26 10:53:47.570 - DEBUG - #5997 -   [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+2015-10-26 10:53:47.586 - DEBUG - #5997 -   [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 10:53:47.608 - DEBUG - #5997 -   [1m[36m (3.9ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 10:53:47.608 - DEBUG - #5997 - FROM pg_constraint c
+2015-10-26 10:53:47.609 - DEBUG - #5997 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 10:53:47.609 - DEBUG - #5997 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 10:53:47.609 - DEBUG - #5997 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 10:53:47.609 - DEBUG - #5997 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 10:53:47.609 - DEBUG - #5997 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 10:53:47.610 - DEBUG - #5997 - WHERE c.contype = 'f'
+2015-10-26 10:53:47.610 - DEBUG - #5997 -   AND t1.relname = 'connects'
+2015-10-26 10:53:47.610 - DEBUG - #5997 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 10:53:47.610 - DEBUG - #5997 - ORDER BY c.conname
+2015-10-26 10:53:47.610 - DEBUG - #5997 - [0m
+2015-10-26 10:53:47.613 - DEBUG - #5997 -   [1m[35m (2.6ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 10:53:47.613 - DEBUG - #5997 - FROM pg_constraint c
+2015-10-26 10:53:47.613 - DEBUG - #5997 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 10:53:47.613 - DEBUG - #5997 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 10:53:47.613 - DEBUG - #5997 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 10:53:47.613 - DEBUG - #5997 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 10:53:47.613 - DEBUG - #5997 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 10:53:47.613 - DEBUG - #5997 - WHERE c.contype = 'f'
+2015-10-26 10:53:47.613 - DEBUG - #5997 -   AND t1.relname = 'containers'
+2015-10-26 10:53:47.613 - DEBUG - #5997 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 10:53:47.613 - DEBUG - #5997 - ORDER BY c.conname
+2015-10-26 10:53:47.618 - DEBUG - #5997 -   [1m[36m (2.9ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 10:53:47.618 - DEBUG - #5997 - FROM pg_constraint c
+2015-10-26 10:53:47.618 - DEBUG - #5997 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 10:53:47.619 - DEBUG - #5997 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 10:53:47.619 - DEBUG - #5997 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 10:53:47.619 - DEBUG - #5997 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 10:53:47.619 - DEBUG - #5997 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 10:53:47.619 - DEBUG - #5997 - WHERE c.contype = 'f'
+2015-10-26 10:53:47.619 - DEBUG - #5997 -   AND t1.relname = 'users'
+2015-10-26 10:53:47.619 - DEBUG - #5997 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 10:53:47.619 - DEBUG - #5997 - ORDER BY c.conname
+2015-10-26 10:53:47.619 - DEBUG - #5997 - [0m
+2015-10-26 11:19:42.059 - DEBUG - #6276 -   [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 11:19:42.094 - DEBUG - #6276 -   [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 11:19:42.114 - DEBUG - #6276 -   [1m[36m (2.8ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:19:42.114 - DEBUG - #6276 - FROM pg_constraint c
+2015-10-26 11:19:42.114 - DEBUG - #6276 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:19:42.114 - DEBUG - #6276 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:19:42.114 - DEBUG - #6276 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:19:42.114 - DEBUG - #6276 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:19:42.114 - DEBUG - #6276 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:19:42.114 - DEBUG - #6276 - WHERE c.contype = 'f'
+2015-10-26 11:19:42.114 - DEBUG - #6276 -   AND t1.relname = 'connects'
+2015-10-26 11:19:42.114 - DEBUG - #6276 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:19:42.114 - DEBUG - #6276 - ORDER BY c.conname
+2015-10-26 11:19:42.114 - DEBUG - #6276 - [0m
+2015-10-26 11:19:42.117 - DEBUG - #6276 -   [1m[35m (2.2ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:19:42.117 - DEBUG - #6276 - FROM pg_constraint c
+2015-10-26 11:19:42.117 - DEBUG - #6276 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:19:42.117 - DEBUG - #6276 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:19:42.117 - DEBUG - #6276 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:19:42.117 - DEBUG - #6276 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:19:42.117 - DEBUG - #6276 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:19:42.117 - DEBUG - #6276 - WHERE c.contype = 'f'
+2015-10-26 11:19:42.117 - DEBUG - #6276 -   AND t1.relname = 'containers'
+2015-10-26 11:19:42.117 - DEBUG - #6276 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:19:42.117 - DEBUG - #6276 - ORDER BY c.conname
+2015-10-26 11:19:42.120 - DEBUG - #6276 -   [1m[36m (1.7ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:19:42.120 - DEBUG - #6276 - FROM pg_constraint c
+2015-10-26 11:19:42.120 - DEBUG - #6276 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:19:42.120 - DEBUG - #6276 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:19:42.120 - DEBUG - #6276 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:19:42.120 - DEBUG - #6276 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:19:42.120 - DEBUG - #6276 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:19:42.120 - DEBUG - #6276 - WHERE c.contype = 'f'
+2015-10-26 11:19:42.120 - DEBUG - #6276 -   AND t1.relname = 'users'
+2015-10-26 11:19:42.120 - DEBUG - #6276 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:19:42.120 - DEBUG - #6276 - ORDER BY c.conname
+2015-10-26 11:19:42.120 - DEBUG - #6276 - [0m
+2015-10-26 11:19:59.262 - DEBUG - #6282 -   [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 11:19:59.281 - DEBUG - #6282 -   [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 11:19:59.281 - INFO - #6282 - Migrating to CreateContainers (20151026104630)
+2015-10-26 11:19:59.285 - DEBUG - #6282 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-10-26 11:19:59.295 - DEBUG - #6282 -   [1m[35m (1.3ms)[0m  DROP TABLE "containers"
+2015-10-26 11:19:59.316 - DEBUG - #6282 -   [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20151026104630"]]
+2015-10-26 11:19:59.317 - DEBUG - #6282 -   [1m[35m (1.2ms)[0m  COMMIT
+2015-10-26 11:19:59.337 - DEBUG - #6282 -   [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 11:19:59.354 - DEBUG - #6282 -   [1m[35m (2.8ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:19:59.354 - DEBUG - #6282 - FROM pg_constraint c
+2015-10-26 11:19:59.354 - DEBUG - #6282 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:19:59.354 - DEBUG - #6282 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:19:59.354 - DEBUG - #6282 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:19:59.354 - DEBUG - #6282 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:19:59.354 - DEBUG - #6282 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:19:59.354 - DEBUG - #6282 - WHERE c.contype = 'f'
+2015-10-26 11:19:59.354 - DEBUG - #6282 -   AND t1.relname = 'connects'
+2015-10-26 11:19:59.354 - DEBUG - #6282 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:19:59.354 - DEBUG - #6282 - ORDER BY c.conname
+2015-10-26 11:19:59.358 - DEBUG - #6282 -   [1m[36m (2.3ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:19:59.358 - DEBUG - #6282 - FROM pg_constraint c
+2015-10-26 11:19:59.358 - DEBUG - #6282 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:19:59.358 - DEBUG - #6282 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:19:59.358 - DEBUG - #6282 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:19:59.358 - DEBUG - #6282 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:19:59.358 - DEBUG - #6282 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:19:59.358 - DEBUG - #6282 - WHERE c.contype = 'f'
+2015-10-26 11:19:59.358 - DEBUG - #6282 -   AND t1.relname = 'users'
+2015-10-26 11:19:59.358 - DEBUG - #6282 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:19:59.358 - DEBUG - #6282 - ORDER BY c.conname
+2015-10-26 11:19:59.358 - DEBUG - #6282 - [0m
+2015-10-26 11:20:05.477 - DEBUG - #6285 -   [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 11:20:05.494 - INFO - #6285 - Migrating to CreateContainers (20151026104630)
+2015-10-26 11:20:05.501 - DEBUG - #6285 -   [1m[35m (0.2ms)[0m  BEGIN
+2015-10-26 11:20:05.512 - DEBUG - #6285 -   [1m[36m (6.6ms)[0m  [1mCREATE TABLE "containers" ("id" serial primary key, "docker_id" character varying, "user_id" character varying, "type" character varying, "host" character varying, "status" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-10-26 11:20:05.544 - DEBUG - #6285 -   [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151026104630"]]
+2015-10-26 11:20:05.545 - DEBUG - #6285 -   [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+2015-10-26 11:20:05.565 - DEBUG - #6285 -   [1m[35mActiveRecord::SchemaMigration Load (0.4ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 11:20:05.592 - DEBUG - #6285 -   [1m[36m (3.8ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:20:05.592 - DEBUG - #6285 - FROM pg_constraint c
+2015-10-26 11:20:05.592 - DEBUG - #6285 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:20:05.592 - DEBUG - #6285 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:20:05.592 - DEBUG - #6285 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:20:05.592 - DEBUG - #6285 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:20:05.593 - DEBUG - #6285 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:20:05.594 - DEBUG - #6285 - WHERE c.contype = 'f'
+2015-10-26 11:20:05.594 - DEBUG - #6285 -   AND t1.relname = 'connects'
+2015-10-26 11:20:05.594 - DEBUG - #6285 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:20:05.594 - DEBUG - #6285 - ORDER BY c.conname
+2015-10-26 11:20:05.594 - DEBUG - #6285 - [0m
+2015-10-26 11:20:05.598 - DEBUG - #6285 -   [1m[35m (3.8ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:20:05.598 - DEBUG - #6285 - FROM pg_constraint c
+2015-10-26 11:20:05.598 - DEBUG - #6285 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:20:05.598 - DEBUG - #6285 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:20:05.598 - DEBUG - #6285 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:20:05.598 - DEBUG - #6285 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:20:05.598 - DEBUG - #6285 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:20:05.598 - DEBUG - #6285 - WHERE c.contype = 'f'
+2015-10-26 11:20:05.598 - DEBUG - #6285 -   AND t1.relname = 'containers'
+2015-10-26 11:20:05.598 - DEBUG - #6285 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:20:05.598 - DEBUG - #6285 - ORDER BY c.conname
+2015-10-26 11:20:05.602 - DEBUG - #6285 -   [1m[36m (3.2ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:20:05.603 - DEBUG - #6285 - FROM pg_constraint c
+2015-10-26 11:20:05.603 - DEBUG - #6285 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:20:05.603 - DEBUG - #6285 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:20:05.603 - DEBUG - #6285 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:20:05.603 - DEBUG - #6285 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:20:05.603 - DEBUG - #6285 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:20:05.603 - DEBUG - #6285 - WHERE c.contype = 'f'
+2015-10-26 11:20:05.603 - DEBUG - #6285 -   AND t1.relname = 'users'
+2015-10-26 11:20:05.603 - DEBUG - #6285 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:20:05.603 - DEBUG - #6285 - ORDER BY c.conname
+2015-10-26 11:20:05.603 - DEBUG - #6285 - [0m
+2015-10-26 11:33:16.322 - DEBUG - #6517 -   [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 11:33:16.336 - DEBUG - #6517 -   [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 11:33:16.337 - INFO - #6517 - Migrating to CreateContainers (20151026104630)
+2015-10-26 11:33:16.340 - DEBUG - #6517 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-10-26 11:33:16.351 - DEBUG - #6517 -   [1m[35m (1.2ms)[0m  DROP TABLE "containers"
+2015-10-26 11:33:16.370 - DEBUG - #6517 -   [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20151026104630"]]
+2015-10-26 11:33:16.372 - DEBUG - #6517 -   [1m[35m (1.0ms)[0m  COMMIT
+2015-10-26 11:33:16.389 - DEBUG - #6517 -   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 11:33:16.414 - DEBUG - #6517 -   [1m[35m (3.0ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:33:16.414 - DEBUG - #6517 - FROM pg_constraint c
+2015-10-26 11:33:16.414 - DEBUG - #6517 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:33:16.414 - DEBUG - #6517 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:33:16.414 - DEBUG - #6517 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:33:16.414 - DEBUG - #6517 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:33:16.414 - DEBUG - #6517 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:33:16.414 - DEBUG - #6517 - WHERE c.contype = 'f'
+2015-10-26 11:33:16.414 - DEBUG - #6517 -   AND t1.relname = 'connects'
+2015-10-26 11:33:16.414 - DEBUG - #6517 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:33:16.414 - DEBUG - #6517 - ORDER BY c.conname
+2015-10-26 11:33:16.417 - DEBUG - #6517 -   [1m[36m (2.8ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:33:16.417 - DEBUG - #6517 - FROM pg_constraint c
+2015-10-26 11:33:16.417 - DEBUG - #6517 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:33:16.418 - DEBUG - #6517 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:33:16.418 - DEBUG - #6517 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:33:16.418 - DEBUG - #6517 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:33:16.418 - DEBUG - #6517 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:33:16.418 - DEBUG - #6517 - WHERE c.contype = 'f'
+2015-10-26 11:33:16.418 - DEBUG - #6517 -   AND t1.relname = 'users'
+2015-10-26 11:33:16.418 - DEBUG - #6517 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:33:16.418 - DEBUG - #6517 - ORDER BY c.conname
+2015-10-26 11:33:16.418 - DEBUG - #6517 - [0m
+2015-10-26 11:33:22.536 - DEBUG - #6520 -   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 11:33:22.547 - INFO - #6520 - Migrating to CreateContainers (20151026104630)
+2015-10-26 11:33:22.551 - DEBUG - #6520 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-26 11:33:22.558 - DEBUG - #6520 -   [1m[36m (4.7ms)[0m  [1mCREATE TABLE "containers" ("id" serial primary key, "docker_id" character varying, "user_id" character varying, "app" character varying, "host" character varying, "status" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-10-26 11:33:22.577 - DEBUG - #6520 -   [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151026104630"]]
+2015-10-26 11:33:22.579 - DEBUG - #6520 -   [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+2015-10-26 11:33:22.597 - DEBUG - #6520 -   [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 11:33:22.620 - DEBUG - #6520 -   [1m[36m (2.4ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:33:22.620 - DEBUG - #6520 - FROM pg_constraint c
+2015-10-26 11:33:22.620 - DEBUG - #6520 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:33:22.620 - DEBUG - #6520 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:33:22.620 - DEBUG - #6520 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:33:22.620 - DEBUG - #6520 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:33:22.620 - DEBUG - #6520 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:33:22.620 - DEBUG - #6520 - WHERE c.contype = 'f'
+2015-10-26 11:33:22.620 - DEBUG - #6520 -   AND t1.relname = 'connects'
+2015-10-26 11:33:22.620 - DEBUG - #6520 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:33:22.620 - DEBUG - #6520 - ORDER BY c.conname
+2015-10-26 11:33:22.620 - DEBUG - #6520 - [0m
+2015-10-26 11:33:22.623 - DEBUG - #6520 -   [1m[35m (1.9ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:33:22.623 - DEBUG - #6520 - FROM pg_constraint c
+2015-10-26 11:33:22.623 - DEBUG - #6520 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:33:22.623 - DEBUG - #6520 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:33:22.623 - DEBUG - #6520 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:33:22.623 - DEBUG - #6520 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:33:22.623 - DEBUG - #6520 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:33:22.623 - DEBUG - #6520 - WHERE c.contype = 'f'
+2015-10-26 11:33:22.623 - DEBUG - #6520 -   AND t1.relname = 'containers'
+2015-10-26 11:33:22.623 - DEBUG - #6520 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:33:22.623 - DEBUG - #6520 - ORDER BY c.conname
+2015-10-26 11:33:22.626 - DEBUG - #6520 -   [1m[36m (2.1ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:33:22.626 - DEBUG - #6520 - FROM pg_constraint c
+2015-10-26 11:33:22.626 - DEBUG - #6520 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:33:22.626 - DEBUG - #6520 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:33:22.626 - DEBUG - #6520 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:33:22.626 - DEBUG - #6520 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:33:22.626 - DEBUG - #6520 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:33:22.626 - DEBUG - #6520 - WHERE c.contype = 'f'
+2015-10-26 11:33:22.626 - DEBUG - #6520 -   AND t1.relname = 'users'
+2015-10-26 11:33:22.626 - DEBUG - #6520 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:33:22.626 - DEBUG - #6520 - ORDER BY c.conname
+2015-10-26 11:33:22.626 - DEBUG - #6520 - [0m
+2015-10-26 11:38:15.780 - DEBUG - #6558 -   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 11:38:15.795 - DEBUG - #6558 -   [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 11:38:15.795 - INFO - #6558 - Migrating to CreateContainers (20151026104630)
+2015-10-26 11:38:15.799 - DEBUG - #6558 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-10-26 11:38:15.810 - DEBUG - #6558 -   [1m[35m (1.5ms)[0m  DROP TABLE "containers"
+2015-10-26 11:38:15.830 - DEBUG - #6558 -   [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20151026104630"]]
+2015-10-26 11:38:15.832 - DEBUG - #6558 -   [1m[35m (1.1ms)[0m  COMMIT
+2015-10-26 11:38:15.852 - DEBUG - #6558 -   [1m[36mActiveRecord::SchemaMigration Load (1.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 11:38:15.867 - DEBUG - #6558 -   [1m[35m (2.1ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:38:15.867 - DEBUG - #6558 - FROM pg_constraint c
+2015-10-26 11:38:15.867 - DEBUG - #6558 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:38:15.867 - DEBUG - #6558 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:38:15.867 - DEBUG - #6558 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:38:15.867 - DEBUG - #6558 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:38:15.867 - DEBUG - #6558 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:38:15.867 - DEBUG - #6558 - WHERE c.contype = 'f'
+2015-10-26 11:38:15.867 - DEBUG - #6558 -   AND t1.relname = 'connects'
+2015-10-26 11:38:15.867 - DEBUG - #6558 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:38:15.867 - DEBUG - #6558 - ORDER BY c.conname
+2015-10-26 11:38:15.870 - DEBUG - #6558 -   [1m[36m (1.8ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:38:15.870 - DEBUG - #6558 - FROM pg_constraint c
+2015-10-26 11:38:15.870 - DEBUG - #6558 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:38:15.870 - DEBUG - #6558 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:38:15.870 - DEBUG - #6558 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:38:15.870 - DEBUG - #6558 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:38:15.870 - DEBUG - #6558 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:38:15.870 - DEBUG - #6558 - WHERE c.contype = 'f'
+2015-10-26 11:38:15.870 - DEBUG - #6558 -   AND t1.relname = 'users'
+2015-10-26 11:38:15.870 - DEBUG - #6558 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:38:15.870 - DEBUG - #6558 - ORDER BY c.conname
+2015-10-26 11:38:15.870 - DEBUG - #6558 - [0m
+2015-10-26 11:38:20.549 - DEBUG - #6561 -   [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 11:38:20.562 - INFO - #6561 - Migrating to CreateContainers (20151026104630)
+2015-10-26 11:38:20.565 - DEBUG - #6561 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-26 11:38:20.573 - DEBUG - #6561 -   [1m[36m (4.7ms)[0m  [1mCREATE TABLE "containers" ("id" serial primary key, "docker_id" character varying, "user_id" character varying, "image" character varying, "host" character varying, "status" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-10-26 11:38:20.590 - DEBUG - #6561 -   [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151026104630"]]
+2015-10-26 11:38:20.592 - DEBUG - #6561 -   [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+2015-10-26 11:38:20.610 - DEBUG - #6561 -   [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 11:38:20.642 - DEBUG - #6561 -   [1m[36m (3.1ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:38:20.642 - DEBUG - #6561 - FROM pg_constraint c
+2015-10-26 11:38:20.642 - DEBUG - #6561 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:38:20.642 - DEBUG - #6561 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:38:20.642 - DEBUG - #6561 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:38:20.642 - DEBUG - #6561 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:38:20.642 - DEBUG - #6561 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:38:20.642 - DEBUG - #6561 - WHERE c.contype = 'f'
+2015-10-26 11:38:20.642 - DEBUG - #6561 -   AND t1.relname = 'connects'
+2015-10-26 11:38:20.642 - DEBUG - #6561 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:38:20.642 - DEBUG - #6561 - ORDER BY c.conname
+2015-10-26 11:38:20.642 - DEBUG - #6561 - [0m
+2015-10-26 11:38:20.645 - DEBUG - #6561 -   [1m[35m (2.3ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:38:20.645 - DEBUG - #6561 - FROM pg_constraint c
+2015-10-26 11:38:20.645 - DEBUG - #6561 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:38:20.645 - DEBUG - #6561 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:38:20.646 - DEBUG - #6561 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:38:20.646 - DEBUG - #6561 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:38:20.646 - DEBUG - #6561 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:38:20.646 - DEBUG - #6561 - WHERE c.contype = 'f'
+2015-10-26 11:38:20.646 - DEBUG - #6561 -   AND t1.relname = 'containers'
+2015-10-26 11:38:20.646 - DEBUG - #6561 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:38:20.646 - DEBUG - #6561 - ORDER BY c.conname
+2015-10-26 11:38:20.650 - DEBUG - #6561 -   [1m[36m (3.4ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 11:38:20.650 - DEBUG - #6561 - FROM pg_constraint c
+2015-10-26 11:38:20.650 - DEBUG - #6561 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 11:38:20.650 - DEBUG - #6561 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 11:38:20.650 - DEBUG - #6561 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 11:38:20.650 - DEBUG - #6561 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 11:38:20.650 - DEBUG - #6561 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 11:38:20.650 - DEBUG - #6561 - WHERE c.contype = 'f'
+2015-10-26 11:38:20.650 - DEBUG - #6561 -   AND t1.relname = 'users'
+2015-10-26 11:38:20.650 - DEBUG - #6561 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 11:38:20.650 - DEBUG - #6561 - ORDER BY c.conname
+2015-10-26 11:38:20.650 - DEBUG - #6561 - [0m
+2015-10-26 12:22:26.679 - DEBUG - #7834 -   [1m[36mApiDeploy::Container Load (1.8ms)[0m  [1mSELECT  "containers".* FROM "containers"  ORDER BY "containers"."id" ASC LIMIT 1[0m

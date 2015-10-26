@@ -5,6 +5,7 @@ Settings = OpenStruct.new(
   ),
   :token_encoding => OpenStruct.new(
     :algorithm      => ENV['TOKEN_ALGORITHM']      || 'HS512',
+    :encryption_key => ENV['TOKEN_ENCRYPTION_KEY'] || 'w421g4uk',
     :decryption_key => ENV['TOKEN_DECRYPTION_KEY'] || 'w421g4uk'
   )
 )

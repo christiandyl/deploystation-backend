@@ -1,12 +1,15 @@
 class ApplicationController < ActionController::API
-  
-  before_filter :check_auth_token, :check_connection
+  include AbstractController::Translation
+
+  before_filter :check_auth_token, :check_app_key
 
   rescue_from Exception, :with => :render_error
   rescue_from StandardError, :with => :render_error
   rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
   rescue_from ActionController::RoutingError, :with => :render_not_found
   rescue_from PermissionDenied, :with => :render_permission_denied
+
+  # Routes handlers
 
   def root
     render json: {}
@@ -22,14 +25,22 @@ class ApplicationController < ActionController::API
 
   def check_auth_token
     provided_token = params[:auth_token] || request.headers['X-Auth-Token'] || nil
-    @token = Token.new provided_token
-    @token.decode_token unless provided_token.nil?
-    
-    raise PermissionDenied unless @token.valid?
+    token = Token.new provided_token
+    token.decode_token unless provided_token.nil?
+
+    @current_user = token.find_user
   end
 
-  def check_connection
-    raise PermissionDenied unless Settings.general.core_ip == request.remote_ip
+  def current_user
+    @current_user || nil
+  end
+
+  def check_app_key
+    @app_client = "Test APP"
+  end
+
+  def ensure_logged_in
+    @current_user || render_unauthorized
   end
 
   # Response helpers
@@ -71,8 +82,6 @@ class ApplicationController < ActionController::API
   end
 
   def render_permission_denied e
-    Rails.logger.error "Exception permission denied return 550 : #{e.message}"
-    
     render json: {success: false, error: [e.message]}, status: 550
   end
 
@@ -84,6 +93,29 @@ class ApplicationController < ActionController::API
   
   def pagination_params
     { :page => params[:page] || 1, :per_page => params[:per_page] || nil }
+  end
+  
+  # Generates json data for render
+  # ==== Attributes
+  # * +name+ - Param name (String)
+  # * +opts+ - Additional opts (Hash)
+  #
+  # ==== Opts
+  # * +:permit+ - permitted attributes, default nil (Array)
+  def require_param name, opts=nil
+    permit = nil
+
+    if opts.is_a? Hash
+      if opts[:permit]
+        raise ArgumentError, 'Permit should be Array' unless opts[:permit].is_a? Array
+        permit = opts[:permit].map { |p| p.to_s }
+      end
+    end
+
+    attrs = params.require(name)
+    attrs = JSON.parse(attrs) unless attrs.is_a? Hash
+
+    return (permit ? attrs.slice(*permit) : attrs).with_indifferent_access
   end
 
 end
