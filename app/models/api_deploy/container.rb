@@ -15,6 +15,8 @@ module ApiDeploy
     validates :image, :presence => true
     validates :user_id, :presence => true
     validates :docker_id, :presence => true
+    validates :host, :presence => true
+    validates :port, :presence => true
   
     class << self
       def class_for game
@@ -24,21 +26,29 @@ module ApiDeploy
         return cname
       end
       
-      def create user, opts
+      def create user, host, opts
         Rails.logger.debug "Creating container with params: #{opts.to_s}"
 
         image = opts["Image"] or raise ArgumentError.new("Can't create container, image doesn't exists")
+        port  = opts["PortBindings"].first[1].first["HostPort"] or raise ArgumentError.new("HostPort is absent")
         
+        Docker.url = "tcp://#{host}:5422" unless host == 'localhost'
+
         container_docker = Docker::Container.create(opts)
 
         container = Container.new.tap do |c|
           c.user_id   = user.id
           c.docker_id = container_docker.id
           c.image     = image
-          c.host      = 'localhost'
+          c.host      = host
+          c.port      = port
         end
 
         container.save
+        
+        # ap container.attributes
+        
+        Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.to_s}"
       
         unless ASYNC
           container_docker.wait
@@ -47,11 +57,21 @@ module ApiDeploy
     
         return container
       end
+      
+      def available_port
+        exists = true
+        while exists
+          port = Helper::available_port
+          exists = self.exists? port: port
+        end
+      
+        return port
+      end
     end
   
-    def start
+    def start opts={}
       Rails.logger.debug "Starting container(#{id})"
-      docker_container.start
+      docker_container.start(opts)
       Rails.logger.debug "Container(#{id}) has started"
     end
   

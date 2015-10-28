@@ -415,3 +415,83 @@
 2015-10-26 11:38:20.650 - DEBUG - #6561 - ORDER BY c.conname
 2015-10-26 11:38:20.650 - DEBUG - #6561 - [0m
 2015-10-26 12:22:26.679 - DEBUG - #7834 -   [1m[36mApiDeploy::Container Load (1.8ms)[0m  [1mSELECT  "containers".* FROM "containers"  ORDER BY "containers"."id" ASC LIMIT 1[0m
+2015-10-26 19:48:25.867 - DEBUG - #3602 -   [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 19:48:25.886 - DEBUG - #3602 -   [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 19:48:25.887 - INFO - #3602 - Migrating to CreateContainers (20151026104630)
+2015-10-26 19:48:25.891 - DEBUG - #3602 -   [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+2015-10-26 19:48:25.909 - DEBUG - #3602 -   [1m[35m (8.5ms)[0m  DROP TABLE "containers"
+2015-10-26 19:48:25.931 - DEBUG - #3602 -   [1m[36mSQL (0.6ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20151026104630"]]
+2015-10-26 19:48:25.933 - DEBUG - #3602 -   [1m[35m (1.1ms)[0m  COMMIT
+2015-10-26 19:48:25.949 - DEBUG - #3602 -   [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 19:48:25.972 - DEBUG - #3602 -   [1m[35m (2.0ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 19:48:25.972 - DEBUG - #3602 - FROM pg_constraint c
+2015-10-26 19:48:25.972 - DEBUG - #3602 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 19:48:25.972 - DEBUG - #3602 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 19:48:25.972 - DEBUG - #3602 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 19:48:25.972 - DEBUG - #3602 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 19:48:25.972 - DEBUG - #3602 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 19:48:25.972 - DEBUG - #3602 - WHERE c.contype = 'f'
+2015-10-26 19:48:25.972 - DEBUG - #3602 -   AND t1.relname = 'connects'
+2015-10-26 19:48:25.972 - DEBUG - #3602 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 19:48:25.972 - DEBUG - #3602 - ORDER BY c.conname
+2015-10-26 19:48:25.975 - DEBUG - #3602 -   [1m[36m (1.8ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 19:48:25.975 - DEBUG - #3602 - FROM pg_constraint c
+2015-10-26 19:48:25.975 - DEBUG - #3602 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 19:48:25.975 - DEBUG - #3602 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 19:48:25.975 - DEBUG - #3602 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 19:48:25.975 - DEBUG - #3602 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 19:48:25.975 - DEBUG - #3602 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 19:48:25.975 - DEBUG - #3602 - WHERE c.contype = 'f'
+2015-10-26 19:48:25.975 - DEBUG - #3602 -   AND t1.relname = 'users'
+2015-10-26 19:48:25.975 - DEBUG - #3602 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 19:48:25.975 - DEBUG - #3602 - ORDER BY c.conname
+2015-10-26 19:48:25.975 - DEBUG - #3602 - [0m
+2015-10-26 19:48:31.956 - DEBUG - #3605 -   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-26 19:48:31.968 - INFO - #3605 - Migrating to CreateContainers (20151026104630)
+2015-10-26 19:48:31.970 - DEBUG - #3605 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-26 19:48:31.994 - DEBUG - #3605 -   [1m[36m (20.0ms)[0m  [1mCREATE TABLE "containers" ("id" serial primary key, "docker_id" character varying, "user_id" character varying, "image" character varying, "host" character varying, "port" character varying, "status" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-10-26 19:48:32.016 - DEBUG - #3605 -   [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151026104630"]]
+2015-10-26 19:48:32.018 - DEBUG - #3605 -   [1m[36m (0.9ms)[0m  [1mCOMMIT[0m
+2015-10-26 19:48:32.038 - DEBUG - #3605 -   [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-10-26 19:48:32.057 - DEBUG - #3605 -   [1m[36m (3.7ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 19:48:32.057 - DEBUG - #3605 - FROM pg_constraint c
+2015-10-26 19:48:32.057 - DEBUG - #3605 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 19:48:32.057 - DEBUG - #3605 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 19:48:32.057 - DEBUG - #3605 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 19:48:32.057 - DEBUG - #3605 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 19:48:32.057 - DEBUG - #3605 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 19:48:32.057 - DEBUG - #3605 - WHERE c.contype = 'f'
+2015-10-26 19:48:32.057 - DEBUG - #3605 -   AND t1.relname = 'connects'
+2015-10-26 19:48:32.057 - DEBUG - #3605 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 19:48:32.057 - DEBUG - #3605 - ORDER BY c.conname
+2015-10-26 19:48:32.057 - DEBUG - #3605 - [0m
+2015-10-26 19:48:32.060 - DEBUG - #3605 -   [1m[35m (2.1ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 19:48:32.060 - DEBUG - #3605 - FROM pg_constraint c
+2015-10-26 19:48:32.060 - DEBUG - #3605 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 19:48:32.060 - DEBUG - #3605 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 19:48:32.060 - DEBUG - #3605 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 19:48:32.060 - DEBUG - #3605 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 19:48:32.060 - DEBUG - #3605 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 19:48:32.060 - DEBUG - #3605 - WHERE c.contype = 'f'
+2015-10-26 19:48:32.060 - DEBUG - #3605 -   AND t1.relname = 'containers'
+2015-10-26 19:48:32.060 - DEBUG - #3605 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 19:48:32.060 - DEBUG - #3605 - ORDER BY c.conname
+2015-10-26 19:48:32.063 - DEBUG - #3605 -   [1m[36m (2.3ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-10-26 19:48:32.063 - DEBUG - #3605 - FROM pg_constraint c
+2015-10-26 19:48:32.063 - DEBUG - #3605 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-10-26 19:48:32.063 - DEBUG - #3605 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-10-26 19:48:32.063 - DEBUG - #3605 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-10-26 19:48:32.063 - DEBUG - #3605 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-10-26 19:48:32.063 - DEBUG - #3605 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-10-26 19:48:32.063 - DEBUG - #3605 - WHERE c.contype = 'f'
+2015-10-26 19:48:32.063 - DEBUG - #3605 -   AND t1.relname = 'users'
+2015-10-26 19:48:32.063 - DEBUG - #3605 -   AND t3.nspname = ANY (current_schemas(false))
+2015-10-26 19:48:32.063 - DEBUG - #3605 - ORDER BY c.conname
+2015-10-26 19:48:32.064 - DEBUG - #3605 - [0m
+2015-10-28 11:41:57.221 - DEBUG - #11813 -   [1m[36mUser Load (3.4ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+2015-10-28 11:41:57.270 - DEBUG - #11813 -   [1m[35mApiDeploy::ContainerMinecraft Exists (2.0ms)[0m  SELECT  1 AS one FROM "containers" WHERE "containers"."port" = $1 LIMIT 1  [["port", "47850"]]
+2015-10-28 11:41:57.273 - DEBUG - #11813 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "HostConfig"=>{"Binds"=>["/mnt/d45e7496-acdc-407e-8f7c-e6ad4b81cc6b:/data"]}, "ExposedPorts"=>{:"25565/tcp"=>{}}, "PortBindings"=>{"25565/tcp"=>[{"HostIp"=>"127.0.0.1", "HostPort"=>"47850"}]}}
+2015-10-28 11:42:01.523 - DEBUG - #11813 -   [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+2015-10-28 11:46:37.128 - DEBUG - #12139 -   [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+2015-10-28 11:46:37.177 - DEBUG - #12139 -   [1m[35mApiDeploy::ContainerMinecraft Exists (0.4ms)[0m  SELECT  1 AS one FROM "containers" WHERE "containers"."port" = $1 LIMIT 1  [["port", "51998"]]
+2015-10-28 11:46:37.178 - DEBUG - #12139 - Creating container with params: {"Image"=>"overshard/minecraft", "Cmd"=>"/start", "HostConfig"=>{"Binds"=>["/mnt/b066e903-1e6c-42bc-846d-55466d171d4a:/data"]}, "ExposedPorts"=>{:"25565/tcp"=>{}}, "PortBindings"=>{"25565/tcp"=>[{"HostIp"=>"127.0.0.1", "HostPort"=>"51998"}]}}

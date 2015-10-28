@@ -13,7 +13,7 @@ describe 'Containers API', :type => :request do
 
   it 'Allows to create container' do
     params = {
-      container: { game: 'minecraft' }
+      container: { game: 'minecraft', host: 'localhost' }
     }.to_json
 
     send :post, containers_path, :params => params, :token => @context.token
@@ -41,6 +41,7 @@ describe 'Containers API', :type => :request do
 
     container = ApiDeploy::Container.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
+    byebug
   end
 
   it 'Allows to restart container' do

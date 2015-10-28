@@ -3,18 +3,25 @@ module ApiDeploy
   
     REPOSITORY = 'overshard/minecraft'
   
-    def self.create user
+    def self.create user, host
       uuid = SecureRandom.uuid
-      port = Helper.get_free_port
+      name = "minecraft_server_#{uuid}"
       
       docker_opts = {
-        'Image'        => REPOSITORY,
-        'Cmd'          => '/start',
-        "HostConfig"   => { "Binds" => ["/mnt/#{uuid}:/data"] },
-        "PortBindings" => { "25565/tcp": [{ "HostPort": port }] }
+        "Name"         => name,
+        "Image"        => REPOSITORY,
+        "Cmd"          => "/start",
+        # "HostConfig"   => { "Binds" => ["/mnt/#{name}:/data"] },
+        "ExposedPorts" => { "25565/tcp": {} },
+        "PortBindings" => { "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => available_port }] }
       }
       
-      super(user, docker_opts)
+      super(user, host, docker_opts)
+    end
+  
+    def start opts={}
+      opts = { "PortBindings" => { "25565/tcp" => [{ "HostIp" => "", "HostPort" => port }] } }
+      super(opts)
     end
   
     def ban_user user_id
