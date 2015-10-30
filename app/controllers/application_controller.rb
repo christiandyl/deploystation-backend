@@ -75,6 +75,14 @@ class ApplicationController < ActionController::API
   # Render helpers
 
   def render_error(e)
+    session = current_user.nil? ? {} : { id: current_user.id }
+    Airbrake.notify_or_ignore(
+        e,
+        :parameters => params,
+        :cgi_data   => ENV.to_hash,
+        :session    => session
+    )
+    
     Rails.logger.error "Exception caught caused return 500 : #{e.message}"
     Rails.logger.debug e.backtrace.join("\n")
     

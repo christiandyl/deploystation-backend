@@ -30052,3 +30052,380 @@ Completed 200 OK in 12ms (Views: 1.9ms | ActiveRecord: 0.0ms)
 2015-10-29 16:15:28.650 - INFO - #6300 - Completed 200 OK in 55ms (Views: 0.7ms | ActiveRecord: 6.9ms)
 2015-10-29 16:15:28.654 - DEBUG - #6300 -   [1m[35mApiDeploy::Container Load (0.8ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
 2015-10-29 16:15:28.659 - DEBUG - #6300 -   [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+2015-10-30 17:14:02.305 - DEBUG - #4429 -   [1m[36mActiveRecord::SchemaMigration Load (2.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-30 17:14:02.406 - DEBUG - #4429 -   [1m[35m (2.4ms)[0m  ALTER TABLE "connects" DISABLE TRIGGER ALL;ALTER TABLE "games" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "containers" DISABLE TRIGGER ALL;ALTER TABLE "hosts" DISABLE TRIGGER ALL;ALTER TABLE "plans" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+2015-10-30 17:14:02.408 - DEBUG - #4429 -   [1m[36m (1.5ms)[0m  [1m          SELECT schemaname || '.' || tablename
+2015-10-30 17:14:02.408 - DEBUG - #4429 -           FROM pg_tables
+2015-10-30 17:14:02.408 - DEBUG - #4429 -           WHERE 
+2015-10-30 17:14:02.408 - DEBUG - #4429 -             tablename !~ '_prt_' AND 
+2015-10-30 17:14:02.408 - DEBUG - #4429 -             tablename <> 'schema_migrations' AND 
+2015-10-30 17:14:02.408 - DEBUG - #4429 -             schemaname = ANY (current_schemas(false))
+2015-10-30 17:14:02.408 - DEBUG - #4429 - [0m
+2015-10-30 17:14:02.412 - DEBUG - #4429 -   [1m[35m (3.1ms)[0m  select table_name from information_schema.views where table_schema = 'gameservers_test'
+2015-10-30 17:14:02.430 - DEBUG - #4429 -   [1m[36m (17.7ms)[0m  [1mTRUNCATE TABLE "public"."connects", "public"."games", "public"."containers", "public"."hosts", "public"."plans", "public"."users" RESTART IDENTITY CASCADE;[0m
+2015-10-30 17:14:02.432 - DEBUG - #4429 -   [1m[35m (0.5ms)[0m  ALTER TABLE "connects" ENABLE TRIGGER ALL;ALTER TABLE "games" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "containers" ENABLE TRIGGER ALL;ALTER TABLE "hosts" ENABLE TRIGGER ALL;ALTER TABLE "plans" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+2015-10-30 17:14:02.446 - DEBUG - #4429 -   [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "games"[0m
+2015-10-30 17:14:02.454 - DEBUG - #4429 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:14:02.466 - DEBUG - #4429 -   [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "minecraft"], ["created_at", "2015-10-30 17:14:02.459167"], ["updated_at", "2015-10-30 17:14:02.459167"]]
+2015-10-30 17:14:02.467 - DEBUG - #4429 -   [1m[35m (0.4ms)[0m  COMMIT
+2015-10-30 17:14:02.482 - DEBUG - #4429 -   [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "hosts"[0m
+2015-10-30 17:14:02.488 - DEBUG - #4429 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:14:02.490 - DEBUG - #4429 -   [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "hosts" ("name", "ip", "domain", "location", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "localhost"], ["ip", 2130706433], ["domain", "localhost"], ["location", "Localhost"], ["created_at", "2015-10-30 17:14:02.488934"], ["updated_at", "2015-10-30 17:14:02.488934"]]
+2015-10-30 17:14:02.491 - DEBUG - #4429 -   [1m[35m (0.6ms)[0m  COMMIT
+2015-10-30 17:14:02.501 - DEBUG - #4429 -   [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "plans"[0m
+2015-10-30 17:14:02.521 - DEBUG - #4429 -   [1m[35mGame Load (0.3ms)[0m  SELECT  "games".* FROM "games" WHERE "games"."name" = $1 LIMIT 1  [["name", "minecraft"]]
+2015-10-30 17:14:02.523 - DEBUG - #4429 -   [1m[36mHost Load (0.3ms)[0m  [1mSELECT  "hosts".* FROM "hosts" WHERE "hosts"."name" = $1 LIMIT 1[0m  [["name", "localhost"]]
+2015-10-30 17:14:02.538 - DEBUG - #4429 -   [1m[35m (0.2ms)[0m  BEGIN
+2015-10-30 17:14:02.540 - DEBUG - #4429 -   [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "plans" ("name", "max_players", "ram", "storage", "storage_type", "game_id", "host_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "starter"], ["max_players", 2], ["ram", 256], ["storage", 1024], ["storage_type", "ssd"], ["game_id", 1], ["host_id", 1], ["created_at", "2015-10-30 17:14:02.538923"], ["updated_at", "2015-10-30 17:14:02.538923"]]
+2015-10-30 17:14:02.542 - DEBUG - #4429 -   [1m[35m (0.8ms)[0m  COMMIT
+2015-10-30 17:14:02.542 - DEBUG - #4429 -   [1m[36mGame Load (0.2ms)[0m  [1mSELECT  "games".* FROM "games" WHERE "games"."name" = $1 LIMIT 1[0m  [["name", "minecraft"]]
+2015-10-30 17:14:02.543 - DEBUG - #4429 -   [1m[35mHost Load (0.2ms)[0m  SELECT  "hosts".* FROM "hosts" WHERE "hosts"."name" = $1 LIMIT 1  [["name", "localhost"]]
+2015-10-30 17:14:02.544 - DEBUG - #4429 -   [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+2015-10-30 17:14:02.546 - DEBUG - #4429 -   [1m[35mSQL (0.3ms)[0m  INSERT INTO "plans" ("name", "max_players", "ram", "storage", "storage_type", "game_id", "host_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"  [["name", "lite"], ["max_players", 7], ["ram", 384], ["storage", 1024], ["storage_type", "ssd"], ["game_id", 1], ["host_id", 1], ["created_at", "2015-10-30 17:14:02.545079"], ["updated_at", "2015-10-30 17:14:02.545079"]]
+2015-10-30 17:14:02.547 - DEBUG - #4429 -   [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+2015-10-30 17:14:02.550 - DEBUG - #4429 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:14:02.550 - DEBUG - #4429 -   [1m[36m (0.1ms)[0m  [1mCOMMIT[0m
+2015-10-30 17:14:02.551 - DEBUG - #4429 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:14:02.560 - INFO - #4429 - [0;1;34mStarted POST [0m"/v1/users" for 127.0.0.1 at 2015-10-30 17:14:02 +0000
+2015-10-30 17:14:02.576 - INFO - #4429 - Processing by ApiBack::V1::UsersController#create as JSON
+2015-10-30 17:14:02.577 - INFO - #4429 -   Parameters: {"connect_login"=>{"email"=>"test@test.com", "password"=>"[FILTERED]"}}
+2015-10-30 17:14:02.667 - DEBUG - #4429 -   [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+2015-10-30 17:14:02.704 - DEBUG - #4429 -   [1m[35mUser Exists (0.6ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = 'test@test.com' LIMIT 1
+2015-10-30 17:14:02.706 - DEBUG - #4429 -   [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "test@test.com"], ["created_at", "2015-10-30 17:14:02.704535"], ["updated_at", "2015-10-30 17:14:02.704535"]]
+2015-10-30 17:14:02.853 - INFO - #4429 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (3.8ms)
+2015-10-30 17:14:02.943 - INFO - #4429 -   Rendered user_mailer/welcome_email.text.erb (0.5ms)
+2015-10-30 17:14:03.231 - DEBUG - #4429 - UserMailer#welcome_email: processed outbound mail in 484.2ms
+2015-10-30 17:14:03.255 - INFO - #4429 - Sent mail to test@test.com (23.2ms)
+2015-10-30 17:14:03.255 - DEBUG - #4429 - Date: Fri, 30 Oct 2015 17:14:03 +0000
+2015-10-30 17:14:03.255 - DEBUG - #4429 - From: noreply@lifevnt.com
+2015-10-30 17:14:03.255 - DEBUG - #4429 - To: test@test.com
+2015-10-30 17:14:03.255 - DEBUG - #4429 - Message-ID: <5633a55b3c27d_114d11ed97037529@vagrant-ubuntu-trusty-64.mail>
+2015-10-30 17:14:03.255 - DEBUG - #4429 - Subject: Welcome to My Awesome Site
+2015-10-30 17:14:03.255 - DEBUG - #4429 - Mime-Version: 1.0
+2015-10-30 17:14:03.255 - DEBUG - #4429 - Content-Type: multipart/alternative;
+2015-10-30 17:14:03.255 - DEBUG - #4429 -  boundary="--==_mimepart_5633a55b38503_114d11ed970374e";
+2015-10-30 17:14:03.255 - DEBUG - #4429 -  charset=UTF-8
+2015-10-30 17:14:03.255 - DEBUG - #4429 - Content-Transfer-Encoding: 7bit
+2015-10-30 17:14:03.255 - DEBUG - #4429 - 
+2015-10-30 17:14:03.255 - DEBUG - #4429 - 
+2015-10-30 17:14:03.255 - DEBUG - #4429 - ----==_mimepart_5633a55b38503_114d11ed970374e
+2015-10-30 17:14:03.255 - DEBUG - #4429 - Content-Type: text/plain;
+2015-10-30 17:14:03.255 - DEBUG - #4429 -  charset=UTF-8
+2015-10-30 17:14:03.255 - DEBUG - #4429 - Content-Transfer-Encoding: 7bit
+2015-10-30 17:14:03.255 - DEBUG - #4429 - 
+2015-10-30 17:14:03.255 - DEBUG - #4429 - Welcome to example.com,
+2015-10-30 17:14:03.255 - DEBUG - #4429 - ===============================================
+2015-10-30 17:14:03.255 - DEBUG - #4429 - 
+2015-10-30 17:14:03.255 - DEBUG - #4429 - You have successfully signed up to example.com,
+2015-10-30 17:14:03.255 - DEBUG - #4429 - your username is: test@test.com.
+2015-10-30 17:14:03.255 - DEBUG - #4429 - 
+2015-10-30 17:14:03.255 - DEBUG - #4429 - To login to the site, just follow this link:.
+2015-10-30 17:14:03.255 - DEBUG - #4429 - 
+2015-10-30 17:14:03.255 - DEBUG - #4429 - Thanks for joining and have a great day!
+2015-10-30 17:14:03.255 - DEBUG - #4429 - ----==_mimepart_5633a55b38503_114d11ed970374e
+2015-10-30 17:14:03.255 - DEBUG - #4429 - Content-Type: text/html;
+2015-10-30 17:14:03.255 - DEBUG - #4429 -  charset=UTF-8
+2015-10-30 17:14:03.255 - DEBUG - #4429 - Content-Transfer-Encoding: 7bit
+2015-10-30 17:14:03.255 - DEBUG - #4429 - 
+2015-10-30 17:14:03.255 - DEBUG - #4429 - <!DOCTYPE html>
+2015-10-30 17:14:03.255 - DEBUG - #4429 - <html>
+2015-10-30 17:14:03.255 - DEBUG - #4429 - <head>
+2015-10-30 17:14:03.255 - DEBUG - #4429 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-10-30 17:14:03.255 - DEBUG - #4429 - </head>
+2015-10-30 17:14:03.255 - DEBUG - #4429 - <body>
+2015-10-30 17:14:03.255 - DEBUG - #4429 - <h1>Welcome to example.com,</h1>
+2015-10-30 17:14:03.255 - DEBUG - #4429 - <p>
+2015-10-30 17:14:03.255 - DEBUG - #4429 -   You have successfully signed up to example.com,
+2015-10-30 17:14:03.255 - DEBUG - #4429 -   your username is: test@test.com.<br>
+2015-10-30 17:14:03.255 - DEBUG - #4429 - </p>
+2015-10-30 17:14:03.255 - DEBUG - #4429 - <p>
+2015-10-30 17:14:03.255 - DEBUG - #4429 -   To login to the site, just follow this link:.
+2015-10-30 17:14:03.256 - DEBUG - #4429 - </p>
+2015-10-30 17:14:03.256 - DEBUG - #4429 - <p>Thanks for joining and have a great day!</p>
+2015-10-30 17:14:03.256 - DEBUG - #4429 - </body>
+2015-10-30 17:14:03.256 - DEBUG - #4429 - </html>
+2015-10-30 17:14:03.256 - DEBUG - #4429 - ----==_mimepart_5633a55b38503_114d11ed970374e--
+2015-10-30 17:14:03.256 - DEBUG - #4429 -   [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+2015-10-30 17:14:03.257 - DEBUG - #4429 -   [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+2015-10-30 17:14:03.259 - DEBUG - #4429 -   [1m[35mSQL (0.4ms)[0m  INSERT INTO "connects" ("partner", "partner_id", "partner_auth_data", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["partner", "login"], ["partner_id", "test@test.com"], ["partner_auth_data", "7288edd0fc3ffcbe93a0cf06e3568e28521687bc"], ["user_id", 1], ["created_at", "2015-10-30 17:14:03.257794"], ["updated_at", "2015-10-30 17:14:03.257794"]]
+2015-10-30 17:14:03.260 - DEBUG - #4429 -   [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+2015-10-30 17:14:03.277 - INFO - #4429 - Completed 200 OK in 700ms (Views: 0.4ms | ActiveRecord: 4.5ms)
+2015-10-30 17:14:03.290 - DEBUG - #4429 -   [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:14:03.292 - INFO - #4429 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-30 17:14:03 +0000
+2015-10-30 17:14:03.315 - INFO - #4429 - Processing by ApiDeploy::V1::ContainersController#create as JSON
+2015-10-30 17:14:03.315 - INFO - #4429 -   Parameters: {"container"=>{"plan_id"=>1}}
+2015-10-30 17:14:03.316 - DEBUG - #4429 -   [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:14:03.318 - DEBUG - #4429 -   [1m[35mPlan Load (0.2ms)[0m  SELECT  "plans".* FROM "plans" WHERE "plans"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:14:03.330 - DEBUG - #4429 -   [1m[36mGame Load (0.2ms)[0m  [1mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:14:03.362 - DEBUG - #4429 -   [1m[35mApiDeploy::ContainerMinecraft Exists (0.3ms)[0m  SELECT  1 AS one FROM "containers" WHERE "containers"."port" = $1 LIMIT 1  [["port", "36681"]]
+2015-10-30 17:14:03.363 - DEBUG - #4429 - Creating container with params: {"Name"=>"minecraft_server_f3506748-e1a0-4409-8bc7-974725c0ede6", "Image"=>"overshard/minecraft", "Cmd"=>"/start", "ExposedPorts"=>{:"25565/tcp"=>{}}, "PortBindings"=>{"25565/tcp"=>[{"HostIp"=>"127.0.0.1", "HostPort"=>"36681"}]}}
+2015-10-30 17:14:03.370 - DEBUG - #4429 -   [1m[36mHost Load (0.2ms)[0m  [1mSELECT  "hosts".* FROM "hosts" WHERE "hosts"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:14:03.431 - DEBUG - #4429 -   [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+2015-10-30 17:14:03.434 - DEBUG - #4429 -   [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "containers" ("user_id", "docker_id", "plan_id", "host_id", "port", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["user_id", 1], ["docker_id", "a5c25120f43759cfdfff41c443358befc9878b69668f24c7df46a4d6c1cfbab1"], ["plan_id", 1], ["host_id", 1], ["port", "36681"], ["created_at", "2015-10-30 17:14:03.431658"], ["updated_at", "2015-10-30 17:14:03.431658"]]
+2015-10-30 17:14:03.434 - DEBUG - #4429 -   [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+2015-10-30 17:14:03.439 - DEBUG - #4429 - Container(1) record has created, attributes: #<ApiDeploy::Container:0x00000007726f58>
+2015-10-30 17:14:03.442 - DEBUG - #4429 - Container(1) has created
+2015-10-30 17:14:03.446 - INFO - #4429 - Completed 200 OK in 131ms (Views: 1.4ms | ActiveRecord: 4.0ms)
+2015-10-30 17:14:03.448 - DEBUG - #4429 -   [1m[36mApiDeploy::Container Load (0.3ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:14:03.451 - INFO - #4429 - [0;1;34mStarted POST [0m"/v1/containers/1/start" for 127.0.0.1 at 2015-10-30 17:14:03 +0000
+2015-10-30 17:14:03.452 - INFO - #4429 - Processing by ApiDeploy::V1::ContainersController#start as JSON
+2015-10-30 17:14:03.452 - INFO - #4429 -   Parameters: {"id"=>"1"}
+2015-10-30 17:14:03.453 - DEBUG - #4429 -   [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:14:03.454 - DEBUG - #4429 -   [1m[36mApiDeploy::Container Load (0.2ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:14:03.498 - DEBUG - #4429 -   [1m[35mGame Load (0.3ms)[0m  SELECT  "games".* FROM "games" INNER JOIN "plans" ON "games"."id" = "plans"."game_id" WHERE "plans"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:14:03.500 - DEBUG - #4429 -   [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", "1"]]
+2015-10-30 17:14:03.506 - DEBUG - #4429 - Starting container(1)
+2015-10-30 17:14:03.682 - DEBUG - #4429 - Container(1) has started
+2015-10-30 17:14:03.687 - INFO - #4429 - Completed 200 OK in 234ms (Views: 1.2ms | ActiveRecord: 0.8ms)
+2015-10-30 17:14:03.690 - DEBUG - #4429 -   [1m[35mApiDeploy::Container Load (0.6ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:14:16.304 - INFO - #4429 - [0;1;34mStarted POST [0m"/v1/containers/1/restart" for 127.0.0.1 at 2015-10-30 17:14:16 +0000
+2015-10-30 17:14:16.310 - INFO - #4429 - Processing by ApiDeploy::V1::ContainersController#restart as JSON
+2015-10-30 17:14:16.311 - INFO - #4429 -   Parameters: {"id"=>"1"}
+2015-10-30 17:14:16.313 - DEBUG - #4429 -   [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:14:16.316 - DEBUG - #4429 -   [1m[35mApiDeploy::Container Load (0.4ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:14:16.322 - DEBUG - #4429 -   [1m[36mGame Load (0.4ms)[0m  [1mSELECT  "games".* FROM "games" INNER JOIN "plans" ON "games"."id" = "plans"."game_id" WHERE "plans"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:14:16.325 - DEBUG - #4429 -   [1m[35mCACHE (0.1ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", "1"]]
+2015-10-30 17:14:16.326 - DEBUG - #4429 - Restarting container(1)
+2015-10-30 17:14:16.683 - DEBUG - #4429 - Container(1) has restarted
+2015-10-30 17:14:16.706 - INFO - #4429 - Completed 200 OK in 395ms (Views: 16.4ms | ActiveRecord: 1.3ms)
+2015-10-30 17:14:16.736 - DEBUG - #4429 -   [1m[36mApiDeploy::Container Load (7.2ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:14:16.784 - INFO - #4429 - [0;1;34mStarted GET [0m"/v1/containers/1" for 127.0.0.1 at 2015-10-30 17:14:16 +0000
+2015-10-30 17:14:16.794 - INFO - #4429 - Processing by ApiDeploy::V1::ContainersController#show as JSON
+2015-10-30 17:14:16.794 - INFO - #4429 -   Parameters: {"id"=>"1"}
+2015-10-30 17:14:16.797 - DEBUG - #4429 -   [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:14:16.800 - DEBUG - #4429 -   [1m[36mApiDeploy::Container Load (0.5ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:14:16.807 - DEBUG - #4429 -   [1m[35mGame Load (0.8ms)[0m  SELECT  "games".* FROM "games" INNER JOIN "plans" ON "games"."id" = "plans"."game_id" WHERE "plans"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:14:16.817 - DEBUG - #4429 -   [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", "1"]]
+2015-10-30 17:14:16.842 - INFO - #4429 - Completed 200 OK in 47ms (Views: 9.9ms | ActiveRecord: 1.7ms)
+2015-10-30 17:14:16.849 - DEBUG - #4429 -   [1m[35mApiDeploy::Container Load (1.2ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:14:16.862 - INFO - #4429 - [0;1;34mStarted DELETE [0m"/v1/containers/1" for 127.0.0.1 at 2015-10-30 17:14:16 +0000
+2015-10-30 17:14:16.867 - INFO - #4429 - Processing by ApiDeploy::V1::ContainersController#destroy as JSON
+2015-10-30 17:14:16.868 - INFO - #4429 -   Parameters: {"id"=>"1"}
+2015-10-30 17:14:16.873 - DEBUG - #4429 -   [1m[36mUser Load (0.8ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:14:16.876 - DEBUG - #4429 -   [1m[35mApiDeploy::Container Load (0.5ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:14:16.882 - DEBUG - #4429 -   [1m[36mGame Load (0.6ms)[0m  [1mSELECT  "games".* FROM "games" INNER JOIN "plans" ON "games"."id" = "plans"."game_id" WHERE "plans"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:14:16.885 - DEBUG - #4429 -   [1m[35mCACHE (0.2ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", "1"]]
+2015-10-30 17:14:16.887 - DEBUG - #4429 -   [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+2015-10-30 17:14:16.903 - DEBUG - #4429 -   [1m[35mSQL (0.5ms)[0m  DELETE FROM "containers" WHERE "containers"."id" = $1  [["id", 1]]
+2015-10-30 17:14:16.905 - DEBUG - #4429 -   [1m[36m (0.4ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+2015-10-30 17:14:16.907 - INFO - #4429 - Completed 200 OK in 38ms (Views: 0.7ms | ActiveRecord: 3.2ms)
+2015-10-30 17:14:16.912 - DEBUG - #4429 -   [1m[35mApiDeploy::Container Load (0.4ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:14:16.919 - DEBUG - #4429 -   [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+2015-10-30 17:14:21.882 - DEBUG - #4579 -   [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-30 17:14:21.947 - DEBUG - #4579 -   [1m[35m (0.4ms)[0m  ALTER TABLE "connects" DISABLE TRIGGER ALL;ALTER TABLE "games" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "containers" DISABLE TRIGGER ALL;ALTER TABLE "hosts" DISABLE TRIGGER ALL;ALTER TABLE "plans" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+2015-10-30 17:14:21.949 - DEBUG - #4579 -   [1m[36m (1.2ms)[0m  [1m          SELECT schemaname || '.' || tablename
+2015-10-30 17:14:21.949 - DEBUG - #4579 -           FROM pg_tables
+2015-10-30 17:14:21.949 - DEBUG - #4579 -           WHERE 
+2015-10-30 17:14:21.949 - DEBUG - #4579 -             tablename !~ '_prt_' AND 
+2015-10-30 17:14:21.949 - DEBUG - #4579 -             tablename <> 'schema_migrations' AND 
+2015-10-30 17:14:21.949 - DEBUG - #4579 -             schemaname = ANY (current_schemas(false))
+2015-10-30 17:14:21.949 - DEBUG - #4579 - [0m
+2015-10-30 17:14:21.950 - DEBUG - #4579 -   [1m[35m (0.8ms)[0m  select table_name from information_schema.views where table_schema = 'gameservers_test'
+2015-10-30 17:14:21.962 - DEBUG - #4579 -   [1m[36m (11.5ms)[0m  [1mTRUNCATE TABLE "public"."connects", "public"."games", "public"."containers", "public"."hosts", "public"."plans", "public"."users" RESTART IDENTITY CASCADE;[0m
+2015-10-30 17:14:21.964 - DEBUG - #4579 -   [1m[35m (0.3ms)[0m  ALTER TABLE "connects" ENABLE TRIGGER ALL;ALTER TABLE "games" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "containers" ENABLE TRIGGER ALL;ALTER TABLE "hosts" ENABLE TRIGGER ALL;ALTER TABLE "plans" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+2015-10-30 17:14:21.978 - DEBUG - #4579 -   [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "games"[0m
+2015-10-30 17:14:21.983 - DEBUG - #4579 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:14:21.995 - DEBUG - #4579 -   [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "minecraft"], ["created_at", "2015-10-30 17:14:21.989288"], ["updated_at", "2015-10-30 17:14:21.989288"]]
+2015-10-30 17:14:21.997 - DEBUG - #4579 -   [1m[35m (0.9ms)[0m  COMMIT
+2015-10-30 17:14:22.013 - DEBUG - #4579 -   [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "hosts"[0m
+2015-10-30 17:14:22.020 - DEBUG - #4579 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:14:22.022 - DEBUG - #4579 -   [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "hosts" ("name", "ip", "domain", "location", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "localhost"], ["ip", 2130706433], ["domain", "localhost"], ["location", "Localhost"], ["created_at", "2015-10-30 17:14:22.020676"], ["updated_at", "2015-10-30 17:14:22.020676"]]
+2015-10-30 17:14:22.023 - DEBUG - #4579 -   [1m[35m (0.5ms)[0m  COMMIT
+2015-10-30 17:14:22.035 - DEBUG - #4579 -   [1m[36mSQL (0.7ms)[0m  [1mDELETE FROM "plans"[0m
+2015-10-30 17:14:22.053 - DEBUG - #4579 -   [1m[35mGame Load (0.3ms)[0m  SELECT  "games".* FROM "games" WHERE "games"."name" = $1 LIMIT 1  [["name", "minecraft"]]
+2015-10-30 17:14:22.056 - DEBUG - #4579 -   [1m[36mHost Load (0.3ms)[0m  [1mSELECT  "hosts".* FROM "hosts" WHERE "hosts"."name" = $1 LIMIT 1[0m  [["name", "localhost"]]
+2015-10-30 17:14:22.067 - DEBUG - #4579 -   [1m[35m (0.2ms)[0m  BEGIN
+2015-10-30 17:14:22.071 - DEBUG - #4579 -   [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "plans" ("name", "max_players", "ram", "storage", "storage_type", "game_id", "host_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "starter"], ["max_players", 2], ["ram", 256], ["storage", 1024], ["storage_type", "ssd"], ["game_id", 1], ["host_id", 1], ["created_at", "2015-10-30 17:14:22.068668"], ["updated_at", "2015-10-30 17:14:22.068668"]]
+2015-10-30 17:14:22.072 - DEBUG - #4579 -   [1m[35m (0.5ms)[0m  COMMIT
+2015-10-30 17:14:22.072 - DEBUG - #4579 -   [1m[36mGame Load (0.2ms)[0m  [1mSELECT  "games".* FROM "games" WHERE "games"."name" = $1 LIMIT 1[0m  [["name", "minecraft"]]
+2015-10-30 17:14:22.073 - DEBUG - #4579 -   [1m[35mHost Load (0.2ms)[0m  SELECT  "hosts".* FROM "hosts" WHERE "hosts"."name" = $1 LIMIT 1  [["name", "localhost"]]
+2015-10-30 17:14:22.074 - DEBUG - #4579 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-10-30 17:14:22.075 - DEBUG - #4579 -   [1m[35mSQL (0.2ms)[0m  INSERT INTO "plans" ("name", "max_players", "ram", "storage", "storage_type", "game_id", "host_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"  [["name", "lite"], ["max_players", 7], ["ram", 384], ["storage", 1024], ["storage_type", "ssd"], ["game_id", 1], ["host_id", 1], ["created_at", "2015-10-30 17:14:22.074934"], ["updated_at", "2015-10-30 17:14:22.074934"]]
+2015-10-30 17:14:22.076 - DEBUG - #4579 -   [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+2015-10-30 17:14:22.079 - DEBUG - #4579 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:14:22.079 - DEBUG - #4579 -   [1m[36m (0.1ms)[0m  [1mCOMMIT[0m
+2015-10-30 17:14:22.079 - DEBUG - #4579 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:14:22.086 - INFO - #4579 - [0;1;34mStarted POST [0m"/v1/users" for 127.0.0.1 at 2015-10-30 17:14:22 +0000
+2015-10-30 17:14:22.102 - INFO - #4579 - Processing by ApiBack::V1::UsersController#create as JSON
+2015-10-30 17:14:22.103 - INFO - #4579 -   Parameters: {"connect_login"=>{"email"=>"test@test.com", "password"=>"[FILTERED]"}}
+2015-10-30 17:14:22.186 - DEBUG - #4579 -   [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+2015-10-30 17:14:22.218 - DEBUG - #4579 -   [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = 'test@test.com' LIMIT 1
+2015-10-30 17:14:22.222 - DEBUG - #4579 -   [1m[36mSQL (1.2ms)[0m  [1mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "test@test.com"], ["created_at", "2015-10-30 17:14:22.219003"], ["updated_at", "2015-10-30 17:14:22.219003"]]
+2015-10-30 17:14:22.364 - INFO - #4579 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (3.5ms)
+2015-10-30 17:14:22.448 - INFO - #4579 -   Rendered user_mailer/welcome_email.text.erb (0.5ms)
+2015-10-30 17:14:22.713 - DEBUG - #4579 - UserMailer#welcome_email: processed outbound mail in 447.1ms
+2015-10-30 17:14:22.733 - INFO - #4579 - Sent mail to test@test.com (19.2ms)
+2015-10-30 17:14:22.733 - DEBUG - #4579 - Date: Fri, 30 Oct 2015 17:14:22 +0000
+2015-10-30 17:14:22.733 - DEBUG - #4579 - From: noreply@lifevnt.com
+2015-10-30 17:14:22.733 - DEBUG - #4579 - To: test@test.com
+2015-10-30 17:14:22.733 - DEBUG - #4579 - Message-ID: <5633a56eb1125_11e36c197068691@vagrant-ubuntu-trusty-64.mail>
+2015-10-30 17:14:22.733 - DEBUG - #4579 - Subject: Welcome to My Awesome Site
+2015-10-30 17:14:22.733 - DEBUG - #4579 - Mime-Version: 1.0
+2015-10-30 17:14:22.733 - DEBUG - #4579 - Content-Type: multipart/alternative;
+2015-10-30 17:14:22.733 - DEBUG - #4579 -  boundary="--==_mimepart_5633a56eadf82_11e36c1970685bb";
+2015-10-30 17:14:22.733 - DEBUG - #4579 -  charset=UTF-8
+2015-10-30 17:14:22.733 - DEBUG - #4579 - Content-Transfer-Encoding: 7bit
+2015-10-30 17:14:22.733 - DEBUG - #4579 - 
+2015-10-30 17:14:22.733 - DEBUG - #4579 - 
+2015-10-30 17:14:22.733 - DEBUG - #4579 - ----==_mimepart_5633a56eadf82_11e36c1970685bb
+2015-10-30 17:14:22.733 - DEBUG - #4579 - Content-Type: text/plain;
+2015-10-30 17:14:22.733 - DEBUG - #4579 -  charset=UTF-8
+2015-10-30 17:14:22.733 - DEBUG - #4579 - Content-Transfer-Encoding: 7bit
+2015-10-30 17:14:22.733 - DEBUG - #4579 - 
+2015-10-30 17:14:22.733 - DEBUG - #4579 - Welcome to example.com,
+2015-10-30 17:14:22.733 - DEBUG - #4579 - ===============================================
+2015-10-30 17:14:22.733 - DEBUG - #4579 - 
+2015-10-30 17:14:22.733 - DEBUG - #4579 - You have successfully signed up to example.com,
+2015-10-30 17:14:22.733 - DEBUG - #4579 - your username is: test@test.com.
+2015-10-30 17:14:22.733 - DEBUG - #4579 - 
+2015-10-30 17:14:22.733 - DEBUG - #4579 - To login to the site, just follow this link:.
+2015-10-30 17:14:22.733 - DEBUG - #4579 - 
+2015-10-30 17:14:22.733 - DEBUG - #4579 - Thanks for joining and have a great day!
+2015-10-30 17:14:22.733 - DEBUG - #4579 - ----==_mimepart_5633a56eadf82_11e36c1970685bb
+2015-10-30 17:14:22.733 - DEBUG - #4579 - Content-Type: text/html;
+2015-10-30 17:14:22.733 - DEBUG - #4579 -  charset=UTF-8
+2015-10-30 17:14:22.733 - DEBUG - #4579 - Content-Transfer-Encoding: 7bit
+2015-10-30 17:14:22.733 - DEBUG - #4579 - 
+2015-10-30 17:14:22.733 - DEBUG - #4579 - <!DOCTYPE html>
+2015-10-30 17:14:22.733 - DEBUG - #4579 - <html>
+2015-10-30 17:14:22.733 - DEBUG - #4579 - <head>
+2015-10-30 17:14:22.733 - DEBUG - #4579 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-10-30 17:14:22.733 - DEBUG - #4579 - </head>
+2015-10-30 17:14:22.733 - DEBUG - #4579 - <body>
+2015-10-30 17:14:22.733 - DEBUG - #4579 - <h1>Welcome to example.com,</h1>
+2015-10-30 17:14:22.733 - DEBUG - #4579 - <p>
+2015-10-30 17:14:22.733 - DEBUG - #4579 -   You have successfully signed up to example.com,
+2015-10-30 17:14:22.733 - DEBUG - #4579 -   your username is: test@test.com.<br>
+2015-10-30 17:14:22.733 - DEBUG - #4579 - </p>
+2015-10-30 17:14:22.733 - DEBUG - #4579 - <p>
+2015-10-30 17:14:22.733 - DEBUG - #4579 -   To login to the site, just follow this link:.
+2015-10-30 17:14:22.733 - DEBUG - #4579 - </p>
+2015-10-30 17:14:22.734 - DEBUG - #4579 - <p>Thanks for joining and have a great day!</p>
+2015-10-30 17:14:22.734 - DEBUG - #4579 - </body>
+2015-10-30 17:14:22.734 - DEBUG - #4579 - </html>
+2015-10-30 17:14:22.734 - DEBUG - #4579 - ----==_mimepart_5633a56eadf82_11e36c1970685bb--
+2015-10-30 17:14:22.734 - DEBUG - #4579 -   [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+2015-10-30 17:14:22.735 - DEBUG - #4579 -   [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+2015-10-30 17:14:22.737 - DEBUG - #4579 -   [1m[35mSQL (0.2ms)[0m  INSERT INTO "connects" ("partner", "partner_id", "partner_auth_data", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["partner", "login"], ["partner_id", "test@test.com"], ["partner_auth_data", "7288edd0fc3ffcbe93a0cf06e3568e28521687bc"], ["user_id", 1], ["created_at", "2015-10-30 17:14:22.735866"], ["updated_at", "2015-10-30 17:14:22.735866"]]
+2015-10-30 17:14:22.737 - DEBUG - #4579 -   [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+2015-10-30 17:14:22.754 - INFO - #4579 - Completed 200 OK in 651ms (Views: 0.4ms | ActiveRecord: 4.5ms)
+2015-10-30 17:14:22.767 - DEBUG - #4579 -   [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:14:22.769 - INFO - #4579 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-30 17:14:22 +0000
+2015-10-30 17:14:22.793 - INFO - #4579 - Processing by ApiDeploy::V1::ContainersController#create as JSON
+2015-10-30 17:14:22.794 - INFO - #4579 -   Parameters: {"container"=>{"plan_id"=>1}}
+2015-10-30 17:14:22.795 - DEBUG - #4579 -   [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:14:22.802 - DEBUG - #4579 - ** [Airbrake] Notice was not sent due to configuration:         
+2015-10-30 17:14:22.802 - DEBUG - #4579 -   Environment Monitored? false         
+2015-10-30 17:14:22.802 - DEBUG - #4579 -   API key set? true
+2015-10-30 17:14:22.804 - ERROR - #4579 - Exception caught caused return 500 : undefined local variable or method `tt' for #<ApiDeploy::V1::ContainersController:0x000000061e7e30>
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /vagrant/app/controllers/api_deploy/v1/containers_controller.rb:8:in `create'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/base.rb:198:in `process_action'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rendering.rb:10:in `process_action'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/callbacks.rb:20:in `block in process_action'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:117:in `call'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:117:in `call'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:505:in `call'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:505:in `call'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:92:in `__run_callbacks__'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:81:in `run_callbacks'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/callbacks.rb:19:in `process_action'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rescue.rb:29:in `process_action'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications.rb:164:in `block in instrument'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/notifications.rb:164:in `instrument'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/abstract_controller/base.rb:137:in `process'
+2015-10-30 17:14:22.804 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionview-4.2.4/lib/action_view/rendering.rb:30:in `process'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal.rb:196:in `dispatch'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_controller/metal.rb:237:in `block in action'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:76:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:76:in `dispatch'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:45:in `serve'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:43:in `block in serve'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:30:in `each'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/journey/router.rb:30:in `serve'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/routing/route_set.rb:821:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/etag.rb:24:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/conditionalget.rb:38:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/head.rb:13:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/query_cache.rb:36:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activerecord-4.2.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:88:in `__run_callbacks__'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:778:in `_run_call_callbacks'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/callbacks.rb:81:in `run_callbacks'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/airbrake-4.3.3/lib/airbrake/rails/middleware.rb:13:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:38:in `call_app'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:20:in `block in call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:68:in `block in tagged'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:26:in `tagged'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/tagged_logging.rb:68:in `tagged'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/rack/logger.rb:20:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/request_id.rb:21:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-1.6.4/lib/rack/runtime.rb:18:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/activesupport-4.2.4/lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/middleware/static.rb:116:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/airbrake-4.3.3/lib/airbrake/user_informer.rb:16:in `_call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/airbrake-4.3.3/lib/airbrake/user_informer.rb:12:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/engine.rb:518:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/railties-4.2.4/lib/rails/application.rb:165:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/mock_session.rb:30:in `request'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/test.rb:244:in `process_request'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rack-test-0.6.3/lib/rack/test.rb:124:in `request'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:297:in `process'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:38:in `post'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/actionpack-4.2.4/lib/action_dispatch/testing/integration.rb:346:in `block (2 levels) in <module:Runner>'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /vagrant/spec/support/base_helper.rb:12:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /vagrant/spec/support/base_helper.rb:12:in `send'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /vagrant/spec/api_deploy/v1/containers_spec.rb:19:in `block (2 levels) in <top (required)>'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:206:in `instance_exec'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:206:in `block in run'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:430:in `block in with_around_and_singleton_context_hooks'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:388:in `block in with_around_example_hooks'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:478:in `block in run'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:618:in `block in run_around_example_hooks_for'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-rails-3.3.3/lib/rspec/rails/adapters.rb:127:in `block (2 levels) in <module:MinitestLifecycleAdapter>'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:378:in `instance_exec'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:378:in `instance_exec'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:389:in `execute_with'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:620:in `block (2 levels) in run_around_example_hooks_for'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:273:in `call'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:621:in `run_around_example_hooks_for'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/hooks.rb:478:in `run'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:388:in `with_around_example_hooks'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:430:in `with_around_and_singleton_context_hooks'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example.rb:203:in `run'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:559:in `block in run_examples'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:555:in `map'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:555:in `run_examples'
+2015-10-30 17:14:22.805 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/example_group.rb:521:in `run'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `block (3 levels) in run_specs'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `map'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:115:in `block (2 levels) in run_specs'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/configuration.rb:1627:in `with_suite_hooks'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:114:in `block in run_specs'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/reporter.rb:77:in `report'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:113:in `run_specs'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:89:in `run'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:73:in `run'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/lib/rspec/core/runner.rb:41:in `invoke'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/gems/rspec-core-3.3.2/exe/rspec:4:in `<top (required)>'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/rspec:23:in `load'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/rspec:23:in `<main>'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `eval'
+2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `<main>'
+2015-10-30 17:14:22.808 - INFO - #4579 - Completed 500 Internal Server Error in 14ms (Views: 0.2ms | ActiveRecord: 0.3ms)
+2015-10-30 17:14:22.865 - DEBUG - #4579 -   [1m[35m (0.2ms)[0m  ROLLBACK
