@@ -7,9 +7,9 @@ development:
   <<: *default
   database: gameservers_development
 
-test:
+staging:
   <<: *default
-  database: gameservers_test
+  database: gameservers_staging
 
 production:
   <<: *default
