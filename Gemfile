@@ -23,6 +23,8 @@ gem 'airbrake', '4.3.3'
 gem 'httparty', '0.13.7'
 # will_paginate provides a simple API for performing paginated queries with Active Record
 gem 'will_paginate', '~> 3.0.7'
+# pusher
+gem 'pusher'
 
 group :development do
   gem 'spring', '1.3.6'
@@ -46,6 +48,7 @@ group :test do
   gem 'poltergeist'
   # Byebug is a Ruby 2 debugger
   gem 'byebug'
+  gem 'pusher-fake'
 end
 
 group :development, :test do

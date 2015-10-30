@@ -30429,3 +30429,321 @@ Completed 200 OK in 12ms (Views: 1.9ms | ActiveRecord: 0.0ms)
 2015-10-30 17:14:22.806 - DEBUG - #4579 - /home/vagrant/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `<main>'
 2015-10-30 17:14:22.808 - INFO - #4579 - Completed 500 Internal Server Error in 14ms (Views: 0.2ms | ActiveRecord: 0.3ms)
 2015-10-30 17:14:22.865 - DEBUG - #4579 -   [1m[35m (0.2ms)[0m  ROLLBACK
+2015-10-30 17:48:42.099 - DEBUG - #5317 -   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-30 17:48:42.193 - DEBUG - #5317 -   [1m[35m (0.7ms)[0m  ALTER TABLE "connects" DISABLE TRIGGER ALL;ALTER TABLE "games" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "containers" DISABLE TRIGGER ALL;ALTER TABLE "hosts" DISABLE TRIGGER ALL;ALTER TABLE "plans" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+2015-10-30 17:48:42.195 - DEBUG - #5317 -   [1m[36m (1.5ms)[0m  [1m          SELECT schemaname || '.' || tablename
+2015-10-30 17:48:42.195 - DEBUG - #5317 -           FROM pg_tables
+2015-10-30 17:48:42.195 - DEBUG - #5317 -           WHERE 
+2015-10-30 17:48:42.195 - DEBUG - #5317 -             tablename !~ '_prt_' AND 
+2015-10-30 17:48:42.195 - DEBUG - #5317 -             tablename <> 'schema_migrations' AND 
+2015-10-30 17:48:42.195 - DEBUG - #5317 -             schemaname = ANY (current_schemas(false))
+2015-10-30 17:48:42.195 - DEBUG - #5317 - [0m
+2015-10-30 17:48:42.197 - DEBUG - #5317 -   [1m[35m (1.0ms)[0m  select table_name from information_schema.views where table_schema = 'gameservers_test'
+2015-10-30 17:48:42.210 - DEBUG - #5317 -   [1m[36m (12.6ms)[0m  [1mTRUNCATE TABLE "public"."connects", "public"."games", "public"."containers", "public"."hosts", "public"."plans", "public"."users" RESTART IDENTITY CASCADE;[0m
+2015-10-30 17:48:42.212 - DEBUG - #5317 -   [1m[35m (0.4ms)[0m  ALTER TABLE "connects" ENABLE TRIGGER ALL;ALTER TABLE "games" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "containers" ENABLE TRIGGER ALL;ALTER TABLE "hosts" ENABLE TRIGGER ALL;ALTER TABLE "plans" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+2015-10-30 17:48:42.226 - DEBUG - #5317 -   [1m[36mSQL (0.5ms)[0m  [1mDELETE FROM "games"[0m
+2015-10-30 17:48:42.232 - DEBUG - #5317 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:48:42.246 - DEBUG - #5317 -   [1m[36mSQL (0.7ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "minecraft"], ["created_at", "2015-10-30 17:48:42.238616"], ["updated_at", "2015-10-30 17:48:42.238616"]]
+2015-10-30 17:48:42.247 - DEBUG - #5317 -   [1m[35m (0.6ms)[0m  COMMIT
+2015-10-30 17:48:42.264 - DEBUG - #5317 -   [1m[36mSQL (0.5ms)[0m  [1mDELETE FROM "hosts"[0m
+2015-10-30 17:48:42.270 - DEBUG - #5317 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:48:42.273 - DEBUG - #5317 -   [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "hosts" ("name", "ip", "domain", "location", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "localhost"], ["ip", 2130706433], ["domain", "localhost"], ["location", "Localhost"], ["created_at", "2015-10-30 17:48:42.271295"], ["updated_at", "2015-10-30 17:48:42.271295"]]
+2015-10-30 17:48:42.274 - DEBUG - #5317 -   [1m[35m (0.5ms)[0m  COMMIT
+2015-10-30 17:48:42.282 - DEBUG - #5317 -   [1m[36mSQL (1.0ms)[0m  [1mDELETE FROM "plans"[0m
+2015-10-30 17:48:42.315 - DEBUG - #5317 -   [1m[35mGame Load (0.3ms)[0m  SELECT  "games".* FROM "games" WHERE "games"."name" = $1 LIMIT 1  [["name", "minecraft"]]
+2015-10-30 17:48:42.317 - DEBUG - #5317 -   [1m[36mHost Load (0.2ms)[0m  [1mSELECT  "hosts".* FROM "hosts" WHERE "hosts"."name" = $1 LIMIT 1[0m  [["name", "localhost"]]
+2015-10-30 17:48:42.324 - DEBUG - #5317 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:48:42.326 - DEBUG - #5317 -   [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "plans" ("name", "max_players", "ram", "storage", "storage_type", "game_id", "host_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "starter"], ["max_players", 2], ["ram", 256], ["storage", 1024], ["storage_type", "ssd"], ["game_id", 1], ["host_id", 1], ["created_at", "2015-10-30 17:48:42.325228"], ["updated_at", "2015-10-30 17:48:42.325228"]]
+2015-10-30 17:48:42.328 - DEBUG - #5317 -   [1m[35m (0.5ms)[0m  COMMIT
+2015-10-30 17:48:42.329 - DEBUG - #5317 -   [1m[36mGame Load (0.0ms)[0m  [1mSELECT  "games".* FROM "games" WHERE "games"."name" = $1 LIMIT 1[0m  [["name", "minecraft"]]
+2015-10-30 17:48:42.330 - DEBUG - #5317 -   [1m[35mHost Load (0.2ms)[0m  SELECT  "hosts".* FROM "hosts" WHERE "hosts"."name" = $1 LIMIT 1  [["name", "localhost"]]
+2015-10-30 17:48:42.330 - DEBUG - #5317 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-10-30 17:48:42.332 - DEBUG - #5317 -   [1m[35mSQL (0.2ms)[0m  INSERT INTO "plans" ("name", "max_players", "ram", "storage", "storage_type", "game_id", "host_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"  [["name", "lite"], ["max_players", 7], ["ram", 384], ["storage", 1024], ["storage_type", "ssd"], ["game_id", 1], ["host_id", 1], ["created_at", "2015-10-30 17:48:42.331446"], ["updated_at", "2015-10-30 17:48:42.331446"]]
+2015-10-30 17:48:42.333 - DEBUG - #5317 -   [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+2015-10-30 17:48:42.336 - DEBUG - #5317 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:48:42.336 - DEBUG - #5317 -   [1m[36m (0.1ms)[0m  [1mCOMMIT[0m
+2015-10-30 17:48:42.336 - DEBUG - #5317 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:48:42.344 - INFO - #5317 - [0;1;34mStarted POST [0m"/v1/users" for 127.0.0.1 at 2015-10-30 17:48:42 +0000
+2015-10-30 17:48:42.361 - INFO - #5317 - Processing by ApiBack::V1::UsersController#create as JSON
+2015-10-30 17:48:42.361 - INFO - #5317 -   Parameters: {"connect_login"=>{"email"=>"test@test.com", "password"=>"[FILTERED]"}}
+2015-10-30 17:48:42.442 - DEBUG - #5317 -   [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+2015-10-30 17:48:42.461 - DEBUG - #5317 -   [1m[35mUser Exists (0.5ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = 'test@test.com' LIMIT 1
+2015-10-30 17:48:42.462 - DEBUG - #5317 -   [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "test@test.com"], ["created_at", "2015-10-30 17:48:42.461538"], ["updated_at", "2015-10-30 17:48:42.461538"]]
+2015-10-30 17:48:42.614 - INFO - #5317 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (4.3ms)
+2015-10-30 17:48:42.698 - INFO - #5317 -   Rendered user_mailer/welcome_email.text.erb (0.4ms)
+2015-10-30 17:48:42.998 - DEBUG - #5317 - UserMailer#welcome_email: processed outbound mail in 496.5ms
+2015-10-30 17:48:43.019 - INFO - #5317 - Sent mail to test@test.com (20.8ms)
+2015-10-30 17:48:43.020 - DEBUG - #5317 - Date: Fri, 30 Oct 2015 17:48:43 +0000
+2015-10-30 17:48:43.020 - DEBUG - #5317 - From: noreply@lifevnt.com
+2015-10-30 17:48:43.020 - DEBUG - #5317 - To: test@test.com
+2015-10-30 17:48:43.020 - DEBUG - #5317 - Message-ID: <5633ad7b2c12_14c563d96820110@vagrant-ubuntu-trusty-64.mail>
+2015-10-30 17:48:43.020 - DEBUG - #5317 - Subject: Welcome to My Awesome Site
+2015-10-30 17:48:43.020 - DEBUG - #5317 - Mime-Version: 1.0
+2015-10-30 17:48:43.020 - DEBUG - #5317 - Content-Type: multipart/alternative;
+2015-10-30 17:48:43.020 - DEBUG - #5317 -  boundary="--==_mimepart_5633ad7af37d3_14c563d968200c4";
+2015-10-30 17:48:43.020 - DEBUG - #5317 -  charset=UTF-8
+2015-10-30 17:48:43.020 - DEBUG - #5317 - Content-Transfer-Encoding: 7bit
+2015-10-30 17:48:43.020 - DEBUG - #5317 - 
+2015-10-30 17:48:43.020 - DEBUG - #5317 - 
+2015-10-30 17:48:43.020 - DEBUG - #5317 - ----==_mimepart_5633ad7af37d3_14c563d968200c4
+2015-10-30 17:48:43.020 - DEBUG - #5317 - Content-Type: text/plain;
+2015-10-30 17:48:43.020 - DEBUG - #5317 -  charset=UTF-8
+2015-10-30 17:48:43.020 - DEBUG - #5317 - Content-Transfer-Encoding: 7bit
+2015-10-30 17:48:43.020 - DEBUG - #5317 - 
+2015-10-30 17:48:43.020 - DEBUG - #5317 - Welcome to example.com,
+2015-10-30 17:48:43.020 - DEBUG - #5317 - ===============================================
+2015-10-30 17:48:43.020 - DEBUG - #5317 - 
+2015-10-30 17:48:43.020 - DEBUG - #5317 - You have successfully signed up to example.com,
+2015-10-30 17:48:43.020 - DEBUG - #5317 - your username is: test@test.com.
+2015-10-30 17:48:43.020 - DEBUG - #5317 - 
+2015-10-30 17:48:43.020 - DEBUG - #5317 - To login to the site, just follow this link:.
+2015-10-30 17:48:43.020 - DEBUG - #5317 - 
+2015-10-30 17:48:43.020 - DEBUG - #5317 - Thanks for joining and have a great day!
+2015-10-30 17:48:43.020 - DEBUG - #5317 - ----==_mimepart_5633ad7af37d3_14c563d968200c4
+2015-10-30 17:48:43.020 - DEBUG - #5317 - Content-Type: text/html;
+2015-10-30 17:48:43.020 - DEBUG - #5317 -  charset=UTF-8
+2015-10-30 17:48:43.020 - DEBUG - #5317 - Content-Transfer-Encoding: 7bit
+2015-10-30 17:48:43.020 - DEBUG - #5317 - 
+2015-10-30 17:48:43.020 - DEBUG - #5317 - <!DOCTYPE html>
+2015-10-30 17:48:43.020 - DEBUG - #5317 - <html>
+2015-10-30 17:48:43.020 - DEBUG - #5317 - <head>
+2015-10-30 17:48:43.020 - DEBUG - #5317 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-10-30 17:48:43.020 - DEBUG - #5317 - </head>
+2015-10-30 17:48:43.020 - DEBUG - #5317 - <body>
+2015-10-30 17:48:43.020 - DEBUG - #5317 - <h1>Welcome to example.com,</h1>
+2015-10-30 17:48:43.020 - DEBUG - #5317 - <p>
+2015-10-30 17:48:43.020 - DEBUG - #5317 -   You have successfully signed up to example.com,
+2015-10-30 17:48:43.020 - DEBUG - #5317 -   your username is: test@test.com.<br>
+2015-10-30 17:48:43.020 - DEBUG - #5317 - </p>
+2015-10-30 17:48:43.020 - DEBUG - #5317 - <p>
+2015-10-30 17:48:43.020 - DEBUG - #5317 -   To login to the site, just follow this link:.
+2015-10-30 17:48:43.020 - DEBUG - #5317 - </p>
+2015-10-30 17:48:43.020 - DEBUG - #5317 - <p>Thanks for joining and have a great day!</p>
+2015-10-30 17:48:43.020 - DEBUG - #5317 - </body>
+2015-10-30 17:48:43.020 - DEBUG - #5317 - </html>
+2015-10-30 17:48:43.020 - DEBUG - #5317 - ----==_mimepart_5633ad7af37d3_14c563d968200c4--
+2015-10-30 17:48:43.021 - DEBUG - #5317 -   [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+2015-10-30 17:48:43.021 - DEBUG - #5317 -   [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+2015-10-30 17:48:43.024 - DEBUG - #5317 -   [1m[35mSQL (0.5ms)[0m  INSERT INTO "connects" ("partner", "partner_id", "partner_auth_data", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["partner", "login"], ["partner_id", "test@test.com"], ["partner_auth_data", "7288edd0fc3ffcbe93a0cf06e3568e28521687bc"], ["user_id", 1], ["created_at", "2015-10-30 17:48:43.022522"], ["updated_at", "2015-10-30 17:48:43.022522"]]
+2015-10-30 17:48:43.025 - DEBUG - #5317 -   [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+2015-10-30 17:48:43.044 - INFO - #5317 - Completed 200 OK in 682ms (Views: 0.5ms | ActiveRecord: 3.9ms)
+2015-10-30 17:48:43.054 - DEBUG - #5317 -   [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:48:43.056 - INFO - #5317 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-30 17:48:43 +0000
+2015-10-30 17:48:43.079 - INFO - #5317 - Processing by ApiDeploy::V1::ContainersController#create as JSON
+2015-10-30 17:48:43.079 - INFO - #5317 -   Parameters: {"container"=>{"plan_id"=>1}}
+2015-10-30 17:48:43.080 - DEBUG - #5317 -   [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:48:43.082 - DEBUG - #5317 -   [1m[35mPlan Load (0.3ms)[0m  SELECT  "plans".* FROM "plans" WHERE "plans"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:48:43.092 - DEBUG - #5317 -   [1m[36mGame Load (0.3ms)[0m  [1mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:48:43.122 - DEBUG - #5317 -   [1m[35mApiDeploy::ContainerMinecraft Exists (0.3ms)[0m  SELECT  1 AS one FROM "containers" WHERE "containers"."port" = $1 LIMIT 1  [["port", "32956"]]
+2015-10-30 17:48:43.122 - DEBUG - #5317 - Creating container with params: {"Name"=>"minecraft_server_78b41432-51dc-438d-b898-7c3f529c5b64", "Image"=>"overshard/minecraft", "Cmd"=>"/start", "ExposedPorts"=>{:"25565/tcp"=>{}}, "PortBindings"=>{"25565/tcp"=>[{"HostIp"=>"127.0.0.1", "HostPort"=>"32956"}]}}
+2015-10-30 17:48:43.128 - DEBUG - #5317 -   [1m[36mHost Load (0.2ms)[0m  [1mSELECT  "hosts".* FROM "hosts" WHERE "hosts"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:48:43.150 - DEBUG - #5317 -   [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+2015-10-30 17:48:43.153 - DEBUG - #5317 -   [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "containers" ("user_id", "docker_id", "plan_id", "host_id", "port", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["user_id", 1], ["docker_id", "da057ae394a98430e358e69d243f2cea58ffab8c93c3b7f1ac0b164f2e2cce47"], ["plan_id", 1], ["host_id", 1], ["port", "32956"], ["created_at", "2015-10-30 17:48:43.151709"], ["updated_at", "2015-10-30 17:48:43.151709"]]
+2015-10-30 17:48:43.154 - DEBUG - #5317 -   [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+2015-10-30 17:48:43.159 - DEBUG - #5317 - Container(1) record has created, attributes: #<ApiDeploy::Container:0x00000007426830>
+2015-10-30 17:48:43.162 - DEBUG - #5317 - Container(1) has created
+2015-10-30 17:48:43.165 - INFO - #5317 - Completed 200 OK in 86ms (Views: 1.6ms | ActiveRecord: 3.4ms)
+2015-10-30 17:48:43.167 - DEBUG - #5317 -   [1m[36mApiDeploy::Container Load (0.3ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:48:43.170 - INFO - #5317 - [0;1;34mStarted POST [0m"/v1/containers/1/start" for 127.0.0.1 at 2015-10-30 17:48:43 +0000
+2015-10-30 17:48:43.171 - INFO - #5317 - Processing by ApiDeploy::V1::ContainersController#start as JSON
+2015-10-30 17:48:43.172 - INFO - #5317 -   Parameters: {"id"=>"1"}
+2015-10-30 17:48:43.173 - DEBUG - #5317 -   [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:48:43.174 - DEBUG - #5317 -   [1m[36mApiDeploy::Container Load (0.2ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:48:43.222 - DEBUG - #5317 -   [1m[35mGame Load (0.5ms)[0m  SELECT  "games".* FROM "games" INNER JOIN "plans" ON "games"."id" = "plans"."game_id" WHERE "plans"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:48:43.224 - DEBUG - #5317 -   [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", "1"]]
+2015-10-30 17:48:43.230 - DEBUG - #5317 - Starting container(1)
+2015-10-30 17:48:43.360 - DEBUG - #5317 - Container(1) has started
+2015-10-30 17:48:43.365 - INFO - #5317 - Completed 200 OK in 193ms (Views: 1.1ms | ActiveRecord: 1.1ms)
+2015-10-30 17:48:43.366 - DEBUG - #5317 -   [1m[35mApiDeploy::Container Load (0.3ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:48:47.259 - INFO - #5317 - [0;1;34mStarted POST [0m"/v1/containers/1/restart" for 127.0.0.1 at 2015-10-30 17:48:47 +0000
+2015-10-30 17:48:47.264 - INFO - #5317 - Processing by ApiDeploy::V1::ContainersController#restart as JSON
+2015-10-30 17:48:47.265 - INFO - #5317 -   Parameters: {"id"=>"1"}
+2015-10-30 17:48:47.268 - DEBUG - #5317 -   [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:48:47.271 - DEBUG - #5317 -   [1m[35mApiDeploy::Container Load (0.4ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:48:47.277 - DEBUG - #5317 -   [1m[36mGame Load (0.5ms)[0m  [1mSELECT  "games".* FROM "games" INNER JOIN "plans" ON "games"."id" = "plans"."game_id" WHERE "plans"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:48:47.280 - DEBUG - #5317 -   [1m[35mCACHE (0.1ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", "1"]]
+2015-10-30 17:48:47.281 - DEBUG - #5317 - Restarting container(1)
+2015-10-30 17:48:47.659 - DEBUG - #5317 - Container(1) has restarted
+2015-10-30 17:48:47.716 - INFO - #5317 - Completed 200 OK in 436ms (Views: 22.2ms | ActiveRecord: 1.3ms)
+2015-10-30 17:48:47.731 - DEBUG - #5317 -   [1m[36mApiDeploy::Container Load (10.5ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:48:47.766 - INFO - #5317 - [0;1;34mStarted GET [0m"/v1/containers/1" for 127.0.0.1 at 2015-10-30 17:48:47 +0000
+2015-10-30 17:48:47.771 - INFO - #5317 - Processing by ApiDeploy::V1::ContainersController#show as JSON
+2015-10-30 17:48:47.771 - INFO - #5317 -   Parameters: {"id"=>"1"}
+2015-10-30 17:48:47.774 - DEBUG - #5317 -   [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:48:47.777 - DEBUG - #5317 -   [1m[36mApiDeploy::Container Load (0.4ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:48:47.785 - DEBUG - #5317 -   [1m[35mGame Load (1.3ms)[0m  SELECT  "games".* FROM "games" INNER JOIN "plans" ON "games"."id" = "plans"."game_id" WHERE "plans"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:48:47.788 - DEBUG - #5317 -   [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", "1"]]
+2015-10-30 17:48:47.815 - INFO - #5317 - Completed 200 OK in 43ms (Views: 10.1ms | ActiveRecord: 2.1ms)
+2015-10-30 17:48:47.820 - DEBUG - #5317 -   [1m[35mApiDeploy::Container Load (0.4ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:48:47.831 - INFO - #5317 - [0;1;34mStarted DELETE [0m"/v1/containers/1" for 127.0.0.1 at 2015-10-30 17:48:47 +0000
+2015-10-30 17:48:47.835 - INFO - #5317 - Processing by ApiDeploy::V1::ContainersController#destroy as JSON
+2015-10-30 17:48:47.835 - INFO - #5317 -   Parameters: {"id"=>"1"}
+2015-10-30 17:48:47.840 - DEBUG - #5317 -   [1m[36mUser Load (1.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:48:47.844 - DEBUG - #5317 -   [1m[35mApiDeploy::Container Load (0.9ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:48:47.851 - DEBUG - #5317 -   [1m[36mGame Load (0.9ms)[0m  [1mSELECT  "games".* FROM "games" INNER JOIN "plans" ON "games"."id" = "plans"."game_id" WHERE "plans"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:48:47.854 - DEBUG - #5317 -   [1m[35mCACHE (0.2ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", "1"]]
+2015-10-30 17:48:47.857 - DEBUG - #5317 -   [1m[36m (0.3ms)[0m  [1mSAVEPOINT active_record_1[0m
+2015-10-30 17:48:47.890 - DEBUG - #5317 -   [1m[35mSQL (0.4ms)[0m  DELETE FROM "containers" WHERE "containers"."id" = $1  [["id", 1]]
+2015-10-30 17:48:47.892 - DEBUG - #5317 -   [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+2015-10-30 17:48:47.893 - INFO - #5317 - Completed 200 OK in 56ms (Views: 0.3ms | ActiveRecord: 4.0ms)
+2015-10-30 17:48:47.896 - DEBUG - #5317 -   [1m[35mApiDeploy::Container Load (0.3ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:48:47.901 - DEBUG - #5317 -   [1m[36m (0.4ms)[0m  [1mROLLBACK[0m
+2015-10-30 17:49:14.439 - DEBUG - #5588 -   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-10-30 17:49:14.504 - DEBUG - #5588 -   [1m[35m (0.4ms)[0m  ALTER TABLE "connects" DISABLE TRIGGER ALL;ALTER TABLE "games" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "containers" DISABLE TRIGGER ALL;ALTER TABLE "hosts" DISABLE TRIGGER ALL;ALTER TABLE "plans" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+2015-10-30 17:49:14.506 - DEBUG - #5588 -   [1m[36m (1.1ms)[0m  [1m          SELECT schemaname || '.' || tablename
+2015-10-30 17:49:14.506 - DEBUG - #5588 -           FROM pg_tables
+2015-10-30 17:49:14.506 - DEBUG - #5588 -           WHERE 
+2015-10-30 17:49:14.506 - DEBUG - #5588 -             tablename !~ '_prt_' AND 
+2015-10-30 17:49:14.506 - DEBUG - #5588 -             tablename <> 'schema_migrations' AND 
+2015-10-30 17:49:14.506 - DEBUG - #5588 -             schemaname = ANY (current_schemas(false))
+2015-10-30 17:49:14.506 - DEBUG - #5588 - [0m
+2015-10-30 17:49:14.507 - DEBUG - #5588 -   [1m[35m (0.9ms)[0m  select table_name from information_schema.views where table_schema = 'gameservers_test'
+2015-10-30 17:49:14.519 - DEBUG - #5588 -   [1m[36m (11.4ms)[0m  [1mTRUNCATE TABLE "public"."connects", "public"."games", "public"."containers", "public"."hosts", "public"."plans", "public"."users" RESTART IDENTITY CASCADE;[0m
+2015-10-30 17:49:14.521 - DEBUG - #5588 -   [1m[35m (0.5ms)[0m  ALTER TABLE "connects" ENABLE TRIGGER ALL;ALTER TABLE "games" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "containers" ENABLE TRIGGER ALL;ALTER TABLE "hosts" ENABLE TRIGGER ALL;ALTER TABLE "plans" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+2015-10-30 17:49:14.535 - DEBUG - #5588 -   [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "games"[0m
+2015-10-30 17:49:14.541 - DEBUG - #5588 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:49:14.551 - DEBUG - #5588 -   [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "minecraft"], ["created_at", "2015-10-30 17:49:14.545713"], ["updated_at", "2015-10-30 17:49:14.545713"]]
+2015-10-30 17:49:14.553 - DEBUG - #5588 -   [1m[35m (0.6ms)[0m  COMMIT
+2015-10-30 17:49:14.566 - DEBUG - #5588 -   [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "hosts"[0m
+2015-10-30 17:49:14.572 - DEBUG - #5588 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:49:14.573 - DEBUG - #5588 -   [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "hosts" ("name", "ip", "domain", "location", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "localhost"], ["ip", 2130706433], ["domain", "localhost"], ["location", "Localhost"], ["created_at", "2015-10-30 17:49:14.572579"], ["updated_at", "2015-10-30 17:49:14.572579"]]
+2015-10-30 17:49:14.575 - DEBUG - #5588 -   [1m[35m (0.7ms)[0m  COMMIT
+2015-10-30 17:49:14.583 - DEBUG - #5588 -   [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "plans"[0m
+2015-10-30 17:49:14.602 - DEBUG - #5588 -   [1m[35mGame Load (0.3ms)[0m  SELECT  "games".* FROM "games" WHERE "games"."name" = $1 LIMIT 1  [["name", "minecraft"]]
+2015-10-30 17:49:14.604 - DEBUG - #5588 -   [1m[36mHost Load (0.2ms)[0m  [1mSELECT  "hosts".* FROM "hosts" WHERE "hosts"."name" = $1 LIMIT 1[0m  [["name", "localhost"]]
+2015-10-30 17:49:14.611 - DEBUG - #5588 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:49:14.613 - DEBUG - #5588 -   [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "plans" ("name", "max_players", "ram", "storage", "storage_type", "game_id", "host_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "starter"], ["max_players", 2], ["ram", 256], ["storage", 1024], ["storage_type", "ssd"], ["game_id", 1], ["host_id", 1], ["created_at", "2015-10-30 17:49:14.612292"], ["updated_at", "2015-10-30 17:49:14.612292"]]
+2015-10-30 17:49:14.615 - DEBUG - #5588 -   [1m[35m (0.5ms)[0m  COMMIT
+2015-10-30 17:49:14.616 - DEBUG - #5588 -   [1m[36mGame Load (0.2ms)[0m  [1mSELECT  "games".* FROM "games" WHERE "games"."name" = $1 LIMIT 1[0m  [["name", "minecraft"]]
+2015-10-30 17:49:14.617 - DEBUG - #5588 -   [1m[35mHost Load (0.2ms)[0m  SELECT  "hosts".* FROM "hosts" WHERE "hosts"."name" = $1 LIMIT 1  [["name", "localhost"]]
+2015-10-30 17:49:14.617 - DEBUG - #5588 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-10-30 17:49:14.619 - DEBUG - #5588 -   [1m[35mSQL (0.2ms)[0m  INSERT INTO "plans" ("name", "max_players", "ram", "storage", "storage_type", "game_id", "host_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"  [["name", "lite"], ["max_players", 7], ["ram", 384], ["storage", 1024], ["storage_type", "ssd"], ["game_id", 1], ["host_id", 1], ["created_at", "2015-10-30 17:49:14.618473"], ["updated_at", "2015-10-30 17:49:14.618473"]]
+2015-10-30 17:49:14.620 - DEBUG - #5588 -   [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+2015-10-30 17:49:14.623 - DEBUG - #5588 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-10-30 17:49:14.624 - DEBUG - #5588 -   [1m[36m (0.1ms)[0m  [1mCOMMIT[0m
+2015-10-30 17:49:14.630 - DEBUG - #5588 -   [1m[35m (0.5ms)[0m  BEGIN
+2015-10-30 17:49:14.640 - INFO - #5588 - [0;1;34mStarted POST [0m"/v1/users" for 127.0.0.1 at 2015-10-30 17:49:14 +0000
+2015-10-30 17:49:14.658 - INFO - #5588 - Processing by ApiBack::V1::UsersController#create as JSON
+2015-10-30 17:49:14.658 - INFO - #5588 -   Parameters: {"connect_login"=>{"email"=>"test@test.com", "password"=>"[FILTERED]"}}
+2015-10-30 17:49:14.732 - DEBUG - #5588 -   [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+2015-10-30 17:49:14.752 - DEBUG - #5588 -   [1m[35mUser Exists (0.4ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = 'test@test.com' LIMIT 1
+2015-10-30 17:49:14.754 - DEBUG - #5588 -   [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "test@test.com"], ["created_at", "2015-10-30 17:49:14.752875"], ["updated_at", "2015-10-30 17:49:14.752875"]]
+2015-10-30 17:49:14.899 - INFO - #5588 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (3.6ms)
+2015-10-30 17:49:14.982 - INFO - #5588 -   Rendered user_mailer/welcome_email.text.erb (0.5ms)
+2015-10-30 17:49:15.274 - DEBUG - #5588 - UserMailer#welcome_email: processed outbound mail in 481.9ms
+2015-10-30 17:49:15.294 - INFO - #5588 - Sent mail to test@test.com (19.7ms)
+2015-10-30 17:49:15.294 - DEBUG - #5588 - Date: Fri, 30 Oct 2015 17:49:15 +0000
+2015-10-30 17:49:15.294 - DEBUG - #5588 - From: noreply@lifevnt.com
+2015-10-30 17:49:15.294 - DEBUG - #5588 - To: test@test.com
+2015-10-30 17:49:15.294 - DEBUG - #5588 - Message-ID: <5633ad9b45b70_15d4108396826812@vagrant-ubuntu-trusty-64.mail>
+2015-10-30 17:49:15.294 - DEBUG - #5588 - Subject: Welcome to My Awesome Site
+2015-10-30 17:49:15.294 - DEBUG - #5588 - Mime-Version: 1.0
+2015-10-30 17:49:15.294 - DEBUG - #5588 - Content-Type: multipart/alternative;
+2015-10-30 17:49:15.294 - DEBUG - #5588 -  boundary="--==_mimepart_5633ad9b42ab4_15d41083968267f4";
+2015-10-30 17:49:15.294 - DEBUG - #5588 -  charset=UTF-8
+2015-10-30 17:49:15.294 - DEBUG - #5588 - Content-Transfer-Encoding: 7bit
+2015-10-30 17:49:15.294 - DEBUG - #5588 - 
+2015-10-30 17:49:15.294 - DEBUG - #5588 - 
+2015-10-30 17:49:15.294 - DEBUG - #5588 - ----==_mimepart_5633ad9b42ab4_15d41083968267f4
+2015-10-30 17:49:15.294 - DEBUG - #5588 - Content-Type: text/plain;
+2015-10-30 17:49:15.294 - DEBUG - #5588 -  charset=UTF-8
+2015-10-30 17:49:15.294 - DEBUG - #5588 - Content-Transfer-Encoding: 7bit
+2015-10-30 17:49:15.294 - DEBUG - #5588 - 
+2015-10-30 17:49:15.294 - DEBUG - #5588 - Welcome to example.com,
+2015-10-30 17:49:15.294 - DEBUG - #5588 - ===============================================
+2015-10-30 17:49:15.294 - DEBUG - #5588 - 
+2015-10-30 17:49:15.294 - DEBUG - #5588 - You have successfully signed up to example.com,
+2015-10-30 17:49:15.294 - DEBUG - #5588 - your username is: test@test.com.
+2015-10-30 17:49:15.294 - DEBUG - #5588 - 
+2015-10-30 17:49:15.294 - DEBUG - #5588 - To login to the site, just follow this link:.
+2015-10-30 17:49:15.294 - DEBUG - #5588 - 
+2015-10-30 17:49:15.294 - DEBUG - #5588 - Thanks for joining and have a great day!
+2015-10-30 17:49:15.294 - DEBUG - #5588 - ----==_mimepart_5633ad9b42ab4_15d41083968267f4
+2015-10-30 17:49:15.294 - DEBUG - #5588 - Content-Type: text/html;
+2015-10-30 17:49:15.294 - DEBUG - #5588 -  charset=UTF-8
+2015-10-30 17:49:15.294 - DEBUG - #5588 - Content-Transfer-Encoding: 7bit
+2015-10-30 17:49:15.294 - DEBUG - #5588 - 
+2015-10-30 17:49:15.294 - DEBUG - #5588 - <!DOCTYPE html>
+2015-10-30 17:49:15.294 - DEBUG - #5588 - <html>
+2015-10-30 17:49:15.294 - DEBUG - #5588 - <head>
+2015-10-30 17:49:15.294 - DEBUG - #5588 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-10-30 17:49:15.294 - DEBUG - #5588 - </head>
+2015-10-30 17:49:15.294 - DEBUG - #5588 - <body>
+2015-10-30 17:49:15.294 - DEBUG - #5588 - <h1>Welcome to example.com,</h1>
+2015-10-30 17:49:15.294 - DEBUG - #5588 - <p>
+2015-10-30 17:49:15.294 - DEBUG - #5588 -   You have successfully signed up to example.com,
+2015-10-30 17:49:15.294 - DEBUG - #5588 -   your username is: test@test.com.<br>
+2015-10-30 17:49:15.294 - DEBUG - #5588 - </p>
+2015-10-30 17:49:15.294 - DEBUG - #5588 - <p>
+2015-10-30 17:49:15.294 - DEBUG - #5588 -   To login to the site, just follow this link:.
+2015-10-30 17:49:15.294 - DEBUG - #5588 - </p>
+2015-10-30 17:49:15.294 - DEBUG - #5588 - <p>Thanks for joining and have a great day!</p>
+2015-10-30 17:49:15.294 - DEBUG - #5588 - </body>
+2015-10-30 17:49:15.295 - DEBUG - #5588 - </html>
+2015-10-30 17:49:15.295 - DEBUG - #5588 - ----==_mimepart_5633ad9b42ab4_15d41083968267f4--
+2015-10-30 17:49:15.295 - DEBUG - #5588 -   [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+2015-10-30 17:49:15.296 - DEBUG - #5588 -   [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+2015-10-30 17:49:15.298 - DEBUG - #5588 -   [1m[35mSQL (0.6ms)[0m  INSERT INTO "connects" ("partner", "partner_id", "partner_auth_data", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["partner", "login"], ["partner_id", "test@test.com"], ["partner_auth_data", "7288edd0fc3ffcbe93a0cf06e3568e28521687bc"], ["user_id", 1], ["created_at", "2015-10-30 17:49:15.296942"], ["updated_at", "2015-10-30 17:49:15.296942"]]
+2015-10-30 17:49:15.299 - DEBUG - #5588 -   [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+2015-10-30 17:49:15.326 - INFO - #5588 - Completed 200 OK in 668ms (Views: 0.3ms | ActiveRecord: 3.9ms)
+2015-10-30 17:49:15.338 - DEBUG - #5588 -   [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:49:15.340 - INFO - #5588 - [0;1;34mStarted POST [0m"/v1/containers" for 127.0.0.1 at 2015-10-30 17:49:15 +0000
+2015-10-30 17:49:15.366 - INFO - #5588 - Processing by ApiDeploy::V1::ContainersController#create as JSON
+2015-10-30 17:49:15.367 - INFO - #5588 -   Parameters: {"container"=>{"plan_id"=>1}}
+2015-10-30 17:49:15.368 - DEBUG - #5588 -   [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:49:15.369 - DEBUG - #5588 -   [1m[35mPlan Load (0.2ms)[0m  SELECT  "plans".* FROM "plans" WHERE "plans"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:49:15.379 - DEBUG - #5588 -   [1m[36mGame Load (0.2ms)[0m  [1mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:49:15.409 - DEBUG - #5588 -   [1m[35mApiDeploy::ContainerMinecraft Exists (0.4ms)[0m  SELECT  1 AS one FROM "containers" WHERE "containers"."port" = $1 LIMIT 1  [["port", "35732"]]
+2015-10-30 17:49:15.409 - DEBUG - #5588 - Creating container with params: {"Name"=>"minecraft_server_bc9638a7-5ff8-4efb-883a-2e7b51479c21", "Image"=>"overshard/minecraft", "Cmd"=>"/start", "ExposedPorts"=>{:"25565/tcp"=>{}}, "PortBindings"=>{"25565/tcp"=>[{"HostIp"=>"127.0.0.1", "HostPort"=>"35732"}]}}
+2015-10-30 17:49:15.415 - DEBUG - #5588 -   [1m[36mHost Load (0.2ms)[0m  [1mSELECT  "hosts".* FROM "hosts" WHERE "hosts"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:49:15.440 - DEBUG - #5588 -   [1m[35m (3.1ms)[0m  SAVEPOINT active_record_1
+2015-10-30 17:49:15.442 - DEBUG - #5588 -   [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "containers" ("user_id", "docker_id", "plan_id", "host_id", "port", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["user_id", 1], ["docker_id", "b67d5fe934585757eb8ba0370127dba2306172e3320264ef818457c9130de697"], ["plan_id", 1], ["host_id", 1], ["port", "35732"], ["created_at", "2015-10-30 17:49:15.440958"], ["updated_at", "2015-10-30 17:49:15.440958"]]
+2015-10-30 17:49:15.443 - DEBUG - #5588 -   [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+2015-10-30 17:49:15.448 - DEBUG - #5588 - Container(1) record has created, attributes: #<ApiDeploy::Container:0x0000000896ef58>
+2015-10-30 17:49:15.449 - DEBUG - #5588 - Container(1) has created
+2015-10-30 17:49:15.453 - INFO - #5588 - Completed 200 OK in 86ms (Views: 1.3ms | ActiveRecord: 6.3ms)
+2015-10-30 17:49:15.455 - DEBUG - #5588 -   [1m[36mApiDeploy::Container Load (0.4ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:49:15.458 - INFO - #5588 - [0;1;34mStarted POST [0m"/v1/containers/1/start" for 127.0.0.1 at 2015-10-30 17:49:15 +0000
+2015-10-30 17:49:15.460 - INFO - #5588 - Processing by ApiDeploy::V1::ContainersController#start as JSON
+2015-10-30 17:49:15.460 - INFO - #5588 -   Parameters: {"id"=>"1"}
+2015-10-30 17:49:15.461 - DEBUG - #5588 -   [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:49:15.462 - DEBUG - #5588 -   [1m[36mApiDeploy::Container Load (0.4ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:49:15.499 - DEBUG - #5588 -   [1m[35mGame Load (0.7ms)[0m  SELECT  "games".* FROM "games" INNER JOIN "plans" ON "games"."id" = "plans"."game_id" WHERE "plans"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:49:15.502 - DEBUG - #5588 -   [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", "1"]]
+2015-10-30 17:49:15.508 - DEBUG - #5588 - Starting container(1)
+2015-10-30 17:49:15.656 - DEBUG - #5588 - Container(1) has started
+2015-10-30 17:49:15.660 - INFO - #5588 - Completed 200 OK in 200ms (Views: 1.3ms | ActiveRecord: 1.4ms)
+2015-10-30 17:49:15.664 - DEBUG - #5588 -   [1m[35mApiDeploy::Container Load (0.3ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:49:23.260 - INFO - #5588 - [0;1;34mStarted POST [0m"/v1/containers/1/restart" for 127.0.0.1 at 2015-10-30 17:49:23 +0000
+2015-10-30 17:49:23.264 - INFO - #5588 - Processing by ApiDeploy::V1::ContainersController#restart as JSON
+2015-10-30 17:49:23.271 - INFO - #5588 -   Parameters: {"id"=>"1"}
+2015-10-30 17:49:23.276 - DEBUG - #5588 -   [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:49:23.281 - DEBUG - #5588 -   [1m[35mApiDeploy::Container Load (0.4ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:49:23.294 - DEBUG - #5588 -   [1m[36mGame Load (3.4ms)[0m  [1mSELECT  "games".* FROM "games" INNER JOIN "plans" ON "games"."id" = "plans"."game_id" WHERE "plans"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:49:23.297 - DEBUG - #5588 -   [1m[35mCACHE (0.1ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", "1"]]
+2015-10-30 17:49:23.299 - DEBUG - #5588 - Restarting container(1)
+2015-10-30 17:49:23.670 - DEBUG - #5588 - Container(1) has restarted
+2015-10-30 17:49:23.687 - INFO - #5588 - Completed 200 OK in 413ms (Views: 11.9ms | ActiveRecord: 4.5ms)
+2015-10-30 17:49:23.716 - DEBUG - #5588 -   [1m[36mApiDeploy::Container Load (6.5ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:49:23.779 - INFO - #5588 - [0;1;34mStarted GET [0m"/v1/containers/1" for 127.0.0.1 at 2015-10-30 17:49:23 +0000
+2015-10-30 17:49:23.784 - INFO - #5588 - Processing by ApiDeploy::V1::ContainersController#show as JSON
+2015-10-30 17:49:23.784 - INFO - #5588 -   Parameters: {"id"=>"1"}
+2015-10-30 17:49:23.787 - DEBUG - #5588 -   [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:49:23.789 - DEBUG - #5588 -   [1m[36mApiDeploy::Container Load (0.3ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:49:23.794 - DEBUG - #5588 -   [1m[35mGame Load (0.4ms)[0m  SELECT  "games".* FROM "games" INNER JOIN "plans" ON "games"."id" = "plans"."game_id" WHERE "plans"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:49:23.797 - DEBUG - #5588 -   [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1[0m  [["id", "1"]]
+2015-10-30 17:49:23.825 - INFO - #5588 - Completed 200 OK in 40ms (Views: 9.3ms | ActiveRecord: 1.2ms)
+2015-10-30 17:49:23.829 - DEBUG - #5588 -   [1m[35mApiDeploy::Container Load (0.4ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:49:23.839 - INFO - #5588 - [0;1;34mStarted DELETE [0m"/v1/containers/1" for 127.0.0.1 at 2015-10-30 17:49:23 +0000
+2015-10-30 17:49:23.843 - INFO - #5588 - Processing by ApiDeploy::V1::ContainersController#destroy as JSON
+2015-10-30 17:49:23.844 - INFO - #5588 -   Parameters: {"id"=>"1"}
+2015-10-30 17:49:23.849 - DEBUG - #5588 -   [1m[36mUser Load (0.8ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:49:23.854 - DEBUG - #5588 -   [1m[35mApiDeploy::Container Load (1.2ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:49:23.862 - DEBUG - #5588 -   [1m[36mGame Load (1.0ms)[0m  [1mSELECT  "games".* FROM "games" INNER JOIN "plans" ON "games"."id" = "plans"."game_id" WHERE "plans"."id" = $1 LIMIT 1[0m  [["id", 1]]
+2015-10-30 17:49:23.865 - DEBUG - #5588 -   [1m[35mCACHE (0.1ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", "1"]]
+2015-10-30 17:49:23.867 - DEBUG - #5588 -   [1m[36m (0.3ms)[0m  [1mSAVEPOINT active_record_1[0m
+2015-10-30 17:49:23.886 - DEBUG - #5588 -   [1m[35mSQL (0.7ms)[0m  DELETE FROM "containers" WHERE "containers"."id" = $1  [["id", 1]]
+2015-10-30 17:49:23.889 - DEBUG - #5588 -   [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+2015-10-30 17:49:23.891 - INFO - #5588 - Completed 200 OK in 46ms (Views: 0.6ms | ActiveRecord: 4.9ms)
+2015-10-30 17:49:23.895 - DEBUG - #5588 -   [1m[35mApiDeploy::Container Load (0.3ms)[0m  SELECT  "containers".* FROM "containers" WHERE "containers"."id" = $1 LIMIT 1  [["id", 1]]
+2015-10-30 17:49:23.900 - DEBUG - #5588 -   [1m[36m (0.4ms)[0m  [1mROLLBACK[0m
