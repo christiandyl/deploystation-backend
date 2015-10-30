@@ -10,12 +10,14 @@ module ApiDeploy
     
     # Relations
     belongs_to :user
+    belongs_to :plan
+    belongs_to :host
+    has_one    :game, :through => :plan
     
     # Validations
-    validates :image, :presence => true
     validates :user_id, :presence => true
     validates :docker_id, :presence => true
-    validates :host, :presence => true
+    validates :host_id, :presence => true
     validates :port, :presence => true
   
     class << self
@@ -26,27 +28,27 @@ module ApiDeploy
         return cname
       end
       
-      def create user, host, opts
+      def create user, plan, opts
         Rails.logger.debug "Creating container with params: #{opts.to_s}"
 
-        image = opts["Image"] or raise ArgumentError.new("Can't create container, image doesn't exists")
-        port  = opts["PortBindings"].first[1].first["HostPort"] or raise ArgumentError.new("HostPort is absent")
-        
-        Docker.url = "tcp://#{host}:5422" unless host == 'localhost'
+        port = opts["PortBindings"].first[1].first["HostPort"] or raise ArgumentError.new("HostPort is absent")
+        host = plan.host
+
+        Docker.url = "tcp://#{host.ip}:5422" unless host.ip == '127.0.0.1'
 
         container_docker = Docker::Container.create(opts)
 
         container = Container.new.tap do |c|
           c.user_id   = user.id
           c.docker_id = container_docker.id
-          c.image     = image
-          c.host      = host
+          c.plan_id   = plan.id
+          c.host_id   = host.id
           c.port      = port
         end
 
         container.save
         
-        # ap container.attributes
+        ap container.attributes
         
         Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.to_s}"
       

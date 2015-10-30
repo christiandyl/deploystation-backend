@@ -13,7 +13,7 @@ describe 'Containers API', :type => :request do
 
   it 'Allows to create container' do
     params = {
-      container: { game: 'minecraft', host: 'localhost' }
+      container: { plan_id: 1 }
     }.to_json
 
     send :post, containers_path, :params => params, :token => @context.token

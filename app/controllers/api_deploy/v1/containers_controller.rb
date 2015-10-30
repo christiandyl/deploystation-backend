@@ -6,10 +6,12 @@ module ApiDeploy
 
       def create
         opts  = params.require(:container)
-        game  = opts[:game] or raise ArgumentError.new("Game name doesn't exists")
-        host  = opts[:host] or raise ArgumentError.new("Host doesn't exists")
-
-        container = Container.class_for(game).create(current_user, host)
+        plan_id  = opts[:plan_id] or raise ArgumentError.new("Plan id doesn't exists")
+        
+        plan = Plan.find(plan_id) or raise "Plan with id #{plan_id} doesn't exists"
+        game = plan.game.name
+        
+        container = Container.class_for(game).create(current_user, plan)
 
         render success_response container.to_api(:public)
       end
@@ -46,7 +48,7 @@ module ApiDeploy
     
       def get_container
         container = Container.find(params[:id])
-        app       = container.image.split("/").last
+        app       = container.game.name
       
         @container = Container.class_for(app).find(params[:id])
       end

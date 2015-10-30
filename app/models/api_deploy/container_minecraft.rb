@@ -3,7 +3,7 @@ module ApiDeploy
   
     REPOSITORY = 'overshard/minecraft'
   
-    def self.create user, host
+    def self.create user, plan
       uuid = SecureRandom.uuid
       name = "minecraft_server_#{uuid}"
       
@@ -16,7 +16,7 @@ module ApiDeploy
         "PortBindings" => { "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => available_port }] }
       }
       
-      super(user, host, docker_opts)
+      super(user, plan, docker_opts)
     end
   
     def start opts={}

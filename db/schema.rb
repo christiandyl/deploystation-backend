@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151026104630) do
+ActiveRecord::Schema.define(version: 20151029103922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,13 +29,41 @@ ActiveRecord::Schema.define(version: 20151026104630) do
 
   create_table "containers", force: :cascade do |t|
     t.string   "docker_id"
-    t.string   "user_id"
-    t.string   "image"
-    t.string   "host"
+    t.integer  "user_id"
+    t.integer  "plan_id"
+    t.integer  "host_id"
     t.string   "port"
     t.string   "status"
+    t.datetime "active_until"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "hosts", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "ip"
+    t.string   "domain"
+    t.string   "location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.integer  "game_id"
+    t.integer  "host_id"
+    t.string   "name"
+    t.integer  "max_players"
+    t.integer  "ram"
+    t.integer  "storage"
+    t.string   "storage_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "users", force: :cascade do |t|
