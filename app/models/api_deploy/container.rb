@@ -16,9 +16,9 @@ module ApiDeploy
     
     # Validations
     validates :user_id, :presence => true
-    validates :docker_id, :presence => true
+    # validates :docker_id, :presence => true
     validates :host_id, :presence => true
-    validates :port, :presence => true
+    # validates :port, :presence => true
   
     class << self
       def class_for game
@@ -28,35 +28,24 @@ module ApiDeploy
         return cname
       end
       
-      def create user, plan, opts
-        Rails.logger.debug "Creating container with params: #{opts.to_s}"
-
-        port = opts["PortBindings"].first[1].first["HostPort"] or raise ArgumentError.new("HostPort is absent")
+      def create user, plan, opts, now=false
         host = plan.host
-
-        Docker.url = "tcp://#{host.ip}:5422" unless host.ip == '127.0.0.1'
-
-        container_docker = Docker::Container.create(opts)
-
+        
         container = Container.new.tap do |c|
           c.user_id   = user.id
-          c.docker_id = container_docker.id
           c.plan_id   = plan.id
           c.host_id   = host.id
-          c.port      = port
         end
-
-        container.save
         
-        ap container.attributes
+        container.save!
+        Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.attributes.to_s}"
         
-        Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.to_s}"
-      
-        unless ASYNC
-          container_docker.wait
-          Rails.logger.debug "Container(#{container.id}) has created"
+        unless now          
+          ApiDeploy::ContainerCreateWorker.perform_async(container.id, opts)
+        else          
+          container.create_docker_container
         end
-    
+        
         return container
       end
       
@@ -71,19 +60,55 @@ module ApiDeploy
       end
     end
   
-    def start opts={}
+    def create_docker_container opts
+      Rails.logger.debug "Creating docker container with params: #{opts.to_s}"
+
+      port = opts["PortBindings"].first[1].first["HostPort"] or raise ArgumentError.new("HostPort is absent")
+
+      Docker.url = "tcp://#{host.ip}:5422" unless host.ip == '127.0.0.1'
+
+      container_docker = Docker::Container.create(opts)
+      
+      self.docker_id = container_docker.id
+      self.port      = port
+      
+      save!
+  
+      unless ASYNC
+        container_docker.wait
+        Rails.logger.debug "Container(#{id}) docker has created"
+      end
+      
+    end
+  
+    def start opts={}, now=false
+      unless now          
+        ApiDeploy::ContainerStartWorker.perform_async(id, opts)
+        return true
+      end
+      
       Rails.logger.debug "Starting container(#{id})"
       docker_container.start(opts)
       Rails.logger.debug "Container(#{id}) has started"
     end
   
-    def restart
+    def restart now=false
+      unless now          
+        ApiDeploy::ContainerRestartWorker.perform_async(id)
+        return true
+      end
+      
       Rails.logger.debug "Restarting container(#{id})"
       docker_container.restart
       Rails.logger.debug "Container(#{id}) has restarted"
     end
   
-    def stop
+    def stop now=false
+      unless now    
+        ApiDeploy::ContainerStopWorker.perform_async(id)
+        return true
+      end
+      
       Rails.logger.debug "Stopping container(#{id})"
       docker_container.stop
       Rails.logger.debug "Container(#{id}) has stopped"
@@ -94,7 +119,11 @@ module ApiDeploy
     end
     
     def info
-      docker_container.info
+      unless docker_id.nil?
+        docker_container.info
+      else
+        {}
+      end
     end
     
     private
