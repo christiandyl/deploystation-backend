@@ -24,6 +24,7 @@ Rails.application.routes.draw do
           post :start
           post :stop
           post :restart
+          post :command
         end
       end
     

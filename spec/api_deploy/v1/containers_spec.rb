@@ -41,7 +41,7 @@ describe 'Containers API', :type => :request do
 
     container = ApiDeploy::Container.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
-    byebug
+    # byebug
   end
 
   it 'Allows to restart container' do
@@ -68,6 +68,17 @@ describe 'Containers API', :type => :request do
 
     container = ApiDeploy::Container.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
+  end
+  
+  it 'Allows to send command to container server' do
+    params = { container: { command: { name: 'kill_player', args: { player_name: 'Skarpy' } } }}.to_json
+    
+    send :post, command_container_path(@context.container_id), :params => params, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
   end
 
   it 'Allows to destroy container' do

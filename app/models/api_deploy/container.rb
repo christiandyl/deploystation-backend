@@ -67,6 +67,8 @@ module ApiDeploy
 
       Docker.url = "tcp://#{host.ip}:5422" unless host.ip == '127.0.0.1'
 
+      opts["name"] = "container_" + id.to_s
+
       container_docker = Docker::Container.create(opts)
       
       self.docker_id = container_docker.id
@@ -126,14 +128,14 @@ module ApiDeploy
       end
     end
     
-    private
-    
     def docker_container
       docker_container = Docker::Container.get(docker_id)
       raise "Container(#{docker_id}) does not exists" if docker_container.nil?
       
       return docker_container
     end
+    
+    private
     
     def on_before_destroy
       # TODO delete docker container in sidekiq

@@ -43,6 +43,17 @@ module ApiDeploy
       
         render success_response
       end
+      
+      def command
+        opts = params.require(:container).require(:command)
+        
+        command_name = opts["name"] or raise ArgumentError.new("Command name doesn't exists")
+        command_args = opts["args"] or raise ArgumentError.new("Command args doesn't exists")
+        byebug
+        @container.command(command_name, command_args)
+        
+        render success_response
+      end
     
       private
     
