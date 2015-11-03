@@ -99,7 +99,7 @@ module ApiDeploy
       end
       
       ##
-      # Execute local server command
+      # Execute game server command
       # @resource /v1/containers/:container_id/command
       # @action POST
       #
@@ -117,6 +117,22 @@ module ApiDeploy
         @container.command(command_name, command_args)
         
         render success_response
+      end
+      
+      ##
+      # Get game server available commands list
+      # @resource /v1/containers/:container_id/commands
+      # @action GET
+      #
+      # @response_field [Boolean] success
+      # @response_field [Array] response
+      # @response_field [String] response[].name Command name
+      # @response_field [Array] response[].required_args Command required arguments
+      # @response_field [String] response[].required_args[].name Argument name
+      # @response_field [String] response[].required_args[].type Argument type
+      # @response_field [Boolean] response[].required_args[].required Argument is required?
+      def commands
+        render success_response ContainerMinecraft::COMMANDS
       end
     
       private

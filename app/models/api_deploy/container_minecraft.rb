@@ -2,6 +2,22 @@ module ApiDeploy
   class ContainerMinecraft < Container
   
     REPOSITORY = 'itzg/minecraft-server'
+    
+    COMMANDS = [
+      {
+        :name => "kill_player",
+        :required_args => [
+          { name: "player_name", type: "string", required: true }
+        ]
+      },
+      {
+        :name => "ban_player",
+        :required_args => [
+          { name: "player_name", type: "string", required: true },
+          { name: "reason", type: "text", required: false }
+        ]
+      }
+    ]
   
     def self.create user, plan
       memory = plan.ram * 1000000
