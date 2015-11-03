@@ -2,6 +2,7 @@ class ApplicationController < ActionController::API
   include AbstractController::Translation
 
   before_filter :check_auth_token, :check_app_key
+  before_filter :ensure_logged_in, :except => [:root]
 
   rescue_from Exception, :with => :render_error
   rescue_from StandardError, :with => :render_error
@@ -40,7 +41,7 @@ class ApplicationController < ActionController::API
   end
 
   def ensure_logged_in
-    @current_user || render_unauthorized
+    @current_user or raise PermissionDenied
   end
 
   # Response helpers

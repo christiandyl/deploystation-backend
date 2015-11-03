@@ -2,6 +2,8 @@ module ApiBack
   module V1
     class SessionsController < ApplicationController
 
+      skip_before_filter :ensure_logged_in
+      
       ##
       # Creating user session
       # @resource /v1/session

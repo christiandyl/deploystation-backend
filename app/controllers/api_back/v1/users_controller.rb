@@ -2,6 +2,8 @@ module ApiBack
   module V1
     class UsersController < ApplicationController
 
+      skip_before_filter :ensure_logged_in
+
       ##
       # Creating user profile (Sign up)
       # @resource /v1/users
