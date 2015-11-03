@@ -1,9 +1,12 @@
 require 'ipaddr'
 
 class Host < ActiveRecord::Base
+  include ApiConverter
 
-  belongs_to :plan
-  has_many   :containers
+  attr_api [:id, :name, :location, :plans_list], :private => [:ip, :domain, :created_at, :updated_at]
+
+  has_many :plans
+  has_many :containers
   
   def ip
     return IPAddr.new(super, Socket::AF_INET).to_s
@@ -27,6 +30,10 @@ class Host < ActiveRecord::Base
     else
       Docker.url = 'unix:///var/run/docker.sock'
     end
+  end
+  
+  def plans_list
+    plans.map { |p| p.to_api(:public) }
   end
 
 end

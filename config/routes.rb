@@ -27,6 +27,8 @@ Rails.application.routes.draw do
           post :command
         end
       end
+      
+      resources :hosts, :only => [:index]
     
     end
   end

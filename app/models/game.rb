@@ -1,4 +1,7 @@
 class Game < ActiveRecord::Base
+  include ApiConverter
+
+  attr_api [:id, :name]
 
   has_many :plans
   

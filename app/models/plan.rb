@@ -1,4 +1,7 @@
 class Plan < ActiveRecord::Base
+  include ApiConverter
+
+  attr_api [:id, :name, :max_players, :game_info]
 
   belongs_to :game
   belongs_to :host
@@ -8,5 +11,9 @@ class Plan < ActiveRecord::Base
   validates :ram, :presence => true, :numericality => { only_integer: true, :greater_than_or_equal_to => 1 }
   validates :storage, :presence => true, :numericality => { only_integer: true, :greater_than_or_equal_to => 1 }
   validates :storage_type, :presence => true, :inclusion => { in: %w(hdd ssd) }
+  
+  def game_info
+    game.to_api(:public)
+  end
 
 end
