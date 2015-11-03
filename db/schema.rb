@@ -47,11 +47,11 @@ ActiveRecord::Schema.define(version: 20151029103922) do
 
   create_table "hosts", force: :cascade do |t|
     t.string   "name"
-    t.integer  "ip"
+    t.integer  "ip",         limit: 8
     t.string   "domain"
     t.string   "location"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "plans", force: :cascade do |t|

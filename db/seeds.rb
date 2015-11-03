@@ -2,28 +2,76 @@ games = [
   { name: 'minecraft' }
 ]
 
-hosts = []
-
-plans = [
-  {
-    :game         => 'minecraft',
-    :host         => 'localhost',
-    :name         => 'starter',
-    :max_players  => 2,
-    :ram          => 256,
-    :storage      => 1024,
-    :storage_type => 'ssd'
-  },
-  {
-    :game         => 'minecraft',
-    :host         => 'localhost',
-    :name         => 'lite',
-    :max_players  => 7,
-    :ram          => 384,
-    :storage      => 1024,
-    :storage_type => 'ssd'
-  }
-]
+if Rails.env.production? # Production seeds
+  plans = [
+    {
+      :game         => 'minecraft',
+      :host         => 'production',
+      :name         => 'starter',
+      :max_players  => 2,
+      :ram          => 256,
+      :storage      => 1024,
+      :storage_type => 'ssd'
+    },
+    {
+      :game         => 'minecraft',
+      :host         => 'production',
+      :name         => 'lite',
+      :max_players  => 7,
+      :ram          => 384,
+      :storage      => 1024,
+      :storage_type => 'ssd'
+    }
+  ]
+  
+  hosts = [{ name: 'production', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv' }]
+elsif Rails.env.staging? # Staging seeds
+  plans = [
+   {
+     :game         => 'minecraft',
+     :host         => 'staging',
+     :name         => 'starter',
+     :max_players  => 2,
+     :ram          => 256,
+     :storage      => 1024,
+     :storage_type => 'ssd'
+   },
+   {
+     :game         => 'minecraft',
+     :host         => 'staging',
+     :name         => 'lite',
+     :max_players  => 7,
+     :ram          => 384,
+     :storage      => 1024,
+     :storage_type => 'ssd'
+   }
+ ]
+ 
+ hosts = [{ name: 'staging', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv' }]
+else # Development and Testing seeds
+  plans = [
+   {
+     :game         => 'minecraft',
+     :host         => 'localhost',
+     :name         => 'starter',
+     :max_players  => 2,
+     :ram          => 256,
+     :storage      => 1024,
+     :storage_type => 'ssd'
+   },
+   {
+     :game         => 'minecraft',
+     :host         => 'localhost',
+     :name         => 'lite',
+     :max_players  => 7,
+     :ram          => 384,
+     :storage      => 1024,
+     :storage_type => 'ssd'
+   }
+ ]
+ 
+ hosts = [{ name: 'localhost', ip: '127.0.0.1', domain: 'localhost', location: 'Localhost' }]
+end
 
 Game.delete_all
 games.each do |attrs|
@@ -32,12 +80,8 @@ end
 puts 'Games table is ready'
 
 Host.delete_all
-if Rails.env.in? ['development', 'test']
-  Host.create name: 'localhost', ip: '127.0.0.1', domain: 'localhost', location: 'Localhost'
-else
-  hosts.each do |attrs|
-    Host.create(attrs)
-  end
+hosts.each do |attrs|
+  Host.create(attrs)
 end
 puts 'Hosts table is ready'
 

@@ -41,7 +41,7 @@ describe 'Containers API', :type => :request do
 
     container = ApiDeploy::Container.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
-    # byebug
+    byebug
   end
 
   it 'Allows to restart container' do

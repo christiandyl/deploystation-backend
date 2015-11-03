@@ -33,7 +33,7 @@ module ApiDeploy
     end
   
     def command name, args
-      if name = "kill_player"
+      if name == "kill_player"
         send("command_#{name}", args)
       end
     end

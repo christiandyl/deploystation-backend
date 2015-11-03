@@ -64,12 +64,20 @@ module ApiDeploy
       Rails.logger.debug "Creating docker container with params: #{opts.to_s}"
 
       port = opts["PortBindings"].first[1].first["HostPort"] or raise ArgumentError.new("HostPort is absent")
-
-      Docker.url = "tcp://#{host.ip}:5422" unless host.ip == '127.0.0.1'
+      
+      host.use
 
       opts["name"] = "container_" + id.to_s
 
-      container_docker = Docker::Container.create(opts)
+      begin
+        container_docker = Docker::Container.create(opts)
+      rescue => e
+        message = "Container(#{id}) docker creation error: #{e.message}"
+        Rails.logger.debug(message)
+        raise message
+        
+        return nil
+      end
       
       self.docker_id = container_docker.id
       self.port      = port
@@ -81,6 +89,7 @@ module ApiDeploy
         Rails.logger.debug "Container(#{id}) docker has created"
       end
       
+      return container_docker
     end
   
     def start opts={}, now=false
@@ -129,6 +138,12 @@ module ApiDeploy
     end
     
     def docker_container
+      if docker_id.nil?
+        raise "Container(#{docker_id}) can't get docker container, docker_id is empty"
+      end
+      
+      host.use
+      
       docker_container = Docker::Container.get(docker_id)
       raise "Container(#{docker_id}) does not exists" if docker_container.nil?
       
@@ -138,6 +153,8 @@ module ApiDeploy
     private
     
     def on_before_destroy
+      host.use
+      
       # TODO delete docker container in sidekiq
       docker_container.delete(:force => true)
     end

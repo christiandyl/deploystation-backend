@@ -49,7 +49,7 @@ module ApiDeploy
         
         command_name = opts["name"] or raise ArgumentError.new("Command name doesn't exists")
         command_args = opts["args"] or raise ArgumentError.new("Command args doesn't exists")
-        byebug
+
         @container.command(command_name, command_args)
         
         render success_response
