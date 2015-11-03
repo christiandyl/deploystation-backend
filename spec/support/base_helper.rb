@@ -41,7 +41,7 @@ module BaseHelper
     expect(obj).to be_instance_of(Hash)
     expect(obj['success']).to be(true)
 
-    token = Token.new obj['auth_token']
+    token = Token.new obj['result']['auth_token']
     token.decode_token
 
     return token

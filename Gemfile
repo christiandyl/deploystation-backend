@@ -31,7 +31,7 @@ group :development do
   
   gem 'redcarpet'
   gem 'yard'
-  gem 'yard-restful'
+  gem 'yard-rest'
 end
 
 group :test do

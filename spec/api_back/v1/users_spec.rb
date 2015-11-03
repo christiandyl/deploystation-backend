@@ -9,6 +9,7 @@ describe 'Users API', :type => :request do
     expect(response.status).to eq(200)
 
     obj = JSON.parse(response.body)
+
     expect(obj).to be_instance_of(Hash)
     expect(obj['success']).to be(true)
   end

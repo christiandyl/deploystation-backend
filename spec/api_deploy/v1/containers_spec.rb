@@ -26,7 +26,7 @@ describe 'Containers API', :type => :request do
 
     container = ApiDeploy::Container.find(obj["result"]["id"]) rescue nil
     expect(container).not_to be_nil
-    
+
     @context.container_id = container.id
   end
   
@@ -71,7 +71,12 @@ describe 'Containers API', :type => :request do
   end
   
   it 'Allows to send command to container server' do
-    params = { container: { command: { name: 'kill_player', args: { player_name: 'Skarpy' } } }}.to_json
+    params = { 
+      command: {
+        name: 'kill_player',
+        args: { player_name: 'Skarpy' }
+      }
+    }.to_json
     
     send :post, command_container_path(@context.container_id), :params => params, :token => @context.token
 
