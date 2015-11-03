@@ -26,7 +26,7 @@ gem 'will_paginate', '~> 3.0.7'
 # pusher
 gem 'pusher'
 
-group :development do
+group :development, :staging do
   gem 'spring', '1.3.6'
   
   gem 'redcarpet'
