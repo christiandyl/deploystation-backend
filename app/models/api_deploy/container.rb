@@ -20,6 +20,8 @@ module ApiDeploy
     validates :host_id, :presence => true
     # validates :port, :presence => true
   
+    def command; raise "SubclassResponsibility"; end
+  
     class << self
       def class_for game
         cname = "api_deploy/container_#{game}".classify.constantize
@@ -137,6 +139,18 @@ module ApiDeploy
       end
     end
     
+    def command name, args, now=false
+      unless now    
+        ApiDeploy::ContainerCommandWorker.perform_async(id, name, args)
+        return true
+      end
+          
+      command_settings = self.class::COMMANDS.find { |c| c[:name] == name }
+      raise ArgumentError.new("Command #{name} doesn't exists") if command_settings.nil?
+      
+      return send("command_#{name}", args)
+    end
+    
     def docker_container
       if docker_id.nil?
         raise "Container(#{docker_id}) can't get docker container, docker_id is empty"
@@ -149,7 +163,7 @@ module ApiDeploy
       
       return docker_container
     end
-    
+      
     private
     
     def on_before_destroy

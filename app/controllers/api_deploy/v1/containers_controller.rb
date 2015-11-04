@@ -3,6 +3,7 @@ module ApiDeploy
     class ContainersController < ApplicationController
 
       before_filter :get_container, :except => [:create]
+      before_action :check_permissions, :except => [:create]
 
       ##
       # Create container
@@ -142,6 +143,10 @@ module ApiDeploy
         app       = container.game.name
       
         @container = Container.class_for(app).find(params[:id])
+      end
+      
+      def check_permissions
+        raise PermissionDenied unless @container.is_owner? current_user
       end
 
     end

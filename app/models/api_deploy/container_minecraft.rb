@@ -6,16 +6,35 @@ module ApiDeploy
     COMMANDS = [
       {
         :name => "kill_player",
-        :required_args => [
+        :args => [
           { name: "player_name", type: "string", required: true }
         ]
       },
       {
         :name => "ban_player",
-        :required_args => [
+        :args => [
           { name: "player_name", type: "string", required: true },
           { name: "reason", type: "text", required: false }
         ]
+      },
+      {
+        :name => "tp",
+        :args => [
+          { name: "player", type: "string", required: true },
+          { name: "target", type: "string", required: true }
+        ]
+      },
+      {
+        :name => "give",
+        :args => [
+          { name: "player", type: "string", required: true },
+          { name: "block_id", type: "string", required: true },
+          { name: "amount", type: "string", required: true }
+        ]
+      },
+      {
+        :name => "list",
+        :args => []
       }
     ]
   
@@ -48,21 +67,61 @@ module ApiDeploy
       super(opts)
     end
   
-    def command name, args
-      if name == "kill_player"
-        send("command_#{name}", args)
-      end
-    end
-  
     def command_kill_player args
       player_name = args[:player_name] or raise ArgumentError.new("Player_name doesn't exists")
       input       = "kill #{player_name}\n"
       
       docker_container.attach stdin: StringIO.new(input)
       
-      Rails.logger.info "Container - Minecraft - #{id} : Player #{player_name} has kicked from the game"
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} has killed by the adminstrator request"
       
-      return true
+      return { success: true }
+    end
+    
+    def command_tp args
+      player = args[:player] or raise ArgumentError.new("Player doesn't exists")
+      target = args[:target] or raise ArgumentError.new("Target doesn't exists")
+      
+      input  = "tp #{player} #{target}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player} has been teleported to #{target}"
+      
+      return { success: true }
+    end
+    
+    def command_give args
+      player = args[:player] or raise ArgumentError.new("Player doesn't exists")
+      target = args[:block_id] or raise ArgumentError.new("Block_id doesn't exists")
+      amount = args[:amount] or raise ArgumentError.new("Amount doesn't exists")
+      
+      input  = "give #{player} #{block_id} #{amount}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player} has received #{amount}x#{block_id}"
+      
+      return { success: true }
+    end
+    
+    def command_list args
+      input  = "list\n"
+      docker_container.attach stdin: StringIO.new(input)
+      
+      return { success: true }
+    end
+    
+    def logs
+      logs = docker_container.logs(stdout: true)
+      lines = logs.split("\n")
+      
+      list = lines.map do |line|
+        splitted = line.split(":")
+        prefix = splitted.first.split(" ")
+        
+        { time: prefix[0], type: prefix[1], message: splitted[1] }
+      end
+      
+      return list
     end
   
   end
