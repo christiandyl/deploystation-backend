@@ -2,12 +2,17 @@ class ConnectFacebook < Connect
 
   default_scope { where(:partner => 'facebook') }
 
+  def self.authenticate data
+    c = self.new data
+    return c.existing_connect
+  end
+
   def initialize data
     super(nil)
 
     short_lived_token = data['token']
 
-    oauth = Koala::Facebook::OAuth.new Settings.connects.facebook.app_id, Settings.connects.facebook.app_secret
+    oauth = Koala::Facebook::OAuth.new Settings.connects.facebook.client_id, Settings.connects.facebook.client_secret
     token = oauth.exchange_access_token_info(short_lived_token)
 
     graph = Koala::Facebook::API.new(token['access_token'])
@@ -19,10 +24,34 @@ class ConnectFacebook < Connect
     self.partner_expire = Time.now+token['expires'].to_i
     self.partner_data = fb_user
   end
+  
+  def partner_data= val
+    write_attribute :partner_data, val.to_json
+  end
 
-  def self.authenticate data
-    c = self.new data
-    return c.existing_connect
+  def partner_data
+    JSON.parse(read_attribute :partner_data) rescue nil
+  end
+
+  def first_name
+    self.partner_data['first_name']
+  end
+
+  def last_name
+    self.partner_data['last_name']
+  end
+
+  def avatar_url
+    "https://graph.facebook.com/#{partner_id}/picture?type=large"
+  end
+
+  def poster_url
+    response = @graph.get_connection("me", "?fields=cover")["cover"]
+    return (response.nil? ? nil : response["source"])
+  end
+  
+  def email
+    partner_data["email"] || "test@facebook.com"
   end
 
 end

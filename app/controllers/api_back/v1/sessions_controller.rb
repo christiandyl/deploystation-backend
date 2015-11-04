@@ -23,21 +23,18 @@ module ApiBack
       # @response_field [Datetime] result.expires Token Expires time
       # @response_field [Hash] result.user User data
       def create
-        connect = user = nil
+        connect_name = Connect::SUPPORTED_CONNECTS.find { |c| !params["connect_#{c}"].nil? }
+        raise "Connect doesn't exists" if connect_name.nil?
+        
+        opts = params.require("connect_#{connect_name}")
 
-        Connect::SUPPORTED_CONNECTS.each do |c|
-          data = params["connect_#{c}"]
-          if data
-            connect = Connect::class_for(c).authenticate(data)
-            user = connect.user if connect
-            raise "Invalid credentials" if user.nil?
-            break
-          end
-        end
+        connect = Connect::class_for(connect_name).authenticate(opts)
+        user = connect.user rescue nil
+        raise "Invalid credentials" if user.nil?
 
         token = Token.new user
         token.generate_token
-
+        
         render success_response(auth_token: token.token, expires: token.expires, user: user.to_api(:public))
       end
 

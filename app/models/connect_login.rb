@@ -26,7 +26,7 @@ class ConnectLogin < Connect
     return nil
   end
 
-  def get_email
+  def email
     partner_id
   end
 

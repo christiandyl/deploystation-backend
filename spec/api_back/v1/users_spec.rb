@@ -12,17 +12,9 @@ describe 'Users API', :type => :request do
 
     expect(obj).to be_instance_of(Hash)
     expect(obj['success']).to be(true)
+    expect(obj['result']).to be_instance_of(Hash)
+    expect(obj['result']['auth_token']).to be_truthy
+    expect(obj['result']['expires']).to be_truthy
   end
-
-  # it 'Allows to create user with facebook connect' do
-  #   token = get_fb_token
-  #   params = { connect_facebook: { token: token } }
-  #   send :post, "/v1/users", :params => params
-  #   expect(response.status).to eq(200)
-  #
-  #   obj = JSON.parse(response.body)
-  #   expect(obj).to be_instance_of(Hash)
-  #   expect(obj['success']).to be(true)
-  # end
 
 end

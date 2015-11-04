@@ -5,11 +5,13 @@ Rails.application.routes.draw do
   scope :module => :api_back do
     scope :v1, :module => :v1 do
 
-      resource  :session, :only => [:create]
-
-      resources :users, :only => [:create] do
+      resource :session, :only => [:create]
+      resources :users, :only => [:create]
+      
+      resource :connect do
         member do
-          get :events
+          post :check
+          get  :request_token
         end
       end
 

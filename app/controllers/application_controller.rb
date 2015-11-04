@@ -56,7 +56,7 @@ class ApplicationController < ActionController::API
 
   def success_response d = nil
     json = { success: true }
-    json[:result] = d if d
+    json[:result] = d unless d.nil?
     { json: json, status: 200 }
   end
   

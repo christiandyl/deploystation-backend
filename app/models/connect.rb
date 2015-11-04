@@ -3,6 +3,8 @@ class Connect < ActiveRecord::Base
 
   SUPPORTED_CONNECTS = ['login', 'facebook']
 
+  def email; raise "SubclassResponsibility"; end
+
   def self.class_for partner_name
     return "connect_#{partner_name}".classify.constantize
   end
@@ -12,7 +14,7 @@ class Connect < ActiveRecord::Base
   end
 
   def user_exists?
-    self.class.where(partner: partner, partner_id: partner_id).first.user rescue nil
+    !user.nil?
   end
 
   def existing_connect

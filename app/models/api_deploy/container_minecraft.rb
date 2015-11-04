@@ -48,8 +48,8 @@ module ApiDeploy
         "OpenStdin"    => true,
         'StdinOnce'    => true,
         "HostConfig"   => {
-          "Memory"     => memory
-          # "MemorySwap" => -1,
+          "Memory"     => memory,
+          "MemorySwap" => -1,
           # "CpuShares"  => 1
         },
         "ExposedPorts" => { "25565/tcp": {} },
