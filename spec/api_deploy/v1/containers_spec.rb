@@ -41,7 +41,21 @@ describe 'Containers API', :type => :request do
 
     container = ApiDeploy::Container.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
+    
     byebug
+  end
+  
+  it 'Allows to get containers list' do
+    send :get, containers_path, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    expect(obj["result"][0]["id"]).to be_truthy
+    expect(obj["result"][0]["status"]).to be_truthy
+    expect(obj["result"][0]["host_info"]).to be_truthy
+    expect(obj["result"][0]["plan_info"]).to be_truthy
   end
 
   it 'Allows to restart container' do
@@ -101,6 +115,19 @@ describe 'Containers API', :type => :request do
     obj = JSON.parse(response.body)
 
     expect(obj['success']).to be(true)
+  end
+
+  it 'Allows to stop container' do
+    send :post, stop_container_path(@context.container_id), :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    # expect(obj["result"]["id"]).not_to be_empty
+
+    container = ApiDeploy::Container.find(@context.container_id) rescue nil
+    expect(container).not_to be_nil
   end
 
   it 'Allows to destroy container' do

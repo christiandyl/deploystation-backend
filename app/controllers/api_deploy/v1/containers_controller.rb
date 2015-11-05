@@ -2,8 +2,25 @@ module ApiDeploy
   module V1
     class ContainersController < ApplicationController
 
-      before_filter :get_container, :except => [:create]
-      before_action :check_permissions, :except => [:create]
+      before_filter :get_container, :except => [:index, :create]
+      before_action :check_permissions, :except => [:index, :create]
+
+      ##
+      # Get containers list
+      # @resource /v1/containers
+      # @action GET
+      #
+      # @response_field [Boolean] success
+      # @response_field [Array] result
+      # @response_field [Integer] result[].id Container id
+      # @response_field [Hash] result[].info Docker container info (blank by default)
+      def index
+        containers = current_user.containers.map do |c|
+          c.to_api(:public)
+        end
+
+        render success_response containers
+      end
 
       ##
       # Create container
@@ -94,7 +111,7 @@ module ApiDeploy
       #
       # @response_field [Boolean] success
       def destroy
-        @container.destroy
+        @container.destroy_container
       
         render success_response
       end

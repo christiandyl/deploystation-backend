@@ -2,9 +2,12 @@ module ApiDeploy
   class Container < ActiveRecord::Base
     include ApiConverter
 
-    attr_api [:id, :info]
+    attr_api [:id, :status, :host_info, :plan_info]
     
     before_destroy :on_before_destroy
+    
+    STATUS_ONLINE  = "online"
+    STATUS_OFFLINE = "offline"
     
     ASYNC = false
     
@@ -34,9 +37,10 @@ module ApiDeploy
         host = plan.host
         
         container = Container.new.tap do |c|
-          c.user_id   = user.id
-          c.plan_id   = plan.id
-          c.host_id   = host.id
+          c.user_id = user.id
+          c.plan_id = plan.id
+          c.host_id = host.id
+          c.status  = STATUS_OFFLINE
         end
         
         container.save!
@@ -103,6 +107,9 @@ module ApiDeploy
       Rails.logger.debug "Starting container(#{id})"
       docker_container.start(opts)
       Rails.logger.debug "Container(#{id}) has started"
+      
+      self.status = STATUS_ONLINE
+      save!
     end
   
     def restart now=false
@@ -111,9 +118,15 @@ module ApiDeploy
         return true
       end
       
+      self.status = STATUS_OFFLINE
+      save!
+      
       Rails.logger.debug "Restarting container(#{id})"
       docker_container.restart
       Rails.logger.debug "Container(#{id}) has restarted"
+      
+      self.status = STATUS_ONLINE
+      save!
     end
   
     def stop now=false
@@ -121,22 +134,36 @@ module ApiDeploy
         ApiDeploy::ContainerStopWorker.perform_async(id)
         return true
       end
-      
+
       Rails.logger.debug "Stopping container(#{id})"
       docker_container.stop
       Rails.logger.debug "Container(#{id}) has stopped"
+      
+      self.status = STATUS_OFFLINE
+      save!
+    end
+    
+    def destroy_container now=false
+      unless now    
+        ApiDeploy::ContainerDestroyWorker.perform_async(id)
+        return true
+      end
+      
+      Rails.logger.debug "Destroying container(#{id})"
+      destroy
+      Rails.logger.debug "Container(#{id}) has destroyed"
     end
     
     def is_owner? user
       user_id == user.id
     end
     
-    def info
-      unless docker_id.nil?
-        docker_container.info
-      else
-        {}
-      end
+    def host_info
+      host.to_api(:public)
+    end
+    
+    def plan_info
+      plan.to_api(:public)
     end
     
     def command name, args, now=false
@@ -168,8 +195,6 @@ module ApiDeploy
     
     def on_before_destroy
       host.use
-      
-      # TODO delete docker container in sidekiq
       docker_container.delete(:force => true)
     end
   
