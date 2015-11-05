@@ -16,12 +16,12 @@ class ConnectFacebook < Connect
     token = oauth.exchange_access_token_info(short_lived_token)
 
     graph = Koala::Facebook::API.new(token['access_token'])
-    fb_user = graph.get_object('me')
+    fb_user = graph.get_object('me', :fields=>"first_name,last_name,email")
 
     self.partner = 'facebook'
     self.partner_id = fb_user['id']
     self.partner_auth_data= token['access_token']
-    self.partner_expire = Time.now+token['expires'].to_i
+    self.partner_expire = Time.now + token['expires'].to_i
     self.partner_data = fb_user
   end
   
@@ -44,14 +44,9 @@ class ConnectFacebook < Connect
   def avatar_url
     "https://graph.facebook.com/#{partner_id}/picture?type=large"
   end
-
-  def poster_url
-    response = @graph.get_connection("me", "?fields=cover")["cover"]
-    return (response.nil? ? nil : response["source"])
-  end
   
   def email
-    partner_data["email"] || "test@facebook.com"
+    partner_data["email"]
   end
 
 end
