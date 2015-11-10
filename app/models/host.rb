@@ -26,7 +26,7 @@ class Host < ActiveRecord::Base
         :ssl_ca_file => ssl_path.join('ca.pem').to_s,
         :scheme      => 'https'
       }
-      Docker.url = 'tcp://195.69.187.71:2376'
+      Docker.url = "tcp://#{ip}:2376"
     else
       Docker.url = 'unix:///var/run/docker.sock'
     end
@@ -34,6 +34,24 @@ class Host < ActiveRecord::Base
   
   def plans_list
     plans.map { |p| p.to_api(:public) }
+  end
+  
+  def free_port
+    port = nil
+    
+    unless ip == "127.0.0.1"
+      Net::SSH.start(ip, 'ubuntu') do |ssh|
+        out  = ssh.exec!("sh /opt/scripts/get_free_port/run.sh")
+        port = out.split("\n").first
+      end
+    else
+      server = TCPServer.new('127.0.0.1', 0)
+      port   = server.addr[1].to_s
+    end
+    
+    raise "Can't get free port" if port.nil?
+    
+    return port
   end
 
 end

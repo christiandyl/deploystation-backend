@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'Containers API', :type => :request do
 
   before :all do
+    `docker rm --force container_1`
     authenticate_test_user
   end
 
@@ -50,7 +51,7 @@ describe 'Containers API', :type => :request do
 
     expect(response.status).to eq(200)
     obj = JSON.parse(response.body)
-
+    
     expect(obj['success']).to be(true)
     expect(obj["result"][0]["id"]).to be_truthy
     expect(obj["result"][0]["status"]).to be_truthy

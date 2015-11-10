@@ -69,8 +69,30 @@ else # Development and Testing seeds
      :storage_type => 'ssd'
    }
  ]
- 
+
  hosts = [{ name: 'localhost', ip: '127.0.0.1', domain: 'localhost', location: 'Localhost' }]
+#  plans = [
+#   {
+#     :game         => 'minecraft',
+#     :host         => 'kharkiv_prod_test',
+#     :name         => 'starter',
+#     :max_players  => 2,
+#     :ram          => 256,
+#     :storage      => 1024,
+#     :storage_type => 'ssd'
+#   },
+#   {
+#     :game         => 'minecraft',
+#     :host         => 'kharkiv_prod_test',
+#     :name         => 'lite',
+#     :max_players  => 7,
+#     :ram          => 384,
+#     :storage      => 1024,
+#     :storage_type => 'ssd'
+#   }
+# ]
+#
+#  hosts = [{ name: 'kharkiv_prod_test', ip: '212.3.116.101', domain: '212.3.116.101', location: 'Kharkiv' }]
 end
 
 Game.delete_all

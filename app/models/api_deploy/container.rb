@@ -2,7 +2,7 @@ module ApiDeploy
   class Container < ActiveRecord::Base
     include ApiConverter
 
-    attr_api [:id, :status, :host_info, :plan_info]
+    attr_api [:id, :status, :host_info, :plan_info, :ip]
     
     before_destroy :on_before_destroy
     
@@ -164,6 +164,10 @@ module ApiDeploy
     
     def plan_info
       plan.to_api(:public)
+    end
+    
+    def ip
+      (host.ip + ":" + port) rescue nil
     end
     
     def command name, args, now=false

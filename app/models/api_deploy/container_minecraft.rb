@@ -40,6 +40,7 @@ module ApiDeploy
   
     def self.create user, plan
       memory = plan.ram * 1000000
+      port   = plan.host.free_port
       
       docker_opts = {
         "Image"        => REPOSITORY,
@@ -53,7 +54,7 @@ module ApiDeploy
           # "CpuShares"  => 1
         },
         "ExposedPorts" => { "25565/tcp": {} },
-        "PortBindings" => { "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => available_port }] },
+        "PortBindings" => { "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port }] },
         "Env"          => ["EULA=TRUE"]
       }
       

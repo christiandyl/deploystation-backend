@@ -25,6 +25,8 @@ gem 'httparty', '0.13.7'
 gem 'will_paginate', '~> 3.0.7'
 # pusher
 gem 'pusher'
+# net ssh
+gem 'net-ssh'
 
 group :development, :staging do
   gem 'spring', '1.3.6'
