@@ -47,6 +47,7 @@ class Host < ActiveRecord::Base
     else
       server = TCPServer.new('127.0.0.1', 0)
       port   = server.addr[1].to_s
+      server.close if server
     end
     
     raise "Can't get free port" if port.nil?

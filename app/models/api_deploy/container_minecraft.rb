@@ -55,7 +55,7 @@ module ApiDeploy
         },
         "ExposedPorts" => { "25565/tcp": {} },
         "PortBindings" => { "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port }] },
-        "Env"          => ["EULA=TRUE"]
+        "Env"          => ["EULA=TRUE", "JVM_OPTS=-Xmx#{plan.ram}M"]
       }
       
       super(user, plan, docker_opts)

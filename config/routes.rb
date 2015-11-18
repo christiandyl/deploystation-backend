@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       end
       
       resources :hosts, :only => [:index]
+      resources :games, :only => [:index]
     
     end
   end
