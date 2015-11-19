@@ -11,7 +11,7 @@ games = [
 if Rails.env.production? # Production seeds
   plans = [
     {
-      :game         => 'minecraft',
+      :game         => 'Minecraft',
       :host         => 'production',
       :name         => 'starter',
       :max_players  => 2,
@@ -20,7 +20,7 @@ if Rails.env.production? # Production seeds
       :storage_type => 'ssd'
     },
     {
-      :game         => 'minecraft',
+      :game         => 'Minecraft',
       :host         => 'production',
       :name         => 'lite',
       :max_players  => 7,
@@ -34,7 +34,7 @@ if Rails.env.production? # Production seeds
 elsif Rails.env.staging? # Staging seeds
   plans = [
    {
-     :game         => 'minecraft',
+     :game         => 'Minecraft',
      :host         => 'staging',
      :name         => 'starter',
      :max_players  => 2,
@@ -43,7 +43,7 @@ elsif Rails.env.staging? # Staging seeds
      :storage_type => 'ssd'
    },
    {
-     :game         => 'minecraft',
+     :game         => 'Minecraft',
      :host         => 'staging',
      :name         => 'lite',
      :max_players  => 7,
@@ -79,7 +79,7 @@ else # Development and Testing seeds
  hosts = [{ name: 'localhost', ip: '127.0.0.1', domain: 'localhost', location: 'Localhost' }]
 #  plans = [
 #   {
-#     :game         => 'minecraft',
+#     :game         => 'Minecraft',
 #     :host         => 'kharkiv_prod_test',
 #     :name         => 'starter',
 #     :max_players  => 2,
@@ -88,7 +88,7 @@ else # Development and Testing seeds
 #     :storage_type => 'ssd'
 #   },
 #   {
-#     :game         => 'minecraft',
+#     :game         => 'Minecraft',
 #     :host         => 'kharkiv_prod_test',
 #     :name         => 'lite',
 #     :max_players  => 7,
