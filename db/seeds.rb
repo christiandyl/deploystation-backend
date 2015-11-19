@@ -1,5 +1,11 @@
 games = [
-  { name: 'minecraft' }
+  { name: 'Minecraft' },
+  { name: 'Minecraft pocket edition' },
+  { name: 'Counter-strike go' },
+  { name: 'Battlefield 4' },
+  { name: 'Battlefield hard line' },
+  { name: '7 days to die' },
+  { name: 'DayZ Standalone' }
 ]
 
 if Rails.env.production? # Production seeds
@@ -51,7 +57,7 @@ elsif Rails.env.staging? # Staging seeds
 else # Development and Testing seeds
   plans = [
    {
-     :game         => 'minecraft',
+     :game         => 'Minecraft',
      :host         => 'localhost',
      :name         => 'starter',
      :max_players  => 2,
@@ -60,7 +66,7 @@ else # Development and Testing seeds
      :storage_type => 'ssd'
    },
    {
-     :game         => 'minecraft',
+     :game         => 'Minecraft',
      :host         => 'localhost',
      :name         => 'lite',
      :max_players  => 7,

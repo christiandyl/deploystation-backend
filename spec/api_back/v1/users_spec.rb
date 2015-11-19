@@ -4,7 +4,7 @@ describe 'Users API', :type => :request do
   include Capybara::DSL
 
   it 'Allows to create user with login connect' do
-    params = { connect_login: { email: 'test@test.com', password: 'test123' } }.to_json
+    params = { connect_login: { full_name: 'Gordon Freeman', email: 'test@test.com', password: 'test123' } }.to_json
     send :post, "/v1/users", :params => params
     expect(response.status).to eq(200)
 
