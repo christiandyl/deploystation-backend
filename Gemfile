@@ -27,6 +27,8 @@ gem 'will_paginate', '~> 3.0.7'
 gem 'pusher'
 # net ssh
 gem 'net-ssh'
+# Rack cors
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :staging do
   gem 'spring', '1.3.6'
