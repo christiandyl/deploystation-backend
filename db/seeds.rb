@@ -17,7 +17,8 @@ if Rails.env.production? # Production seeds
       :max_players  => 2,
       :ram          => 256,
       :storage      => 1024,
-      :storage_type => 'ssd'
+      :storage_type => 'ssd',
+      :price        => "3"
     },
     {
       :game         => 'Minecraft',
@@ -26,7 +27,18 @@ if Rails.env.production? # Production seeds
       :max_players  => 7,
       :ram          => 384,
       :storage      => 1024,
-      :storage_type => 'ssd'
+      :storage_type => 'ssd',
+      :price        => "5"
+    },
+    {
+      :game         => 'Minecraft',
+      :host         => 'production',
+      :name         => 'medium',
+      :max_players  => 12,
+      :ram          => 512,
+      :storage      => 1024,
+      :storage_type => 'ssd',
+      :price        => "8"
     }
   ]
   

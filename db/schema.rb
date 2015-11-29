@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20151029103922) do
     t.integer  "ram"
     t.integer  "storage"
     t.string   "storage_type"
+    t.string   "price"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end

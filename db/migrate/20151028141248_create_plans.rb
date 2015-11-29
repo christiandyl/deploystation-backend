@@ -8,6 +8,7 @@ class CreatePlans < ActiveRecord::Migration
       t.integer :ram
       t.integer :storage
       t.string  :storage_type
+      t.string  :price
       t.timestamps null: false
     end
   end
