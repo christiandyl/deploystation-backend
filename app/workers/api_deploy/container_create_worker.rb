@@ -15,6 +15,7 @@ module ApiDeploy
       rescue => e
         data = { :success => false }
         Pusher.trigger "container-#{container_id}", "create", data
+        raise e
       end
     end
 
