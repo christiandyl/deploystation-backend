@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resource :session, :only => [:create]
       resources :users, :only => [:create]
       get "users/me", :controller => :users, :action => :me
+      post "users/request_password_recovery", :controller => :users, :action => :request_password_recovery
       
       resource :connect do
         member do

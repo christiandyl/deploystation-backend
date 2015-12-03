@@ -33,6 +33,10 @@ This is backend part of [DeployStation] project.
 
 ***Some specs need to have docker launched, so don't forget to install docker!!!***
 
+## API FAQ
+* Question: What headers should I sent in http request when I logged in?
+* Answer: { "X-Auth-Token": "access_token" }
+
 [DeployStation]:http://www.deploystation.com
 [Sidekiq]:http://sidekiq.org/
 [Rspec]:https://github.com/rspec

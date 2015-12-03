@@ -29,6 +29,8 @@ gem 'pusher'
 gem 'net-ssh'
 # Rack cors
 gem 'rack-cors', :require => 'rack/cors'
+# Sendgrid for mailing
+gem 'sendgrid'
 
 group :development, :staging do
   gem 'spring', '1.3.6'

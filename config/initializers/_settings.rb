@@ -18,6 +18,10 @@ Settings = OpenStruct.new(
     :key    => ENV['PUSHER_KEY']    || 'e5404185a0460e3f52da',
     :secret => ENV['PUSHER_SECRET'] || '2df3b5a0303647b59b08'
   ),
+  :sendgrid => OpenStruct.new(
+    :user_name => ENV['SENDGRID_USER_NAME']|| 'deploy4play@gmail.com',
+    :password  => ENV['SENDGRID_PASSWORD'] || 'dsTest2015'
+  ),
   :connects => OpenStruct.new(
     :facebook => OpenStruct.new(
       :client_id     => ENV['CONNECTS_FACEBOOK_APP_ID']     || '705288129606370',

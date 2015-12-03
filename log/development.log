@@ -1801,3 +1801,668 @@
 2015-11-29 13:24:29.496 - DEBUG - #3289 -   AND t1.relname = 'users'
 2015-11-29 13:24:29.496 - DEBUG - #3289 -   AND t3.nspname = ANY (current_schemas(false))
 2015-11-29 13:24:29.496 - DEBUG - #3289 - ORDER BY c.conname
+2015-12-03 10:49:15.402 - DEBUG - #4007 -   [1m[36mUser Load (2.8ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+2015-12-03 10:49:33.178 - DEBUG - #4007 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-12-03 10:49:33.214 - DEBUG - #4007 -   [1m[36mUser Exists (0.8ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'christian.dyl@outlook.com' LIMIT 1[0m
+2015-12-03 10:49:33.222 - DEBUG - #4007 -   [1m[35mSQL (2.9ms)[0m  INSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["email", "christian.dyl@outlook.com"], ["created_at", "2015-12-03 10:49:33.214870"], ["updated_at", "2015-12-03 10:49:33.214870"]]
+2015-12-03 10:49:33.264 - DEBUG - #4007 -   [1m[36m (0.6ms)[0m  [1mROLLBACK[0m
+2015-12-03 10:51:32.109 - DEBUG - #4451 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-12-03 10:51:32.141 - DEBUG - #4451 -   [1m[35mUser Exists (0.5ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = 'christian.dyl@outlook.com' LIMIT 1
+2015-12-03 10:51:32.144 - DEBUG - #4451 -   [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "christian.dyl@outlook.com"], ["created_at", "2015-12-03 10:51:32.141786"], ["updated_at", "2015-12-03 10:51:32.141786"]]
+2015-12-03 10:51:32.180 - DEBUG - #4451 -   [1m[35m (0.7ms)[0m  COMMIT
+2015-12-03 10:52:06.067 - DEBUG - #4451 -   [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+2015-12-03 10:52:06.070 - DEBUG - #4451 -   [1m[35mUser Exists (0.5ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = 'christian.dyl@outlook.com' LIMIT 1
+2015-12-03 10:52:06.083 - DEBUG - #4451 -   [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+2015-12-03 10:53:13.467 - INFO - #4579 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (0.6ms)
+2015-12-03 10:53:13.543 - INFO - #4579 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (0.1ms)
+2015-12-03 10:53:13.544 - INFO - #4579 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (0.0ms)
+2015-12-03 10:53:13.696 - INFO - #4579 -   Rendered user_mailer/welcome_email.text.erb (0.5ms)
+2015-12-03 10:53:13.698 - INFO - #4579 -   Rendered user_mailer/welcome_email.text.erb (0.1ms)
+2015-12-03 10:53:13.702 - INFO - #4579 -   Rendered user_mailer/welcome_email.text.erb (0.1ms)
+2015-12-03 10:53:13.936 - DEBUG - #4579 - UserMailer#welcome_email: processed outbound mail in 717.7ms
+2015-12-03 10:53:13.937 - DEBUG - #4579 - UserMailer#welcome_email: processed outbound mail in 571.5ms
+2015-12-03 10:53:13.939 - DEBUG - #4579 - UserMailer#welcome_email: processed outbound mail in 641.1ms
+2015-12-03 10:53:17.051 - INFO - #4579 - Sent mail to christian.dyl@outlook.com (3111.6ms)
+2015-12-03 10:53:17.051 - DEBUG - #4579 - Date: Thu, 03 Dec 2015 10:53:13 +0000
+2015-12-03 10:53:17.051 - DEBUG - #4579 - From: noreply@deploystation.com
+2015-12-03 10:53:17.051 - DEBUG - #4579 - To: christian.dyl@outlook.com
+2015-12-03 10:53:17.051 - DEBUG - #4579 - Message-ID: <56601f19e960f_11e33fd7d204042c1913f@vagrant-ubuntu-trusty-64.mail>
+2015-12-03 10:53:17.051 - DEBUG - #4579 - Subject: Welcome to My Awesome Site
+2015-12-03 10:53:17.051 - DEBUG - #4579 - Mime-Version: 1.0
+2015-12-03 10:53:17.051 - DEBUG - #4579 - Content-Type: multipart/alternative;
+2015-12-03 10:53:17.051 - DEBUG - #4579 -  boundary="--==_mimepart_56601f19e4c46_11e33fd7d204042c188bb";
+2015-12-03 10:53:17.051 - DEBUG - #4579 -  charset=UTF-8
+2015-12-03 10:53:17.051 - DEBUG - #4579 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:53:17.051 - DEBUG - #4579 - 
+2015-12-03 10:53:17.051 - DEBUG - #4579 - 
+2015-12-03 10:53:17.051 - DEBUG - #4579 - ----==_mimepart_56601f19e4c46_11e33fd7d204042c188bb
+2015-12-03 10:53:17.052 - DEBUG - #4579 - Content-Type: text/plain;
+2015-12-03 10:53:17.052 - DEBUG - #4579 -  charset=UTF-8
+2015-12-03 10:53:17.052 - DEBUG - #4579 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:53:17.052 - DEBUG - #4579 - 
+2015-12-03 10:53:17.052 - DEBUG - #4579 - Welcome to example.com,
+2015-12-03 10:53:17.052 - DEBUG - #4579 - ===============================================
+2015-12-03 10:53:17.052 - DEBUG - #4579 - 
+2015-12-03 10:53:17.052 - DEBUG - #4579 - You have successfully signed up to example.com,
+2015-12-03 10:53:17.052 - DEBUG - #4579 - your username is: christian.dyl@outlook.com.
+2015-12-03 10:53:17.052 - DEBUG - #4579 - 
+2015-12-03 10:53:17.052 - DEBUG - #4579 - To login to the site, just follow this link:.
+2015-12-03 10:53:17.052 - DEBUG - #4579 - 
+2015-12-03 10:53:17.052 - DEBUG - #4579 - Thanks for joining and have a great day!
+2015-12-03 10:53:17.052 - DEBUG - #4579 - ----==_mimepart_56601f19e4c46_11e33fd7d204042c188bb
+2015-12-03 10:53:17.052 - DEBUG - #4579 - Content-Type: text/html;
+2015-12-03 10:53:17.052 - DEBUG - #4579 -  charset=UTF-8
+2015-12-03 10:53:17.052 - DEBUG - #4579 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:53:17.052 - DEBUG - #4579 - 
+2015-12-03 10:53:17.052 - DEBUG - #4579 - <!DOCTYPE html>
+2015-12-03 10:53:17.052 - DEBUG - #4579 - <html>
+2015-12-03 10:53:17.052 - DEBUG - #4579 - <head>
+2015-12-03 10:53:17.052 - DEBUG - #4579 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-12-03 10:53:17.052 - DEBUG - #4579 - </head>
+2015-12-03 10:53:17.052 - DEBUG - #4579 - <body>
+2015-12-03 10:53:17.052 - DEBUG - #4579 - <h1>Welcome to example.com,</h1>
+2015-12-03 10:53:17.052 - DEBUG - #4579 - <p>
+2015-12-03 10:53:17.052 - DEBUG - #4579 -   You have successfully signed up to example.com,
+2015-12-03 10:53:17.052 - DEBUG - #4579 -   your username is: christian.dyl@outlook.com.<br>
+2015-12-03 10:53:17.052 - DEBUG - #4579 - </p>
+2015-12-03 10:53:17.052 - DEBUG - #4579 - <p>
+2015-12-03 10:53:17.052 - DEBUG - #4579 -   To login to the site, just follow this link:.
+2015-12-03 10:53:17.052 - DEBUG - #4579 - </p>
+2015-12-03 10:53:17.052 - DEBUG - #4579 - <p>Thanks for joining and have a great day!</p>
+2015-12-03 10:53:17.052 - DEBUG - #4579 - </body>
+2015-12-03 10:53:17.052 - DEBUG - #4579 - </html>
+2015-12-03 10:53:17.052 - DEBUG - #4579 - ----==_mimepart_56601f19e4c46_11e33fd7d204042c188bb--
+2015-12-03 10:53:18.053 - INFO - #4579 - Sent mail to christian.dyl@outlook.com (4113.2ms)
+2015-12-03 10:53:18.054 - DEBUG - #4579 - Date: Thu, 03 Dec 2015 10:53:13 +0000
+2015-12-03 10:53:18.054 - DEBUG - #4579 - From: noreply@deploystation.com
+2015-12-03 10:53:18.054 - DEBUG - #4579 - To: christian.dyl@outlook.com
+2015-12-03 10:53:18.054 - DEBUG - #4579 - Message-ID: <56601f19e9e3f_11e32a6ea8019257@vagrant-ubuntu-trusty-64.mail>
+2015-12-03 10:53:18.054 - DEBUG - #4579 - Subject: Welcome to My Awesome Site
+2015-12-03 10:53:18.054 - DEBUG - #4579 - Mime-Version: 1.0
+2015-12-03 10:53:18.054 - DEBUG - #4579 - Content-Type: multipart/alternative;
+2015-12-03 10:53:18.054 - DEBUG - #4579 -  boundary="--==_mimepart_56601f19e514e_11e32a6ea80189e6";
+2015-12-03 10:53:18.054 - DEBUG - #4579 -  charset=UTF-8
+2015-12-03 10:53:18.054 - DEBUG - #4579 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:53:18.054 - DEBUG - #4579 - 
+2015-12-03 10:53:18.054 - DEBUG - #4579 - 
+2015-12-03 10:53:18.054 - DEBUG - #4579 - ----==_mimepart_56601f19e514e_11e32a6ea80189e6
+2015-12-03 10:53:18.054 - DEBUG - #4579 - Content-Type: text/plain;
+2015-12-03 10:53:18.054 - DEBUG - #4579 -  charset=UTF-8
+2015-12-03 10:53:18.054 - DEBUG - #4579 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:53:18.054 - DEBUG - #4579 - 
+2015-12-03 10:53:18.054 - DEBUG - #4579 - Welcome to example.com,
+2015-12-03 10:53:18.054 - DEBUG - #4579 - ===============================================
+2015-12-03 10:53:18.054 - DEBUG - #4579 - 
+2015-12-03 10:53:18.054 - DEBUG - #4579 - You have successfully signed up to example.com,
+2015-12-03 10:53:18.054 - DEBUG - #4579 - your username is: christian.dyl@outlook.com.
+2015-12-03 10:53:18.054 - DEBUG - #4579 - 
+2015-12-03 10:53:18.054 - DEBUG - #4579 - To login to the site, just follow this link:.
+2015-12-03 10:53:18.054 - DEBUG - #4579 - 
+2015-12-03 10:53:18.054 - DEBUG - #4579 - Thanks for joining and have a great day!
+2015-12-03 10:53:18.054 - DEBUG - #4579 - ----==_mimepart_56601f19e514e_11e32a6ea80189e6
+2015-12-03 10:53:18.054 - DEBUG - #4579 - Content-Type: text/html;
+2015-12-03 10:53:18.054 - DEBUG - #4579 -  charset=UTF-8
+2015-12-03 10:53:18.054 - DEBUG - #4579 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:53:18.054 - DEBUG - #4579 - 
+2015-12-03 10:53:18.054 - DEBUG - #4579 - <!DOCTYPE html>
+2015-12-03 10:53:18.054 - DEBUG - #4579 - <html>
+2015-12-03 10:53:18.054 - DEBUG - #4579 - <head>
+2015-12-03 10:53:18.054 - DEBUG - #4579 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-12-03 10:53:18.054 - DEBUG - #4579 - </head>
+2015-12-03 10:53:18.054 - DEBUG - #4579 - <body>
+2015-12-03 10:53:18.054 - DEBUG - #4579 - <h1>Welcome to example.com,</h1>
+2015-12-03 10:53:18.054 - DEBUG - #4579 - <p>
+2015-12-03 10:53:18.054 - DEBUG - #4579 -   You have successfully signed up to example.com,
+2015-12-03 10:53:18.054 - DEBUG - #4579 -   your username is: christian.dyl@outlook.com.<br>
+2015-12-03 10:53:18.054 - DEBUG - #4579 - </p>
+2015-12-03 10:53:18.054 - DEBUG - #4579 - <p>
+2015-12-03 10:53:18.054 - DEBUG - #4579 -   To login to the site, just follow this link:.
+2015-12-03 10:53:18.054 - DEBUG - #4579 - </p>
+2015-12-03 10:53:18.054 - DEBUG - #4579 - <p>Thanks for joining and have a great day!</p>
+2015-12-03 10:53:18.054 - DEBUG - #4579 - </body>
+2015-12-03 10:53:18.054 - DEBUG - #4579 - </html>
+2015-12-03 10:53:18.054 - DEBUG - #4579 - ----==_mimepart_56601f19e514e_11e32a6ea80189e6--
+2015-12-03 10:53:19.073 - INFO - #4579 - Sent mail to christian.dyl@outlook.com (5133.7ms)
+2015-12-03 10:53:19.073 - DEBUG - #4579 - Date: Thu, 03 Dec 2015 10:53:13 +0000
+2015-12-03 10:53:19.073 - DEBUG - #4579 - From: noreply@deploystation.com
+2015-12-03 10:53:19.073 - DEBUG - #4579 - To: christian.dyl@outlook.com
+2015-12-03 10:53:19.073 - DEBUG - #4579 - Message-ID: <56601f19e8f90_11e33fd7c4047280190d7@vagrant-ubuntu-trusty-64.mail>
+2015-12-03 10:53:19.073 - DEBUG - #4579 - Subject: Welcome to My Awesome Site
+2015-12-03 10:53:19.073 - DEBUG - #4579 - Mime-Version: 1.0
+2015-12-03 10:53:19.073 - DEBUG - #4579 - Content-Type: multipart/alternative;
+2015-12-03 10:53:19.073 - DEBUG - #4579 -  boundary="--==_mimepart_56601f19e4669_11e33fd7c404728018728";
+2015-12-03 10:53:19.073 - DEBUG - #4579 -  charset=UTF-8
+2015-12-03 10:53:19.073 - DEBUG - #4579 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:53:19.073 - DEBUG - #4579 - 
+2015-12-03 10:53:19.073 - DEBUG - #4579 - 
+2015-12-03 10:53:19.073 - DEBUG - #4579 - ----==_mimepart_56601f19e4669_11e33fd7c404728018728
+2015-12-03 10:53:19.073 - DEBUG - #4579 - Content-Type: text/plain;
+2015-12-03 10:53:19.073 - DEBUG - #4579 -  charset=UTF-8
+2015-12-03 10:53:19.073 - DEBUG - #4579 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:53:19.073 - DEBUG - #4579 - 
+2015-12-03 10:53:19.073 - DEBUG - #4579 - Welcome to example.com,
+2015-12-03 10:53:19.073 - DEBUG - #4579 - ===============================================
+2015-12-03 10:53:19.073 - DEBUG - #4579 - 
+2015-12-03 10:53:19.073 - DEBUG - #4579 - You have successfully signed up to example.com,
+2015-12-03 10:53:19.074 - DEBUG - #4579 - your username is: christian.dyl@outlook.com.
+2015-12-03 10:53:19.074 - DEBUG - #4579 - 
+2015-12-03 10:53:19.074 - DEBUG - #4579 - To login to the site, just follow this link:.
+2015-12-03 10:53:19.074 - DEBUG - #4579 - 
+2015-12-03 10:53:19.074 - DEBUG - #4579 - Thanks for joining and have a great day!
+2015-12-03 10:53:19.074 - DEBUG - #4579 - ----==_mimepart_56601f19e4669_11e33fd7c404728018728
+2015-12-03 10:53:19.074 - DEBUG - #4579 - Content-Type: text/html;
+2015-12-03 10:53:19.074 - DEBUG - #4579 -  charset=UTF-8
+2015-12-03 10:53:19.074 - DEBUG - #4579 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:53:19.074 - DEBUG - #4579 - 
+2015-12-03 10:53:19.074 - DEBUG - #4579 - <!DOCTYPE html>
+2015-12-03 10:53:19.074 - DEBUG - #4579 - <html>
+2015-12-03 10:53:19.074 - DEBUG - #4579 - <head>
+2015-12-03 10:53:19.074 - DEBUG - #4579 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-12-03 10:53:19.074 - DEBUG - #4579 - </head>
+2015-12-03 10:53:19.074 - DEBUG - #4579 - <body>
+2015-12-03 10:53:19.074 - DEBUG - #4579 - <h1>Welcome to example.com,</h1>
+2015-12-03 10:53:19.074 - DEBUG - #4579 - <p>
+2015-12-03 10:53:19.074 - DEBUG - #4579 -   You have successfully signed up to example.com,
+2015-12-03 10:53:19.074 - DEBUG - #4579 -   your username is: christian.dyl@outlook.com.<br>
+2015-12-03 10:53:19.074 - DEBUG - #4579 - </p>
+2015-12-03 10:53:19.074 - DEBUG - #4579 - <p>
+2015-12-03 10:53:19.074 - DEBUG - #4579 -   To login to the site, just follow this link:.
+2015-12-03 10:53:19.074 - DEBUG - #4579 - </p>
+2015-12-03 10:53:19.074 - DEBUG - #4579 - <p>Thanks for joining and have a great day!</p>
+2015-12-03 10:53:19.074 - DEBUG - #4579 - </body>
+2015-12-03 10:53:19.074 - DEBUG - #4579 - </html>
+2015-12-03 10:53:19.074 - DEBUG - #4579 - ----==_mimepart_56601f19e4669_11e33fd7c404728018728--
+2015-12-03 10:53:56.059 - DEBUG - #4625 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-12-03 10:53:56.089 - DEBUG - #4625 -   [1m[35mUser Exists (0.4ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = 'christian.dyl@outlook.com' LIMIT 1
+2015-12-03 10:53:56.099 - DEBUG - #4625 -   [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+2015-12-03 10:54:13.785 - DEBUG - #4625 -   [1m[35m (0.6ms)[0m  BEGIN
+2015-12-03 10:54:13.787 - DEBUG - #4625 -   [1m[36mUser Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'christian.dyl@outlook.com' LIMIT 1[0m
+2015-12-03 10:54:13.790 - DEBUG - #4625 -   [1m[35m (0.3ms)[0m  ROLLBACK
+2015-12-03 10:54:43.105 - DEBUG - #4625 -   [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+2015-12-03 10:55:36.649 - DEBUG - #4830 -   [1m[36mUser Load (0.8ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+2015-12-03 10:55:40.290 - INFO - #4790 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (0.6ms)
+2015-12-03 10:55:40.370 - INFO - #4790 -   Rendered user_mailer/welcome_email.text.erb (0.4ms)
+2015-12-03 10:55:40.701 - DEBUG - #4790 - UserMailer#welcome_email: processed outbound mail in 498.8ms
+2015-12-03 10:55:41.784 - INFO - #4790 - Sent mail to christian.dyl@outlook.com (1082.5ms)
+2015-12-03 10:55:41.784 - DEBUG - #4790 - Date: Thu, 03 Dec 2015 10:55:40 +0000
+2015-12-03 10:55:41.784 - DEBUG - #4790 - From: noreply@deploystation.com
+2015-12-03 10:55:41.784 - DEBUG - #4790 - To: christian.dyl@outlook.com
+2015-12-03 10:55:41.784 - DEBUG - #4790 - Message-ID: <56601facae15d_12b63f970a0576448492b@vagrant-ubuntu-trusty-64.mail>
+2015-12-03 10:55:41.784 - DEBUG - #4790 - Subject: Welcome to My Awesome Site
+2015-12-03 10:55:41.784 - DEBUG - #4790 - Mime-Version: 1.0
+2015-12-03 10:55:41.784 - DEBUG - #4790 - Content-Type: multipart/alternative;
+2015-12-03 10:55:41.784 - DEBUG - #4790 -  boundary="--==_mimepart_56601facab159_12b63f970a0576448484c";
+2015-12-03 10:55:41.784 - DEBUG - #4790 -  charset=UTF-8
+2015-12-03 10:55:41.784 - DEBUG - #4790 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:55:41.784 - DEBUG - #4790 - 
+2015-12-03 10:55:41.784 - DEBUG - #4790 - 
+2015-12-03 10:55:41.784 - DEBUG - #4790 - ----==_mimepart_56601facab159_12b63f970a0576448484c
+2015-12-03 10:55:41.784 - DEBUG - #4790 - Content-Type: text/plain;
+2015-12-03 10:55:41.785 - DEBUG - #4790 -  charset=UTF-8
+2015-12-03 10:55:41.785 - DEBUG - #4790 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:55:41.785 - DEBUG - #4790 - 
+2015-12-03 10:55:41.785 - DEBUG - #4790 - Welcome to example.com,
+2015-12-03 10:55:41.785 - DEBUG - #4790 - ===============================================
+2015-12-03 10:55:41.785 - DEBUG - #4790 - 
+2015-12-03 10:55:41.785 - DEBUG - #4790 - You have successfully signed up to example.com,
+2015-12-03 10:55:41.785 - DEBUG - #4790 - your username is: christian.dyl@outlook.com.
+2015-12-03 10:55:41.785 - DEBUG - #4790 - 
+2015-12-03 10:55:41.785 - DEBUG - #4790 - To login to the site, just follow this link:.
+2015-12-03 10:55:41.785 - DEBUG - #4790 - 
+2015-12-03 10:55:41.785 - DEBUG - #4790 - Thanks for joining and have a great day!
+2015-12-03 10:55:41.785 - DEBUG - #4790 - ----==_mimepart_56601facab159_12b63f970a0576448484c
+2015-12-03 10:55:41.785 - DEBUG - #4790 - Content-Type: text/html;
+2015-12-03 10:55:41.785 - DEBUG - #4790 -  charset=UTF-8
+2015-12-03 10:55:41.785 - DEBUG - #4790 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:55:41.785 - DEBUG - #4790 - 
+2015-12-03 10:55:41.785 - DEBUG - #4790 - <!DOCTYPE html>
+2015-12-03 10:55:41.785 - DEBUG - #4790 - <html>
+2015-12-03 10:55:41.785 - DEBUG - #4790 - <head>
+2015-12-03 10:55:41.785 - DEBUG - #4790 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-12-03 10:55:41.785 - DEBUG - #4790 - </head>
+2015-12-03 10:55:41.785 - DEBUG - #4790 - <body>
+2015-12-03 10:55:41.785 - DEBUG - #4790 - <h1>Welcome to example.com,</h1>
+2015-12-03 10:55:41.785 - DEBUG - #4790 - <p>
+2015-12-03 10:55:41.785 - DEBUG - #4790 -   You have successfully signed up to example.com,
+2015-12-03 10:55:41.785 - DEBUG - #4790 -   your username is: christian.dyl@outlook.com.<br>
+2015-12-03 10:55:41.785 - DEBUG - #4790 - </p>
+2015-12-03 10:55:41.785 - DEBUG - #4790 - <p>
+2015-12-03 10:55:41.785 - DEBUG - #4790 -   To login to the site, just follow this link:.
+2015-12-03 10:55:41.785 - DEBUG - #4790 - </p>
+2015-12-03 10:55:41.785 - DEBUG - #4790 - <p>Thanks for joining and have a great day!</p>
+2015-12-03 10:55:41.785 - DEBUG - #4790 - </body>
+2015-12-03 10:55:41.785 - DEBUG - #4790 - </html>
+2015-12-03 10:55:41.785 - DEBUG - #4790 - ----==_mimepart_56601facab159_12b63f970a0576448484c--
+2015-12-03 10:58:17.273 - DEBUG - #4866 -   [1m[36mUser Load (1.5ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+2015-12-03 10:58:18.373 - INFO - #4855 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (0.6ms)
+2015-12-03 10:58:18.453 - INFO - #4855 -   Rendered user_mailer/welcome_email.text.erb (0.4ms)
+2015-12-03 10:58:18.748 - DEBUG - #4855 - UserMailer#welcome_email: processed outbound mail in 453.6ms
+2015-12-03 10:58:19.825 - INFO - #4855 - Sent mail to christian.dyl@outlook.com (1077.3ms)
+2015-12-03 10:58:19.826 - DEBUG - #4855 - Date: Thu, 03 Dec 2015 10:58:18 +0000
+2015-12-03 10:58:19.826 - DEBUG - #4855 - From: noreply@deploystation.com
+2015-12-03 10:58:19.826 - DEBUG - #4855 - To: christian.dyl@outlook.com
+2015-12-03 10:58:19.826 - DEBUG - #4855 - Message-ID: <5660204ab98a6_12f73f8bcc05764c927c8@vagrant-ubuntu-trusty-64.mail>
+2015-12-03 10:58:19.826 - DEBUG - #4855 - Subject: Welcome to My Awesome Site
+2015-12-03 10:58:19.826 - DEBUG - #4855 - Mime-Version: 1.0
+2015-12-03 10:58:19.826 - DEBUG - #4855 - Content-Type: multipart/alternative;
+2015-12-03 10:58:19.826 - DEBUG - #4855 -  boundary="--==_mimepart_5660204ab660a_12f73f8bcc05764c926a3";
+2015-12-03 10:58:19.826 - DEBUG - #4855 -  charset=UTF-8
+2015-12-03 10:58:19.826 - DEBUG - #4855 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:58:19.826 - DEBUG - #4855 - 
+2015-12-03 10:58:19.826 - DEBUG - #4855 - 
+2015-12-03 10:58:19.826 - DEBUG - #4855 - ----==_mimepart_5660204ab660a_12f73f8bcc05764c926a3
+2015-12-03 10:58:19.826 - DEBUG - #4855 - Content-Type: text/plain;
+2015-12-03 10:58:19.826 - DEBUG - #4855 -  charset=UTF-8
+2015-12-03 10:58:19.826 - DEBUG - #4855 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:58:19.826 - DEBUG - #4855 - 
+2015-12-03 10:58:19.826 - DEBUG - #4855 - Welcome to example.com,
+2015-12-03 10:58:19.826 - DEBUG - #4855 - ===============================================
+2015-12-03 10:58:19.826 - DEBUG - #4855 - 
+2015-12-03 10:58:19.826 - DEBUG - #4855 - You have successfully signed up to example.com,
+2015-12-03 10:58:19.826 - DEBUG - #4855 - your username is: christian.dyl@outlook.com.
+2015-12-03 10:58:19.826 - DEBUG - #4855 - 
+2015-12-03 10:58:19.826 - DEBUG - #4855 - To login to the site, just follow this link:.
+2015-12-03 10:58:19.826 - DEBUG - #4855 - 
+2015-12-03 10:58:19.826 - DEBUG - #4855 - Thanks for joining and have a great day!
+2015-12-03 10:58:19.826 - DEBUG - #4855 - ----==_mimepart_5660204ab660a_12f73f8bcc05764c926a3
+2015-12-03 10:58:19.826 - DEBUG - #4855 - Content-Type: text/html;
+2015-12-03 10:58:19.826 - DEBUG - #4855 -  charset=UTF-8
+2015-12-03 10:58:19.826 - DEBUG - #4855 - Content-Transfer-Encoding: 7bit
+2015-12-03 10:58:19.826 - DEBUG - #4855 - 
+2015-12-03 10:58:19.826 - DEBUG - #4855 - <!DOCTYPE html>
+2015-12-03 10:58:19.826 - DEBUG - #4855 - <html>
+2015-12-03 10:58:19.826 - DEBUG - #4855 - <head>
+2015-12-03 10:58:19.826 - DEBUG - #4855 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-12-03 10:58:19.826 - DEBUG - #4855 - </head>
+2015-12-03 10:58:19.826 - DEBUG - #4855 - <body>
+2015-12-03 10:58:19.826 - DEBUG - #4855 - <h1>Welcome to example.com,</h1>
+2015-12-03 10:58:19.826 - DEBUG - #4855 - <p>
+2015-12-03 10:58:19.826 - DEBUG - #4855 -   You have successfully signed up to example.com,
+2015-12-03 10:58:19.826 - DEBUG - #4855 -   your username is: christian.dyl@outlook.com.<br>
+2015-12-03 10:58:19.826 - DEBUG - #4855 - </p>
+2015-12-03 10:58:19.826 - DEBUG - #4855 - <p>
+2015-12-03 10:58:19.826 - DEBUG - #4855 -   To login to the site, just follow this link:.
+2015-12-03 10:58:19.826 - DEBUG - #4855 - </p>
+2015-12-03 10:58:19.826 - DEBUG - #4855 - <p>Thanks for joining and have a great day!</p>
+2015-12-03 10:58:19.826 - DEBUG - #4855 - </body>
+2015-12-03 10:58:19.826 - DEBUG - #4855 - </html>
+2015-12-03 10:58:19.826 - DEBUG - #4855 - ----==_mimepart_5660204ab660a_12f73f8bcc05764c926a3--
+2015-12-03 11:01:22.880 - DEBUG - #4974 -   [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+2015-12-03 11:01:25.598 - INFO - #4935 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (0.6ms)
+2015-12-03 11:01:25.682 - INFO - #4935 -   Rendered user_mailer/welcome_email.text.erb (0.4ms)
+2015-12-03 11:01:26.002 - DEBUG - #4935 - UserMailer#welcome_email: processed outbound mail in 487.1ms
+2015-12-03 11:01:26.823 - INFO - #4935 - Sent mail to christian.dyl@outlook.com (820.5ms)
+2015-12-03 11:01:26.824 - DEBUG - #4935 - Date: Thu, 03 Dec 2015 11:01:26 +0000
+2015-12-03 11:01:26.824 - DEBUG - #4935 - From: noreply@deploystation.com
+2015-12-03 11:01:26.824 - DEBUG - #4935 - To: christian.dyl@outlook.com
+2015-12-03 11:01:26.824 - DEBUG - #4935 - Message-ID: <5660210637a7_13473f806e0937646909@vagrant-ubuntu-trusty-64.mail>
+2015-12-03 11:01:26.824 - DEBUG - #4935 - Subject: Welcome to My Awesome Site
+2015-12-03 11:01:26.824 - DEBUG - #4935 - Mime-Version: 1.0
+2015-12-03 11:01:26.824 - DEBUG - #4935 - Content-Type: multipart/alternative;
+2015-12-03 11:01:26.824 - DEBUG - #4935 -  boundary="--==_mimepart_566021062cb_13473f806e09376468994";
+2015-12-03 11:01:26.824 - DEBUG - #4935 -  charset=UTF-8
+2015-12-03 11:01:26.824 - DEBUG - #4935 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:01:26.824 - DEBUG - #4935 - 
+2015-12-03 11:01:26.824 - DEBUG - #4935 - 
+2015-12-03 11:01:26.824 - DEBUG - #4935 - ----==_mimepart_566021062cb_13473f806e09376468994
+2015-12-03 11:01:26.824 - DEBUG - #4935 - Content-Type: text/plain;
+2015-12-03 11:01:26.824 - DEBUG - #4935 -  charset=UTF-8
+2015-12-03 11:01:26.824 - DEBUG - #4935 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:01:26.824 - DEBUG - #4935 - 
+2015-12-03 11:01:26.824 - DEBUG - #4935 - Welcome to example.com,
+2015-12-03 11:01:26.824 - DEBUG - #4935 - ===============================================
+2015-12-03 11:01:26.824 - DEBUG - #4935 - 
+2015-12-03 11:01:26.824 - DEBUG - #4935 - You have successfully signed up to example.com,
+2015-12-03 11:01:26.824 - DEBUG - #4935 - your username is: christian.dyl@outlook.com.
+2015-12-03 11:01:26.824 - DEBUG - #4935 - 
+2015-12-03 11:01:26.824 - DEBUG - #4935 - To login to the site, just follow this link:.
+2015-12-03 11:01:26.824 - DEBUG - #4935 - 
+2015-12-03 11:01:26.824 - DEBUG - #4935 - Thanks for joining and have a great day!
+2015-12-03 11:01:26.824 - DEBUG - #4935 - ----==_mimepart_566021062cb_13473f806e09376468994
+2015-12-03 11:01:26.824 - DEBUG - #4935 - Content-Type: text/html;
+2015-12-03 11:01:26.824 - DEBUG - #4935 -  charset=UTF-8
+2015-12-03 11:01:26.824 - DEBUG - #4935 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:01:26.824 - DEBUG - #4935 - 
+2015-12-03 11:01:26.824 - DEBUG - #4935 - <!DOCTYPE html>
+2015-12-03 11:01:26.824 - DEBUG - #4935 - <html>
+2015-12-03 11:01:26.824 - DEBUG - #4935 - <head>
+2015-12-03 11:01:26.824 - DEBUG - #4935 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-12-03 11:01:26.824 - DEBUG - #4935 - </head>
+2015-12-03 11:01:26.824 - DEBUG - #4935 - <body>
+2015-12-03 11:01:26.824 - DEBUG - #4935 - <h1>Welcome to example.com,</h1>
+2015-12-03 11:01:26.824 - DEBUG - #4935 - <p>
+2015-12-03 11:01:26.824 - DEBUG - #4935 -   You have successfully signed up to example.com,
+2015-12-03 11:01:26.824 - DEBUG - #4935 -   your username is: christian.dyl@outlook.com.<br>
+2015-12-03 11:01:26.824 - DEBUG - #4935 - </p>
+2015-12-03 11:01:26.824 - DEBUG - #4935 - <p>
+2015-12-03 11:01:26.824 - DEBUG - #4935 -   To login to the site, just follow this link:.
+2015-12-03 11:01:26.824 - DEBUG - #4935 - </p>
+2015-12-03 11:01:26.824 - DEBUG - #4935 - <p>Thanks for joining and have a great day!</p>
+2015-12-03 11:01:26.824 - DEBUG - #4935 - </body>
+2015-12-03 11:01:26.824 - DEBUG - #4935 - </html>
+2015-12-03 11:01:26.824 - DEBUG - #4935 - ----==_mimepart_566021062cb_13473f806e09376468994--
+2015-12-03 11:03:16.275 - DEBUG - #4997 -   [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+2015-12-03 11:03:19.258 - INFO - #5002 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (0.6ms)
+2015-12-03 11:03:19.338 - INFO - #5002 -   Rendered user_mailer/welcome_email.text.erb (0.4ms)
+2015-12-03 11:03:19.587 - DEBUG - #5002 - UserMailer#welcome_email: processed outbound mail in 419.4ms
+2015-12-03 11:03:20.191 - INFO - #5002 - Sent mail to christian.dyl@outlook.com (604.4ms)
+2015-12-03 11:03:20.192 - DEBUG - #5002 - Date: Thu, 03 Dec 2015 11:03:19 +0000
+2015-12-03 11:03:20.192 - DEBUG - #5002 - From: noreply@deploystation.com
+2015-12-03 11:03:20.192 - DEBUG - #5002 - To: christian.dyl@outlook.com
+2015-12-03 11:03:20.192 - DEBUG - #5002 - Message-ID: <5660217791da5_138a3f91e40a782c7de@vagrant-ubuntu-trusty-64.mail>
+2015-12-03 11:03:20.192 - DEBUG - #5002 - Subject: Welcome to My Awesome Site
+2015-12-03 11:03:20.192 - DEBUG - #5002 - Mime-Version: 1.0
+2015-12-03 11:03:20.192 - DEBUG - #5002 - Content-Type: multipart/alternative;
+2015-12-03 11:03:20.192 - DEBUG - #5002 -  boundary="--==_mimepart_566021778f1b1_138a3f91e40a782c659";
+2015-12-03 11:03:20.192 - DEBUG - #5002 -  charset=UTF-8
+2015-12-03 11:03:20.192 - DEBUG - #5002 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:03:20.192 - DEBUG - #5002 - 
+2015-12-03 11:03:20.192 - DEBUG - #5002 - 
+2015-12-03 11:03:20.192 - DEBUG - #5002 - ----==_mimepart_566021778f1b1_138a3f91e40a782c659
+2015-12-03 11:03:20.192 - DEBUG - #5002 - Content-Type: text/plain;
+2015-12-03 11:03:20.192 - DEBUG - #5002 -  charset=UTF-8
+2015-12-03 11:03:20.192 - DEBUG - #5002 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:03:20.192 - DEBUG - #5002 - 
+2015-12-03 11:03:20.192 - DEBUG - #5002 - Welcome to example.com,
+2015-12-03 11:03:20.192 - DEBUG - #5002 - ===============================================
+2015-12-03 11:03:20.192 - DEBUG - #5002 - 
+2015-12-03 11:03:20.192 - DEBUG - #5002 - You have successfully signed up to example.com,
+2015-12-03 11:03:20.192 - DEBUG - #5002 - your username is: christian.dyl@outlook.com.
+2015-12-03 11:03:20.192 - DEBUG - #5002 - 
+2015-12-03 11:03:20.192 - DEBUG - #5002 - To login to the site, just follow this link:.
+2015-12-03 11:03:20.192 - DEBUG - #5002 - 
+2015-12-03 11:03:20.192 - DEBUG - #5002 - Thanks for joining and have a great day!
+2015-12-03 11:03:20.192 - DEBUG - #5002 - ----==_mimepart_566021778f1b1_138a3f91e40a782c659
+2015-12-03 11:03:20.192 - DEBUG - #5002 - Content-Type: text/html;
+2015-12-03 11:03:20.192 - DEBUG - #5002 -  charset=UTF-8
+2015-12-03 11:03:20.192 - DEBUG - #5002 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:03:20.192 - DEBUG - #5002 - 
+2015-12-03 11:03:20.192 - DEBUG - #5002 - <!DOCTYPE html>
+2015-12-03 11:03:20.192 - DEBUG - #5002 - <html>
+2015-12-03 11:03:20.192 - DEBUG - #5002 - <head>
+2015-12-03 11:03:20.192 - DEBUG - #5002 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-12-03 11:03:20.192 - DEBUG - #5002 - </head>
+2015-12-03 11:03:20.192 - DEBUG - #5002 - <body>
+2015-12-03 11:03:20.192 - DEBUG - #5002 - <h1>Welcome to example.com,</h1>
+2015-12-03 11:03:20.192 - DEBUG - #5002 - <p>
+2015-12-03 11:03:20.192 - DEBUG - #5002 -   You have successfully signed up to example.com,
+2015-12-03 11:03:20.192 - DEBUG - #5002 -   your username is: christian.dyl@outlook.com.<br>
+2015-12-03 11:03:20.192 - DEBUG - #5002 - </p>
+2015-12-03 11:03:20.192 - DEBUG - #5002 - <p>
+2015-12-03 11:03:20.192 - DEBUG - #5002 -   To login to the site, just follow this link:.
+2015-12-03 11:03:20.192 - DEBUG - #5002 - </p>
+2015-12-03 11:03:20.192 - DEBUG - #5002 - <p>Thanks for joining and have a great day!</p>
+2015-12-03 11:03:20.192 - DEBUG - #5002 - </body>
+2015-12-03 11:03:20.192 - DEBUG - #5002 - </html>
+2015-12-03 11:03:20.192 - DEBUG - #5002 - ----==_mimepart_566021778f1b1_138a3f91e40a782c659--
+2015-12-03 11:03:26.724 - INFO - #5002 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (0.1ms)
+2015-12-03 11:03:26.808 - INFO - #5002 -   Rendered user_mailer/welcome_email.text.erb (0.1ms)
+2015-12-03 11:03:26.811 - DEBUG - #5002 - UserMailer#welcome_email: processed outbound mail in 187.5ms
+2015-12-03 11:03:27.306 - INFO - #5002 - Sent mail to christian.dyl@outlook.com (494.2ms)
+2015-12-03 11:03:27.306 - DEBUG - #5002 - Date: Thu, 03 Dec 2015 11:03:26 +0000
+2015-12-03 11:03:27.306 - DEBUG - #5002 - From: noreply@deploystation.com
+2015-12-03 11:03:27.306 - DEBUG - #5002 - To: christian.dyl@outlook.com
+2015-12-03 11:03:27.306 - DEBUG - #5002 - Message-ID: <5660217ec6839_138a3f91e40a782c9af@vagrant-ubuntu-trusty-64.mail>
+2015-12-03 11:03:27.306 - DEBUG - #5002 - Subject: Welcome to My Awesome Site
+2015-12-03 11:03:27.306 - DEBUG - #5002 - Mime-Version: 1.0
+2015-12-03 11:03:27.306 - DEBUG - #5002 - Content-Type: multipart/alternative;
+2015-12-03 11:03:27.306 - DEBUG - #5002 -  boundary="--==_mimepart_5660217ec5b40_138a3f91e40a782c86f";
+2015-12-03 11:03:27.306 - DEBUG - #5002 -  charset=UTF-8
+2015-12-03 11:03:27.306 - DEBUG - #5002 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:03:27.306 - DEBUG - #5002 - 
+2015-12-03 11:03:27.306 - DEBUG - #5002 - 
+2015-12-03 11:03:27.306 - DEBUG - #5002 - ----==_mimepart_5660217ec5b40_138a3f91e40a782c86f
+2015-12-03 11:03:27.306 - DEBUG - #5002 - Content-Type: text/plain;
+2015-12-03 11:03:27.306 - DEBUG - #5002 -  charset=UTF-8
+2015-12-03 11:03:27.306 - DEBUG - #5002 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:03:27.306 - DEBUG - #5002 - 
+2015-12-03 11:03:27.306 - DEBUG - #5002 - Welcome to example.com,
+2015-12-03 11:03:27.306 - DEBUG - #5002 - ===============================================
+2015-12-03 11:03:27.306 - DEBUG - #5002 - 
+2015-12-03 11:03:27.306 - DEBUG - #5002 - You have successfully signed up to example.com,
+2015-12-03 11:03:27.306 - DEBUG - #5002 - your username is: christian.dyl@outlook.com.
+2015-12-03 11:03:27.306 - DEBUG - #5002 - 
+2015-12-03 11:03:27.306 - DEBUG - #5002 - To login to the site, just follow this link:.
+2015-12-03 11:03:27.306 - DEBUG - #5002 - 
+2015-12-03 11:03:27.306 - DEBUG - #5002 - Thanks for joining and have a great day!
+2015-12-03 11:03:27.307 - DEBUG - #5002 - ----==_mimepart_5660217ec5b40_138a3f91e40a782c86f
+2015-12-03 11:03:27.307 - DEBUG - #5002 - Content-Type: text/html;
+2015-12-03 11:03:27.307 - DEBUG - #5002 -  charset=UTF-8
+2015-12-03 11:03:27.307 - DEBUG - #5002 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:03:27.307 - DEBUG - #5002 - 
+2015-12-03 11:03:27.307 - DEBUG - #5002 - <!DOCTYPE html>
+2015-12-03 11:03:27.307 - DEBUG - #5002 - <html>
+2015-12-03 11:03:27.307 - DEBUG - #5002 - <head>
+2015-12-03 11:03:27.307 - DEBUG - #5002 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-12-03 11:03:27.307 - DEBUG - #5002 - </head>
+2015-12-03 11:03:27.307 - DEBUG - #5002 - <body>
+2015-12-03 11:03:27.307 - DEBUG - #5002 - <h1>Welcome to example.com,</h1>
+2015-12-03 11:03:27.307 - DEBUG - #5002 - <p>
+2015-12-03 11:03:27.307 - DEBUG - #5002 -   You have successfully signed up to example.com,
+2015-12-03 11:03:27.307 - DEBUG - #5002 -   your username is: christian.dyl@outlook.com.<br>
+2015-12-03 11:03:27.307 - DEBUG - #5002 - </p>
+2015-12-03 11:03:27.307 - DEBUG - #5002 - <p>
+2015-12-03 11:03:27.307 - DEBUG - #5002 -   To login to the site, just follow this link:.
+2015-12-03 11:03:27.307 - DEBUG - #5002 - </p>
+2015-12-03 11:03:27.307 - DEBUG - #5002 - <p>Thanks for joining and have a great day!</p>
+2015-12-03 11:03:27.307 - DEBUG - #5002 - </body>
+2015-12-03 11:03:27.307 - DEBUG - #5002 - </html>
+2015-12-03 11:03:27.307 - DEBUG - #5002 - ----==_mimepart_5660217ec5b40_138a3f91e40a782c86f--
+2015-12-03 11:05:12.122 - DEBUG - #5067 -   [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+2015-12-03 11:05:13.771 - INFO - #5057 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (0.6ms)
+2015-12-03 11:05:13.849 - INFO - #5057 -   Rendered user_mailer/welcome_email.text.erb (0.5ms)
+2015-12-03 11:05:14.190 - DEBUG - #5057 - UserMailer#welcome_email: processed outbound mail in 500.9ms
+2015-12-03 11:05:15.070 - INFO - #5057 - Sent mail to christian.dyl@outlook.com (880.0ms)
+2015-12-03 11:05:15.071 - DEBUG - #5057 - Date: Thu, 03 Dec 2015 11:05:14 +0000
+2015-12-03 11:05:15.071 - DEBUG - #5057 - From: noreply@deploystation.com
+2015-12-03 11:05:15.071 - DEBUG - #5057 - To: christian.dyl@outlook.com
+2015-12-03 11:05:15.071 - DEBUG - #5057 - Message-ID: <566021ea3117e_13c13fc908096d6493396@vagrant-ubuntu-trusty-64.mail>
+2015-12-03 11:05:15.071 - DEBUG - #5057 - Subject: Welcome to My Awesome Site
+2015-12-03 11:05:15.071 - DEBUG - #5057 - Mime-Version: 1.0
+2015-12-03 11:05:15.071 - DEBUG - #5057 - Content-Type: multipart/alternative;
+2015-12-03 11:05:15.071 - DEBUG - #5057 -  boundary="--==_mimepart_566021ea2e40d_13c13fc908096d6493286";
+2015-12-03 11:05:15.071 - DEBUG - #5057 -  charset=UTF-8
+2015-12-03 11:05:15.071 - DEBUG - #5057 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:05:15.071 - DEBUG - #5057 - 
+2015-12-03 11:05:15.071 - DEBUG - #5057 - 
+2015-12-03 11:05:15.071 - DEBUG - #5057 - ----==_mimepart_566021ea2e40d_13c13fc908096d6493286
+2015-12-03 11:05:15.071 - DEBUG - #5057 - Content-Type: text/plain;
+2015-12-03 11:05:15.071 - DEBUG - #5057 -  charset=UTF-8
+2015-12-03 11:05:15.071 - DEBUG - #5057 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:05:15.071 - DEBUG - #5057 - 
+2015-12-03 11:05:15.071 - DEBUG - #5057 - Welcome to example.com,
+2015-12-03 11:05:15.071 - DEBUG - #5057 - ===============================================
+2015-12-03 11:05:15.071 - DEBUG - #5057 - 
+2015-12-03 11:05:15.071 - DEBUG - #5057 - You have successfully signed up to example.com,
+2015-12-03 11:05:15.071 - DEBUG - #5057 - your username is: christian.dyl@outlook.com.
+2015-12-03 11:05:15.071 - DEBUG - #5057 - 
+2015-12-03 11:05:15.071 - DEBUG - #5057 - To login to the site, just follow this link:.
+2015-12-03 11:05:15.071 - DEBUG - #5057 - 
+2015-12-03 11:05:15.071 - DEBUG - #5057 - Thanks for joining and have a great day!
+2015-12-03 11:05:15.071 - DEBUG - #5057 - ----==_mimepart_566021ea2e40d_13c13fc908096d6493286
+2015-12-03 11:05:15.071 - DEBUG - #5057 - Content-Type: text/html;
+2015-12-03 11:05:15.071 - DEBUG - #5057 -  charset=UTF-8
+2015-12-03 11:05:15.071 - DEBUG - #5057 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:05:15.071 - DEBUG - #5057 - 
+2015-12-03 11:05:15.071 - DEBUG - #5057 - <!DOCTYPE html>
+2015-12-03 11:05:15.071 - DEBUG - #5057 - <html>
+2015-12-03 11:05:15.071 - DEBUG - #5057 - <head>
+2015-12-03 11:05:15.071 - DEBUG - #5057 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-12-03 11:05:15.071 - DEBUG - #5057 - </head>
+2015-12-03 11:05:15.071 - DEBUG - #5057 - <body>
+2015-12-03 11:05:15.071 - DEBUG - #5057 - <h1>Welcome to example.com,</h1>
+2015-12-03 11:05:15.071 - DEBUG - #5057 - <p>
+2015-12-03 11:05:15.071 - DEBUG - #5057 -   You have successfully signed up to example.com,
+2015-12-03 11:05:15.071 - DEBUG - #5057 -   your username is: christian.dyl@outlook.com.<br>
+2015-12-03 11:05:15.071 - DEBUG - #5057 - </p>
+2015-12-03 11:05:15.071 - DEBUG - #5057 - <p>
+2015-12-03 11:05:15.071 - DEBUG - #5057 -   To login to the site, just follow this link:.
+2015-12-03 11:05:15.071 - DEBUG - #5057 - </p>
+2015-12-03 11:05:15.071 - DEBUG - #5057 - <p>Thanks for joining and have a great day!</p>
+2015-12-03 11:05:15.071 - DEBUG - #5057 - </body>
+2015-12-03 11:05:15.071 - DEBUG - #5057 - </html>
+2015-12-03 11:05:15.071 - DEBUG - #5057 - ----==_mimepart_566021ea2e40d_13c13fc908096d6493286--
+2015-12-03 11:08:26.686 - DEBUG - #5154 -   [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+2015-12-03 11:08:28.913 - INFO - #5161 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (0.6ms)
+2015-12-03 11:08:28.992 - INFO - #5161 -   Rendered user_mailer/welcome_email.text.erb (0.4ms)
+2015-12-03 11:08:29.250 - DEBUG - #5161 - UserMailer#welcome_email: processed outbound mail in 427.9ms
+2015-12-03 11:08:30.157 - INFO - #5161 - Sent mail to christian.dyl@outlook.com (906.6ms)
+2015-12-03 11:08:30.157 - DEBUG - #5161 - Date: Thu, 03 Dec 2015 11:08:29 +0000
+2015-12-03 11:08:30.158 - DEBUG - #5161 - From: noreply@deploystation.com
+2015-12-03 11:08:30.158 - DEBUG - #5161 - To: christian.dyl@outlook.com
+2015-12-03 11:08:30.158 - DEBUG - #5161 - Message-ID: <566022ad4002b_14293fa4a4069a4073813@vagrant-ubuntu-trusty-64.mail>
+2015-12-03 11:08:30.158 - DEBUG - #5161 - Subject: Welcome to My Awesome Site
+2015-12-03 11:08:30.158 - DEBUG - #5161 - Mime-Version: 1.0
+2015-12-03 11:08:30.158 - DEBUG - #5161 - Content-Type: multipart/alternative;
+2015-12-03 11:08:30.158 - DEBUG - #5161 -  boundary="--==_mimepart_566022ad3ce73_14293fa4a4069a40737d1";
+2015-12-03 11:08:30.158 - DEBUG - #5161 -  charset=UTF-8
+2015-12-03 11:08:30.158 - DEBUG - #5161 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:08:30.158 - DEBUG - #5161 - 
+2015-12-03 11:08:30.158 - DEBUG - #5161 - 
+2015-12-03 11:08:30.158 - DEBUG - #5161 - ----==_mimepart_566022ad3ce73_14293fa4a4069a40737d1
+2015-12-03 11:08:30.158 - DEBUG - #5161 - Content-Type: text/plain;
+2015-12-03 11:08:30.158 - DEBUG - #5161 -  charset=UTF-8
+2015-12-03 11:08:30.158 - DEBUG - #5161 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:08:30.158 - DEBUG - #5161 - 
+2015-12-03 11:08:30.158 - DEBUG - #5161 - Welcome to example.com,
+2015-12-03 11:08:30.158 - DEBUG - #5161 - ===============================================
+2015-12-03 11:08:30.158 - DEBUG - #5161 - 
+2015-12-03 11:08:30.158 - DEBUG - #5161 - You have successfully signed up to example.com,
+2015-12-03 11:08:30.158 - DEBUG - #5161 - your username is: christian.dyl@outlook.com.
+2015-12-03 11:08:30.158 - DEBUG - #5161 - 
+2015-12-03 11:08:30.158 - DEBUG - #5161 - To login to the site, just follow this link:.
+2015-12-03 11:08:30.158 - DEBUG - #5161 - 
+2015-12-03 11:08:30.158 - DEBUG - #5161 - Thanks for joining and have a great day!
+2015-12-03 11:08:30.158 - DEBUG - #5161 - ----==_mimepart_566022ad3ce73_14293fa4a4069a40737d1
+2015-12-03 11:08:30.158 - DEBUG - #5161 - Content-Type: text/html;
+2015-12-03 11:08:30.158 - DEBUG - #5161 -  charset=UTF-8
+2015-12-03 11:08:30.158 - DEBUG - #5161 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:08:30.158 - DEBUG - #5161 - 
+2015-12-03 11:08:30.158 - DEBUG - #5161 - <!DOCTYPE html>
+2015-12-03 11:08:30.158 - DEBUG - #5161 - <html>
+2015-12-03 11:08:30.158 - DEBUG - #5161 - <head>
+2015-12-03 11:08:30.158 - DEBUG - #5161 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-12-03 11:08:30.158 - DEBUG - #5161 - </head>
+2015-12-03 11:08:30.158 - DEBUG - #5161 - <body>
+2015-12-03 11:08:30.158 - DEBUG - #5161 - <h1>Welcome to example.com,</h1>
+2015-12-03 11:08:30.158 - DEBUG - #5161 - <p>
+2015-12-03 11:08:30.158 - DEBUG - #5161 -   You have successfully signed up to example.com,
+2015-12-03 11:08:30.158 - DEBUG - #5161 -   your username is: christian.dyl@outlook.com.<br>
+2015-12-03 11:08:30.158 - DEBUG - #5161 - </p>
+2015-12-03 11:08:30.158 - DEBUG - #5161 - <p>
+2015-12-03 11:08:30.158 - DEBUG - #5161 -   To login to the site, just follow this link:.
+2015-12-03 11:08:30.158 - DEBUG - #5161 - </p>
+2015-12-03 11:08:30.158 - DEBUG - #5161 - <p>Thanks for joining and have a great day!</p>
+2015-12-03 11:08:30.158 - DEBUG - #5161 - </body>
+2015-12-03 11:08:30.158 - DEBUG - #5161 - </html>
+2015-12-03 11:08:30.158 - DEBUG - #5161 - ----==_mimepart_566022ad3ce73_14293fa4a4069a40737d1--
+2015-12-03 11:09:50.977 - DEBUG - #5154 -   [1m[35m (0.4ms)[0m  BEGIN
+2015-12-03 11:09:51.006 - DEBUG - #5154 -   [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'christian@deploystation.com' LIMIT 1[0m
+2015-12-03 11:09:51.009 - DEBUG - #5154 -   [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["email", "christian@deploystation.com"], ["created_at", "2015-12-03 11:09:51.007061"], ["updated_at", "2015-12-03 11:09:51.007061"]]
+2015-12-03 11:09:51.023 - DEBUG - #5154 -   [1m[36m (1.6ms)[0m  [1mCOMMIT[0m
+2015-12-03 11:09:51.120 - INFO - #5161 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (0.1ms)
+2015-12-03 11:09:51.199 - INFO - #5161 -   Rendered user_mailer/welcome_email.text.erb (0.1ms)
+2015-12-03 11:09:51.202 - DEBUG - #5161 - UserMailer#welcome_email: processed outbound mail in 182.7ms
+2015-12-03 11:09:51.766 - INFO - #5161 - Sent mail to christian@deploystation.com (563.7ms)
+2015-12-03 11:09:51.767 - DEBUG - #5161 - Date: Thu, 03 Dec 2015 11:09:51 +0000
+2015-12-03 11:09:51.767 - DEBUG - #5161 - From: noreply@deploystation.com
+2015-12-03 11:09:51.767 - DEBUG - #5161 - To: christian@deploystation.com
+2015-12-03 11:09:51.767 - DEBUG - #5161 - Message-ID: <566022ff31c40_14293fa4a4069a40740b7@vagrant-ubuntu-trusty-64.mail>
+2015-12-03 11:09:51.767 - DEBUG - #5161 - Subject: Welcome to My Awesome Site
+2015-12-03 11:09:51.767 - DEBUG - #5161 - Mime-Version: 1.0
+2015-12-03 11:09:51.767 - DEBUG - #5161 - Content-Type: multipart/alternative;
+2015-12-03 11:09:51.767 - DEBUG - #5161 -  boundary="--==_mimepart_566022ff31342_14293fa4a4069a4073940";
+2015-12-03 11:09:51.767 - DEBUG - #5161 -  charset=UTF-8
+2015-12-03 11:09:51.767 - DEBUG - #5161 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:09:51.767 - DEBUG - #5161 - 
+2015-12-03 11:09:51.767 - DEBUG - #5161 - 
+2015-12-03 11:09:51.767 - DEBUG - #5161 - ----==_mimepart_566022ff31342_14293fa4a4069a4073940
+2015-12-03 11:09:51.767 - DEBUG - #5161 - Content-Type: text/plain;
+2015-12-03 11:09:51.767 - DEBUG - #5161 -  charset=UTF-8
+2015-12-03 11:09:51.767 - DEBUG - #5161 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:09:51.767 - DEBUG - #5161 - 
+2015-12-03 11:09:51.767 - DEBUG - #5161 - Welcome to example.com,
+2015-12-03 11:09:51.767 - DEBUG - #5161 - ===============================================
+2015-12-03 11:09:51.767 - DEBUG - #5161 - 
+2015-12-03 11:09:51.767 - DEBUG - #5161 - You have successfully signed up to example.com,
+2015-12-03 11:09:51.767 - DEBUG - #5161 - your username is: christian@deploystation.com.
+2015-12-03 11:09:51.767 - DEBUG - #5161 - 
+2015-12-03 11:09:51.767 - DEBUG - #5161 - To login to the site, just follow this link:.
+2015-12-03 11:09:51.767 - DEBUG - #5161 - 
+2015-12-03 11:09:51.767 - DEBUG - #5161 - Thanks for joining and have a great day!
+2015-12-03 11:09:51.767 - DEBUG - #5161 - ----==_mimepart_566022ff31342_14293fa4a4069a4073940
+2015-12-03 11:09:51.767 - DEBUG - #5161 - Content-Type: text/html;
+2015-12-03 11:09:51.767 - DEBUG - #5161 -  charset=UTF-8
+2015-12-03 11:09:51.767 - DEBUG - #5161 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:09:51.767 - DEBUG - #5161 - 
+2015-12-03 11:09:51.767 - DEBUG - #5161 - <!DOCTYPE html>
+2015-12-03 11:09:51.767 - DEBUG - #5161 - <html>
+2015-12-03 11:09:51.767 - DEBUG - #5161 - <head>
+2015-12-03 11:09:51.767 - DEBUG - #5161 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-12-03 11:09:51.767 - DEBUG - #5161 - </head>
+2015-12-03 11:09:51.767 - DEBUG - #5161 - <body>
+2015-12-03 11:09:51.767 - DEBUG - #5161 - <h1>Welcome to example.com,</h1>
+2015-12-03 11:09:51.767 - DEBUG - #5161 - <p>
+2015-12-03 11:09:51.767 - DEBUG - #5161 -   You have successfully signed up to example.com,
+2015-12-03 11:09:51.767 - DEBUG - #5161 -   your username is: christian@deploystation.com.<br>
+2015-12-03 11:09:51.767 - DEBUG - #5161 - </p>
+2015-12-03 11:09:51.768 - DEBUG - #5161 - <p>
+2015-12-03 11:09:51.768 - DEBUG - #5161 -   To login to the site, just follow this link:.
+2015-12-03 11:09:51.768 - DEBUG - #5161 - </p>
+2015-12-03 11:09:51.768 - DEBUG - #5161 - <p>Thanks for joining and have a great day!</p>
+2015-12-03 11:09:51.768 - DEBUG - #5161 - </body>
+2015-12-03 11:09:51.768 - DEBUG - #5161 - </html>
+2015-12-03 11:09:51.768 - DEBUG - #5161 - ----==_mimepart_566022ff31342_14293fa4a4069a4073940--
+2015-12-03 11:09:58.124 - INFO - #5161 -   Rendered user_mailer/welcome_email.html.erb within layouts/mailer (0.1ms)
+2015-12-03 11:09:58.214 - INFO - #5161 -   Rendered user_mailer/welcome_email.text.erb (0.1ms)
+2015-12-03 11:09:58.216 - DEBUG - #5161 - UserMailer#welcome_email: processed outbound mail in 186.3ms
+2015-12-03 11:09:58.915 - INFO - #5161 - Sent mail to christian@deploystation.com (699.0ms)
+2015-12-03 11:09:58.915 - DEBUG - #5161 - Date: Thu, 03 Dec 2015 11:09:58 +0000
+2015-12-03 11:09:58.915 - DEBUG - #5161 - From: noreply@deploystation.com
+2015-12-03 11:09:58.915 - DEBUG - #5161 - To: christian@deploystation.com
+2015-12-03 11:09:58.916 - DEBUG - #5161 - Message-ID: <566023063550b_14293fa4a4069a4074284@vagrant-ubuntu-trusty-64.mail>
+2015-12-03 11:09:58.916 - DEBUG - #5161 - Subject: Welcome to My Awesome Site
+2015-12-03 11:09:58.916 - DEBUG - #5161 - Mime-Version: 1.0
+2015-12-03 11:09:58.916 - DEBUG - #5161 - Content-Type: multipart/alternative;
+2015-12-03 11:09:58.916 - DEBUG - #5161 -  boundary="--==_mimepart_566023063492a_14293fa4a4069a40741f4";
+2015-12-03 11:09:58.916 - DEBUG - #5161 -  charset=UTF-8
+2015-12-03 11:09:58.916 - DEBUG - #5161 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:09:58.916 - DEBUG - #5161 - 
+2015-12-03 11:09:58.916 - DEBUG - #5161 - 
+2015-12-03 11:09:58.916 - DEBUG - #5161 - ----==_mimepart_566023063492a_14293fa4a4069a40741f4
+2015-12-03 11:09:58.916 - DEBUG - #5161 - Content-Type: text/plain;
+2015-12-03 11:09:58.916 - DEBUG - #5161 -  charset=UTF-8
+2015-12-03 11:09:58.916 - DEBUG - #5161 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:09:58.916 - DEBUG - #5161 - 
+2015-12-03 11:09:58.916 - DEBUG - #5161 - Welcome to example.com,
+2015-12-03 11:09:58.916 - DEBUG - #5161 - ===============================================
+2015-12-03 11:09:58.916 - DEBUG - #5161 - 
+2015-12-03 11:09:58.916 - DEBUG - #5161 - You have successfully signed up to example.com,
+2015-12-03 11:09:58.916 - DEBUG - #5161 - your username is: christian@deploystation.com.
+2015-12-03 11:09:58.916 - DEBUG - #5161 - 
+2015-12-03 11:09:58.916 - DEBUG - #5161 - To login to the site, just follow this link:.
+2015-12-03 11:09:58.916 - DEBUG - #5161 - 
+2015-12-03 11:09:58.916 - DEBUG - #5161 - Thanks for joining and have a great day!
+2015-12-03 11:09:58.916 - DEBUG - #5161 - ----==_mimepart_566023063492a_14293fa4a4069a40741f4
+2015-12-03 11:09:58.916 - DEBUG - #5161 - Content-Type: text/html;
+2015-12-03 11:09:58.916 - DEBUG - #5161 -  charset=UTF-8
+2015-12-03 11:09:58.916 - DEBUG - #5161 - Content-Transfer-Encoding: 7bit
+2015-12-03 11:09:58.916 - DEBUG - #5161 - 
+2015-12-03 11:09:58.916 - DEBUG - #5161 - <!DOCTYPE html>
+2015-12-03 11:09:58.916 - DEBUG - #5161 - <html>
+2015-12-03 11:09:58.916 - DEBUG - #5161 - <head>
+2015-12-03 11:09:58.916 - DEBUG - #5161 -   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+2015-12-03 11:09:58.916 - DEBUG - #5161 - </head>
+2015-12-03 11:09:58.916 - DEBUG - #5161 - <body>
+2015-12-03 11:09:58.916 - DEBUG - #5161 - <h1>Welcome to example.com,</h1>
+2015-12-03 11:09:58.916 - DEBUG - #5161 - <p>
+2015-12-03 11:09:58.916 - DEBUG - #5161 -   You have successfully signed up to example.com,
+2015-12-03 11:09:58.916 - DEBUG - #5161 -   your username is: christian@deploystation.com.<br>
+2015-12-03 11:09:58.916 - DEBUG - #5161 - </p>
+2015-12-03 11:09:58.916 - DEBUG - #5161 - <p>
+2015-12-03 11:09:58.916 - DEBUG - #5161 -   To login to the site, just follow this link:.
+2015-12-03 11:09:58.916 - DEBUG - #5161 - </p>
+2015-12-03 11:09:58.916 - DEBUG - #5161 - <p>Thanks for joining and have a great day!</p>
+2015-12-03 11:09:58.916 - DEBUG - #5161 - </body>
+2015-12-03 11:09:58.916 - DEBUG - #5161 - </html>
+2015-12-03 11:09:58.916 - DEBUG - #5161 - ----==_mimepart_566023063492a_14293fa4a4069a40741f4--

@@ -58,6 +58,35 @@ module ApiBack
       def me
         render success_response current_user.to_api(:public)
       end
+      
+      ##
+      # Requests password recovery
+      # @resource /v1/users/request_password_recovery
+      # @action POST
+      #
+      # @required [Hash] password_recovery
+      # @required [String] password_recovery.email
+      #
+      # @response_field [Boolean] success
+      def request_password_recovery
+        opts = require_param :password_recovery, :permit => [:email]
+        raise "Email is absent" if opts["email"].blank?
+
+        connect_login = ConnectLogin.find_by_partner_id(opts["email"]) or raise "Can't find connect_login with this email"
+        user          = connect_login.user or raise "Can't find user"
+
+        begin
+          new_password = SecureRandom.hex[0..8]
+          connect_login.partner_auth_data = Digest::SHA1.hexdigest(new_password)
+          connect_login.save
+
+          UserMailer.delay.password_recovery(user, new_password)
+        rescue => message
+          raise "Can't change user password : #{message.to_s}"
+        end
+
+        render success_response
+      end
 
     end
   end
