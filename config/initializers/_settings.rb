@@ -11,7 +11,7 @@ Settings = OpenStruct.new(
   ),
   :airbrake => OpenStruct.new(
     :api_key => ENV['AIRBRAKE_API_KEY'] || '4baa8bb8fc18a836dcc04fb0a756742b',
-    :host    => ENV['AIRBRAKE_HOST']    || 'servers-errbit.herokuapp.com'
+    :host    => ENV['AIRBRAKE_HOST']    || 'errbit.deploystation.com'
   ),
   :pusher => OpenStruct.new(
     :app_id => ENV['PUSHER_APP_ID'] || '158644',
