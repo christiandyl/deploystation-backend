@@ -5,6 +5,7 @@ class CreateHosts < ActiveRecord::Migration
       t.column :ip, :bigint
       t.string :domain
       t.string :location
+      t.string :host_user
       t.timestamps null: false
     end
   end

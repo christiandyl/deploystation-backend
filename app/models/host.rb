@@ -40,7 +40,7 @@ class Host < ActiveRecord::Base
     port = nil
     
     unless ip == "127.0.0.1"
-      Net::SSH.start(ip, 'ubuntu') do |ssh|
+      Net::SSH.start(ip, host_user) do |ssh|
         out  = ssh.exec!("sh /opt/scripts/get_free_port/run.sh")
         port = out.split("\n").first
       end

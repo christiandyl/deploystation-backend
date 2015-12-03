@@ -2466,3 +2466,144 @@
 2015-12-03 11:09:58.916 - DEBUG - #5161 - </body>
 2015-12-03 11:09:58.916 - DEBUG - #5161 - </html>
 2015-12-03 11:09:58.916 - DEBUG - #5161 - ----==_mimepart_566023063492a_14293fa4a4069a40741f4--
+2015-12-03 14:29:54.959 - DEBUG - #3393 -   [1m[36m (3.8ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+2015-12-03 14:29:54.971 - DEBUG - #3393 -   [1m[35m (2.7ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+2015-12-03 14:29:54.974 - DEBUG - #3393 -   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-12-03 14:29:54.981 - INFO - #3393 - Migrating to CreateUsers (20151025112105)
+2015-12-03 14:29:54.984 - DEBUG - #3393 -   [1m[35m (0.2ms)[0m  BEGIN
+2015-12-03 14:29:54.996 - DEBUG - #3393 -   [1m[36m (7.7ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-12-03 14:29:55.012 - DEBUG - #3393 -   [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151025112105"]]
+2015-12-03 14:29:55.013 - DEBUG - #3393 -   [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+2015-12-03 14:29:55.014 - INFO - #3393 - Migrating to CreateConnects (20151025112312)
+2015-12-03 14:29:55.016 - DEBUG - #3393 -   [1m[35m (0.2ms)[0m  BEGIN
+2015-12-03 14:29:55.023 - DEBUG - #3393 -   [1m[36m (3.9ms)[0m  [1mCREATE TABLE "connects" ("id" serial primary key, "user_id" integer, "partner" character varying, "partner_id" character varying, "partner_auth_data" character varying, "partner_expire" timestamp, "partner_data" text, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-12-03 14:29:55.028 - DEBUG - #3393 -   [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151025112312"]]
+2015-12-03 14:29:55.029 - DEBUG - #3393 -   [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+2015-12-03 14:29:55.030 - INFO - #3393 - Migrating to CreateContainers (20151026104630)
+2015-12-03 14:29:55.033 - DEBUG - #3393 -   [1m[35m (0.2ms)[0m  BEGIN
+2015-12-03 14:29:55.041 - DEBUG - #3393 -   [1m[36m (3.7ms)[0m  [1mCREATE TABLE "containers" ("id" serial primary key, "docker_id" character varying, "user_id" integer, "plan_id" integer, "host_id" integer, "port" character varying, "status" character varying, "active_until" timestamp, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-12-03 14:29:55.045 - DEBUG - #3393 -   [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151026104630"]]
+2015-12-03 14:29:55.046 - DEBUG - #3393 -   [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+2015-12-03 14:29:55.046 - INFO - #3393 - Migrating to CreatePlans (20151028141248)
+2015-12-03 14:29:55.049 - DEBUG - #3393 -   [1m[35m (0.2ms)[0m  BEGIN
+2015-12-03 14:29:55.054 - DEBUG - #3393 -   [1m[36m (3.3ms)[0m  [1mCREATE TABLE "plans" ("id" serial primary key, "game_id" integer, "host_id" integer, "name" character varying, "max_players" integer, "ram" integer, "storage" integer, "storage_type" character varying, "price" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-12-03 14:29:55.058 - DEBUG - #3393 -   [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151028141248"]]
+2015-12-03 14:29:55.059 - DEBUG - #3393 -   [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+2015-12-03 14:29:55.060 - INFO - #3393 - Migrating to CreateGames (20151028141551)
+2015-12-03 14:29:55.064 - DEBUG - #3393 -   [1m[35m (0.2ms)[0m  BEGIN
+2015-12-03 14:29:55.069 - DEBUG - #3393 -   [1m[36m (3.1ms)[0m  [1mCREATE TABLE "games" ("id" serial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-12-03 14:29:55.073 - DEBUG - #3393 -   [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151028141551"]]
+2015-12-03 14:29:55.074 - DEBUG - #3393 -   [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+2015-12-03 14:29:55.074 - INFO - #3393 - Migrating to CreateHosts (20151029103922)
+2015-12-03 14:29:55.077 - DEBUG - #3393 -   [1m[35m (0.2ms)[0m  BEGIN
+2015-12-03 14:29:55.086 - DEBUG - #3393 -   [1m[36m (5.4ms)[0m  [1mCREATE TABLE "hosts" ("id" serial primary key, "name" character varying, "ip" bigint, "domain" character varying, "location" character varying, "host_user" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+2015-12-03 14:29:55.090 - DEBUG - #3393 -   [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20151029103922"]]
+2015-12-03 14:29:55.091 - DEBUG - #3393 -   [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+2015-12-03 14:29:55.105 - DEBUG - #3393 -   [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+2015-12-03 14:29:55.131 - DEBUG - #3393 -   [1m[36m (2.6ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-12-03 14:29:55.131 - DEBUG - #3393 - FROM pg_constraint c
+2015-12-03 14:29:55.131 - DEBUG - #3393 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-12-03 14:29:55.131 - DEBUG - #3393 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-12-03 14:29:55.131 - DEBUG - #3393 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-12-03 14:29:55.131 - DEBUG - #3393 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-12-03 14:29:55.131 - DEBUG - #3393 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-12-03 14:29:55.131 - DEBUG - #3393 - WHERE c.contype = 'f'
+2015-12-03 14:29:55.131 - DEBUG - #3393 -   AND t1.relname = 'connects'
+2015-12-03 14:29:55.131 - DEBUG - #3393 -   AND t3.nspname = ANY (current_schemas(false))
+2015-12-03 14:29:55.131 - DEBUG - #3393 - ORDER BY c.conname
+2015-12-03 14:29:55.131 - DEBUG - #3393 - [0m
+2015-12-03 14:29:55.134 - DEBUG - #3393 -   [1m[35m (1.9ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-12-03 14:29:55.134 - DEBUG - #3393 - FROM pg_constraint c
+2015-12-03 14:29:55.134 - DEBUG - #3393 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-12-03 14:29:55.134 - DEBUG - #3393 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-12-03 14:29:55.134 - DEBUG - #3393 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-12-03 14:29:55.134 - DEBUG - #3393 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-12-03 14:29:55.134 - DEBUG - #3393 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-12-03 14:29:55.134 - DEBUG - #3393 - WHERE c.contype = 'f'
+2015-12-03 14:29:55.134 - DEBUG - #3393 -   AND t1.relname = 'containers'
+2015-12-03 14:29:55.134 - DEBUG - #3393 -   AND t3.nspname = ANY (current_schemas(false))
+2015-12-03 14:29:55.134 - DEBUG - #3393 - ORDER BY c.conname
+2015-12-03 14:29:55.136 - DEBUG - #3393 -   [1m[36m (2.2ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-12-03 14:29:55.136 - DEBUG - #3393 - FROM pg_constraint c
+2015-12-03 14:29:55.136 - DEBUG - #3393 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-12-03 14:29:55.136 - DEBUG - #3393 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-12-03 14:29:55.137 - DEBUG - #3393 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-12-03 14:29:55.137 - DEBUG - #3393 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-12-03 14:29:55.137 - DEBUG - #3393 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-12-03 14:29:55.137 - DEBUG - #3393 - WHERE c.contype = 'f'
+2015-12-03 14:29:55.137 - DEBUG - #3393 -   AND t1.relname = 'games'
+2015-12-03 14:29:55.137 - DEBUG - #3393 -   AND t3.nspname = ANY (current_schemas(false))
+2015-12-03 14:29:55.137 - DEBUG - #3393 - ORDER BY c.conname
+2015-12-03 14:29:55.137 - DEBUG - #3393 - [0m
+2015-12-03 14:29:55.140 - DEBUG - #3393 -   [1m[35m (2.4ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-12-03 14:29:55.140 - DEBUG - #3393 - FROM pg_constraint c
+2015-12-03 14:29:55.140 - DEBUG - #3393 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-12-03 14:29:55.140 - DEBUG - #3393 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-12-03 14:29:55.140 - DEBUG - #3393 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-12-03 14:29:55.140 - DEBUG - #3393 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-12-03 14:29:55.140 - DEBUG - #3393 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-12-03 14:29:55.140 - DEBUG - #3393 - WHERE c.contype = 'f'
+2015-12-03 14:29:55.140 - DEBUG - #3393 -   AND t1.relname = 'hosts'
+2015-12-03 14:29:55.140 - DEBUG - #3393 -   AND t3.nspname = ANY (current_schemas(false))
+2015-12-03 14:29:55.140 - DEBUG - #3393 - ORDER BY c.conname
+2015-12-03 14:29:55.142 - DEBUG - #3393 -   [1m[36m (2.0ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-12-03 14:29:55.142 - DEBUG - #3393 - FROM pg_constraint c
+2015-12-03 14:29:55.142 - DEBUG - #3393 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-12-03 14:29:55.143 - DEBUG - #3393 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-12-03 14:29:55.143 - DEBUG - #3393 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-12-03 14:29:55.143 - DEBUG - #3393 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-12-03 14:29:55.143 - DEBUG - #3393 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-12-03 14:29:55.143 - DEBUG - #3393 - WHERE c.contype = 'f'
+2015-12-03 14:29:55.143 - DEBUG - #3393 -   AND t1.relname = 'plans'
+2015-12-03 14:29:55.143 - DEBUG - #3393 -   AND t3.nspname = ANY (current_schemas(false))
+2015-12-03 14:29:55.143 - DEBUG - #3393 - ORDER BY c.conname
+2015-12-03 14:29:55.143 - DEBUG - #3393 - [0m
+2015-12-03 14:29:55.146 - DEBUG - #3393 -   [1m[35m (2.5ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+2015-12-03 14:29:55.146 - DEBUG - #3393 - FROM pg_constraint c
+2015-12-03 14:29:55.146 - DEBUG - #3393 - JOIN pg_class t1 ON c.conrelid = t1.oid
+2015-12-03 14:29:55.146 - DEBUG - #3393 - JOIN pg_class t2 ON c.confrelid = t2.oid
+2015-12-03 14:29:55.146 - DEBUG - #3393 - JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+2015-12-03 14:29:55.146 - DEBUG - #3393 - JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+2015-12-03 14:29:55.146 - DEBUG - #3393 - JOIN pg_namespace t3 ON c.connamespace = t3.oid
+2015-12-03 14:29:55.146 - DEBUG - #3393 - WHERE c.contype = 'f'
+2015-12-03 14:29:55.146 - DEBUG - #3393 -   AND t1.relname = 'users'
+2015-12-03 14:29:55.146 - DEBUG - #3393 -   AND t3.nspname = ANY (current_schemas(false))
+2015-12-03 14:29:55.146 - DEBUG - #3393 - ORDER BY c.conname
+2015-12-03 14:29:55.152 - DEBUG - #3393 -   [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+2015-12-03 14:29:55.178 - DEBUG - #3393 -   [1m[35mSQL (0.4ms)[0m  DELETE FROM "games"
+2015-12-03 14:29:55.184 - DEBUG - #3393 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-12-03 14:29:55.187 - DEBUG - #3393 -   [1m[35mSQL (0.4ms)[0m  INSERT INTO "games" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "Minecraft"], ["created_at", "2015-12-03 14:29:55.185436"], ["updated_at", "2015-12-03 14:29:55.185436"]]
+2015-12-03 14:29:55.188 - DEBUG - #3393 -   [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+2015-12-03 14:29:55.188 - DEBUG - #3393 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-12-03 14:29:55.190 - DEBUG - #3393 -   [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Minecraft pocket edition"], ["created_at", "2015-12-03 14:29:55.189101"], ["updated_at", "2015-12-03 14:29:55.189101"]]
+2015-12-03 14:29:55.191 - DEBUG - #3393 -   [1m[35m (0.5ms)[0m  COMMIT
+2015-12-03 14:29:55.191 - DEBUG - #3393 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-12-03 14:29:55.192 - DEBUG - #3393 -   [1m[35mSQL (0.2ms)[0m  INSERT INTO "games" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "Counter-strike go"], ["created_at", "2015-12-03 14:29:55.192046"], ["updated_at", "2015-12-03 14:29:55.192046"]]
+2015-12-03 14:29:55.194 - DEBUG - #3393 -   [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+2015-12-03 14:29:55.194 - DEBUG - #3393 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-12-03 14:29:55.195 - DEBUG - #3393 -   [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Battlefield 4"], ["created_at", "2015-12-03 14:29:55.194981"], ["updated_at", "2015-12-03 14:29:55.194981"]]
+2015-12-03 14:29:55.197 - DEBUG - #3393 -   [1m[35m (0.5ms)[0m  COMMIT
+2015-12-03 14:29:55.197 - DEBUG - #3393 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-12-03 14:29:55.198 - DEBUG - #3393 -   [1m[35mSQL (0.2ms)[0m  INSERT INTO "games" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "Battlefield hard line"], ["created_at", "2015-12-03 14:29:55.198000"], ["updated_at", "2015-12-03 14:29:55.198000"]]
+2015-12-03 14:29:55.200 - DEBUG - #3393 -   [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+2015-12-03 14:29:55.200 - DEBUG - #3393 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-12-03 14:29:55.201 - DEBUG - #3393 -   [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "7 days to die"], ["created_at", "2015-12-03 14:29:55.200924"], ["updated_at", "2015-12-03 14:29:55.200924"]]
+2015-12-03 14:29:55.202 - DEBUG - #3393 -   [1m[35m (0.1ms)[0m  COMMIT
+2015-12-03 14:29:55.202 - DEBUG - #3393 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-12-03 14:29:55.204 - DEBUG - #3393 -   [1m[35mSQL (0.2ms)[0m  INSERT INTO "games" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "DayZ Standalone"], ["created_at", "2015-12-03 14:29:55.203250"], ["updated_at", "2015-12-03 14:29:55.203250"]]
+2015-12-03 14:29:55.205 - DEBUG - #3393 -   [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+2015-12-03 14:29:55.214 - DEBUG - #3393 -   [1m[35mSQL (0.5ms)[0m  DELETE FROM "hosts"
+2015-12-03 14:29:55.221 - DEBUG - #3393 -   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+2015-12-03 14:29:55.223 - DEBUG - #3393 -   [1m[35mSQL (0.4ms)[0m  INSERT INTO "hosts" ("name", "ip", "domain", "location", "host_user", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["name", "localhost"], ["ip", 2130706433], ["domain", "localhost"], ["location", "Localhost"], ["host_user", "vagrant"], ["created_at", "2015-12-03 14:29:55.222437"], ["updated_at", "2015-12-03 14:29:55.222437"]]
+2015-12-03 14:29:55.225 - DEBUG - #3393 -   [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+2015-12-03 14:29:55.239 - DEBUG - #3393 -   [1m[35mSQL (0.4ms)[0m  DELETE FROM "plans"
+2015-12-03 14:29:55.259 - DEBUG - #3393 -   [1m[36mGame Load (0.3ms)[0m  [1mSELECT  "games".* FROM "games" WHERE "games"."name" = $1 LIMIT 1[0m  [["name", "Minecraft"]]
+2015-12-03 14:29:55.262 - DEBUG - #3393 -   [1m[35mHost Load (0.4ms)[0m  SELECT  "hosts".* FROM "hosts" WHERE "hosts"."name" = $1 LIMIT 1  [["name", "localhost"]]
+2015-12-03 14:29:55.276 - DEBUG - #3393 -   [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+2015-12-03 14:29:55.279 - DEBUG - #3393 -   [1m[35mSQL (0.4ms)[0m  INSERT INTO "plans" ("name", "max_players", "ram", "storage", "storage_type", "game_id", "host_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"  [["name", "starter"], ["max_players", 2], ["ram", 256], ["storage", 1024], ["storage_type", "ssd"], ["game_id", 1], ["host_id", 1], ["created_at", "2015-12-03 14:29:55.277435"], ["updated_at", "2015-12-03 14:29:55.277435"]]
+2015-12-03 14:29:55.280 - DEBUG - #3393 -   [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+2015-12-03 14:29:55.281 - DEBUG - #3393 -   [1m[35mGame Load (0.2ms)[0m  SELECT  "games".* FROM "games" WHERE "games"."name" = $1 LIMIT 1  [["name", "Minecraft"]]
+2015-12-03 14:29:55.282 - DEBUG - #3393 -   [1m[36mHost Load (0.2ms)[0m  [1mSELECT  "hosts".* FROM "hosts" WHERE "hosts"."name" = $1 LIMIT 1[0m  [["name", "localhost"]]
+2015-12-03 14:29:55.282 - DEBUG - #3393 -   [1m[35m (0.1ms)[0m  BEGIN
+2015-12-03 14:29:55.284 - DEBUG - #3393 -   [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "plans" ("name", "max_players", "ram", "storage", "storage_type", "game_id", "host_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "lite"], ["max_players", 7], ["ram", 384], ["storage", 1024], ["storage_type", "ssd"], ["game_id", 1], ["host_id", 1], ["created_at", "2015-12-03 14:29:55.283520"], ["updated_at", "2015-12-03 14:29:55.283520"]]
+2015-12-03 14:29:55.285 - DEBUG - #3393 -   [1m[35m (0.4ms)[0m  COMMIT

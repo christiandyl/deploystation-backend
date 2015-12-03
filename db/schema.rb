@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20151029103922) do
     t.integer  "ip",         limit: 8
     t.string   "domain"
     t.string   "location"
+    t.string   "host_user"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
