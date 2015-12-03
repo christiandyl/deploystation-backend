@@ -42,7 +42,7 @@ if Rails.env.production? # Production seeds
     }
   ]
   
-  hosts = [{ name: 'production', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'deploy' }]
+  hosts = [{ name: 'production', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'ubuntu' }]
 elsif Rails.env.staging? # Staging seeds
   plans = [
    {
@@ -77,7 +77,7 @@ elsif Rails.env.staging? # Staging seeds
    }
  ]
  
- hosts = [{ name: 'staging', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'deploy' }]
+ hosts = [{ name: 'staging', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'ubuntu' }]
 else # Development and Testing seeds
   plans = [
    {
