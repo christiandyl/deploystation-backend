@@ -15,6 +15,22 @@ describe 'Users API', :type => :request do
     expect(obj['result']).to be_instance_of(Hash)
     expect(obj['result']['auth_token']).to be_truthy
     expect(obj['result']['expires']).to be_truthy
+  
+    @context.token = obj['result']['auth_token'] 
+  end
+  
+  it 'Allows user to get own data' do
+    send :get, users_me_path, :token => @context.token
+    
+    expect(response.status).to eq(200)
+
+    obj = JSON.parse(response.body)
+
+    expect(obj).to be_instance_of(Hash)
+    expect(obj['success']).to be(true)
+    expect(obj['result']).to be_instance_of(Hash)
+    expect(obj['result']['id']).to be_truthy
+    expect(obj['result']['email']).to be_truthy
   end
 
 end

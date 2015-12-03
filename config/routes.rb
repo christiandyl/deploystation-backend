@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
       resource :session, :only => [:create]
       resources :users, :only => [:create]
+      get "users/me", :controller => :users, :action => :me
       
       resource :connect do
         member do

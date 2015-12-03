@@ -45,6 +45,19 @@ module ApiBack
         
         render success_response opts
       end
+      
+      ##
+      # Get current user data
+      # @resource /v1/users/me
+      # @action GET
+      #
+      # @response_field [Boolean] success
+      # @response_field [Hash] result
+      # @response_field [String] result.id User id
+      # @response_field [String] result.email User email
+      def me
+        render success_response current_user.to_api(:public)
+      end
 
     end
   end
