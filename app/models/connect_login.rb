@@ -15,9 +15,30 @@ class ConnectLogin < Connect
       data = data.with_indifferent_access
       self.partner_id = data[:email] || nil
       self.partner_auth_data = (Digest::SHA1.hexdigest(data['password']) rescue nil) || nil
+      
+      
+      self.partner_data = {
+        :full_name => data["full_name"]
+      }
     end
   end
 
+  def partner_data= val
+    write_attribute :partner_data, val.to_json
+  end
+
+  def partner_data
+    JSON.parse(read_attribute :partner_data) rescue nil
+  end
+  
+  def first_name
+    partner_data["full_name"].split(" ").first
+  end
+
+  def last_name
+    partner_data["full_name"].split(" ").last
+  end
+  
   def self.authenticate data
     c = self.new data
     d = c.existing_connect
@@ -26,7 +47,7 @@ class ConnectLogin < Connect
     return nil
   end
 
-  def get_email
+  def email
     partner_id
   end
 

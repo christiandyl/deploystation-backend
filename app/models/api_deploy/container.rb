@@ -2,9 +2,12 @@ module ApiDeploy
   class Container < ActiveRecord::Base
     include ApiConverter
 
-    attr_api [:id, :info]
+    attr_api [:id, :status, :host_info, :plan_info, :ip]
     
     before_destroy :on_before_destroy
+    
+    STATUS_ONLINE  = "online"
+    STATUS_OFFLINE = "offline"
     
     ASYNC = false
     
@@ -16,9 +19,11 @@ module ApiDeploy
     
     # Validations
     validates :user_id, :presence => true
-    validates :docker_id, :presence => true
+    # validates :docker_id, :presence => true
     validates :host_id, :presence => true
-    validates :port, :presence => true
+    # validates :port, :presence => true
+  
+    def command; raise "SubclassResponsibility"; end
   
     class << self
       def class_for game
@@ -28,35 +33,25 @@ module ApiDeploy
         return cname
       end
       
-      def create user, plan, opts
-        Rails.logger.debug "Creating container with params: #{opts.to_s}"
-
-        port = opts["PortBindings"].first[1].first["HostPort"] or raise ArgumentError.new("HostPort is absent")
+      def create user, plan, opts, now=false
         host = plan.host
-
-        Docker.url = "tcp://#{host.ip}:5422" unless host.ip == '127.0.0.1'
-
-        container_docker = Docker::Container.create(opts)
-
+        
         container = Container.new.tap do |c|
-          c.user_id   = user.id
-          c.docker_id = container_docker.id
-          c.plan_id   = plan.id
-          c.host_id   = host.id
-          c.port      = port
+          c.user_id = user.id
+          c.plan_id = plan.id
+          c.host_id = host.id
+          c.status  = STATUS_OFFLINE
         end
-
-        container.save
         
-        ap container.attributes
+        container.save!
+        Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.attributes.to_s}"
         
-        Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.to_s}"
-      
-        unless ASYNC
-          container_docker.wait
-          Rails.logger.debug "Container(#{container.id}) has created"
+        unless now          
+          ApiDeploy::ContainerCreateWorker.perform_async(container.id, opts)
+        else          
+          container.create_docker_container
         end
-    
+        
         return container
       end
       
@@ -71,43 +66,139 @@ module ApiDeploy
       end
     end
   
-    def start opts={}
+    def create_docker_container opts
+      Rails.logger.debug "Creating docker container with params: #{opts.to_s}"
+
+      port = opts["PortBindings"].first[1].first["HostPort"] or raise ArgumentError.new("HostPort is absent")
+      
+      host.use
+
+      opts["name"] = "container_" + id.to_s
+
+      begin
+        container_docker = Docker::Container.create(opts)
+      rescue => e
+        message = "Container(#{id}) docker creation error: #{e.message}"
+        Rails.logger.debug(message)
+        raise message
+        
+        return nil
+      end
+      
+      self.docker_id = container_docker.id
+      self.port      = port
+      
+      save!
+  
+      unless ASYNC
+        container_docker.wait
+        Rails.logger.debug "Container(#{id}) docker has created"
+      end
+      
+      return container_docker
+    end
+  
+    def start opts={}, now=false
+      unless now          
+        ApiDeploy::ContainerStartWorker.perform_async(id, opts)
+        return true
+      end
+      
       Rails.logger.debug "Starting container(#{id})"
       docker_container.start(opts)
       Rails.logger.debug "Container(#{id}) has started"
+      
+      self.status = STATUS_ONLINE
+      save!
     end
   
-    def restart
+    def restart now=false
+      unless now          
+        ApiDeploy::ContainerRestartWorker.perform_async(id)
+        return true
+      end
+      
+      self.status = STATUS_OFFLINE
+      save!
+      
       Rails.logger.debug "Restarting container(#{id})"
       docker_container.restart
       Rails.logger.debug "Container(#{id}) has restarted"
+      
+      self.status = STATUS_ONLINE
+      save!
     end
   
-    def stop
+    def stop now=false
+      unless now    
+        ApiDeploy::ContainerStopWorker.perform_async(id)
+        return true
+      end
+
       Rails.logger.debug "Stopping container(#{id})"
       docker_container.stop
       Rails.logger.debug "Container(#{id}) has stopped"
+      
+      self.status = STATUS_OFFLINE
+      save!
+    end
+    
+    def destroy_container now=false
+      unless now    
+        ApiDeploy::ContainerDestroyWorker.perform_async(id)
+        return true
+      end
+      
+      Rails.logger.debug "Destroying container(#{id})"
+      destroy
+      Rails.logger.debug "Container(#{id}) has destroyed"
     end
     
     def is_owner? user
       user_id == user.id
     end
     
-    def info
-      docker_container.info
+    def host_info
+      host.to_api(:public)
     end
     
-    private
+    def plan_info
+      plan.to_api(:public)
+    end
+    
+    def ip
+      (host.ip + ":" + port) rescue nil
+    end
+    
+    def command name, args, now=false
+      unless now    
+        ApiDeploy::ContainerCommandWorker.perform_async(id, name, args)
+        return true
+      end
+          
+      command_settings = self.class::COMMANDS.find { |c| c[:name] == name }
+      raise ArgumentError.new("Command #{name} doesn't exists") if command_settings.nil?
+      
+      return send("command_#{name}", args)
+    end
     
     def docker_container
+      if docker_id.nil?
+        raise "Container(#{docker_id}) can't get docker container, docker_id is empty"
+      end
+      
+      host.use
+      
       docker_container = Docker::Container.get(docker_id)
       raise "Container(#{docker_id}) does not exists" if docker_container.nil?
       
       return docker_container
     end
+      
+    private
     
     def on_before_destroy
-      # TODO delete docker container in sidekiq
+      host.use
       docker_container.delete(:force => true)
     end
   

@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   attr_api [:id, :email]
 
   has_many :connects
+  has_many :containers, :class_name => "ApiDeploy::Container"
 
   after_create :send_welcome_mail
 

@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'Containers API', :type => :request do
 
   before :all do
+    `docker rm --force container_1`
     authenticate_test_user
   end
 
@@ -26,7 +27,7 @@ describe 'Containers API', :type => :request do
 
     container = ApiDeploy::Container.find(obj["result"]["id"]) rescue nil
     expect(container).not_to be_nil
-    
+
     @context.container_id = container.id
   end
   
@@ -41,7 +42,21 @@ describe 'Containers API', :type => :request do
 
     container = ApiDeploy::Container.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
+    
     byebug
+  end
+  
+  it 'Allows to get containers list' do
+    send :get, containers_path, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+    
+    expect(obj['success']).to be(true)
+    expect(obj["result"][0]["id"]).to be_truthy
+    expect(obj["result"][0]["status"]).to be_truthy
+    expect(obj["result"][0]["host_info"]).to be_truthy
+    expect(obj["result"][0]["plan_info"]).to be_truthy
   end
 
   it 'Allows to restart container' do
@@ -59,6 +74,52 @@ describe 'Containers API', :type => :request do
 
   it 'Allows to show container info' do
     send :get, container_path(@context.container_id), :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    # expect(obj["result"]["id"]).not_to be_empty
+
+    container = ApiDeploy::Container.find(@context.container_id) rescue nil
+    expect(container).not_to be_nil
+  end
+  
+  it 'Allows to get game server commands list' do
+    send :get, commands_container_path(@context.container_id), :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+
+    expect(obj["result"]).to be_a(Array)
+    expect(obj["result"][0]).to be_a(Hash)
+    expect(obj["result"][0]["name"]).to be_truthy
+    expect(obj["result"][0]["args"]).to be_a(Array)
+    expect(obj["result"][0]["args"][0]["name"]).to be_truthy
+    expect(obj["result"][0]["args"][0]["type"]).to be_truthy
+    expect(obj["result"][0]["args"][0]["required"]).to be_truthy
+  end
+  
+  it 'Allows to send command to container server' do
+    params = { 
+      command: {
+        name: 'kill_player',
+        args: { player_name: 'Skarpy' }
+      }
+    }.to_json
+    
+    send :post, command_container_path(@context.container_id), :params => params, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+  end
+
+  it 'Allows to stop container' do
+    send :post, stop_container_path(@context.container_id), :token => @context.token
 
     expect(response.status).to eq(200)
     obj = JSON.parse(response.body)

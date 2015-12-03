@@ -1,4 +1,7 @@
 class Plan < ActiveRecord::Base
+  include ApiConverter
+
+  attr_api [:id, :name, :max_players, :price, :host_id]
 
   belongs_to :game
   belongs_to :host

@@ -2,6 +2,7 @@ class ApplicationController < ActionController::API
   include AbstractController::Translation
 
   before_filter :check_auth_token, :check_app_key
+  before_filter :ensure_logged_in, :except => [:root]
 
   rescue_from Exception, :with => :render_error
   rescue_from StandardError, :with => :render_error
@@ -40,7 +41,7 @@ class ApplicationController < ActionController::API
   end
 
   def ensure_logged_in
-    @current_user || render_unauthorized
+    @current_user or raise PermissionDenied
   end
 
   # Response helpers
@@ -55,7 +56,7 @@ class ApplicationController < ActionController::API
 
   def success_response d = nil
     json = { success: true }
-    json[:result] = d if d
+    json[:result] = d unless d.nil?
     { json: json, status: 200 }
   end
   
@@ -75,6 +76,14 @@ class ApplicationController < ActionController::API
   # Render helpers
 
   def render_error(e)
+    session = current_user.nil? ? {} : { id: current_user.id }
+    Airbrake.notify_or_ignore(
+        e,
+        :parameters => params,
+        :cgi_data   => ENV.to_hash,
+        :session    => session
+    )
+    
     Rails.logger.error "Exception caught caused return 500 : #{e.message}"
     Rails.logger.debug e.backtrace.join("\n")
     
