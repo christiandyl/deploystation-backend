@@ -11,10 +11,10 @@ module ApiDeploy
           :success => true,
           :result  => container.to_api(:public)
         }
-        Pusher.trigger "container-#{container_id}", "container_create", data
+        Pusher.trigger "container-#{container_id}", "create", data
       rescue => e
         data = { :success => false }
-        Pusher.trigger "container-#{container_id}", "container_create", data
+        Pusher.trigger "container-#{container_id}", "create", data
       end
     end
 
