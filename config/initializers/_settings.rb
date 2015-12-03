@@ -19,7 +19,7 @@ Settings = OpenStruct.new(
     :secret => ENV['PUSHER_SECRET'] || '210f3bc51210d73d4b39'
   ),
   :sendgrid => OpenStruct.new(
-    :user_name => ENV['SENDGRID_USER_NAME']|| 'deploy4play@gmail.com',
+    :user_name => ENV['SENDGRID_USER_NAME']|| 'christiandyl',
     :password  => ENV['SENDGRID_PASSWORD'] || 'dsTest2015'
   ),
   :connects => OpenStruct.new(
