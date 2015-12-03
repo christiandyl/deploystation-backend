@@ -31,7 +31,7 @@ This is backend part of [DeployStation] project.
 * to generate rdoc: `$ bundle exec yardoc --plugin rest --title "DeployStation backend API" --readme "README.md" --output-dir ./public/docs`
 * to see generated docs `$ open public/docs/index.html`, or open manually using UI.
 
-***Some specs need to have xvfb terminal launched, so don't forget to install xvfb!!!***
+***Some specs need to have docker launched, so don't forget to install docker!!!***
 
 [DeployStation]:http://www.deploystation.com
 [Sidekiq]:http://sidekiq.org/
