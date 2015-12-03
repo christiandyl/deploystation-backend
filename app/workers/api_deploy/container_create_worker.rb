@@ -7,9 +7,14 @@ module ApiDeploy
         container = Container.find(container_id)
         container.create_docker_container(opts)
       
-        Pusher.trigger "container-#{container_id}", "container_has_created", container.to_api(:public)
+        data = {
+          :success => true,
+          :result  => container.to_api(:public)
+        }
+        Pusher.trigger "container-#{container_id}", "container_create", data
       rescue => e
-        Pusher.trigger "container-#{container_id}", "container_creation_error", {}
+        data = { :success => false }
+        Pusher.trigger "container-#{container_id}", "container_create", data
       end
     end
 

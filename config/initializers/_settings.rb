@@ -14,9 +14,9 @@ Settings = OpenStruct.new(
     :host    => ENV['AIRBRAKE_HOST']    || 'servers-errbit.herokuapp.com'
   ),
   :pusher => OpenStruct.new(
-    :app_id => ENV['PUSHER_APP_ID'] || '151255',
-    :key    => ENV['PUSHER_KEY']    || 'e5404185a0460e3f52da',
-    :secret => ENV['PUSHER_SECRET'] || '2df3b5a0303647b59b08'
+    :app_id => ENV['PUSHER_APP_ID'] || '158644',
+    :key    => ENV['PUSHER_KEY']    || '9e3aa42715e92c6e12b2',
+    :secret => ENV['PUSHER_SECRET'] || '210f3bc51210d73d4b39'
   ),
   :sendgrid => OpenStruct.new(
     :user_name => ENV['SENDGRID_USER_NAME']|| 'deploy4play@gmail.com',
