@@ -6,6 +6,7 @@ class CreateContainers < ActiveRecord::Migration
       t.integer  :plan_id
       t.integer  :host_id
       t.string   :port
+      t.string   :name
       t.string   :status
       t.datetime :active_until
       t.timestamps null: false

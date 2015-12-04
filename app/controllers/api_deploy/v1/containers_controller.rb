@@ -29,6 +29,7 @@ module ApiDeploy
       #
       # @required [Hash] container
       # @required [Integer] container.plan_id Plan id
+      # @required [String] container.name Server name
       #
       # @response_field [Boolean] success
       # @response_field [Hash] result
@@ -37,11 +38,14 @@ module ApiDeploy
       def create
         opts  = params.require(:container)
         plan_id  = opts[:plan_id] or raise ArgumentError.new("Plan id doesn't exists")
+        name     = opts[:name] or raise ArgumentError.new("Name doesn't exists")
         
         plan = Plan.find(plan_id) or raise "Plan with id #{plan_id} doesn't exists"
         game = plan.game.name
 
         container = Container.class_for(game).create(current_user, plan)
+        container.name = name
+        container.save!
 
         render success_response container.to_api(:public)
       end
@@ -55,6 +59,7 @@ module ApiDeploy
       # @response_field [Hash] result
       # @response_field [Integer] result.id Container id
       # @response_field [Hash] result.info Docker container info
+      # @response_field [String] result.name Docker container name
       def show
         render success_response @container.to_api(:public)
       end

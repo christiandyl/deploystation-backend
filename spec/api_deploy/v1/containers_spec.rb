@@ -14,7 +14,7 @@ describe 'Containers API', :type => :request do
 
   it 'Allows to create container' do
     params = {
-      container: { plan_id: 1 }
+      container: { plan_id: 1, name: "Server name" }
     }.to_json
 
     send :post, containers_path, :params => params, :token => @context.token

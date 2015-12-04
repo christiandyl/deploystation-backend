@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20151029103922) do
     t.integer  "plan_id"
     t.integer  "host_id"
     t.string   "port"
+    t.string   "name"
     t.string   "status"
     t.datetime "active_until"
     t.datetime "created_at",   null: false
