@@ -29,9 +29,11 @@ module ApiBack
 
         connect = Connect::class_for(connect_name).new(opts)
 
-        if connect.user.nil?
+        if connect.existing_connect.nil?
           connect.user = User.create email: connect.email
           connect.save!
+        else
+          raise "This user is already exists"
         end
 
         token = Token.new connect.user

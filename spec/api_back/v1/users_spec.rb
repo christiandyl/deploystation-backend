@@ -7,6 +7,7 @@ describe 'Users API', :type => :request do
     email = 'test@test.com'
     params = { connect_login: { full_name: 'Gordon Freeman', email: email, password: 'test123' } }.to_json
     send :post, "/v1/users", :params => params
+
     expect(response.status).to eq(200)
 
     obj = JSON.parse(response.body)
