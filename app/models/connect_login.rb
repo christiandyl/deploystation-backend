@@ -39,6 +39,10 @@ class ConnectLogin < Connect
     partner_data["full_name"].split(" ").last
   end
   
+  def full_name
+    partner_data["full_name"]
+  end
+  
   def self.authenticate data
     c = self.new data
     d = c.existing_connect

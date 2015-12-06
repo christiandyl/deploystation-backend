@@ -40,6 +40,10 @@ class ConnectFacebook < Connect
   def last_name
     self.partner_data['last_name']
   end
+  
+  def full_name
+    self.partner_data['first_name'] + " " + self.partner_data['last_name']
+  end
 
   def avatar_url
     "https://graph.facebook.com/#{partner_id}/picture?type=large"
