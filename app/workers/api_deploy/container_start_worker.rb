@@ -24,7 +24,7 @@ module ApiDeploy
         
         raise "Container #{container.id} didn't start" unless done
       rescue => e
-        Pusher.trigger "container-#{container_id}", "container_starting_error", {}
+        Pusher.trigger "container-#{container_id}", "start", { error: true }
         raise e
       end
     end

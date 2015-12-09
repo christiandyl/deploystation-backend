@@ -10,6 +10,7 @@ module ApiDeploy
         Pusher.trigger "container-#{container_id}", "container_has_deleted", {}
       rescue => e
         Pusher.trigger "container-#{container_id}", "container_deleting_error", {}
+        raise e
       end
     end
 

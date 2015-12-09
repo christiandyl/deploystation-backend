@@ -10,6 +10,7 @@ module ApiDeploy
         Pusher.trigger "container-#{container_id}", "container_has_restarted", container.to_api(:public)
       rescue => e
         Pusher.trigger "container-#{container_id}", "container_restarting_error", {}
+        raise e
       end
     end
 
