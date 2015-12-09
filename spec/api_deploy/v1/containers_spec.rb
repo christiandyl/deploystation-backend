@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Containers API', :type => :request do
 
   before :all do
-    `docker rm --force container_1`
+    `docker rm --force container_1` if `docker ps -a`.include?("container_1")
     authenticate_test_user
   end
 

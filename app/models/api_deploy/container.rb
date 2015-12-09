@@ -24,6 +24,10 @@ module ApiDeploy
     # validates :port, :presence => true
   
     def command; raise "SubclassResponsibility"; end
+    def players_online; raise "SubclassResponsibility"; end
+    def logs; raise "SubclassResponsibility"; end
+    def started?; raise "SubclassResponsibility"; end
+    def starting_progress; raise "SubclassResponsibility"; end
   
     class << self
       def class_for game

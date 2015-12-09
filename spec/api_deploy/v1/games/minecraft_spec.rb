@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'Container(Minecraft) API', :type => :request do
 
   before :all do
+    `docker rm --force container_1` if `docker ps -a`.include?("container_1")
     authenticate_test_user
   end
 
@@ -41,6 +42,15 @@ describe 'Container(Minecraft) API', :type => :request do
 
     container = ApiDeploy::Container.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
+  end
+  
+  it 'Allows to get players online' do
+    send :get, players_online_container_path(@context.container_id), :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
   end
   
   it 'Allows to send command (list)' do

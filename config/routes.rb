@@ -30,6 +30,7 @@ Rails.application.routes.draw do
           post :restart
           post :command
           get  :commands
+          get  :players_online
         end
       end
       

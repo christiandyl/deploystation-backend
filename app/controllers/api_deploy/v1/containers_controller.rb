@@ -155,7 +155,22 @@ module ApiDeploy
       # @response_field [String] response[].required_args[].type Argument type
       # @response_field [Boolean] response[].required_args[].required Argument is required?
       def commands
-        render success_response ContainerMinecraft::COMMANDS
+        render success_response @container::COMMANDS
+      end
+    
+      ##
+      # Get game server online players list
+      # @resource /v1/containers/:container_id/players_online
+      # @action GET
+      #
+      # @response_field [Boolean] success
+      def players_online
+        players_online = @container.players_online
+        unless players_online
+          raise "Can't get players online, server doesn't started"
+        end
+        
+        render success_response
       end
     
       private
