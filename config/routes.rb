@@ -31,6 +31,7 @@ Rails.application.routes.draw do
           post :command
           get  :commands
           get  :players_online
+          get  :logs
         end
       end
       

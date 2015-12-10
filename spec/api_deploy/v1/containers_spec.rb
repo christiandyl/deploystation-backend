@@ -58,6 +58,19 @@ describe 'Containers API', :type => :request do
     expect(obj["result"][0]["host_info"]).to be_truthy
     expect(obj["result"][0]["plan_info"]).to be_truthy
   end
+  
+  it 'Allows to get container logs' do
+    send :get, logs_container_path(@context.container_id), :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+    
+    expect(obj['success']).to be(true)
+    # expect(obj["result"][0]["date"]).to be_truthy
+    expect(obj["result"][0]["time"]).to be_truthy
+    expect(obj["result"][0]["type"]).to be_truthy
+    expect(obj["result"][0]["message"]).to be_truthy
+  end 
 
   it 'Allows to restart container' do
     send :post, restart_container_path(@context.container_id), :token => @context.token

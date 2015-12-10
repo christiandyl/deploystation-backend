@@ -73,6 +73,11 @@ module ApiDeploy
       # @response_field [Hash] result
       # @response_field [Integer] result.id Container id
       # @response_field [Hash] result.info Docker container info
+      # @response_field [_________________________] _________________________
+      # @response_field [PUSHER_CHANNEL_NAME] container-{id}
+      # @response_field [PUSHER_KEY] start
+      # @response_field [PUSHER_SUCCESS_RESULT] { progress: [Float], message: [String] }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { error: [Boolean] }
       def start
         @container.start
       
@@ -115,6 +120,11 @@ module ApiDeploy
       # @action DELETE
       #
       # @response_field [Boolean] success
+      # @response_field [_________________________] _________________________
+      # @response_field [PUSHER_CHANNEL_NAME] container-{id}
+      # @response_field [PUSHER_KEY] destroy
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: [Boolean] }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: [Boolean] }
       def destroy
         @container.destroy_container
       
@@ -148,14 +158,14 @@ module ApiDeploy
       # @action GET
       #
       # @response_field [Boolean] success
-      # @response_field [Array] response
-      # @response_field [String] response[].name Command name
-      # @response_field [Array] response[].required_args Command required arguments
-      # @response_field [String] response[].required_args[].name Argument name
-      # @response_field [String] response[].required_args[].type Argument type
-      # @response_field [Boolean] response[].required_args[].required Argument is required?
+      # @response_field [Array] result
+      # @response_field [String] result[].name Command name
+      # @response_field [Array] result[].required_args Command required arguments
+      # @response_field [String] result[].required_args[].name Argument name
+      # @response_field [String] result[].required_args[].type Argument type
+      # @response_field [Boolean] result[].required_args[].required Argument is required?
       def commands
-        render success_response @container::COMMANDS
+        render success_response @container.class::COMMANDS
       end
     
       ##
@@ -164,6 +174,11 @@ module ApiDeploy
       # @action GET
       #
       # @response_field [Boolean] success
+      # @response_field [_________________________] _________________________
+      # @response_field [PUSHER_CHANNEL_NAME] container-{id}
+      # @response_field [PUSHER_KEY] players_online
+      # @response_field [PUSHER_SUCCESS_RESULT] { number_of_players: [Int], players_list: [List] }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
       def players_online
         players_online = @container.players_online
         unless players_online
@@ -171,6 +186,23 @@ module ApiDeploy
         end
         
         render success_response
+      end
+      
+      ##
+      # Get game server logs list
+      # @resource /v1/containers/:container_id/logs
+      # @action GET
+      #
+      # @response_field [Boolean] success
+      # @response_field [Array] result
+      # @response_field [String] result[].date Command data
+      # @response_field [String] result[].time Command time
+      # @response_field [String] result[].type Command type
+      # @response_field [String] result[].message Command message
+      def logs
+        logs = @container.logs
+        
+        render success_response logs
       end
     
       private

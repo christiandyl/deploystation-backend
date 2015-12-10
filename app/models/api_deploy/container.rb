@@ -141,6 +141,9 @@ module ApiDeploy
 
       Rails.logger.debug "Stopping container(#{id})"
       docker_container.stop
+      
+      raise "Container #{id} stopping error" unless stopped?
+      
       Rails.logger.debug "Container(#{id}) has stopped"
       
       self.status = STATUS_OFFLINE
@@ -155,7 +158,14 @@ module ApiDeploy
       
       Rails.logger.debug "Destroying container(#{id})"
       destroy
+      
+      dc = docker_container rescue true
+      
+      raise "Container #{id} destroying error" unless dc == true
+      
       Rails.logger.debug "Container(#{id}) has destroyed"
+      
+      return true
     end
     
     def is_owner? user
@@ -198,7 +208,13 @@ module ApiDeploy
       
       return docker_container
     end
+    
+    def stopped?
+      s = docker_container.info["State"]
       
+      s["Running"] == false && s["Paused"] == false && s["Restarting"] == false && s["Dead"] == false
+    end
+    
     private
     
     def on_before_destroy
