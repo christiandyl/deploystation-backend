@@ -10,6 +10,7 @@ module ApiDeploy
         
         Rails.logger.debug "Checking container #{container.id} status..."
         done = false
+        sleep 3
         20.times do
           progress = container.starting_progress
           if (done = (progress[:progress] == 1.0))

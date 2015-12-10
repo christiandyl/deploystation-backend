@@ -170,6 +170,9 @@ module ApiDeploy
     
     def starting_progress
       logs_str = docker_container.logs(stdout: true)
+      logs_str = logs_str.split("usermod: no changes").last || ""
+      
+      return { progress: 0.2, message: "Initializing server" } if logs_str.blank?
       
       unless (/ Done \(/).match(logs_str).nil?
         return { progress: 1.0, message: "Done" }
@@ -190,10 +193,10 @@ module ApiDeploy
       
       downloading = (/Downloading minecraft_server.(.+?).jar/).match(logs_str)
       unless downloading.nil?
-        return { progress: 0.2, message: "Downloading server" }
+        return { progress: 0.4, message: "Downloading server" }
       end
       
-      return { progress: 0, message: "Initializing server" }
+      return { progress: 0.2, message: "Initializing server" }
     end
     
     def started?
