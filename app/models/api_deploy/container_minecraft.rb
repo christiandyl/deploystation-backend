@@ -106,7 +106,7 @@ module ApiDeploy
     end
   
     def command_kill_player args
-      player_name = args[:player_name] or raise ArgumentError.new("Player_name doesn't exists")
+      player_name = args["player_name"] or raise ArgumentError.new("Player_name doesn't exists")
       input       = "kill #{player_name}\n"
       
       docker_container.attach stdin: StringIO.new(input)
@@ -117,8 +117,8 @@ module ApiDeploy
     end
     
     def command_tp args
-      player = args[:player] or raise ArgumentError.new("Player doesn't exists")
-      target = args[:target] or raise ArgumentError.new("Target doesn't exists")
+      player = args["player"] or raise ArgumentError.new("Player doesn't exists")
+      target = args["target"] or raise ArgumentError.new("Target doesn't exists")
       
       input  = "tp #{player} #{target}\n"
       
@@ -129,9 +129,9 @@ module ApiDeploy
     end
     
     def command_give args
-      player = args[:player] or raise ArgumentError.new("Player doesn't exists")
-      target = args[:block_id] or raise ArgumentError.new("Block_id doesn't exists")
-      amount = args[:amount] or raise ArgumentError.new("Amount doesn't exists")
+      player = args["player"] or raise ArgumentError.new("Player doesn't exists")
+      target = args["block_id"] or raise ArgumentError.new("Block_id doesn't exists")
+      amount = args["amount"] or raise ArgumentError.new("Amount doesn't exists")
       
       input  = "give #{player} #{block_id} #{amount}\n"
       

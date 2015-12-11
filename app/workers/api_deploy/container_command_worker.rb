@@ -9,9 +9,9 @@ module ApiDeploy
 
         output = container.command(command_name, command_args, true)
         
-        Pusher.trigger "container-#{container_id}", "container_command_success", output
+        Pusher.trigger "container-#{container_id}", "command", { success: true, result: output }
       rescue => e
-        Pusher.trigger "container-#{container_id}", "container_command_error", {}
+        Pusher.trigger "container-#{container_id}", "command", { success: false, result: {} }
       end
     end
 
