@@ -11,7 +11,8 @@ module ApiDeploy
         
         Pusher.trigger "container-#{container_id}", "command", { success: true, result: output }
       rescue => e
-        Pusher.trigger "container-#{container_id}", "command", { success: false, result: {} }
+        Pusher.trigger "container-#{container_id}", "command", { success: false, result: output }
+        raise e
       end
     end
 

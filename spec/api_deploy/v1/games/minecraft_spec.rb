@@ -54,7 +54,7 @@ describe 'Container(Minecraft) API', :type => :request do
   end
   
   it 'Allows to send command (list)' do
-    params = { 
+    params = {
       command: {
         name: 'kill_player',
         args: { player_name: "Skarpy" }

@@ -5,37 +5,44 @@ module ApiDeploy
     
     COMMANDS = [
       {
-        :name => "kill_player",
-        :args => [
+        :name  => "kill_player",
+        :title => "Kill player",
+        :args  => [
           { name: "player_name", type: "string", required: true }
         ]
       },
       {
-        :name => "ban_player",
-        :args => [
+        :name  => "ban_player",
+        :title => "Bad player",
+        :args  => [
           { name: "player_name", type: "string", required: true },
           { name: "reason", type: "text", required: false }
         ]
       },
       {
-        :name => "tp",
-        :args => [
+        :name  => "tp",
+        :title => "Teleport player",
+        :args  => [
           { name: "player", type: "string", required: true },
           { name: "target", type: "string", required: true }
         ]
       },
       {
-        :name => "give",
-        :args => [
+        :name  => "give",
+        :title => "Give item to player",
+        :args  => [
           { name: "player", type: "string", required: true },
-          { name: "block_id", type: "string", required: true },
-          { name: "amount", type: "string", required: true }
+          { name: "block_id", type: "int", required: true },
+          { name: "amount", type: "int", required: true }
         ]
       },
       {
-        :name => "list",
-        :args => []
-      }
+        :name  => "time",
+        :title => "Change day time",
+        :args  => [
+          { name: "value", type: "string", required: true }
+        ]
+      },
     ]
   
     def self.create user, plan
@@ -129,9 +136,9 @@ module ApiDeploy
     end
     
     def command_give args
-      player = args["player"] or raise ArgumentError.new("Player doesn't exists")
-      target = args["block_id"] or raise ArgumentError.new("Block_id doesn't exists")
-      amount = args["amount"] or raise ArgumentError.new("Amount doesn't exists")
+      player   = args["player"] or raise ArgumentError.new("Player doesn't exists")
+      block_id = args["block_id"] or raise ArgumentError.new("Block_id doesn't exists")
+      amount   = args["amount"] or raise ArgumentError.new("Amount doesn't exists")
       
       input  = "give #{player} #{block_id} #{amount}\n"
       
@@ -141,15 +148,19 @@ module ApiDeploy
       return { success: true }
     end
     
-    def command_list args
-      input  = "list\n"
+    def command_time args
+      value = args["value"] or raise ArgumentError.new("Value doesn't exists")
+      
+      input = "time set #{value}\n"
+      
       docker_container.attach stdin: StringIO.new(input)
+      Rails.logger.info "Container(#{id}) - Minecraft : Day time has changed to #{value}"
       
       return { success: true }
     end
     
     def logs
-      logs = docker_container.logs(stdout: true)
+      logs = docker_container.logs(stdout: true).split("usermod: no changes").last
 
       list = logs.scan(/\[([0-9]{2}:[0-9]{2}:[0-9]{2})\] \[[a-zA-Z ]*\/([A-Z]*)\]: (.+?)\r\n/)
       

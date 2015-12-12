@@ -162,6 +162,7 @@ module ApiDeploy
       # @response_field [String] result[].name Command name
       # @response_field [Array] result[].required_args Command required arguments
       # @response_field [String] result[].required_args[].name Argument name
+      # @response_field [String] result[].required_args[].title Argument title
       # @response_field [String] result[].required_args[].type Argument type
       # @response_field [Boolean] result[].required_args[].required Argument is required?
       def commands
