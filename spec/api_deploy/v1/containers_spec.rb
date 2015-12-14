@@ -140,27 +140,13 @@ describe 'Containers API', :type => :request do
     expect(obj["result"][0]["args"][0]["required"]).to be_truthy
   end
   
-  it 'Allows to get game server commands list' do
-    send :get, commands_container_path(@context.container_id), :token => @context.token
-
-    expect(response.status).to eq(200)
-    obj = JSON.parse(response.body)
-
-    expect(obj['success']).to be(true)
-
-    expect(obj["result"]).to be_a(Array)
-    expect(obj["result"][0]).to be_a(Hash)
-    expect(obj["result"][0]["name"]).to be_truthy
-    expect(obj["result"][0]["args"]).to be_a(Array)
-    expect(obj["result"][0]["args"][0]["name"]).to be_truthy
-    expect(obj["result"][0]["args"][0]["type"]).to be_truthy
-    expect(obj["result"][0]["args"][0]["required"]).to be_truthy
-  end
-  
   # Access logics
   
   it 'Allows to create access for user' do
-    @context.second_user = User.create! email: "new_user@email.com", full_name: "New User"
+    second_user_params = { connect_login: { email: 'test2@test.com', password: 'test123' } }
+    @context.second_user_token = create_user_token(second_user_params)
+    @context.second_user_token.find_user
+    @context.second_user = @context.second_user_token.user
 
     params = {
       access: {
@@ -194,7 +180,20 @@ describe 'Containers API', :type => :request do
     expect(obj['result'][0]['user_data']['id']).to eq(@context.second_user.id)
   end
   
-  it 'Allows to get delete containe access' do
+  it 'Allows user to get shared containers list' do
+    send :get, shared_containers_path, :token => @context.second_user_token.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+    
+    expect(obj['success']).to be(true)
+    expect(obj["result"][0]["id"]).to be_truthy
+    expect(obj["result"][0]["status"]).to be_truthy
+    expect(obj["result"][0]["host_info"]).to be_truthy
+    expect(obj["result"][0]["plan_info"]).to be_truthy
+  end
+  
+  it 'Allows to delete container access' do
     send :delete, container_access_path(container_id: @context.container_id, id: @context.second_user.id), :token => @context.token
 
     expect(response.status).to eq(200)

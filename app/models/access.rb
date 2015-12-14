@@ -6,7 +6,7 @@ class Access < ActiveRecord::Base
   attr_api [:user_data]
 
   # Relations
-  belongs_to :container
+  belongs_to :container, :class_name => "ApiDeploy::Container"
   belongs_to :user
   
   # Validations

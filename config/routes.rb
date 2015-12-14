@@ -35,6 +35,7 @@ Rails.application.routes.draw do
         end
         resources :accesses, :only => [:index, :create, :destroy]
       end
+      get :shared_containers, :controller => :containers, :action => :shared
       
       resources :hosts, :only => [:index]
       resources :games, :only => [:index]

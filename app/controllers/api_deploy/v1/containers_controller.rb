@@ -2,8 +2,8 @@ module ApiDeploy
   module V1
     class ContainersController < ApplicationController
 
-      before_filter :get_container, :except => [:index, :create]
-      before_action :check_permissions, :except => [:index, :create, :destroy]
+      before_filter :get_container, :except => [:index, :shared, :create]
+      before_action :check_permissions, :except => [:index, :shared, :create, :destroy]
       before_action :check_super_permissions, :only => [:destroy]
 
       ##
@@ -17,6 +17,23 @@ module ApiDeploy
       # @response_field [Hash] result[].info Docker container info (blank by default)
       def index
         containers = current_user.containers.map do |c|
+          c.to_api(:public)
+        end
+
+        render success_response containers
+      end
+      
+      ##
+      # Get shared containers list
+      # @resource /v1/shared_containers
+      # @action GET
+      #
+      # @response_field [Boolean] success
+      # @response_field [Array] result
+      # @response_field [Integer] result[].id Container id
+      # @response_field [Hash] result[].info Docker container info (blank by default)
+      def shared
+        containers = current_user.shared_containers.map do |c|
           c.to_api(:public)
         end
 
