@@ -3,7 +3,8 @@ module ApiDeploy
     class ContainersController < ApplicationController
 
       before_filter :get_container, :except => [:index, :create]
-      before_action :check_permissions, :except => [:index, :create]
+      before_action :check_permissions, :except => [:index, :create, :destroy]
+      before_action :check_super_permissions, :only => [:destroy]
 
       ##
       # Get containers list
@@ -62,6 +63,25 @@ module ApiDeploy
       # @response_field [String] result.name Docker container name
       def show
         render success_response @container.to_api(:public)
+      end
+  
+      ##
+      # Update container info
+      # @resource /v1/containers/:container_id
+      # @action PUT
+      #
+      # @optional [Hash] container
+      # @optional [String] container.name Container name
+      # @optional [Boolean] container.is_private Is private
+      #
+      # @response_field [Boolean] success
+      def update
+        opts = params.require(:container).permit(Container::PERMIT_LIST_UPDATE)
+        
+        @container.update(opts)
+        Rails.logger.debug "Container-#{@container.id} info updated: #{opts.to_s}"
+        
+        render success_response
       end
   
       ##
@@ -217,6 +237,10 @@ module ApiDeploy
       
       def check_permissions
         raise PermissionDenied unless @container.is_owner? current_user
+      end
+      
+      def check_super_permissions
+        raise PermissionDenied unless @container.is_super_owner? current_user
       end
 
     end

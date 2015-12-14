@@ -11,17 +11,19 @@ module ApiDeploy
     
     ASYNC = false
     
+    PERMIT_LIST_UPDATE = [:name, :is_private]
+    
     # Relations
     belongs_to :user
     belongs_to :plan
     belongs_to :host
     has_one    :game, :through => :plan
+    has_many   :accesses
     
     # Validations
     validates :user_id, :presence => true
-    # validates :docker_id, :presence => true
     validates :host_id, :presence => true
-    # validates :port, :presence => true
+    validates :is_private, inclusion: { in: [true, false] }
   
     def command; raise "SubclassResponsibility"; end
     def players_online; raise "SubclassResponsibility"; end
@@ -41,10 +43,11 @@ module ApiDeploy
         host = plan.host
         
         container = Container.new.tap do |c|
-          c.user_id = user.id
-          c.plan_id = plan.id
-          c.host_id = host.id
-          c.status  = STATUS_OFFLINE
+          c.user_id    = user.id
+          c.plan_id    = plan.id
+          c.host_id    = host.id
+          c.status     = STATUS_OFFLINE
+          c.is_private = false
         end
         
         container.save!
@@ -169,6 +172,10 @@ module ApiDeploy
     end
     
     def is_owner? user
+      user_id == user.id || Access.exists?(container_id: container_id, user_id: user.id)
+    end
+    
+    def is_super_owner? user
       user_id == user.id
     end
     

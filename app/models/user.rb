@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 
   has_many :connects
   has_many :containers, :class_name => "ApiDeploy::Container"
+  has_many :accesses, :class_name => "ApiDeploy::Access"
 
   after_create :send_welcome_mail
 

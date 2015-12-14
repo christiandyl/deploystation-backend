@@ -8,6 +8,7 @@ class CreateContainers < ActiveRecord::Migration
       t.string   :port
       t.string   :name
       t.string   :status
+      t.boolean  :is_private, null: false
       t.datetime :active_until
       t.timestamps null: false
     end

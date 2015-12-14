@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   scope :module => :api_deploy do
     scope :v1, :module => :v1 do
       
-      resources :containers, :only => [:index, :create, :show, :destroy] do
+      resources :containers, :only => [:index, :create, :update, :show, :destroy] do
         member do
           post :start
           post :stop
@@ -33,6 +33,7 @@ Rails.application.routes.draw do
           get  :players_online
           get  :logs
         end
+        resources :accesses, :only => [:index, :create, :destroy]
       end
       
       resources :hosts, :only => [:index]
