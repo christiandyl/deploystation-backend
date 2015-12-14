@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20151214121613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "accesses", force: :cascade do |t|
     t.integer "container_id"
@@ -40,10 +41,11 @@ ActiveRecord::Schema.define(version: 20151214121613) do
     t.string   "port"
     t.string   "name"
     t.string   "status"
-    t.boolean  "is_private",   null: false
+    t.boolean  "is_private",    null: false
     t.datetime "active_until"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.hstore   "server_config"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "games", force: :cascade do |t|

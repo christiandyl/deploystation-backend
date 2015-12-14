@@ -213,6 +213,10 @@ module ApiDeploy
     def started?
       !logs.blank?
     end
+    
+    def config
+      @config ||= ConfigMinecraft.new(id)
+    end
   
   end
 end

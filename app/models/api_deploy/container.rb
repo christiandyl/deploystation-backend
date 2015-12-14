@@ -222,6 +222,14 @@ module ApiDeploy
       s["Running"] == false && s["Paused"] == false && s["Restarting"] == false && s["Dead"] == false
     end
     
+    def game
+      plan.game
+    end
+    
+    def config
+      @config ||= ("ApiDeploy::Config#{game.name.capitalize}".constantize).new(id)
+    end
+    
     private
     
     def on_before_destroy
