@@ -94,7 +94,7 @@ module ApiDeploy
         init_stamp = (init_stamp[0].to_i * 3600) + (init_stamp[1].to_i * 60) + init_stamp[2].to_i
         
         docker_container.attach stdin: StringIO.new("list\n")
-        (docker_container.wait(5) rescue nil) unless Rails.env.test?
+        # (docker_container.wait(5) rescue nil) unless Rails.env.test?
 
         x = 5
         seconds_delay = 2
