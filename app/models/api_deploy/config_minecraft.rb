@@ -1,7 +1,7 @@
 module ApiDeploy
   class ConfigMinecraft < GameConfig
     
-    attr_accessor :properties, :container_id
+    attr_accessor :properties, :container_id, :super_access
     
     LAST_TIME_UPDATED = 1450115967
     
@@ -260,6 +260,7 @@ module ApiDeploy
     def initialize container_id, props=nil
       self.properties = SCHEMA
       self.container_id = container_id
+      self.super_access = false
       
       read_from_database
       
@@ -272,7 +273,7 @@ module ApiDeploy
       is_found = false
       self.properties.each_with_index do |prop, index|
         if prop[:key] == key
-          raise "Property #{key} is not editable" if !prop[:is_editable]
+          raise "Property #{key} is not editable" if !prop[:is_editable] && !self.super_access
           
           type = prop[:type]
           validations = prop[:validations]

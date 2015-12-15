@@ -42,7 +42,7 @@ module ApiDeploy
       def create user, plan, opts, now=false
         host = plan.host
         
-        container = Container.new.tap do |c|
+        container = self.new.tap do |c|
           c.user_id    = user.id
           c.plan_id    = plan.id
           c.host_id    = host.id

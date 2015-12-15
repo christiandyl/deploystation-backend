@@ -45,6 +45,8 @@ module ApiDeploy
       },
     ]
   
+    after_create :define_config
+  
     def self.create user, plan
       memory = plan.ram * 1000000
       port   = plan.host.free_port
@@ -65,7 +67,7 @@ module ApiDeploy
         "Env"          => ["EULA=TRUE", "JVM_OPTS=-Xmx#{plan.ram}M"]
       }
       
-      super(user, plan, docker_opts)
+      container = super(user, plan, docker_opts)
     end
   
     def start opts={}, now=false
@@ -83,34 +85,81 @@ module ApiDeploy
         return true
       end
       
-      logs_before = logs
-      stamp = logs_before.last[:time]
-      docker_container.attach stdin: StringIO.new("list\n")
-      sleep(1)
-      logs_after = logs
+      players_online = 0
+      max_players    = config.get_property_value("max-players")
       
-      players_list = []
-      number_of_players = 0
-      max_players = 0
-      header_found = false
-      logs_after.each do |l|
-        unless header_found
-          match = /There are ([0-9]*)\/([0-9]*) players online:/.match(l[:message])
-          if (l[:time] >= stamp && !match.nil?)
-            number_of_players = match[1].to_i
-            max_players = match[2].to_i
-            header_found = true
-            next
+      
+      if status == STATUS_ONLINE
+        init_stamp = logs.last[:time].split(":")
+        init_stamp = (init_stamp[0].to_i * 3600) + (init_stamp[1].to_i * 60) + init_stamp[2].to_i
+        
+        docker_container.attach stdin: StringIO.new("list\n")
+        (docker_container.wait(5) rescue nil) unless Rails.env.test?
+
+        x = 5
+        seconds_delay = 2
+        done = false
+        
+        x.times do
+          str = docker_container.logs(stdout: true).split("usermod: no changes").last 
+ 
+          regex = /\[([0-9]{2}:[0-9]{2}:[0-9]{2})\] \[[a-zA-Z ]*\/([A-Z]*)\]: There are ([0-9]*)\/([0-9]*) players online:/
+          match = str.scan(regex).last
+          unless match.nil?
+            stamp = match[0].split(":")
+            stamp = (stamp[0].to_i * 3600) + (stamp[1].to_i * 60) + stamp[2].to_i
+            if stamp >= init_stamp
+              players_online = match[2].to_i
+              done = true
+              break
+            end
           end
-        else
-          if header_found == true && players_list.count != number_of_players
-            players_list << l[:message]
-          end
+          
+          sleep(seconds_delay)
         end
+
+        raise "Can't get players online" unless done
       end
       
-      return { number_of_players: number_of_players, players_list: players_list, max_players: max_players }
+      return { players_online: players_online, max_players: max_players }
     end
+  
+    # def players_online now=false
+    #   return false unless started?
+    #
+    #   unless now
+    #     ApiDeploy::ContainerPlayersOnlineWorker.perform_async(id)
+    #     return true
+    #   end
+    #
+    #   logs_before = logs
+    #   stamp = logs_before.last[:time]
+    #   docker_container.attach stdin: StringIO.new("list\n")
+    #   sleep(1)
+    #   logs_after = logs
+    #
+    #   players_list = []
+    #   number_of_players = 0
+    #   max_players = 0
+    #   header_found = false
+    #   logs_after.each do |l|
+    #     unless header_found
+    #       match = /There are ([0-9]*)\/([0-9]*) players online:/.match(l[:message])
+    #       if (l[:time] >= stamp && !match.nil?)
+    #         number_of_players = match[1].to_i
+    #         max_players = match[2].to_i
+    #         header_found = true
+    #         next
+    #       end
+    #     else
+    #       if header_found == true && players_list.count != number_of_players
+    #         players_list << l[:message]
+    #       end
+    #     end
+    #   end
+    #
+    #   return { number_of_players: number_of_players, players_list: players_list, max_players: max_players }
+    # end
   
     def command_kill_player args
       player_name = args["player_name"] or raise ArgumentError.new("Player_name doesn't exists")
@@ -216,6 +265,13 @@ module ApiDeploy
     
     def config
       @config ||= ConfigMinecraft.new(id)
+    end
+    
+    def define_config
+      config.super_access = true
+      config.set_property("max-players", plan.max_players)
+      # config.set_property("level-name", name)
+      config.export_to_database
     end
   
   end

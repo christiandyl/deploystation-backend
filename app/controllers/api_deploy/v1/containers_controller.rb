@@ -215,7 +215,7 @@ module ApiDeploy
       # @response_field [_________________________] _________________________
       # @response_field [PUSHER_CHANNEL_NAME] container-{id}
       # @response_field [PUSHER_KEY] players_online
-      # @response_field [PUSHER_SUCCESS_RESULT] { number_of_players: [Int], players_list: [List] }
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true, result: [List] }
       # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
       def players_online
         players_online = @container.players_online

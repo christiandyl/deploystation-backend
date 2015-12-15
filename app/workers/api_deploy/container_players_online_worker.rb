@@ -10,11 +10,12 @@ module ApiDeploy
         players_online = container.players_online(true)
 
         result = {
-          :container      => container.to_api(:public),
-          :players_online => players_online
+          :success => true,
+          :result  => players_online
         }
-        Pusher.trigger "user-#{container.user.id}-containers", "players_online", result
+        Pusher.trigger "container-#{container_id}", "players_online", result
       rescue => e
+        Pusher.trigger "container-#{container_id}", "players_online", { success: false }
         raise e
       end
     end
