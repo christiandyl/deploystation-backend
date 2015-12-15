@@ -330,10 +330,12 @@ module ApiDeploy
         :ltu   => LAST_TIME_UPDATED,
         :props => {}
       }
-      
+
       props = properties.map do |p|
-         hs[:props][p[:key]] = p[:value].nil? ? p[:default_value] : p[:value]
+        hs[:props][p[:key]] = p[:value].nil? ? p[:default_value] : p[:value]
       end
+      
+      hs[:props] = hs[:props].to_json
       
       container.server_config = hs
       container.save
@@ -369,8 +371,18 @@ module ApiDeploy
     end
     
     def read_from_database
-      if container.server_config.is_a?(Hash) && container.server_config[:props]
-        container.server_config[:props].each { |v| set_property(v[0], v[1]) }
+      if container.server_config.is_a?(Hash) && container.server_config["props"]
+        props = JSON.parse(container.server_config["props"])
+        unless props.is_a?(Hash)
+          raise "Container #{container.id} config read error: #{container.server_config.to_s}"
+        end
+        
+        Rails.logger.debug "Container #{container.id} server config: #{props.to_s}"
+        
+        self.super_access = true
+        props.each { |v| set_property(v[0], v[1]) }
+        self.super_access = false
+        
         return true
       end
       
