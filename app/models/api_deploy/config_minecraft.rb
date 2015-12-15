@@ -362,10 +362,11 @@ module ApiDeploy
         raise "Error syncing server config in docker: #{str}"
       end
       
-      output = container.docker_container.exec ["cat", "server.properties"]
-      unless output[0][0][0..-2] == str
-        raise "Error syncing server config in docker: #{str}"
-      end
+      # TODO write extra check for server.properties
+      # output = container.docker_container.exec ["cat", "server.properties"]
+      # unless output[0][0][0..-2] == str
+      #   raise "Error syncing server config in docker: #{str}"
+      # end
       
       return true
     end
