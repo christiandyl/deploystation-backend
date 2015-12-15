@@ -9,178 +9,253 @@ module ApiDeploy
       {
         :key           => "generator-settings",
         :type          => :string,
+        :title         => "",
         :default_value => nil,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "op-permission-level",
         :type          => :integer,
+        :title         => "",
         :default_value => 4,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "allow-nether",
         :type          => :boolean,
+        :title         => "Allow nether",
         :default_value => true,
-        :is_editable   => true
+        :is_editable   => true,
+        :validations   => {}
       }, {
         :key           => "resource-pack-hash",
         :type          => :string,
-        :default_value => nil
+        :title         => "",
+        :default_value => nil,
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "level-name",
         :type          => :string,
+        :title         => "Level name",
         :default_value => "world",
-        :is_editable   => true
+        :is_editable   => true,
+        :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } }
       }, {
         :key           => "enable-query",
         :type          => :boolean,
-        :default_value => false
+        :title         => "",
+        :default_value => false,
+        :validations   => {}
       }, {
         :key           => "allow-flight",
         :type          => :boolean,
+        :title         => "Allow flight",
         :default_value => false,
-        :is_editable   => true
+        :is_editable   => true,
+        :validations   => {}
       }, {
         :key           => "announce-player-achievements",
         :type          => :boolean,
+        :title         => "Annonce player achievements",
         :default_value => true,
-        :is_editable   => true
+        :is_editable   => true,
+        :validations   => {}
       }, {
         :key           => "server-port",
         :type          => :integer,
+        :title         => "",
         :default_value => 25565,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "max-world-size",
         :type          => :integer,
+        :title         => "",
         :default_value => 29999984,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "level-type",
         :type          => :string,
+        :title         => "",
         :default_value => "DEFAULT",
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "enable-rcon",
         :type          => :boolean,
+        :title         => "",
         :default_value => false,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "level-seed",
         :type          => :string,
+        :title         => "",
         :default_value => nil,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "force-gamemode",
         :type          => :boolean,
+        :title         => "",
         :default_value => false,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "server-ip",
         :type          => :string,
+        :title         => "",
         :default_value => nil,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "network-compression-threshold",
         :type          => :integer,
+        :title         => "",
         :default_value => 256,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "max-build-height",
         :type          => :integer,
+        :title         => "",
         :default_value => 256,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "spawn-npcs",
         :type          => :boolean,
+        :title         => "Spawn npcs",
         :default_value => true,
-        :is_editable   => true
+        :is_editable   => true,
+        :validations   => {}
       }, {
         :key           => "white-list",
         :type          => :boolean,
+        :title         => "",
         :default_value => false,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "spawn-animals",
         :type          => :boolean,
+        :title         => "Spawn animals",
         :default_value => true,
-        :is_editable   => true
+        :is_editable   => true,
+        :validations   => {}
       }, {
         :key           => "hardcore",
         :type          => :boolean,
+        :title         => "Hardcore",
         :default_value => false,
-        :is_editable   => true
+        :is_editable   => true,
+        :validations   => {}
       }, {
         :key           => "snooper-enabled",
         :type          => :boolean,
+        :title         => "",
         :default_value => true,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "online-mode",
         :type          => :boolean,
+        :title         => "Online mode",
         :default_value => true,
-        :is_editable   => true
+        :is_editable   => true,
+        :validations   => {}
       }, {
         :key           => "resource-pack",
         :type          => :string,
+        :title         => "",
         :default_value => nil,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "pvp",
         :type          => :boolean,
+        :title         => "PVP",
         :default_value => true,
-        :is_editable   => true
+        :is_editable   => true,
+        :validations   => {}
       }, {
         :key           => "difficulty",
         :type          => :integer,
+        :title         => "",
         :default_value => 1,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "enable-command-block",
         :type          => :boolean,
+        :title         => "",
         :default_value => false,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "gamemode",
         :type          => :integer,
+        :title         => "",
         :default_value => 0,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "player-idle-timeout",
         :type          => :integer,
+        :title         => "",
         :default_value => 0,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "max-players",
         :type          => :integer,
+        :title         => "",
         :default_value => 5,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {  
         :key           => "max-tick-time",
         :type          => :integer,
+        :title         => "",
         :default_value => 60000,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "spawn-monsters",
         :type          => :boolean,
+        :title         => "Spawn monsters",
         :default_value => true,
-        :is_editable   => true
+        :is_editable   => true,
+        :validations   => {}
       }, {
         :key           => "generate-structures",
         :type          => :boolean,
+        :title         => "Generate structures",
         :default_value => true,
-        :is_editable   => false
+        :is_editable   => true,
+        :validations   => {}
       }, {
         :key           => "view-distance",
         :type          => :integer,
+        :title         => "",
         :default_value => 10,
-        :is_editable   => false
+        :is_editable   => false,
+        :validations   => {}
       }, {
         :key           => "motd",
         :type          => :string,
+        :title         => "",
         :default_value => "A Minecraft Server",
-        :is_editable   => true
+        :is_editable   => true,
+        :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } }
       }
     ]
+    
+    def self.permit
+      SCHEMA.map { |p| p[:key] }
+    end
     
     def initialize container_id, props=nil
       self.properties = SCHEMA
@@ -200,13 +275,16 @@ module ApiDeploy
           raise "Property #{key} is not editable" if !prop[:is_editable]
           
           type = prop[:type]
+          validations = prop[:validations]
           if type == :boolean
             raise ArgumentError.new("Property #{key} doesn't have type #{type}") unless [true,false].include?(value)
           elsif type == :string
-            value = value.to_s.split.join(" ").tr('^A-Za-z0-9 ', '')[0..20]
+            value = value.to_s.split.join(" ").tr('^A-Za-z0-9 ', '')[0..20]            
           elsif type == :integer
             raise ArgumentError.new("Property #{key} doesn't have type #{type}") unless value.is_a?(Integer)
           end
+          
+          raise "Property #{key} can't be blank" if validations[:allow_blank] == true && value.blank?
           
           self.properties[index][:value] = value
           is_found = true
@@ -215,6 +293,12 @@ module ApiDeploy
       end
       
       raise ArgumentError.new("Property #{key} doesn't exists") unless is_found
+      
+      return true
+    end
+    
+    def set_properties props
+      props.each { |prop| set_property(prop[0], prop[1]) }
       
       return true
     end
@@ -236,8 +320,8 @@ module ApiDeploy
       @container ||= Container.find(self.container_id)
     end
     
-    def all flavor = :public
-      return flavor == :private ? properties.find_all { |p| p[:is_editable] == true } : properties
+    def all flavor = :private
+      return flavor == :public ? properties.find_all { |p| p[:is_editable] == true } : properties
     end
     
     def export_to_database
@@ -294,7 +378,6 @@ module ApiDeploy
     
     def save
       export_to_database
-      export_to_docker
 
       return true
     end

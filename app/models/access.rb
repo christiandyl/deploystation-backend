@@ -1,9 +1,11 @@
 class Access < ActiveRecord::Base
   include ApiConverter
 
-  PERMIT = [:user_id]
+  PERMIT = [:email]
 
   attr_api [:user_data]
+
+  after_create :send_mail
 
   # Relations
   belongs_to :container, :class_name => "ApiDeploy::Container"
@@ -15,6 +17,10 @@ class Access < ActiveRecord::Base
   
   def user_data
     user.to_api(:public)
+  end
+  
+  def send_mail
+    AccessMailer.delay.invite(self)
   end
 
 end

@@ -10,9 +10,6 @@ module ApiDeploy
       # @resource /v1/containers/:container_id/access
       # @action GET
       #
-      # @required [Hash] access
-      # @required [Integer] access.user_id User id
-      #
       # @response_field [Boolean] success
       # @response_field [Array] result
       # @response_field [Hash] result[].user_data
@@ -27,12 +24,15 @@ module ApiDeploy
       # @resource /v1/containers/:container_id/access
       # @action POST
       #
+      # @required [Hash] access
+      # @required [Integer] access.email User email
+      #
       # @response_field [Boolean] success
       def create
         opts = params.require(:access).permit(Access::PERMIT)
-        user_id = opts[:user_id] or raise ArgumentError.new("User id doesn't exists")
+        email = opts[:email] or raise ArgumentError.new("Email doesn't exists")
         
-        user   = User.find(user_id)
+        user   = User.find_by_email(email)
         access = Access.create container_id: @container.id, user_id: user.id
         
         render success_response

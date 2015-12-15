@@ -150,7 +150,7 @@ describe 'Containers API', :type => :request do
 
     params = {
       access: {
-        user_id: @context.second_user.id
+        email: @context.second_user.email
       }
     }.to_json
 
@@ -210,7 +210,43 @@ describe 'Containers API', :type => :request do
     expect(obj['success']).to be(true)
     expect(obj['result']).to be_empty
   end
+  
+  # Config
+  
+  it 'Allows to get container config list' do
+    send :get, config_path(@context.container_id), :token => @context.token
 
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    expect(obj['result'].class).to be(Array)
+    expect(obj['result'][0].class).to be(Hash)
+    expect(obj['result'][0]['key'].class).to be_truthy
+    expect(obj['result'][0]['type']).to be_truthy
+    expect(obj['result'][0]['title']).to be_truthy
+    expect(obj['result'][0]['default_value']).to be_truthy
+    expect(obj['result'][0]['is_editable']).to be_truthy
+    expect(obj['result'][0]['validations']).to be_truthy
+    
+    @context.config = obj['result']
+  end
+  
+  it 'Allows to update container config list' do
+    params = { :config => {} }
+    @context.config.map { |p| params[:config][p["key"]] = p["default_value"] }
+    params = params.to_json
+
+    send :put, config_path(@context.container_id), :params => params, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+  end
+  
+  ####
+  
   it 'Allows to stop container' do
     send :post, stop_container_path(@context.container_id), :token => @context.token
 
