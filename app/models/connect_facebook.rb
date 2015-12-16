@@ -21,8 +21,8 @@ class ConnectFacebook < Connect
 
     self.partner = 'facebook'
     self.partner_id = fb_user['id']
-    self.partner_auth_data= token['access_token']
-    self.partner_expire = Time.now + token['expires'].to_i
+    self.partner_auth_data= token
+    self.partner_expire = nil
     self.partner_data = fb_user
   end
   
