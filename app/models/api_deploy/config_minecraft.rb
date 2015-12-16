@@ -278,8 +278,8 @@ module ApiDeploy
           type = prop[:type]
           validations = prop[:validations]
           if type == :boolean
-            value = value == 1 if value.is_a?(Integer)
-            raise ArgumentError.new("Property #{key} doesn't have type #{type}") unless [true,false].include?(value)
+            value = value.to_i == 1 unless unless [true,false].include?(value)
+            # raise ArgumentError.new("Property #{key} doesn't have type #{type}") unless [true,false].include?(value)
           elsif type == :string
             value = value.to_s.split.join(" ").tr('^A-Za-z0-9 ', '')[0..20]            
           elsif type == :integer
