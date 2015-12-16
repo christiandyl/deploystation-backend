@@ -9,6 +9,8 @@ module ApiDeploy
         container.start(opts, true)
         
         container.config.export_to_docker
+        container.stop(true)
+        container.start(opts, true)
         
         Rails.logger.debug "Checking container #{container.id} status..."
         done = false
