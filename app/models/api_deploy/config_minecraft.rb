@@ -246,7 +246,7 @@ module ApiDeploy
       }, {
         :key           => "motd",
         :type          => :string,
-        :title         => "",
+        :title         => "Motd",
         :default_value => "A Minecraft Server",
         :is_editable   => true,
         :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } }
