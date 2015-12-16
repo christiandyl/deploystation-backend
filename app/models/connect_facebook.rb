@@ -10,12 +10,13 @@ class ConnectFacebook < Connect
   def initialize data
     super(nil)
 
-    short_lived_token = data['token']
+    short_lived_token = data['code']
+    redirect_uri      = data['redirect_uri']
 
-    oauth = Koala::Facebook::OAuth.new Settings.connects.facebook.client_id, Settings.connects.facebook.client_secret
-    token = oauth.exchange_access_token_info(short_lived_token)
+    oauth = Koala::Facebook::OAuth.new Settings.connects.facebook.client_id, Settings.connects.facebook.client_secret, redirect_uri
+    token = oauth.get_access_token(short_lived_token)
 
-    graph = Koala::Facebook::API.new(token['access_token'])
+    graph = Koala::Facebook::API.new(token)
     fb_user = graph.get_object('me', :fields=>"first_name,last_name,email")
 
     self.partner = 'facebook'
