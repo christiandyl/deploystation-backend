@@ -33,7 +33,7 @@ module ApiBack
           connect.user = User.find_by_email(connect.email) || User.create(email: connect.email, full_name: connect.full_name)
           connect.save!
         else
-          raise "This user is already exists"
+          raise "This user is already exists" if connect.is_a?(ConnectLogin)
         end
 
         token = Token.new connect.user
