@@ -8,10 +8,6 @@ module ApiDeploy
         container = Container.class_for(container.game.name).find(container_id)
         container.start(opts, true)
         
-        container.config.export_to_docker
-        container.stop(true)
-        container.start(opts, true)
-        
         Rails.logger.debug "Checking container #{container.id} status..."
         done = false
         sleep 3

@@ -6,6 +6,7 @@ module ApiDeploy
     
     before_destroy :on_before_destroy
     
+    STATUS_CREATED = "created"
     STATUS_ONLINE  = "online"
     STATUS_OFFLINE = "offline"
     
@@ -46,7 +47,7 @@ module ApiDeploy
           c.user_id    = user.id
           c.plan_id    = plan.id
           c.host_id    = host.id
-          c.status     = STATUS_OFFLINE
+          c.status     = STATUS_CREATED
           c.is_private = false
         end
         
@@ -113,6 +114,7 @@ module ApiDeploy
       
       Rails.logger.debug "Starting container(#{id})"
       docker_container.start(opts)
+      config.export_to_docker if status == STATUS_CREATED
       Rails.logger.debug "Container(#{id}) has started"
       
       self.status = STATUS_ONLINE
@@ -143,6 +145,7 @@ module ApiDeploy
       end
 
       Rails.logger.debug "Stopping container(#{id})"
+      config.export_to_docker
       docker_container.stop
       
       raise "Container #{id} stopping error" unless stopped?
