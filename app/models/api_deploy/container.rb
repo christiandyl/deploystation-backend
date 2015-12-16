@@ -2,7 +2,7 @@ module ApiDeploy
   class Container < ActiveRecord::Base
     include ApiConverter
 
-    attr_api [:id, :status, :host_info, :plan_info, :ip, :name]
+    attr_api [:id, :status, :host_info, :plan_info, :ip, :name, :is_private]
     
     before_destroy :on_before_destroy
     
