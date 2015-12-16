@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   include ApiConverter
 
-  attr_api [:id, :email]
+  attr_api [:id, :email, :full_name]
 
   has_many :connects
   has_many :containers, :class_name => "ApiDeploy::Container"
