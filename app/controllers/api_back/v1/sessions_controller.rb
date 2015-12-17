@@ -14,7 +14,8 @@ module ApiBack
       # @optional [String] connect_login.password User password
       #
       # @optional [Hash] connect_facebook
-      # @optional [String] connect_facebook.token Short lived token
+      # @optional [String] connect_facebook.code Short lived token
+      # @optional [String] connect_facebook.redirect_uri OAUTH redirect uri
       #
       # @response_field [Boolean] success
       # @response_field [Hash] result

@@ -15,7 +15,8 @@ module ApiBack
       # @optional [String] connect_login.password User password
       #
       # @optional [Hash] connect_facebook
-      # @optional [String] connect_facebook.token Short lived token
+      # @optional [String] connect_facebook.code Short lived token
+      # @optional [String] connect_facebook.redirect_uri OAUTH redirect uri
       #
       # @response_field [Boolean] success
       # @response_field [Hash] result
@@ -32,6 +33,12 @@ module ApiBack
         if connect.existing_connect.nil?
           connect.user = User.create(email: connect.email, full_name: connect.full_name)
           connect.save!
+          unless connect.is_a?(ConnectLogin)
+            new_password = SecureRandom.hex[0..8]
+            login_data = { "email" => connect.email, "password" => Digest::SHA1.hexdigest(new_password) }
+            connect_login = ConnectLogin.new(login_data).tap { |c| c.user_id = connect.user.id }
+            connect_login.save
+          end
         else
           raise "This user is already exists" if connect.is_a?(ConnectLogin)
           connect.user = User.find_by_email(connect.email)

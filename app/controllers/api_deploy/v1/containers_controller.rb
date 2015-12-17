@@ -53,6 +53,11 @@ module ApiDeploy
       # @response_field [Hash] result
       # @response_field [Integer] result.id Container id
       # @response_field [Hash] result.info Docker container info (blank by default)
+      # @response_field [_________________________] _________________________
+      # @response_field [PUSHER_CHANNEL_NAME] container-{id}
+      # @response_field [PUSHER_KEY] create
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true, result: [Hash] }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false, result: {} }
       def create
         opts  = params.require(:container)
         plan_id  = opts[:plan_id] or raise ArgumentError.new("Plan id doesn't exists")
@@ -113,8 +118,8 @@ module ApiDeploy
       # @response_field [_________________________] _________________________
       # @response_field [PUSHER_CHANNEL_NAME] container-{id}
       # @response_field [PUSHER_KEY] start
-      # @response_field [PUSHER_SUCCESS_RESULT] { progress: [Float], message: [String] }
-      # @response_field [PUSHER_UNSUCCESS_RESULT] { error: [Boolean] }
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
       def start
         @container.start
       
@@ -130,6 +135,11 @@ module ApiDeploy
       # @response_field [Hash] result
       # @response_field [Integer] result.id Container id
       # @response_field [Hash] result.info Docker container info
+      # @response_field [_________________________] _________________________
+      # @response_field [PUSHER_CHANNEL_NAME] container-{id}
+      # @response_field [PUSHER_KEY] restart
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
       def restart
         @container.restart
       
@@ -145,6 +155,11 @@ module ApiDeploy
       # @response_field [Hash] result
       # @response_field [Integer] result.id Container id
       # @response_field [Hash] result.info Docker container info
+      # @response_field [_________________________] _________________________
+      # @response_field [PUSHER_CHANNEL_NAME] container-{id}
+      # @response_field [PUSHER_KEY] stop
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
       def stop
         @container.stop
       
@@ -160,8 +175,8 @@ module ApiDeploy
       # @response_field [_________________________] _________________________
       # @response_field [PUSHER_CHANNEL_NAME] container-{id}
       # @response_field [PUSHER_KEY] destroy
-      # @response_field [PUSHER_SUCCESS_RESULT] { success: [Boolean] }
-      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: [Boolean] }
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
       def destroy
         @container.destroy_container
       
@@ -178,7 +193,14 @@ module ApiDeploy
       # @required [Hash] command.args Command arguments
       #
       # @response_field [Boolean] success
+      # @response_field [_________________________] _________________________
+      # @response_field [PUSHER_CHANNEL_NAME] container-{id}
+      # @response_field [PUSHER_KEY] command
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true, result: [Hash] }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
       def command
+        raise "Server should be running" if @container.stopped?
+        
         opts = params.require(:command)
         
         command_name = opts["name"] or raise ArgumentError.new("Command name doesn't exists")
@@ -215,7 +237,7 @@ module ApiDeploy
       # @response_field [_________________________] _________________________
       # @response_field [PUSHER_CHANNEL_NAME] container-{id}
       # @response_field [PUSHER_KEY] players_online
-      # @response_field [PUSHER_SUCCESS_RESULT] { success: true, result: [List] }
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true, result: [Hash] }
       # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
       def players_online
         players_online = @container.players_online

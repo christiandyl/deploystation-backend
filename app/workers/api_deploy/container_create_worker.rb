@@ -6,16 +6,28 @@ module ApiDeploy
       begin
         container = Container.find(container_id)
         container = Container.class_for(container.game.name).find(container_id)
+        
         container.create_docker_container(opts)
-      
-        data = {
-          :success => true,
-          :result  => container.to_api(:public)
-        }
-        Pusher.trigger "container-#{container_id}", "create", data
+        container.start
+        
+        Rails.logger.debug "Checking container #{container.id} status..."
+        done = false
+        sleep 3
+        20.times do
+          progress = container.starting_progress
+          if (done = (progress[:progress] == 1.0))
+            Rails.logger.debug "Container #{container_id} started successfully"
+            Pusher.trigger "container-#{container_id}", "create", { success: true, result: progress }
+            break
+          end
+          Rails.logger.debug "Container start status is #{progress.to_s}"
+          Pusher.trigger "container-#{container_id}", "create", { success: true, result: progress }
+          sleep 3
+        end
+        
+        raise "Container #{container.id} didn't start" unless done
       rescue => e
-        data = { :success => false }
-        Pusher.trigger "container-#{container_id}", "create", data
+        Pusher.trigger "container-#{container_id}", "create", { success: false, result: {} }
         raise e
       end
     end

@@ -15,6 +15,7 @@ class ConnectFacebook < Connect
 
     oauth = Koala::Facebook::OAuth.new Settings.connects.facebook.client_id, Settings.connects.facebook.client_secret, redirect_uri
     token = oauth.get_access_token(short_lived_token)
+    token_info = oauth.exchange_access_token_info(token)
 
     graph = Koala::Facebook::API.new(token)
     fb_user = graph.get_object('me', :fields=>"first_name,last_name,email")
@@ -22,7 +23,7 @@ class ConnectFacebook < Connect
     self.partner = 'facebook'
     self.partner_id = fb_user['id']
     self.partner_auth_data= token
-    self.partner_expire = nil
+    self.partner_expire = token_info["expires"]
     self.partner_data = fb_user
   end
   

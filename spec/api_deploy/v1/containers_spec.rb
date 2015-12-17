@@ -29,6 +29,21 @@ describe 'Containers API', :type => :request do
     expect(container).not_to be_nil
 
     @context.container_id = container.id
+    
+    byebug
+  end
+  
+  it 'Allows to stop container' do
+    send :post, stop_container_path(@context.container_id), :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    # expect(obj["result"]["id"]).not_to be_empty
+
+    container = ApiDeploy::Container.find(@context.container_id) rescue nil
+    expect(container).not_to be_nil
   end
   
   it 'Allows to start container' do
@@ -42,8 +57,6 @@ describe 'Containers API', :type => :request do
 
     container = ApiDeploy::Container.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
-    
-    byebug
   end
   
   it 'Allows to get containers list' do
@@ -246,19 +259,6 @@ describe 'Containers API', :type => :request do
   end
   
   ####
-  
-  it 'Allows to stop container' do
-    send :post, stop_container_path(@context.container_id), :token => @context.token
-
-    expect(response.status).to eq(200)
-    obj = JSON.parse(response.body)
-
-    expect(obj['success']).to be(true)
-    # expect(obj["result"]["id"]).not_to be_empty
-
-    container = ApiDeploy::Container.find(@context.container_id) rescue nil
-    expect(container).not_to be_nil
-  end
 
   it 'Allows to destroy container' do
     send :delete, container_path(@context.container_id), :token => @context.token
