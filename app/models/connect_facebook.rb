@@ -10,19 +10,24 @@ class ConnectFacebook < Connect
   def initialize data
     super(nil)
 
-    short_lived_token = data['code']
-    redirect_uri      = data['redirect_uri']
+    if !data['access_token'].nil?
+      oauth = Koala::Facebook::OAuth.new Settings.connects.facebook.client_id, Settings.connects.facebook.client_secret
+      access_token = data['access_token']
+    elsif !data['code'].nil? && !data['redirect_uri'].nil?
+      oauth = Koala::Facebook::OAuth.new Settings.connects.facebook.client_id, Settings.connects.facebook.client_secret, data['redirect_uri']
+      access_token = oauth.get_access_token(data['code'])
+    else
+      raise ArgumentError.new("Create initialize facebook connect, no correct data")
+    end
 
-    oauth = Koala::Facebook::OAuth.new Settings.connects.facebook.client_id, Settings.connects.facebook.client_secret, redirect_uri
-    token = oauth.get_access_token(short_lived_token)
-    token_info = oauth.exchange_access_token_info(token)
+    token_info = oauth.exchange_access_token_info(access_token)
 
-    graph = Koala::Facebook::API.new(token)
+    graph = Koala::Facebook::API.new(access_token)
     fb_user = graph.get_object('me', :fields=>"first_name,last_name,email")
 
     self.partner = 'facebook'
     self.partner_id = fb_user['id']
-    self.partner_auth_data= token
+    self.partner_auth_data= access_token
     self.partner_expire = token_info["expires"]
     self.partner_data = fb_user
   end
