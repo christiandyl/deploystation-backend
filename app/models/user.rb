@@ -74,9 +74,6 @@ class User < ActiveRecord::Base
     id == user.id
   end
   
-  def avatar_url
-  end
-  
   def on_before_destroy
     destroy_avatar(true)
   end

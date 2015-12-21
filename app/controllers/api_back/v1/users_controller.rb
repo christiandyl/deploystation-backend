@@ -70,10 +70,15 @@ module ApiBack
       #
       # @required [Hash] user
       # @required [String] user.email User email
-      # @required [String] user.full_name User password
+      # @required [String] user.full_name User full_name
       #
       # @response_field [Boolean] success
       def update
+        opts = require_param :user, :permit => [:email, :full_name]
+
+        @user.update(opts.to_hash)
+        
+        render success_response
       end
       
       ##
@@ -81,9 +86,9 @@ module ApiBack
       # @resource /v1/users/:user_id/avatar
       # @action PUT
       #
-      # @required [Hash] user
-      # @required [String] user.email User email
-      # @required [String] user.full_name User password
+      # @required [Hash] avatar
+      # @optional [String] avatar.type Avatar type
+      # @required [String] avatar.source Avatar source
       #
       # @response_field [Boolean] success
       def avatar_update
