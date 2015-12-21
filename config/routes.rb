@@ -9,16 +9,11 @@ Rails.application.routes.draw do
       resources :users, :only => [:create, :update] do
         put    :avatar, :action => :avatar_update
         delete :avatar, :action => :avatar_destroy
+        
+        resources :connects, :only => [:index, :create, :destroy]
       end
       get "users/me", :controller => :users, :action => :me
       post "users/request_password_recovery", :controller => :users, :action => :request_password_recovery
-      
-      resource :connect do
-        member do
-          post :check
-          get  :request_token
-        end
-      end
 
     end
   end

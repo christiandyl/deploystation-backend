@@ -1,4 +1,8 @@
 class Connect < ActiveRecord::Base
+  include ApiConverter
+  
+  attr_api [:id, :partner, :partner_id]
+  
   belongs_to :user
 
   SUPPORTED_CONNECTS = ['login', 'facebook']
