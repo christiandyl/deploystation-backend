@@ -2,17 +2,19 @@ module ApiBack
   module V1
     class UsersController < ApplicationController
 
-      skip_before_filter :ensure_logged_in
+      skip_before_filter :ensure_logged_in, :only => [:create, :request_password_recovery]
+      before_filter :get_user, :except => [:create, :me, :request_password_recovery]
+      before_filter :check_permissions, :except => [:create, :me, :request_password_recovery]
 
       ##
       # Creating user profile (Sign up)
       # @resource /v1/users
       # @action POST
       #
-      # @optional [String] fullname User full name
       # @optional [Hash] connect_login
       # @optional [String] connect_login.email User email
       # @optional [String] connect_login.password User password
+      # @optional [String] connect_login.fullname User full name
       #
       # @optional [Hash] connect_facebook
       # @optional [String] connect_facebook.code Short lived token
@@ -32,6 +34,11 @@ module ApiBack
 
         if connect.existing_connect.nil?
           connect.user = User.create(email: connect.email, full_name: connect.full_name)
+          avatar_url = connect.avatar_url
+          unless avatar_url.nil?
+            connect.user.upload_avatar({ "url" => avatar_url }, :url)
+          end
+          
           connect.save!
           unless connect.is_a?(ConnectLogin)
             new_password = SecureRandom.hex[0..8]
@@ -54,6 +61,65 @@ module ApiBack
         }
         
         render success_response opts
+      end
+      
+      ##
+      # Updating user info
+      # @resource /v1/users
+      # @action PUT
+      #
+      # @required [Hash] user
+      # @required [String] user.email User email
+      # @required [String] user.full_name User password
+      #
+      # @response_field [Boolean] success
+      def update
+      end
+      
+      ##
+      # Uploading user avatar
+      # @resource /v1/users/:user_id/avatar
+      # @action PUT
+      #
+      # @required [Hash] user
+      # @required [String] user.email User email
+      # @required [String] user.full_name User password
+      #
+      # @response_field [Boolean] success
+      def avatar_update
+        opts = require_param :avatar, :permit => [:source, :type]
+        opts[:source] = params[:file] if params[:file]
+        
+        source = opts[:source] or raise ArgumentError.new("Source doesn't exists")
+        type   = opts[:type] or raise ArgumentError.new("Type doesn't exists")
+        type   = type.to_sym
+        
+        raise ArgumentError.new("#{source} is unknown type") unless User::AVATAR_UPLOAD_TYPES.include?(type)
+        
+        if type == User::AVATAR_UPLOAD_TYPES[0]
+          raise ArgumentError, 'source "file" is incorrect' unless source.is_a? ActionDispatch::Http::UploadedFile
+
+          file_path = Rails.root.join("tmp", "uploaded_files", "avatar_#{SecureRandom.uuid}")
+          File.open(file_path, "wb") { |f| f.write(source.tempfile.read) }
+          
+          source = { tmp_file_path: file_path }
+        end
+        
+        @user.upload_avatar(source, type)
+        
+        render success_response
+      end
+      
+      ##
+      # Deleting user avatar
+      # @resource /v1/users/:user_id/avatar
+      # @action DELETE
+      #
+      # @response_field [Boolean] success
+      def avatar_destroy
+        @user.destroy_avatar
+        
+        render success_response
       end
       
       ##
@@ -96,6 +162,15 @@ module ApiBack
         end
 
         render success_response
+      end
+      
+      def get_user     
+        id = params[:id] || params[:user_id]
+        @user = User.find(id)
+      end
+      
+      def check_permissions
+        raise PermissionDenied unless @user.is_owner? current_user
       end
 
     end

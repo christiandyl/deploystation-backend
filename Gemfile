@@ -16,7 +16,7 @@ gem 'koala', '2.2.0'
 # Simple, efficient background processing for Ruby
 gem 'sidekiq', '3.5.1'
 # The official AWS SDK for Ruby
-gem 'aws-sdk', '2.1.31'
+gem 'aws-sdk'
 # Exception notification for Rails apps
 gem 'airbrake', '4.3.3'
 # Makes http fun! Also, makes consuming restful web services dead easy.
@@ -31,6 +31,8 @@ gem 'net-ssh'
 gem 'rack-cors', :require => 'rack/cors'
 # Sendgrid for mailing
 gem 'sendgrid'
+# Minimagick
+gem 'mini_magick'
 
 group :development, :staging do
   gem 'spring', '1.3.6'
@@ -57,6 +59,6 @@ group :test do
   gem 'pusher-fake'
 end
 
-group :development, :test do
+group :development, :test, :staging do
   gem 'awesome_print'
 end

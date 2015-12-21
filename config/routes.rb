@@ -6,7 +6,10 @@ Rails.application.routes.draw do
     scope :v1, :module => :v1 do
 
       resource :session, :only => [:create]
-      resources :users, :only => [:create]
+      resources :users, :only => [:create, :update] do
+        put    :avatar, :action => :avatar_update
+        delete :avatar, :action => :avatar_destroy
+      end
       get "users/me", :controller => :users, :action => :me
       post "users/request_password_recovery", :controller => :users, :action => :request_password_recovery
       

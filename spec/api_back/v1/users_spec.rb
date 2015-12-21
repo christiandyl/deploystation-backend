@@ -36,6 +36,54 @@ describe 'Users API', :type => :request do
     expect(obj['result']['email']).to be_truthy
   end
   
+  it 'Allows user to upload avatar (direct upload)' do
+    file = Rack::Test::UploadedFile.new(Rails.root.join("spec", "files", "avatar.jpg"))
+    params = {
+      :file => file,
+      :avatar => {
+        :type => :direct_upload
+      }
+    }
+    send :put, user_avatar_path(1), :params => params, :token => @context.token
+    
+    expect(response.status).to eq(200)
+
+    obj = JSON.parse(response.body)
+
+    expect(obj).to be_instance_of(Hash)
+    expect(obj['success']).to be(true)
+  end
+  
+  it 'Allows user to upload avatar (url)' do
+    params = {
+      :avatar => {
+        :type   => :url,
+        :source => {
+          :url => "https://graph.facebook.com/100001401312341/picture?type=large"
+        }
+      }
+    }.to_json
+    send :put, user_avatar_path(1), :params => params, :token => @context.token
+    
+    expect(response.status).to eq(200)
+
+    obj = JSON.parse(response.body)
+
+    expect(obj).to be_instance_of(Hash)
+    expect(obj['success']).to be(true)
+  end
+  
+  it 'Allows user to destroy avatar' do
+    send :delete, user_avatar_path(1), :token => @context.token
+    
+    expect(response.status).to eq(200)
+
+    obj = JSON.parse(response.body)
+
+    expect(obj).to be_instance_of(Hash)
+    expect(obj['success']).to be(true)
+  end
+  
   it 'Allows to request password recovery' do
     params = { password_recovery: { email: @context.email } }.to_json
     send :post, users_request_password_recovery_path, :params => params

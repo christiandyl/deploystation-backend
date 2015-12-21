@@ -22,6 +22,14 @@ Settings = OpenStruct.new(
     :user_name => ENV['SENDGRID_USER_NAME']|| 'christiandyl',
     :password  => ENV['SENDGRID_PASSWORD'] || 'dsTest2015'
   ),
+  :aws => OpenStruct.new(
+      :key    => ENV['AWS_KEY']    || 'AKIAJIP5KTJWEMQPGQZQ',
+      :secret => ENV['AWS_SECRET'] || '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',
+      :s3 => OpenStruct.new(
+        :bucket => ENV['AWS_S3_BUCKET'] || 'com.deploystation.staging',
+        :region => ENV['AWS_S3_REGION'] || 'eu-central-1'
+      )
+  ),
   :connects => OpenStruct.new(
     :facebook => OpenStruct.new(
       :client_id     => ENV['CONNECTS_FACEBOOK_APP_ID']     || '705288129606370',
