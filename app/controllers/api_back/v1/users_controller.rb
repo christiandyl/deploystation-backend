@@ -104,7 +104,7 @@ module ApiBack
         if type == User::AVATAR_UPLOAD_TYPES[0]
           raise ArgumentError, 'source "file" is incorrect' unless source.is_a? ActionDispatch::Http::UploadedFile
 
-          file_path = Rails.root.join("tmp", "uploaded_files", "avatar_#{SecureRandom.uuid}")
+          file_path = Settings.general.tmp_path.join("uploaded_files", "avatar_#{SecureRandom.uuid}")
           File.open(file_path, "wb") { |f| f.write(source.tempfile.read) }
           
           source = { tmp_file_path: file_path }

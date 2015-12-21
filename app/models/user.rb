@@ -12,12 +12,24 @@ class User < ActiveRecord::Base
   has_many :accesses
 
   after_create :send_welcome_mail
+  after_create :define_s3_bucket
   before_destroy :on_before_destroy
 
   validates :email, :presence => true, uniqueness: true
 
   def send_welcome_mail
     UserMailer.delay.welcome_email(self)
+  end
+  
+  def define_s3_bucket
+    self.s3_region = get_s3_region
+    self.s3_bucket = get_s3_bucket
+    self.save!
+  end
+  
+  def avatar_url
+    return nil unless has_avatar?
+    return s3_root_url + "avatar.jpg"
   end
   
   def upload_avatar source, type, now = false    
@@ -31,7 +43,7 @@ class User < ActiveRecord::Base
       file_path = source["tmp_file_path"] or raise ArgumentError.new("Tmp file path is absent")
     elsif type == AVATAR_UPLOAD_TYPES[1] # url
       url = source["url"] or raise ArgumentError.new("Url is absent")
-      file_path = Rails.root.join("tmp", "uploaded_files", "avatar_#{SecureRandom.uuid}")
+      file_path = Settings.general.tmp_path.join("uploaded_files", "avatar_#{SecureRandom.uuid}")
       open(file_path, 'wb') { |f| f << open(url).read }
     else
       raise ArgumentError.new("Type #{type} doesn't exists")
@@ -46,8 +58,8 @@ class User < ActiveRecord::Base
     
     obj = s3_obj("avatar.jpg")
     obj.upload_file(file_path, :acl => 'public-read')
-    
-    self.avatar_url = obj.public_url
+
+    self.has_avatar = true
     save!
     
     File.delete(file_path)
@@ -64,7 +76,7 @@ class User < ActiveRecord::Base
     obj = s3_obj("avatar.jpg")
     obj.delete
     
-    self.avatar_url = nil
+    self.has_avatar = false
     save!
     
     return true
@@ -78,11 +90,27 @@ class User < ActiveRecord::Base
     destroy_avatar(true)
   end
   
+  def s3_root_url
+    path = AWS_FOLDER.gsub(":user_id", id.to_s) + "/"
+    return "https://s3-#{get_s3_region}.amazonaws.com/#{get_s3_bucket}/" + path
+  end
+  
   private
   
+  def get_s3_region
+    s3_region || Settings.aws.s3.region
+  end
+  
+  def get_s3_bucket
+    s3_bucket || Settings.aws.s3.bucket
+  end
+  
   def s3_obj file_path
-    s3 = Aws::S3::Resource.new region: Settings.aws.s3.region
-    bucket = s3.bucket(Settings.aws.s3.bucket)
+    region = get_s3_region
+    bucket = get_s3_bucket
+    
+    s3 = Aws::S3::Resource.new region: region
+    bucket = s3.bucket(bucket)
     
     path = AWS_FOLDER.gsub(":user_id", id.to_s) + "/" + file_path.to_s
     

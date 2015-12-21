@@ -2,7 +2,8 @@ Settings = OpenStruct.new(
   :general => OpenStruct.new(
     :host     => ENV['GENERAL_HOST'] || 'http://localhost:3000',
     :core_ip  => ENV['GENERAL_CORE_IP'] || '127.0.0.1',
-    :ssl_path => ENV['GENERAL_SSL_PATH'] || '/home/ubuntu/.ssl'
+    :ssl_path => ENV['GENERAL_SSL_PATH'] || '/home/ubuntu/.ssl',
+    :tmp_path => ENV['GENERAL_TMP_PATH'] || Rails.root.join('tmp')
   ),
   :token_encoding => OpenStruct.new(
     :algorithm      => ENV['TOKEN_ALGORITHM']      || 'HS512',

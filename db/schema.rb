@@ -80,9 +80,11 @@ ActiveRecord::Schema.define(version: 20151214121613) do
   create_table "users", force: :cascade do |t|
     t.string   "email"
     t.string   "full_name"
-    t.text     "avatar_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "s3_region"
+    t.string   "s3_bucket"
+    t.boolean  "has_avatar", default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
 end
