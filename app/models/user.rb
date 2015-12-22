@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   include ApiConverter
 
+  attr_accessor :password
+
   attr_api [:id, :email, :full_name, :avatar_url]
 
   AWS_FOLDER = "users/:user_id"
@@ -11,8 +13,9 @@ class User < ActiveRecord::Base
   has_many :shared_containers, through: :accesses, :source => :container
   has_many :accesses
 
-  after_create :send_welcome_mail
-  after_create :define_s3_bucket
+  after_create   :send_welcome_mail
+  after_create   :define_s3_bucket
+  after_update   :on_after_update
   before_destroy :on_before_destroy
 
   validates :email, :presence => true, uniqueness: true
@@ -74,7 +77,7 @@ class User < ActiveRecord::Base
     end
     
     obj = s3_obj("avatar.jpg")
-    obj.delete
+    # obj.delete
     
     self.has_avatar = false
     save!
@@ -87,15 +90,34 @@ class User < ActiveRecord::Base
   end
   
   def on_before_destroy
-    destroy_avatar(true)
+    s3 = Aws::S3::Resource.new region: get_s3_region
+    bucket = s3.bucket(get_s3_bucket)
+    path = AWS_FOLDER.gsub(":user_id", id.to_s)
+
+    bucket.objects.delete("#{id.to_s}/")
   end
+  
+  def on_after_update
+    return if connect_login.nil?
+    if email_changed? && email != connect_login.partner_id
+      connect_login.update!(partner_id: email)
+    end
+    unless password.nil?
+      connect_login.update(partner_auth_data: password)
+      self.password = nil
+    end
+  end
+  
+  def connect_login
+    @connect_login ||= ConnectLogin.find_by_user_id(id)
+  end
+  
+  private
   
   def s3_root_url
     path = AWS_FOLDER.gsub(":user_id", id.to_s) + "/"
     return "https://s3-#{get_s3_region}.amazonaws.com/#{get_s3_bucket}/" + path
   end
-  
-  private
   
   def get_s3_region
     s3_region || Settings.aws.s3.region

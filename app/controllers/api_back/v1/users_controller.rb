@@ -69,12 +69,13 @@ module ApiBack
       # @action PUT
       #
       # @required [Hash] user
-      # @required [String] user.email User email
-      # @required [String] user.full_name User full_name
+      # @optional [String] user.email User email
+      # @optional [String] user.full_name User full_name
+      # @optional [String] user.password New user password
       #
       # @response_field [Boolean] success
       def update
-        opts = require_param :user, :permit => [:email, :full_name]
+        opts = require_param :user, :permit => [:email, :full_name, :password]
 
         @user.update(opts.to_hash)
         

@@ -37,10 +37,12 @@ describe 'Users API', :type => :request do
   end
   
   it 'Allows user to update data' do
+    new_email = "new_email@test.com"
     params = {
       :user => {
-        :email => "new_email@test.com",
-        :full_name => "Adam Janson"
+        :email     => new_email,
+        :full_name => "Adam Janson",
+        :password  => "gtibgtgbrei3"
       }
     }.to_json
     send :put, user_path(1), :params => params, :token => @context.token
@@ -51,6 +53,8 @@ describe 'Users API', :type => :request do
 
     expect(obj).to be_instance_of(Hash)
     expect(obj['success']).to be(true)
+    
+    @context.email = new_email
   end
   
   it 'Allows user to upload avatar (direct upload)' do
@@ -92,7 +96,7 @@ describe 'Users API', :type => :request do
   
   it 'Allows user to destroy avatar' do
     send :delete, user_avatar_path(1), :token => @context.token
-    
+
     expect(response.status).to eq(200)
 
     obj = JSON.parse(response.body)
