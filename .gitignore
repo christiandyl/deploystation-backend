@@ -25,3 +25,5 @@
 .ruby-version
 public/api_doc
 .yardoc/
+
+.apns_pem

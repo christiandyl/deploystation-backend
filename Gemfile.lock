@@ -40,6 +40,7 @@ GEM
     airbrake (4.3.3)
       builder
       multi_json
+    apns (1.0.0)
     arel (6.0.3)
     awesome_print (1.6.1)
     aws-sdk (2.1.31)
@@ -252,6 +253,7 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake (= 4.3.3)
+  apns
   awesome_print
   aws-sdk
   byebug
