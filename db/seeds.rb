@@ -1,11 +1,11 @@
 games = [
-  { name: 'Minecraft' },
-  { name: 'Minecraft pocket edition' },
-  { name: 'Counter-strike go' },
-  { name: 'Battlefield 4' },
-  { name: 'Battlefield hard line' },
-  { name: '7 days to die' },
-  { name: 'DayZ Standalone' }
+  { name: 'Minecraft', sname: 'minecraft', status: Game::STATUS_ENABLED },
+  { name: 'Minecraft pocket edition', sname: 'minecraft_pe', status: Game::STATUS_COMING_SOON },
+  { name: 'Counter-strike go', sname: 'counter_strike_go', status: Game::STATUS_COMING_SOON },
+  { name: 'Battlefield 4', sname: 'battlefield_4', status: Game::STATUS_COMING_SOON },
+  { name: 'Battlefield hard line', sname: 'battlefield_hl', status: Game::STATUS_COMING_SOON },
+  { name: '7 days to die', sname: '7_days_to_die', status: Game::STATUS_COMING_SOON },
+  { name: 'DayZ Standalone', sname: 'dayz_standalone', status: Game::STATUS_COMING_SOON }
 ]
 
 if Rails.env.production? # Production seeds
