@@ -7,7 +7,7 @@ class Game < ActiveRecord::Base
 
   ASSETS_FOLDER_NAME = "games"
 
-  attr_api [:id, :name, :images, :status, :plans_list]
+  attr_api [:id, :name, :sname, :images, :status]
 
   has_many :plans
   
