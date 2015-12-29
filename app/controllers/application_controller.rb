@@ -91,7 +91,7 @@ class ApplicationController < ActionController::API
   end
 
   def render_permission_denied e
-    render json: {success: false, error: [e.message]}, status: 550
+    render json: {success: false, error: [e.message]}, status: 401
   end
 
   def render_not_found(e = nil)
