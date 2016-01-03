@@ -2,6 +2,8 @@ module ApiDeploy
   class ContainerPlayersOnlineWorker
     include Sidekiq::Worker
 
+    sidekiq_options unique: :all
+
     def perform(container_id)
       begin
         container = Container.find(container_id)

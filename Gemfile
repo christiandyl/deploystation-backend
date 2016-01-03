@@ -4,7 +4,6 @@ gem 'rails', '4.2.4'
 gem 'rails-api', '0.4.0'
 gem 'pg'
 
-
 # A lightweight Ruby client for the Docker Remote API
 gem 'docker-api', '1.22.4'
 # Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server
@@ -15,6 +14,8 @@ gem 'jwt', '1.5.1'
 gem 'koala', '2.2.0'
 # Simple, efficient background processing for Ruby
 gem 'sidekiq', '3.5.1'
+# Additional sidekiq middleware
+gem 'sidekiq-middleware', '0.3.0'
 # The official AWS SDK for Ruby
 gem 'aws-sdk'
 # Exception notification for Rails apps
