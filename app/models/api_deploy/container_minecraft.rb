@@ -15,7 +15,7 @@ module ApiDeploy
         :name  => "ban_player",
         :title => "Ban player",
         :args  => [
-          { name: "player_name", type: "string", required: true },
+          { name: "player_name", type: "list", required: true, options: "players_list" },
           { name: "reason", type: "text", required: false }
         ]
       },
@@ -23,7 +23,7 @@ module ApiDeploy
         :name  => "tp",
         :title => "Teleport player",
         :args  => [
-          { name: "player", type: "string", required: true },
+          { name: "player", type: "list", required: true, options: "players_list" },
           { name: "target", type: "string", required: true }
         ]
       },
@@ -31,7 +31,7 @@ module ApiDeploy
         :name  => "give",
         :title => "Give item to player",
         :args  => [
-          { name: "player", type: "string", required: true },
+          { name: "player", type: "list", required: true, options: "players_list" },
           { name: "block_id", type: "int", required: true },
           { name: "amount", type: "int", required: true }
         ]
@@ -40,7 +40,7 @@ module ApiDeploy
         :name  => "time",
         :title => "Change day time",
         :args  => [
-          { name: "value", type: "string", required: true }
+          { name: "value", type: "list", required: true, options: ["day","night"] }
         ]
       },
     ]
@@ -198,10 +198,16 @@ module ApiDeploy
     #   return { number_of_players: number_of_players, players_list: players_list, max_players: max_players }
     # end
   
-    def command_data id
-      command = (COMMANDS.find { |c| c[:name] == id }).clone
+    def command_data command_id, now=false
+      unless now    
+        ApiDeploy::ContainerCommandDataWorker.perform_async(id, command_id)
+        return true
+      end
+      
+      command = (COMMANDS.find { |c| c[:name] == command_id }).clone
       raise "Command #{id} doesn't exists" if command.nil?
       
+      # TODO shit code !!!!!!!!!!!!!!!!!!!!!!
       command = JSON.parse command.to_json
       
       command["args"].each_with_index do |hs,i|

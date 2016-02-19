@@ -188,19 +188,14 @@ module ApiDeploy
       # @resource /v1/containers/:container_id/command
       # @action GET
       #
-      # @required [Hash] command
-      # @required [String] command.name Command name
-      # @required [Hash] command.args Command arguments
+      # @required [String] command_id
       #
       # @response_field [Boolean] success
-      # @response_field [Hash] result
-      # @response_field [String] result.name Command name
-      # @response_field [String] result.title Command title
-      # @response_field [Array] result.args Command args
-      # @response_field [String] result[].name Argument name
-      # @response_field [String] result[].type Argument type (text|string|int|list);
-      # @response_field [Boolean] result[].required Argument required
-      # @response_field [Array] result[].options Argument options
+      # @response_field [_________________________] _________________________
+      # @response_field [PUSHER_CHANNEL_NAME] container-{id}
+      # @response_field [PUSHER_KEY] command_data
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true, result: [Hash] }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
       def command
         raise "Server should be running" if @container.stopped?
         
@@ -208,7 +203,7 @@ module ApiDeploy
 
         command = @container.command_data(id)
         
-        render success_response command
+        render success_response
       end
       
       ##
