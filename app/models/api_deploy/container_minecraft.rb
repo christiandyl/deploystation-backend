@@ -8,12 +8,12 @@ module ApiDeploy
         :name  => "kill_player",
         :title => "Kill player",
         :args  => [
-          { name: "player_name", type: "string", required: true }
+          { name: "player_name", type: "list", required: true, options: "players_list" }
         ]
       },
       {
         :name  => "ban_player",
-        :title => "Bad player",
+        :title => "Ban player",
         :args  => [
           { name: "player_name", type: "string", required: true },
           { name: "reason", type: "text", required: false }
@@ -124,6 +124,43 @@ module ApiDeploy
       return { players_online: players_online, max_players: max_players }
     end
   
+    def players_list
+      return [] unless started?
+      
+      timestamp = logs.last[:timestamp]
+      
+      docker_container.attach stdin: StringIO.new("list\n")
+
+      list = nil
+      x = 5
+      seconds_delay = 1
+      
+      x.times do
+        current_logs = logs.find_all { |s| s[:timestamp] > timestamp }
+        points = nil
+        regex = /There are ([0-9]*)\/([0-9]*) players online:/
+        
+        current_logs.each_with_index do |s,i|
+          result = regex.match s[:message]
+          unless result.nil?
+            points = (i + 1)..(i + result[1].to_i)
+            if result[1].to_i > 0
+              list = current_logs[points].map { |s| s[:message] }
+            else
+              list = []
+            end
+            break
+          end
+        end
+
+        break unless points.nil?
+        
+        sleep(seconds_delay)
+      end
+            
+      return list
+    end
+  
     # def players_online now=false
     #   return false unless started?
     #
@@ -160,6 +197,21 @@ module ApiDeploy
     #
     #   return { number_of_players: number_of_players, players_list: players_list, max_players: max_players }
     # end
+  
+    def command_data id
+      command = (COMMANDS.find { |c| c[:name] == id }).clone
+      raise "Command #{id} doesn't exists" if command.nil?
+      
+      command = JSON.parse command.to_json
+      
+      command["args"].each_with_index do |hs,i|
+        if hs["type"] == "list" && hs["options"].is_a?(String)
+          command["args"][i]["options"] = send(hs["options"])
+        end
+      end
+      
+      return command
+    end
   
     def command_kill_player args
       player_name = args["player_name"] or raise ArgumentError.new("Player_name doesn't exists")
@@ -215,11 +267,14 @@ module ApiDeploy
       
       output = []
       list.each do |s|
+        spl = s[0].split(":")
+        timestamp = (spl[0].to_i * 3600) + (spl[1].to_i * 60) + spl[2].to_i
         output << {
-          :date    => nil,
-          :time    => s[0],
-          :type    => s[1],
-          :message => s[2]
+          :date      => nil,
+          :time      => s[0],
+          :timestamp => timestamp,
+          :type      => s[1],
+          :message   => s[2]
         }
       end
       

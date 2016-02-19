@@ -1,1 +1,1 @@
-{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/christiandyl/Projects/christiandyl-deploystation-backend","disabled":false}}}
+{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"/Volumes/Storage/Projects/christiandyl-deploystation-backend","disabled":false,"__vagrantfile":true}}}

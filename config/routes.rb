@@ -26,7 +26,8 @@ Rails.application.routes.draw do
           post     :start
           post     :stop
           post     :restart
-          post     :command
+          post     :execute_command
+          get      :command
           get      :commands
           get      :players_online
           get      :logs

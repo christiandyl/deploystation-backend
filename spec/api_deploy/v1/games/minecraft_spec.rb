@@ -53,6 +53,16 @@ describe 'Container(Minecraft) API', :type => :request do
     expect(obj['success']).to be(true)
   end
   
+  it 'Allows to get command details' do
+    params = { command_id: "kill_player" }
+    send :get, command_container_path(@context.container_id), :params => params, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+  end  
+  
   it 'Allows to send command (list)' do
     params = {
       command: {
@@ -61,7 +71,7 @@ describe 'Container(Minecraft) API', :type => :request do
       }
     }.to_json
     
-    send :post, command_container_path(@context.container_id), :params => params, :token => @context.token
+    send :post, execute_command_container_path(@context.container_id), :params => params, :token => @context.token
 
     expect(response.status).to eq(200)
     obj = JSON.parse(response.body)

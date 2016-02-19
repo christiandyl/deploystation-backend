@@ -184,6 +184,34 @@ module ApiDeploy
       end
       
       ##
+      # Get game command
+      # @resource /v1/containers/:container_id/command
+      # @action GET
+      #
+      # @required [Hash] command
+      # @required [String] command.name Command name
+      # @required [Hash] command.args Command arguments
+      #
+      # @response_field [Boolean] success
+      # @response_field [Hash] result
+      # @response_field [String] result.name Command name
+      # @response_field [String] result.title Command title
+      # @response_field [Array] result.args Command args
+      # @response_field [String] result[].name Argument name
+      # @response_field [String] result[].type Argument type (text|string|int|list);
+      # @response_field [Boolean] result[].required Argument required
+      # @response_field [Array] result[].options Argument options
+      def command
+        raise "Server should be running" if @container.stopped?
+        
+        id = params[:command_id] or raise ArgumentError.new("Command id doesn't exists")
+
+        command = @container.command_data(id)
+        
+        render success_response command
+      end
+      
+      ##
       # Execute game server command
       # @resource /v1/containers/:container_id/command
       # @action POST
@@ -198,7 +226,7 @@ module ApiDeploy
       # @response_field [PUSHER_KEY] command
       # @response_field [PUSHER_SUCCESS_RESULT] { success: true, result: [Hash] }
       # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
-      def command
+      def execute_command
         raise "Server should be running" if @container.stopped?
         
         opts = params.require(:command)

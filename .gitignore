@@ -16,7 +16,7 @@
 /.idea/
 
 # Vagrant
-.vagrant
+/.vagrant
 
 # Mac
 .DS_Store
