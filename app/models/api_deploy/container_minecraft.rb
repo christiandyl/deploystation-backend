@@ -10,24 +10,21 @@ module ApiDeploy
         :args  => [
           { name: "player_name", type: "list", required: true, options: "players_list" }
         ]
-      },
-      {
+      },{
         :name  => "ban_player",
         :title => "Ban player",
         :args  => [
           { name: "player_name", type: "list", required: true, options: "players_list" },
           { name: "reason", type: "text", required: false }
         ]
-      },
-      {
+      },{
         :name  => "tp",
         :title => "Teleport player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" },
           { name: "target", type: "string", required: true }
         ]
-      },
-      {
+      },{
         :name  => "give",
         :title => "Give item to player",
         :args  => [
@@ -35,14 +32,33 @@ module ApiDeploy
           { name: "block_id", type: "int", required: true },
           { name: "amount", type: "int", required: true }
         ]
-      },
-      {
+      },{
         :name  => "time",
         :title => "Change day time",
         :args  => [
           { name: "value", type: "list", required: true, options: ["day","night"] }
         ]
-      },
+      },{
+        :name  => "tell",
+        :title => "Tell something to the player",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" },
+          { name: "message", type: "string", required: true }
+        ]
+      },{
+        :name  => "weather",
+        :title => "Change weather in game",
+        :args  => [
+          { name: "value", type: "list", required: true, options: ["clear","rain","thunder"] }
+        ]  
+      },{
+        :name  => "xp",
+        :title => "Give level to player",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" },
+          { name: "level", type: "list", required: true, options: [1,2,3] }
+        ]
+      }
     ]
   
     after_create :define_config
@@ -161,43 +177,6 @@ module ApiDeploy
       return list
     end
   
-    # def players_online now=false
-    #   return false unless started?
-    #
-    #   unless now
-    #     ApiDeploy::ContainerPlayersOnlineWorker.perform_async(id)
-    #     return true
-    #   end
-    #
-    #   logs_before = logs
-    #   stamp = logs_before.last[:time]
-    #   docker_container.attach stdin: StringIO.new("list\n")
-    #   sleep(1)
-    #   logs_after = logs
-    #
-    #   players_list = []
-    #   number_of_players = 0
-    #   max_players = 0
-    #   header_found = false
-    #   logs_after.each do |l|
-    #     unless header_found
-    #       match = /There are ([0-9]*)\/([0-9]*) players online:/.match(l[:message])
-    #       if (l[:time] >= stamp && !match.nil?)
-    #         number_of_players = match[1].to_i
-    #         max_players = match[2].to_i
-    #         header_found = true
-    #         next
-    #       end
-    #     else
-    #       if header_found == true && players_list.count != number_of_players
-    #         players_list << l[:message]
-    #       end
-    #     end
-    #   end
-    #
-    #   return { number_of_players: number_of_players, players_list: players_list, max_players: max_players }
-    # end
-  
     def command_data command_id, now=false
       unless now    
         ApiDeploy::ContainerCommandDataWorker.perform_async(id, command_id)
@@ -217,6 +196,29 @@ module ApiDeploy
       end
       
       return command
+    end
+  
+    def command_xp args
+      player_name = args["player_name"] or raise ArgumentError.new("Player_name doesn't exists")
+      level       = args["level"] or raise ArgumentError.new("Level doesn't exists")
+      input       = "xp #{level}L #{player_name}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} just received #{level} levels"
+      
+      return { success: true }
+    end
+    
+    def command_weather args
+      value = args["value"] or raise ArgumentError.new("Value doesn't exists")
+      input       = "weather #{value}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Weather has changed to #{value}"
+      
+      return { success: true }
     end
   
     def command_kill_player args
@@ -262,6 +264,19 @@ module ApiDeploy
       
       docker_container.attach stdin: StringIO.new(input)
       Rails.logger.info "Container(#{id}) - Minecraft : Day time has changed to #{value}"
+      
+      return { success: true }
+    end
+    
+    def command_tell args
+      player  = args["player"] or raise ArgumentError.new("Player doesn't exists")
+      message = args["message"] or raise ArgumentError.new("Message doesn't exists")
+      raise "Message is blank" if message.blank?
+      
+      input = "tell #{player} #{message}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player} received message \"#{message}\""
       
       return { success: true }
     end
