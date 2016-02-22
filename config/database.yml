@@ -20,6 +20,7 @@ production:
   database: gameservers
   
 beta:
+  <<: *default
   database: <%= ENV['RDS_DB_NAME'] || 'deploystation' %>
   username: <%= ENV['RDS_USERNAME'] || 'deploystation' %>
   password: <%= ENV['RDS_PASSWORD'] || 'deploystation' %>
