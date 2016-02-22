@@ -82,7 +82,7 @@ elsif Rails.env.beta? # Beta seeds
   plans = [
    {
      :game         => 'Minecraft',
-     :host         => 'staging',
+     :host         => 'beta',
      :name         => 'starter',
      :max_players  => 2,
      :ram          => 256,
@@ -92,7 +92,7 @@ elsif Rails.env.beta? # Beta seeds
    },
    {
      :game         => 'Minecraft',
-     :host         => 'staging',
+     :host         => 'beta',
      :name         => 'lite',
      :max_players  => 7,
      :ram          => 384,
@@ -102,7 +102,7 @@ elsif Rails.env.beta? # Beta seeds
    },
    {
      :game         => 'Minecraft',
-     :host         => 'staging',
+     :host         => 'beta',
      :name         => 'medium',
      :max_players  => 12,
      :ram          => 512,
