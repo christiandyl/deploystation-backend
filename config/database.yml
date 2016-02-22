@@ -18,3 +18,10 @@ staging:
 production:
   <<: *default
   database: gameservers
+  
+beta:
+  database: <%= ENV['RDS_DB_NAME'] || 'deploystation' %>
+  username: <%= ENV['RDS_USERNAME'] || 'deploystation' %>
+  password: <%= ENV['RDS_PASSWORD'] || 'deploystation' %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
