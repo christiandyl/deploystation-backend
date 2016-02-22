@@ -35,7 +35,9 @@ gem 'sendgrid'
 # Minimagick
 gem 'mini_magick'
 # Apple Push Notification Service client
-gem "apns"
+gem 'apns'
+# Minecraft query
+gem 'minecraft-query'
 
 group :development, :staging do
   gem 'spring', '1.3.6'

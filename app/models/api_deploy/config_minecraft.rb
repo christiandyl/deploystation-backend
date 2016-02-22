@@ -45,7 +45,7 @@ module ApiDeploy
         :key           => "enable-query",
         :type          => :boolean,
         :title         => "",
-        :default_value => false,
+        :default_value => true,
         :validations   => {}
       }, {
         :key           => "allow-flight",

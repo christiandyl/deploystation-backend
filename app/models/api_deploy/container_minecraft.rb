@@ -78,8 +78,11 @@ module ApiDeploy
           "MemorySwap" => -1,
           # "CpuShares"  => 1
         },
-        "ExposedPorts" => { "25565/tcp": {} },
-        "PortBindings" => { "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port }] },
+        "ExposedPorts" => { "25565/tcp": {}, "25565/udp": {} },
+        "PortBindings" => {
+          "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port }],
+          "25565/udp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port }]
+        },
         "Env"          => ["EULA=TRUE", "JVM_OPTS=-Xmx#{plan.ram}M"]
       }
       
@@ -88,7 +91,10 @@ module ApiDeploy
   
     def start opts={}, now=false
       opts = {
-        "PortBindings" => { "25565/tcp" => [{ "HostIp" => "", "HostPort" => port }] } 
+        "PortBindings" => { 
+          "25565/tcp" => [{ "HostIp" => "", "HostPort" => port }],
+          "25565/udp" => [{ "HostIp" => "", "HostPort" => port }]
+        }
       }
       super(opts, now)
     end
@@ -104,38 +110,46 @@ module ApiDeploy
       players_online = 0
       max_players    = config.get_property_value("max-players")
       
+      begin
+        query = Query::fullQuery(container.host.ip, container.port)
       
-      if status == STATUS_ONLINE
-        init_stamp = logs.last[:time].split(":")
-        init_stamp = (init_stamp[0].to_i * 3600) + (init_stamp[1].to_i * 60) + init_stamp[2].to_i
-        
-        docker_container.attach stdin: StringIO.new("list\n")
-        # (docker_container.wait(5) rescue nil) unless Rails.env.test?
-
-        x = 5
-        seconds_delay = 2
-        done = false
-        
-        x.times do
-          str = docker_container.logs(stdout: true).split("usermod: no changes").last 
- 
-          regex = /\[([0-9]{2}:[0-9]{2}:[0-9]{2})\] \[[a-zA-Z ]*\/([A-Z]*)\]: There are ([0-9]*)\/([0-9]*) players online:/
-          match = str.scan(regex).last
-          unless match.nil?
-            stamp = match[0].split(":")
-            stamp = (stamp[0].to_i * 3600) + (stamp[1].to_i * 60) + stamp[2].to_i
-            if stamp >= init_stamp
-              players_online = match[2].to_i
-              done = true
-              break
-            end
-          end
-          
-          sleep(seconds_delay)
-        end
-
-        raise "Can't get players online" unless done
+        players_online = query[:numplayers].to_i
+        max_players    = query[:maxplayers].to_i
+      rescue
+        Rails.logger.debug "Can't get query from Minecraft server in container-#{id}"
       end
+      
+      # if status == STATUS_ONLINE
+      #   init_stamp = logs.last[:time].split(":")
+      #   init_stamp = (init_stamp[0].to_i * 3600) + (init_stamp[1].to_i * 60) + init_stamp[2].to_i
+      #
+      #   docker_container.attach stdin: StringIO.new("list\n")
+      #   # (docker_container.wait(5) rescue nil) unless Rails.env.test?
+      #
+      #   x = 5
+      #   seconds_delay = 2
+      #   done = false
+      #
+      #   x.times do
+      #     str = docker_container.logs(stdout: true).split("usermod: no changes").last
+      #
+      #     regex = /\[([0-9]{2}:[0-9]{2}:[0-9]{2})\] \[[a-zA-Z ]*\/([A-Z]*)\]: There are ([0-9]*)\/([0-9]*) players online:/
+      #     match = str.scan(regex).last
+      #     unless match.nil?
+      #       stamp = match[0].split(":")
+      #       stamp = (stamp[0].to_i * 3600) + (stamp[1].to_i * 60) + stamp[2].to_i
+      #       if stamp >= init_stamp
+      #         players_online = match[2].to_i
+      #         done = true
+      #         break
+      #       end
+      #     end
+      #
+      #     sleep(seconds_delay)
+      #   end
+      #
+      #   raise "Can't get players online" unless done
+      # end
       
       return { players_online: players_online, max_players: max_players }
     end
