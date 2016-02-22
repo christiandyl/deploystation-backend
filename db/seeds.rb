@@ -78,6 +78,41 @@ elsif Rails.env.staging? # Staging seeds
  ]
  
  hosts = [{ name: 'staging', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'ubuntu' }]
+elsif Rails.env.beta? # Beta seeds
+  plans = [
+   {
+     :game         => 'Minecraft',
+     :host         => 'staging',
+     :name         => 'starter',
+     :max_players  => 2,
+     :ram          => 256,
+     :storage      => 1024,
+     :storage_type => 'ssd',
+     :price        => "0",
+   },
+   {
+     :game         => 'Minecraft',
+     :host         => 'staging',
+     :name         => 'lite',
+     :max_players  => 7,
+     :ram          => 384,
+     :storage      => 1024,
+     :storage_type => 'ssd',
+     :price        => "0",
+   },
+   {
+     :game         => 'Minecraft',
+     :host         => 'staging',
+     :name         => 'medium',
+     :max_players  => 12,
+     :ram          => 512,
+     :storage      => 1024,
+     :storage_type => 'ssd',
+     :price        => "0"
+   }
+ ]
+ 
+ hosts = [{ name: 'beta', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Ukraine', host_user: 'ubuntu' }]
 else # Development and Testing seeds
   plans = [
    {
