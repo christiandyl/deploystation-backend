@@ -122,7 +122,7 @@ module ApiDeploy
       # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
       def start
         @container.start
-      
+
         render success_response @container.to_api(:public)
       end
   

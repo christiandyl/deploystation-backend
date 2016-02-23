@@ -111,7 +111,7 @@ module ApiDeploy
       max_players    = config.get_property_value("max-players")
       
       begin
-        query = Query::fullQuery(host.ip, port)
+        query = ::Query::fullQuery(host.ip, port)
       
         players_online = query[:numplayers].to_i
         max_players    = query[:maxplayers].to_i
