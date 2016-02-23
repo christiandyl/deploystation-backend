@@ -157,35 +157,45 @@ module ApiDeploy
     def players_list
       return [] unless started?
       
-      timestamp = logs.last[:timestamp]
+      # timestamp = logs.last[:timestamp]
+      #
+      # docker_container.attach stdin: StringIO.new("list\n")
+      #
+      # list = nil
+      # x = 5
+      # seconds_delay = 1
+      #
+      # x.times do
+      #   current_logs = logs.find_all { |s| s[:timestamp] > timestamp }
+      #   points = nil
+      #   regex = /There are ([0-9]*)\/([0-9]*) players online:/
+      #
+      #   current_logs.each_with_index do |s,i|
+      #     result = regex.match s[:message]
+      #     unless result.nil?
+      #       points = (i + 1)..(i + result[1].to_i)
+      #       if result[1].to_i > 0
+      #         list = current_logs[points].map { |s| s[:message] }
+      #       else
+      #         list = []
+      #       end
+      #       break
+      #     end
+      #   end
+      #
+      #   break unless points.nil?
+      #
+      #   sleep(seconds_delay)
+      # end
       
-      docker_container.attach stdin: StringIO.new("list\n")
-
-      list = nil
-      x = 5
-      seconds_delay = 1
+      list = []
       
-      x.times do
-        current_logs = logs.find_all { |s| s[:timestamp] > timestamp }
-        points = nil
-        regex = /There are ([0-9]*)\/([0-9]*) players online:/
-        
-        current_logs.each_with_index do |s,i|
-          result = regex.match s[:message]
-          unless result.nil?
-            points = (i + 1)..(i + result[1].to_i)
-            if result[1].to_i > 0
-              list = current_logs[points].map { |s| s[:message] }
-            else
-              list = []
-            end
-            break
-          end
-        end
-
-        break unless points.nil?
-        
-        sleep(seconds_delay)
+      begin
+        query = ::Query::fullQuery(host.ip, port)
+      
+        list = query[:players]
+      rescue
+        Rails.logger.debug "Can't get query from Minecraft server in container-#{id}"
       end
             
       return list
