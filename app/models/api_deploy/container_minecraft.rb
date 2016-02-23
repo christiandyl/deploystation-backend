@@ -69,7 +69,7 @@ module ApiDeploy
       
       docker_opts = {
         "Image"        => REPOSITORY,
-        "Cmd"          => "/start",
+        # "Cmd"          => "/start",
         "Tty"          => true,
         "OpenStdin"    => true,
         'StdinOnce'    => true,
