@@ -112,7 +112,7 @@ elsif Rails.env.beta? # Beta seeds
    }
  ]
  
- hosts = [{ name: 'beta', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Ukraine', host_user: 'ubuntu' }]
+ hosts = [{ name: 'beta', ip: '195.69.187.74', domain: 'ua.deploystation.com', location: 'Ukraine', host_user: 'ubuntu' }]
 else # Development and Testing seeds
   plans = [
    {

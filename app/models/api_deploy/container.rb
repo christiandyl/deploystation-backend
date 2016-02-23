@@ -195,7 +195,7 @@ module ApiDeploy
     end
     
     def ip
-      (host.ip + ":" + port) rescue nil
+      (host.domain + ":" + port) rescue nil
     end
     
     def command name, args, now=false
