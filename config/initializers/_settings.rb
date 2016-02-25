@@ -38,8 +38,8 @@ Settings = OpenStruct.new(
   ),
   :connects => OpenStruct.new(
     :facebook => OpenStruct.new(
-      :client_id     => ENV['CONNECTS_FACEBOOK_APP_ID']     || '705288129606370',
-      :client_secret => ENV['CONNECTS_FACEBOOK_APP_SECRET'] || 'b3cc3532612805e9301738c6bb78a463'
+      :client_id     => ENV['CONNECTS_FACEBOOK_APP_ID']     || '705287956273054',
+      :client_secret => ENV['CONNECTS_FACEBOOK_APP_SECRET'] || '5feb1fbebdd2e3ba5026e9719d380217'
     )
   )
 )
