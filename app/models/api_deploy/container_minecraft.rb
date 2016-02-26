@@ -11,7 +11,7 @@ module ApiDeploy
           { name: "player", type: "list", required: true, options: "players_list" }
         ]
       },{
-        :name  => "ban_player",
+        :name  => "ban",
         :title => "Ban player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" },
@@ -181,6 +181,7 @@ module ApiDeploy
       data_hash = JSON.parse(file)
       
       list = data_hash.map { |hs| hs["text_id"] }
+      data_hash = nil
       
       return list
     end
@@ -236,6 +237,29 @@ module ApiDeploy
       docker_container.attach stdin: StringIO.new(input)
       
       Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} has killed by the adminstrator request"
+      
+      return { success: true }
+    end
+    
+    def command_ban args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      reason      = args["reason"] or raise ArgumentError.new("Reason doesn't exists")
+      input       = "ban #{player_name} #{reason}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} has banned by the adminstrator request"
+      
+      return { success: true }
+    end
+    
+    def command_unban args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      input       = "unbun #{player_name} #{reason}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} has unbunned by the adminstrator request"
       
       return { success: true }
     end
