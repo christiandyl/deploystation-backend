@@ -254,7 +254,7 @@ module ApiDeploy
     
     def command_unban args
       player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
-      input       = "unban #{player_name}\n"
+      input       = "pardon #{player_name}\n"
       
       docker_container.attach stdin: StringIO.new(input)
       
