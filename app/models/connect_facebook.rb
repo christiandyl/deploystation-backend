@@ -25,11 +25,15 @@ class ConnectFacebook < Connect
     graph = Koala::Facebook::API.new(access_token)
     fb_user = graph.get_object('me', :fields=>"first_name,last_name,email")
 
+    raise "Can't get email from Facebook, token: #{access_token}" if partner_data["email"].blank?
+
     self.partner = 'facebook'
     self.partner_id = fb_user['id']
     self.partner_auth_data= access_token
     self.partner_expire = token_info["expires"]
     self.partner_data = fb_user
+    
+    Rails.logger.debug "ConnectFacebook has initialized, id: #{self.partner_id}, auth_data: #{self.partner_auth_data}, data: #{self.partner_data.to_s}"
   end
   
   def partner_data= val
