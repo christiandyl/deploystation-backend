@@ -25,7 +25,7 @@ class ConnectFacebook < Connect
     graph = Koala::Facebook::API.new(access_token)
     fb_user = graph.get_object('me', :fields=>"first_name,last_name,email")
 
-    raise "Can't get email from Facebook, token: #{access_token}" if partner_data["email"].blank?
+    raise "Can't get email from Facebook, token: #{access_token}" if fb_user["email"].blank?
 
     self.partner = 'facebook'
     self.partner_id = fb_user['id']
