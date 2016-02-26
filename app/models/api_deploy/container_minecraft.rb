@@ -8,28 +8,34 @@ module ApiDeploy
         :name  => "kill_player",
         :title => "Kill player",
         :args  => [
-          { name: "player_name", type: "list", required: true, options: "players_list" }
+          { name: "player", type: "list", required: true, options: "players_list" }
         ]
       },{
         :name  => "ban_player",
         :title => "Ban player",
         :args  => [
-          { name: "player_name", type: "list", required: true, options: "players_list" },
+          { name: "player", type: "list", required: true, options: "players_list" },
           { name: "reason", type: "text", required: false }
         ]
       },{
-        :name  => "tp",
-        :title => "Teleport player",
+        :name  => "unban",
+        :title => "Unban player",
         :args  => [
-          { name: "player", type: "list", required: true, options: "players_list" },
-          { name: "target", type: "string", required: true }
+          { name: "player", type: "string", required: true }
         ]
+      # },{
+      #   :name  => "tp",
+      #   :title => "Teleport player",
+      #   :args  => [
+      #     { name: "player", type: "list", required: true, options: "players_list" },
+      #     { name: "target", type: "string", required: true }
+      #   ]
       },{
         :name  => "give",
         :title => "Give item to player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" },
-          { name: "block_id", type: "int", required: true },
+          { name: "block_id", type: "list", required: true, options: "blocks_list" },
           { name: "amount", type: "int", required: true }
         ]
       },{
@@ -157,37 +163,6 @@ module ApiDeploy
     def players_list
       return [] unless started?
       
-      # timestamp = logs.last[:timestamp]
-      #
-      # docker_container.attach stdin: StringIO.new("list\n")
-      #
-      # list = nil
-      # x = 5
-      # seconds_delay = 1
-      #
-      # x.times do
-      #   current_logs = logs.find_all { |s| s[:timestamp] > timestamp }
-      #   points = nil
-      #   regex = /There are ([0-9]*)\/([0-9]*) players online:/
-      #
-      #   current_logs.each_with_index do |s,i|
-      #     result = regex.match s[:message]
-      #     unless result.nil?
-      #       points = (i + 1)..(i + result[1].to_i)
-      #       if result[1].to_i > 0
-      #         list = current_logs[points].map { |s| s[:message] }
-      #       else
-      #         list = []
-      #       end
-      #       break
-      #     end
-      #   end
-      #
-      #   break unless points.nil?
-      #
-      #   sleep(seconds_delay)
-      # end
-      
       list = []
       
       begin
@@ -198,6 +173,15 @@ module ApiDeploy
         Rails.logger.debug "Can't get query from Minecraft server in container-#{id}"
       end
             
+      return list
+    end
+    
+    def blocks_list
+      file = File.read('lib/api_deploy/minecraft/items.json')
+      data_hash = JSON.parse(file)
+      
+      list = data_hash.map { |hs| hs["text_id"] }
+      
       return list
     end
   
@@ -223,7 +207,7 @@ module ApiDeploy
     end
   
     def command_xp args
-      player_name = args["player_name"] or raise ArgumentError.new("Player_name doesn't exists")
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
       level       = args["level"] or raise ArgumentError.new("Level doesn't exists")
       input       = "xp #{level}L #{player_name}\n"
       
@@ -246,7 +230,7 @@ module ApiDeploy
     end
   
     def command_kill_player args
-      player_name = args["player_name"] or raise ArgumentError.new("Player_name doesn't exists")
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
       input       = "kill #{player_name}\n"
       
       docker_container.attach stdin: StringIO.new(input)
