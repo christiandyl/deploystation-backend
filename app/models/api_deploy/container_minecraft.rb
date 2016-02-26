@@ -180,10 +180,9 @@ module ApiDeploy
       file = File.read('lib/api_deploy/minecraft/items.json')
       data_hash = JSON.parse(file)
       
-      list = data_hash.map { |hs| hs["text_id"] }
-      data_hash = nil
+      # list = data_hash.map { |hs| hs["text_id"] }
       
-      return list
+      return []
     end
   
     def command_data command_id, now=false
@@ -255,7 +254,7 @@ module ApiDeploy
     
     def command_unban args
       player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
-      input       = "unbun #{player_name} #{reason}\n"
+      input       = "unbun #{player_name}\n"
       
       docker_container.attach stdin: StringIO.new(input)
       
