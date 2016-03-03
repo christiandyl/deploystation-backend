@@ -150,7 +150,7 @@ describe 'Containers API', :type => :request do
     expect(response.status).to eq(500)
     
     name       = "New Server name"
-    is_private = true
+    is_private = false
     params = {
       container: { name: name, is_private: is_private }
     }.to_json
@@ -182,6 +182,19 @@ describe 'Containers API', :type => :request do
     expect(obj["result"][0]["args"][0]["name"]).to be_truthy
     expect(obj["result"][0]["args"][0]["type"]).to be_truthy
     expect(obj["result"][0]["args"][0]["required"]).to be_truthy
+  end
+  
+  it 'Allows to get popular containers' do
+    send :get, popular_containers_path, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+    #
+    # expect(obj['success']).to be(true)
+    # expect(obj['result'].class).to be(Array)
+    # expect(obj['result'][0].class).to be(Hash)
+    # expect(obj['result'][0]['user_data'].class).to be(Hash)
+    # expect(obj['result'][0]['user_data']['id']).to eq(@context.second_user.id)
   end
   
   # Access logics

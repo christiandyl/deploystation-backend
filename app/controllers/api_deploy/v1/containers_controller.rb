@@ -4,9 +4,27 @@ module ApiDeploy
 
       skip_before_filter :ensure_logged_in, :only => [:search, :show]
       
-      before_filter :get_container, :except => [:index, :shared, :create, :bookmarked]
-      before_action :check_permissions, :except => [:index, :shared, :create, :destroy, :bookmarked, :show]
+      before_filter :get_container, :except => [:index, :shared, :create, :bookmarked, :popular]
+      before_action :check_permissions, :except => [:index, :shared, :create, :destroy, :bookmarked, :popular, :show]
       before_action :check_super_permissions, :only => [:destroy]
+
+      ##
+      # Get popular containers
+      # @resource /v1/popular_containers
+      # @action GET
+      #
+      # @optional [Integer] page Page number, default: 1
+      # @optional [Integer] per_page Per page items quantity, default: 15
+      #
+      # @response_field [Boolean] success
+      # @response_field [Array] result
+      # @response_field [Integer] result[].id Container id
+      # @response_field [Hash] result[].info Docker container info (blank by default)
+      def popular
+        containers = Container.where(is_private: false).paginate(pagination_params)
+
+        render success_response_with_pagination containers
+      end
 
       ##
       # Search containers
@@ -27,7 +45,7 @@ module ApiDeploy
         raise "Query is blank" if query.blank?
 
         # Generating sql inputs
-        condition = "containers.is_private is true and "
+        condition = "containers.is_private is false and "
         args      = {}
 
         query.split(" ").each_with_index do |word, index|

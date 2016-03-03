@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       end
       get :shared_containers, :controller => :containers, :action => :shared
       get :bookmarked_containers, :controller => :containers, :action => :bookmarked
+      get :popular_containers, :controller => :containers, :action => :popular
       
       resources :hosts, :only => [:index]
       resources :games, :only => [:index]
