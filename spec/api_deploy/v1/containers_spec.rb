@@ -30,7 +30,7 @@ describe 'Containers API', :type => :request do
 
     @context.container_id = container.id
     
-    # byebug
+    byebug
   end
   
   it 'Allows to stop container' do

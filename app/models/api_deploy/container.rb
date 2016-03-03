@@ -49,7 +49,7 @@ module ApiDeploy
           c.plan_id    = plan.id
           c.host_id    = host.id
           c.status     = STATUS_CREATED
-          c.is_private = false
+          c.is_private = true
         end
         
         container.save!

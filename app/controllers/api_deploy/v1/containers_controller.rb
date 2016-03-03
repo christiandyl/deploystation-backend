@@ -27,7 +27,7 @@ module ApiDeploy
         raise "Query is blank" if query.blank?
 
         # Generating sql inputs
-        condition = ""
+        condition = "containers.is_private is true and "
         args      = {}
 
         query.split(" ").each_with_index do |word, index|
