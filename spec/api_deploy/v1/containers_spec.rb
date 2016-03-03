@@ -47,8 +47,7 @@ describe 'Containers API', :type => :request do
   end
   
   it 'Allows to search containers' do
-    params = { query: "Server" }
-    send :get, search_container_path, :params => params, :token => @context.token
+    send :get, search_containers_path(query: "Server")
 
     expect(response.status).to eq(200)
     obj = JSON.parse(response.body)
@@ -58,9 +57,8 @@ describe 'Containers API', :type => :request do
     expect(obj["result"]["current_page"]).to be_truthy
     expect(obj["result"]["is_last_page"]).to be_truthy
     
-    params = { query: "1233g43jh42k34kvk" }
-    send :get, search_container_path, :params => params
-    
+    send :get, search_containers_path(query: "rege3432rhethrthrthrthrthrth")
+
     expect(response.status).to eq(200)
     obj = JSON.parse(response.body)
     

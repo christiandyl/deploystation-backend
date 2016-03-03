@@ -32,7 +32,6 @@ Rails.application.routes.draw do
           get      :commands
           get      :players_online
           get      :logs
-          get      :search
           resource :config, :only => [:show, :update]
         end
         resources :accesses, :only => [:index, :create, :destroy]
@@ -41,6 +40,7 @@ Rails.application.routes.draw do
       get :shared_containers, :controller => :containers, :action => :shared
       get :bookmarked_containers, :controller => :containers, :action => :bookmarked
       get :popular_containers, :controller => :containers, :action => :popular
+      get :search_containers, :controller => :containers, :action => :search
       
       resources :hosts, :only => [:index]
       resources :games, :only => [:index]
