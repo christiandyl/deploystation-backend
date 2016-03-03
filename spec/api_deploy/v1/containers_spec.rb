@@ -284,6 +284,19 @@ describe 'Containers API', :type => :request do
     expect(obj["result"][0]["plan_info"]).to be_truthy
   end
   
+  it 'Allows to show container info with bookmark attribute' do
+    send :get, container_path(@context.container_id), :token => @context.second_user_token.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    # expect(obj["result"]["id"]).not_to be_empty
+
+    container = ApiDeploy::Container.find(@context.container_id) rescue nil
+    expect(container).not_to be_nil
+  end
+  
   it 'Allows user to delete bookmark server' do
     send :delete, container_bookmark_path(@context.second_user.id, container_id: @context.container_id), :token => @context.second_user_token.token
 

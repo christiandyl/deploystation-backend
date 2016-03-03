@@ -5,7 +5,7 @@ module ApiDeploy
       skip_before_filter :ensure_logged_in, :only => [:search, :show]
       
       before_filter :get_container, :except => [:index, :shared, :create, :bookmarked]
-      before_action :check_permissions, :except => [:index, :show, :shared, :create, :destroy, :bookmarked]
+      before_action :check_permissions, :except => [:index, :shared, :create, :destroy, :bookmarked, :show]
       before_action :check_super_permissions, :only => [:destroy]
 
       ##
@@ -137,8 +137,15 @@ module ApiDeploy
       # @response_field [Integer] result.id Container id
       # @response_field [Hash] result.info Docker container info
       # @response_field [String] result.name Docker container name
+      # @response_field [Boolean] result.bookmarked Bookmarked by user?
       def show
-        render success_response @container.to_api(:public)
+        args = @container.to_api(:public)
+        args[:bookmarked] = false
+        if @container.user_id != current_user.id
+          args[:bookmarked] = Bookmark.exists?(container_id: @container.id, user_id: 2)
+        end
+
+        render success_response args
       end
   
       ##
