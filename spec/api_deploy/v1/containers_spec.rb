@@ -46,6 +46,28 @@ describe 'Containers API', :type => :request do
     expect(container).not_to be_nil
   end
   
+  it 'Allows to search containers' do
+    params = { query: "Server" }
+    send :get, search_container_path, :params => params, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    expect(obj["result"]["list"]).not_to be_empty
+    expect(obj["result"]["current_page"]).to be_truthy
+    expect(obj["result"]["is_last_page"]).to be_truthy
+    
+    params = { query: "1233g43jh42k34kvk" }
+    send :get, search_container_path, :params => params
+    
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+    
+    expect(obj['success']).to be(true)
+    expect(obj["result"]["list"]).to be_empty
+  end
+  
   it 'Allows to start container' do
     send :post, start_container_path(@context.container_id), :token => @context.token
 

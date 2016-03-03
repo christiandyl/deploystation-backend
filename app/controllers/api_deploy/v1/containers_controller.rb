@@ -2,11 +2,46 @@ module ApiDeploy
   module V1
     class ContainersController < ApplicationController
 
-      skip_before_filter :ensure_logged_in, :only => [:show]
+      skip_before_filter :ensure_logged_in, :only => [:search, :show]
       
       before_filter :get_container, :except => [:index, :shared, :create]
       before_action :check_permissions, :except => [:index, :show, :shared, :create, :destroy]
       before_action :check_super_permissions, :only => [:destroy]
+
+      ##
+      # Search containers
+      # @resource /v1/containers/search
+      # @action GET
+      #
+      # @required [String] query
+      #
+      # @optional [Integer] page Page number, default: 1
+      # @optional [Integer] per_page Per page items quantity, default: 15
+      #
+      # @response_field [Boolean] success
+      # @response_field [Array] result
+      # @response_field [Integer] result[].id Container id
+      # @response_field [Hash] result[].info Docker container info (blank by default)
+      def search
+        query = params[:query] or raise "Search query is missing"
+        raise "Query is blank" if query.blank?
+
+        # Generating sql inputs
+        condition = ""
+        args      = {}
+
+        query.split(" ").each_with_index do |word, index|
+          key = "q" + index.to_s
+          condition  << "lower(containers.name) like :#{key} or lower(users.full_name) LIKE :#{key} or "
+          args[key.to_sym] = "%#{word.downcase}%"
+        end
+        condition = condition[0..-4]
+
+        # Getting experiences list
+        containers = Container.joins(:user).where(condition, args).paginate(pagination_params)
+
+        render success_response_with_pagination containers
+      end
 
       ##
       # Get containers list
