@@ -31,6 +31,7 @@ Rails.application.routes.draw do
           get      :commands
           get      :players_online
           get      :logs
+          post     :invitation
           resource :config, :only => [:show, :update]
         end
         resources :accesses, :only => [:index, :create, :destroy]

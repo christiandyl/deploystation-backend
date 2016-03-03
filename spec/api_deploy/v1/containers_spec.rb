@@ -117,7 +117,6 @@ describe 'Containers API', :type => :request do
     
     expect(response.status).to eq(500)
     
-    
     name       = "New Server name"
     is_private = true
     params = {
@@ -255,6 +254,18 @@ describe 'Containers API', :type => :request do
     expect(response.status).to eq(200)
     obj = JSON.parse(response.body)
 
+    expect(obj['success']).to be(true)
+  end
+  
+  it 'Allows to invite friends by email' do
+    params = {
+      invitation: { method_name: "email", data: { emails: ["christian.dyl@outlook.com", "christian@deploystation.com"] } }
+    }.to_json
+    send :post, invitation_container_path(@context.container_id), :params => params, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+    
     expect(obj['success']).to be(true)
   end
   

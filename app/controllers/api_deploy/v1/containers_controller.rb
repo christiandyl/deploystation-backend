@@ -287,6 +287,32 @@ module ApiDeploy
         
         render success_response logs
       end
+      
+      ##
+      # Get game server logs list
+      # @resource /v1/containers/:container_id/invitation
+      # @action POST
+      #
+      # @required [Hash] invitation
+      # @required [String] invitation.method_name Method name (email,facebook,twitter...)
+      # @required [Hash] invitation.data Invitation data
+      #
+      # @response_field [Boolean] success
+      # @response_field [_________________________] _________________________
+      # @response_field [PUSHER_CHANNEL_NAME] container-{id}
+      # @response_field [PUSHER_KEY] invitation
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
+      def invitation
+        opts = params.require(:invitation)
+        invitation_method = opts[:method_name] or raise ArgumentError.new("Invitation method name doesn't exists")
+        invitation_data   = opts[:data] or raise ArgumentError.new("Invitation data doesn't exists")
+        
+        invitation = @container.invitation(invitation_method, invitation_data)
+        invitation.send
+        
+        render success_response
+      end
     
       private
     

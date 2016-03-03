@@ -13,5 +13,11 @@ class UserMailer < ApplicationMailer
     
     mail(to: @email, subject: 'Your password is reseted')
   end
+  
+  def invitation(container, email)
+    @container = container
+    
+    mail(to: email, subject: "Let's start to play")
+  end
 
 end

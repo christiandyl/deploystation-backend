@@ -237,6 +237,10 @@ module ApiDeploy
       @config ||= ("ApiDeploy::Config#{game.name.capitalize}".constantize).new(id)
     end
     
+    def invitation method_name, method_data
+      Invitation.new(self, method_name, method_data)
+    end
+    
     private
     
     def on_before_destroy
