@@ -46,6 +46,28 @@ describe 'Containers API', :type => :request do
     expect(container).not_to be_nil
   end
   
+  it 'Allows to search containers' do
+    params = { query: "Server" }
+    send :get, search_container_path, :params => params, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    expect(obj["result"]["list"]).not_to be_empty
+    expect(obj["result"]["current_page"]).to be_truthy
+    expect(obj["result"]["is_last_page"]).to be_truthy
+    
+    params = { query: "1233g43jh42k34kvk" }
+    send :get, search_container_path, :params => params
+    
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+    
+    expect(obj['success']).to be(true)
+    expect(obj["result"]["list"]).to be_empty
+  end
+  
   it 'Allows to start container' do
     send :post, start_container_path(@context.container_id), :token => @context.token
 
@@ -111,12 +133,21 @@ describe 'Containers API', :type => :request do
     expect(container).not_to be_nil
   end
   
+  it 'Allows to show public container info' do
+    send :get, container_path(@context.container_id)
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    # expect(obj["result"]["id"]).not_to be_empty
+  end
+  
   it 'Allows to update container info' do
     params = { container: {} }.to_json
     send :put, container_path(@context.container_id), :params => params, :token => @context.token
     
     expect(response.status).to eq(500)
-    
     
     name       = "New Server name"
     is_private = true
@@ -224,6 +255,57 @@ describe 'Containers API', :type => :request do
     expect(obj['result']).to be_empty
   end
   
+  # Bookmarks logics
+  
+  it 'Allows user to bookmark server' do
+    send :post, container_bookmarks_path(container_id: @context.container_id), :token => @context.second_user_token.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    
+    bookmark = Bookmark.last
+
+    expect(bookmark.container_id).to eq(@context.container_id)
+    expect(bookmark.user_id).to eq(@context.second_user.id)
+  end
+  
+  it 'Allows user to get bookmarked containers list' do
+    send :get, bookmarked_containers_path, :token => @context.second_user_token.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+    
+    expect(obj['success']).to be(true)
+    expect(obj["result"][0]["id"]).to be_truthy
+    expect(obj["result"][0]["status"]).to be_truthy
+    expect(obj["result"][0]["host_info"]).to be_truthy
+    expect(obj["result"][0]["plan_info"]).to be_truthy
+  end
+  
+  it 'Allows to show container info with bookmark attribute' do
+    send :get, container_path(@context.container_id), :token => @context.second_user_token.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    # expect(obj["result"]["id"]).not_to be_empty
+
+    container = ApiDeploy::Container.find(@context.container_id) rescue nil
+    expect(container).not_to be_nil
+  end
+  
+  it 'Allows user to delete bookmark server' do
+    send :delete, container_bookmark_path(@context.second_user.id, container_id: @context.container_id), :token => @context.second_user_token.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+  end
+  
   # Config
   
   it 'Allows to get container config list' do
@@ -255,6 +337,18 @@ describe 'Containers API', :type => :request do
     expect(response.status).to eq(200)
     obj = JSON.parse(response.body)
 
+    expect(obj['success']).to be(true)
+  end
+  
+  it 'Allows to invite friends by email' do
+    params = {
+      invitation: { method_name: "email", data: { emails: ["christian.dyl@outlook.com", "christian@deploystation.com"] } }
+    }.to_json
+    send :post, invitation_container_path(@context.container_id), :params => params, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+    
     expect(obj['success']).to be(true)
   end
   

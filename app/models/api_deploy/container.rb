@@ -20,6 +20,7 @@ module ApiDeploy
     belongs_to :host
     has_one    :game, :through => :plan
     has_many   :accesses
+    has_many   :bookmarks
     
     # Validations
     validates :user_id, :presence => true
@@ -48,7 +49,7 @@ module ApiDeploy
           c.plan_id    = plan.id
           c.host_id    = host.id
           c.status     = STATUS_CREATED
-          c.is_private = false
+          c.is_private = true
         end
         
         container.save!
@@ -235,6 +236,10 @@ module ApiDeploy
     
     def config
       @config ||= ("ApiDeploy::Config#{game.name.capitalize}".constantize).new(id)
+    end
+    
+    def invitation method_name, method_data
+      Invitation.new(self, method_name, method_data)
     end
     
     private

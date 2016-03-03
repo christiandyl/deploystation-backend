@@ -27,15 +27,19 @@ Rails.application.routes.draw do
           post     :stop
           post     :restart
           post     :execute_command
+          post     :invitation
           get      :command
           get      :commands
           get      :players_online
           get      :logs
+          get      :search
           resource :config, :only => [:show, :update]
         end
         resources :accesses, :only => [:index, :create, :destroy]
+        resources :bookmarks, :only => [:create, :destroy]
       end
       get :shared_containers, :controller => :containers, :action => :shared
+      get :bookmarked_containers, :controller => :containers, :action => :bookmarked
       
       resources :hosts, :only => [:index]
       resources :games, :only => [:index]

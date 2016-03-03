@@ -65,10 +65,12 @@ class ApplicationController < ActionController::API
     {
       :status => 200,
       :json   => {
-        :success       => true,
-        :result        => d_api,
-        :current_page  => d.current_page,
-        :is_last_page  => d.total_pages == d.current_page
+        :success => true,
+        :result  => {
+          :list         => d_api,
+          :current_page => d.current_page,
+          :is_last_page => (d.total_pages == d.current_page)
+        }
       }
     }
   end
@@ -101,7 +103,7 @@ class ApplicationController < ActionController::API
   # Pagination helper
   
   def pagination_params
-    { :page => params[:page] || 1, :per_page => params[:per_page] || nil }
+    { :page => params[:page] || 1, :per_page => params[:per_page] || 15 }
   end
   
   # Generates json data for render

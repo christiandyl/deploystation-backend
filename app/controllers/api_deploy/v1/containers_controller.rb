@@ -2,9 +2,46 @@ module ApiDeploy
   module V1
     class ContainersController < ApplicationController
 
-      before_filter :get_container, :except => [:index, :shared, :create]
-      before_action :check_permissions, :except => [:index, :shared, :create, :destroy]
+      skip_before_filter :ensure_logged_in, :only => [:search, :show]
+      
+      before_filter :get_container, :except => [:index, :shared, :create, :bookmarked]
+      before_action :check_permissions, :except => [:index, :shared, :create, :destroy, :bookmarked, :show]
       before_action :check_super_permissions, :only => [:destroy]
+
+      ##
+      # Search containers
+      # @resource /v1/containers/search
+      # @action GET
+      #
+      # @required [String] query
+      #
+      # @optional [Integer] page Page number, default: 1
+      # @optional [Integer] per_page Per page items quantity, default: 15
+      #
+      # @response_field [Boolean] success
+      # @response_field [Array] result
+      # @response_field [Integer] result[].id Container id
+      # @response_field [Hash] result[].info Docker container info (blank by default)
+      def search
+        query = params[:query] or raise "Search query is missing"
+        raise "Query is blank" if query.blank?
+
+        # Generating sql inputs
+        condition = "containers.is_private is true and "
+        args      = {}
+
+        query.split(" ").each_with_index do |word, index|
+          key = "q" + index.to_s
+          condition  << "lower(containers.name) like :#{key} or lower(users.full_name) LIKE :#{key} or "
+          args[key.to_sym] = "%#{word.downcase}%"
+        end
+        condition = condition[0..-4]
+
+        # Getting experiences list
+        containers = Container.joins(:user).where(condition, args).paginate(pagination_params)
+
+        render success_response_with_pagination containers
+      end
 
       ##
       # Get containers list
@@ -34,6 +71,23 @@ module ApiDeploy
       # @response_field [Hash] result[].info Docker container info (blank by default)
       def shared
         containers = current_user.shared_containers.map do |c|
+          c.to_api(:public)
+        end
+
+        render success_response containers
+      end
+      
+      ##
+      # Get bookmarked containers list
+      # @resource /v1/bookmarked_containers
+      # @action GET
+      #
+      # @response_field [Boolean] success
+      # @response_field [Array] result
+      # @response_field [Integer] result[].id Container id
+      # @response_field [Hash] result[].info Docker container info (blank by default)
+      def bookmarked
+        containers = current_user.bookmarked_containers.map do |c|
           c.to_api(:public)
         end
 
@@ -83,8 +137,15 @@ module ApiDeploy
       # @response_field [Integer] result.id Container id
       # @response_field [Hash] result.info Docker container info
       # @response_field [String] result.name Docker container name
+      # @response_field [Boolean] result.bookmarked Bookmarked by user?
       def show
-        render success_response @container.to_api(:public)
+        args = @container.to_api(:public)
+        args[:bookmarked] = false
+        if @container.user_id != current_user.id
+          args[:bookmarked] = Bookmark.exists?(container_id: @container.id, user_id: 2)
+        end
+
+        render success_response args
       end
   
       ##
@@ -286,6 +347,32 @@ module ApiDeploy
         logs = @container.logs
         
         render success_response logs
+      end
+      
+      ##
+      # Get game server logs list
+      # @resource /v1/containers/:container_id/invitation
+      # @action POST
+      #
+      # @required [Hash] invitation
+      # @required [String] invitation.method_name Method name (email,facebook,twitter...)
+      # @required [Hash] invitation.data Invitation data
+      #
+      # @response_field [Boolean] success
+      # @response_field [_________________________] _________________________
+      # @response_field [PUSHER_CHANNEL_NAME] container-{id}
+      # @response_field [PUSHER_KEY] invitation
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
+      def invitation
+        opts = params.require(:invitation)
+        invitation_method = opts[:method_name] or raise ArgumentError.new("Invitation method name doesn't exists")
+        invitation_data   = opts[:data] or raise ArgumentError.new("Invitation data doesn't exists")
+        
+        invitation = @container.invitation(invitation_method, invitation_data)
+        invitation.send
+        
+        render success_response
       end
     
       private
