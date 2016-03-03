@@ -36,8 +36,10 @@ Rails.application.routes.draw do
           resource :config, :only => [:show, :update]
         end
         resources :accesses, :only => [:index, :create, :destroy]
+        resources :bookmarks, :only => [:create, :destroy]
       end
       get :shared_containers, :controller => :containers, :action => :shared
+      get :bookmarked_containers, :controller => :containers, :action => :bookmarked
       
       resources :hosts, :only => [:index]
       resources :games, :only => [:index]

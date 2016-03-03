@@ -30,7 +30,7 @@ describe 'Containers API', :type => :request do
 
     @context.container_id = container.id
     
-    byebug
+    # byebug
   end
   
   it 'Allows to stop container' do
@@ -253,6 +253,44 @@ describe 'Containers API', :type => :request do
 
     expect(obj['success']).to be(true)
     expect(obj['result']).to be_empty
+  end
+  
+  # Bookmarks logics
+  
+  it 'Allows user to bookmark server' do
+    send :post, container_bookmarks_path(container_id: @context.container_id), :token => @context.second_user_token.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    
+    bookmark = Bookmark.last
+
+    expect(bookmark.container_id).to eq(@context.container_id)
+    expect(bookmark.user_id).to eq(@context.second_user.id)
+  end
+  
+  it 'Allows user to get bookmarked containers list' do
+    send :get, bookmarked_containers_path, :token => @context.second_user_token.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+    
+    expect(obj['success']).to be(true)
+    expect(obj["result"][0]["id"]).to be_truthy
+    expect(obj["result"][0]["status"]).to be_truthy
+    expect(obj["result"][0]["host_info"]).to be_truthy
+    expect(obj["result"][0]["plan_info"]).to be_truthy
+  end
+  
+  it 'Allows user to delete bookmark server' do
+    send :delete, container_bookmark_path(@context.second_user.id, container_id: @context.container_id), :token => @context.second_user_token.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
   end
   
   # Config

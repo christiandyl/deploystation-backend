@@ -11,7 +11,10 @@ class User < ActiveRecord::Base
   has_many :connects
   has_many :containers, :class_name => "ApiDeploy::Container"
   has_many :shared_containers, through: :accesses, :source => :container
+  # has_many :bookmarked_containers, through: :bookmarks, :source => :container
+  has_many :bookmarked_containers, through: :bookmarks, :source => :container
   has_many :accesses
+  has_many :bookmarks
 
   after_create   :send_welcome_mail
   after_create   :define_s3_bucket

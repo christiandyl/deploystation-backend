@@ -20,6 +20,7 @@ module ApiDeploy
     belongs_to :host
     has_one    :game, :through => :plan
     has_many   :accesses
+    has_many   :bookmarks
     
     # Validations
     validates :user_id, :presence => true

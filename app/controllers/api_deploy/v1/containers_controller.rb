@@ -4,8 +4,8 @@ module ApiDeploy
 
       skip_before_filter :ensure_logged_in, :only => [:search, :show]
       
-      before_filter :get_container, :except => [:index, :shared, :create]
-      before_action :check_permissions, :except => [:index, :show, :shared, :create, :destroy]
+      before_filter :get_container, :except => [:index, :shared, :create, :bookmarked]
+      before_action :check_permissions, :except => [:index, :show, :shared, :create, :destroy, :bookmarked]
       before_action :check_super_permissions, :only => [:destroy]
 
       ##
@@ -71,6 +71,23 @@ module ApiDeploy
       # @response_field [Hash] result[].info Docker container info (blank by default)
       def shared
         containers = current_user.shared_containers.map do |c|
+          c.to_api(:public)
+        end
+
+        render success_response containers
+      end
+      
+      ##
+      # Get bookmarked containers list
+      # @resource /v1/bookmarked_containers
+      # @action GET
+      #
+      # @response_field [Boolean] success
+      # @response_field [Array] result
+      # @response_field [Integer] result[].id Container id
+      # @response_field [Hash] result[].info Docker container info (blank by default)
+      def bookmarked
+        containers = current_user.bookmarked_containers.map do |c|
           c.to_api(:public)
         end
 
