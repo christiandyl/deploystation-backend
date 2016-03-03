@@ -111,6 +111,16 @@ describe 'Containers API', :type => :request do
     expect(container).not_to be_nil
   end
   
+  it 'Allows to show public container info' do
+    send :get, container_path(@context.container_id)
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    # expect(obj["result"]["id"]).not_to be_empty
+  end
+  
   it 'Allows to update container info' do
     params = { container: {} }.to_json
     send :put, container_path(@context.container_id), :params => params, :token => @context.token

@@ -2,8 +2,10 @@ module ApiDeploy
   module V1
     class ContainersController < ApplicationController
 
+      skip_before_filter :ensure_logged_in, :only => [:show]
+      
       before_filter :get_container, :except => [:index, :shared, :create]
-      before_action :check_permissions, :except => [:index, :shared, :create, :destroy]
+      before_action :check_permissions, :except => [:index, :show, :shared, :create, :destroy]
       before_action :check_super_permissions, :only => [:destroy]
 
       ##
