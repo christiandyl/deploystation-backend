@@ -161,6 +161,7 @@ module ApiDeploy
         args[:bookmarked] = false
         if @container.user_id != current_user.id
           args[:bookmarked] = Bookmark.exists?(container_id: @container.id, user_id: 2)
+          args[:owner] = @container.user_id == current_user.id
         end
 
         render success_response args
