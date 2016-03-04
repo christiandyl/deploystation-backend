@@ -5,7 +5,7 @@ module ApiDeploy
       skip_before_filter :ensure_logged_in, :only => [:search, :show]
       
       before_filter :get_container, :except => [:index, :shared, :create, :bookmarked, :popular, :search]
-      before_action :check_permissions, :except => [:index, :shared, :create, :destroy, :bookmarked, :popular, :show, :search]
+      before_action :check_permissions, :except => [:index, :shared, :create, :destroy, :bookmarked, :popular, :show, :search, :players_online]
       before_action :check_super_permissions, :only => [:destroy]
 
       ##
