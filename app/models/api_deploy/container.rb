@@ -235,7 +235,7 @@ module ApiDeploy
     end
     
     def config
-      @config ||= ("ApiDeploy::Config#{game.name.capitalize}".constantize).new(id)
+      @config ||= ("ApiDeploy::Config#{game.sname.capitalize}".constantize).new(id)
     end
     
     def invitation method_name, method_data

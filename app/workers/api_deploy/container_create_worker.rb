@@ -5,7 +5,7 @@ module ApiDeploy
     def perform(container_id, opts)
       begin
         container = Container.find(container_id)
-        container = Container.class_for(container.game.name).find(container_id)
+        container = Container.class_for(container.game.sname).find(container_id)
         
         container.create_docker_container(opts)
         container.start

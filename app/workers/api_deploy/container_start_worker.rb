@@ -5,13 +5,13 @@ module ApiDeploy
     def perform(container_id, opts)
       begin
         container = Container.find(container_id)
-        container = Container.class_for(container.game.name).find(container_id)
+        container = Container.class_for(container.game.sname).find(container_id)
         container.start(opts, true)
         
         Rails.logger.debug "Checking container #{container.id} status..."
         done = false
-        sleep 3
-        20.times do
+        sleep 5
+        80.times do
           progress = container.starting_progress
           if (done = (progress[:progress] == 1.0))
             Rails.logger.debug "Container #{container_id} started successfully"

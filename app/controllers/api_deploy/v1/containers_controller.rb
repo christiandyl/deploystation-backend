@@ -136,7 +136,7 @@ module ApiDeploy
         name     = opts[:name] or raise ArgumentError.new("Name doesn't exists")
         
         plan = Plan.find(plan_id) or raise "Plan with id #{plan_id} doesn't exists"
-        game = plan.game.name
+        game = plan.game.sname
 
         container = Container.class_for(game).create(current_user, plan)
         container.name = name
@@ -398,7 +398,7 @@ module ApiDeploy
     
       def get_container
         container = Container.find(params[:id])
-        app       = container.game.name
+        app       = container.game.sname
       
         @container = Container.class_for(app).find(params[:id])
       end
