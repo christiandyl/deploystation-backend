@@ -62,7 +62,32 @@ module ApiDeploy
         :title => "Give level to player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" },
-          { name: "level", type: "list", required: true, options: [1,2,3] }
+          { name: "level", type: "list", required: true, options: [1,2,3,4,5,6,7,8,9,10,11,12] }
+        ]
+      },{
+        :name  => "op",
+        :title => "Grants operator status to a player",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" }
+        ]
+      },{
+        :name  => "deop",
+        :title => "Revoke operator status from a player",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" }
+        ]
+      },{
+        :name  => "say",
+        :title => "Displays a message to multiple players.",
+        :args  => [
+          { name: "message", type: "string", required: true }
+        ]
+      },{
+        :name  => "kick",
+        :title => "Kicks a player off a server.",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" },
+          { name: "reason", type: "text", required: false }
         ]
       }
     ]
@@ -308,6 +333,51 @@ module ApiDeploy
       
       docker_container.attach stdin: StringIO.new(input)
       Rails.logger.info "Container(#{id}) - Minecraft : Player #{player} received message \"#{message}\""
+      
+      return { success: true }
+    end
+    
+    def command_op args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      input       = "op #{player_name}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} is now an admin"
+      
+      return { success: true }
+    end
+    
+    def command_deop args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      input       = "deop #{player_name}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} is now not admin"
+      
+      return { success: true }
+    end
+    
+    def command_say args
+      message = args["message"] or raise ArgumentError.new("Message doesn't exists")
+      input   = "say #{message}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Sayed to all #{message}"
+      
+      return { success: true }
+    end
+    
+    def command_kick args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      reason      = args["reason"] or raise ArgumentError.new("Reason doesn't exists")
+      input       = "kick #{player_name} #{reason}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} has been kicked"
       
       return { success: true }
     end
