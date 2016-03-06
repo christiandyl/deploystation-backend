@@ -4,7 +4,7 @@ games = [
   { name: 'Counter-strike go', sname: 'counter_strike_go', status: Game::STATUS_COMING_SOON },
   { name: 'Battlefield 4', sname: 'battlefield_4', status: Game::STATUS_COMING_SOON },
   { name: 'Battlefield hard line', sname: 'battlefield_hl', status: Game::STATUS_COMING_SOON },
-  { name: '7 days to die', sname: '7_days_to_die', status: Game::STATUS_COMING_SOON },
+  { name: '7 days to die', sname: 'seven_days_to_die', status: Game::STATUS_ENABLED },
   { name: 'DayZ Standalone', sname: 'dayz_standalone', status: Game::STATUS_COMING_SOON }
 ]
 
@@ -132,7 +132,15 @@ else # Development and Testing seeds
      :ram          => 384,
      :storage      => 1024,
      :storage_type => 'ssd'
-   }
+    },{
+      :game         => '7 days to die',
+      :host         => 'localhost',
+      :name         => 'lite',
+      :max_players  => 2,
+      :ram          => 1024,
+      :storage      => 1024,
+      :storage_type => 'ssd'
+    }
  ]
 
  hosts = [{ name: 'localhost', ip: '127.0.0.1', domain: 'localhost', location: 'Localhost', host_user: 'vagrant' }]

@@ -2,7 +2,7 @@ module ApiDeploy
   class Container < ActiveRecord::Base
     include ApiConverter
 
-    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :is_private]
+    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :is_private, :user_id]
     
     before_destroy :on_before_destroy
     
@@ -49,7 +49,7 @@ module ApiDeploy
           c.plan_id    = plan.id
           c.host_id    = host.id
           c.status     = STATUS_CREATED
-          c.is_private = true
+          c.is_private = false
         end
         
         container.save!
@@ -235,7 +235,7 @@ module ApiDeploy
     end
     
     def config
-      @config ||= ("ApiDeploy::Config#{game.name.capitalize}".constantize).new(id)
+      @config ||= ("ApiDeploy::Config#{game.sname.capitalize}".constantize).new(id)
     end
     
     def invitation method_name, method_data
