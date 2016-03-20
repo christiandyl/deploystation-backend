@@ -1,7 +1,7 @@
 class Notification < ActiveRecord::Base
   
   after_save :push
-  belongs_to :recipient, class_name: "User"
+  belongs_to :user
 
   # Pushes notification to each of the recipient's devices
   def push
