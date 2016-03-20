@@ -38,6 +38,8 @@ gem 'mini_magick'
 gem 'apns'
 # Minecraft query
 gem 'minecraft-query'
+# Payment system
+gem "braintree"
 
 group :development, :staging do
   gem 'spring', '1.3.6'

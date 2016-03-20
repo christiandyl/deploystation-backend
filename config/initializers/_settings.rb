@@ -36,6 +36,11 @@ Settings = OpenStruct.new(
     :host     => ENV['APNS_HOST']     || 'gateway.sandbox.push.apple.com',
     :pem_path => ENV['APNS_PEM_PATH'] || Rails.root.join('.apns_pem')
   ),
+  :braintree => OpenStruct.new(
+    :merchant_id => ENV['BRAINTREE_MERCHANT_ID'] || '8vz9fygsrydrggqb',
+    :public_key  => ENV['BRAINTREE_PUBLIC_KEY']|| 'kprr7gxx549pc7jp',
+    :private_key => ENV['BRAINTREE_PUBLIC_KEY'] || 'ffb5fbe45d4ed915ab9c590dba340025'
+  ),
   :connects => OpenStruct.new(
     :facebook => OpenStruct.new(
       :client_id     => ENV['CONNECTS_FACEBOOK_APP_ID']     || '705287956273054',

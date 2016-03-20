@@ -49,6 +49,8 @@ GEM
       jmespath (~> 1.0)
     aws-sdk-resources (2.1.31)
       aws-sdk-core (= 2.1.31)
+    braintree (2.59.0)
+      builder (>= 2.0.0)
     builder (3.2.2)
     byebug (5.0.0)
       columnize (= 0.9.0)
@@ -259,6 +261,7 @@ DEPENDENCIES
   apns
   awesome_print
   aws-sdk
+  braintree
   byebug
   capybara
   capybara-screenshot
