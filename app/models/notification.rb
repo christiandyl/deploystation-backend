@@ -6,7 +6,7 @@ class Notification < ActiveRecord::Base
   # Pushes notification to each of the recipient's devices
   def push
     notifications = self.user.devices.map{ |device|
-      APNS::Notification.new(device.token,
+      APNS::Notification.new(device.push_token,
         alert: self.alert,
         other: { some_extra_data: "can be sent too" }
       )
