@@ -122,7 +122,8 @@ else # Development and Testing seeds
      :max_players  => 2,
      :ram          => 256,
      :storage      => 1024,
-     :storage_type => 'ssd'
+     :storage_type => 'ssd',
+     :price        => '5'
    },
    {
      :game         => 'Minecraft',
@@ -131,7 +132,8 @@ else # Development and Testing seeds
      :max_players  => 7,
      :ram          => 384,
      :storage      => 1024,
-     :storage_type => 'ssd'
+     :storage_type => 'ssd',
+     :price        => '10'
     },{
       :game         => '7 days to die',
       :host         => 'localhost',
@@ -139,7 +141,8 @@ else # Development and Testing seeds
       :max_players  => 2,
       :ram          => 1024,
       :storage      => 1024,
-      :storage_type => 'ssd'
+      :storage_type => 'ssd',
+      :price        => '15'
     }
  ]
 

@@ -14,6 +14,12 @@ Rails.application.routes.draw do
       end
       get "users/me", :controller => :users, :action => :me
       post "users/request_password_recovery", :controller => :users, :action => :request_password_recovery
+      
+      resource :payment, :only => [:create] do
+        member do
+          get  :client_token
+        end
+      end
 
     end
   end
