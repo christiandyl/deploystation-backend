@@ -20,6 +20,8 @@ Rails.application.routes.draw do
           get  :client_token
         end
       end
+      
+      resources :devices, :only => [:create, :destroy]
 
     end
   end

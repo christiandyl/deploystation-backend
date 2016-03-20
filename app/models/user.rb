@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :bookmarked_containers, through: :bookmarks, :source => :container
   has_many :accesses
   has_many :bookmarks
+  has_many :devices
 
   after_create   :send_welcome_mail
   after_create   :define_s3_bucket
