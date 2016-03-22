@@ -33,6 +33,8 @@ class ConnectFacebook < Connect
     self.partner_expire = token_info["expires"]
     self.partner_data = fb_user
     
+    self.partner_data["locale"] = data["locale"] || I18n.default_locale
+    
     Rails.logger.debug "ConnectFacebook has initialized, id: #{self.partner_id}, auth_data: #{self.partner_auth_data}, data: #{self.partner_data.to_s}"
   end
   
@@ -54,6 +56,10 @@ class ConnectFacebook < Connect
   
   def full_name
     self.partner_data['first_name'] + " " + self.partner_data['last_name']
+  end
+  
+  def locale
+    partner_data["locale"]
   end
 
   def avatar_url

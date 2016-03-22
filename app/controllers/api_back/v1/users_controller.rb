@@ -15,10 +15,12 @@ module ApiBack
       # @optional [String] connect_login.email User email
       # @optional [String] connect_login.password User password
       # @optional [String] connect_login.fullname User full name
+      # @optional [String] connect_login.locale User locale (by default is "en")
       #
       # @optional [Hash] connect_facebook
       # @optional [String] connect_facebook.code Short lived token
       # @optional [String] connect_facebook.redirect_uri OAUTH redirect uri
+      # @optional [String] connect_facebook.locale User locale (by default is "en")
       #
       # @response_field [Boolean] success
       # @response_field [Hash] result
@@ -33,7 +35,7 @@ module ApiBack
         connect = Connect::class_for(connect_name).new(opts)
 
         if connect.existing_connect.nil?
-          connect.user = User.create(email: connect.email, full_name: connect.full_name)
+          connect.user = User.create(email: connect.email, full_name: connect.full_name, locale: connect.locale)
           avatar_url = connect.avatar_url
           unless avatar_url.nil?
             connect.user.upload_avatar({ "url" => avatar_url }, :url)

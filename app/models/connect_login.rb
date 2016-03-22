@@ -18,7 +18,8 @@ class ConnectLogin < Connect
       
       
       self.partner_data = {
-        :full_name => data["full_name"]
+        :full_name => data["full_name"],
+        :locale    => data["locale"] || I18n.default_locale
       }
     end
   end
@@ -41,6 +42,10 @@ class ConnectLogin < Connect
   
   def full_name
     partner_data["full_name"]
+  end
+  
+  def locale
+    partner_data["locale"]
   end
   
   def avatar_url

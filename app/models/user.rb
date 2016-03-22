@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   after_create   :define_s3_bucket
   after_update   :on_after_update
   before_destroy :on_before_destroy
+  
+  validates :email, uniqueness: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)*[^@.\s]+\z/ }
 
   def send_welcome_mail
     UserMailer.delay.welcome_email(self)

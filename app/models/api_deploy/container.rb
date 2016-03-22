@@ -32,6 +32,7 @@ module ApiDeploy
     def logs; raise "SubclassResponsibility"; end
     def started?; raise "SubclassResponsibility"; end
     def starting_progress; raise "SubclassResponsibility"; end
+    def reset; raise "SubclassResponsibility"; end
   
     class << self
       def class_for game

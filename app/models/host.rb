@@ -3,7 +3,7 @@ require 'ipaddr'
 class Host < ActiveRecord::Base
   include ApiConverter
 
-  attr_api [:id, :name, :location, :plans_list], :private => [:ip, :domain, :created_at, :updated_at]
+  attr_api [:id, :name, :location, :country_code, :plans_list], :private => [:ip, :domain, :created_at, :updated_at]
 
   has_many :plans
   has_many :containers

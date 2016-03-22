@@ -39,7 +39,7 @@ module ApiDeploy
         :type          => :string,
         :title         => "Level name",
         :default_value => "world",
-        :is_editable   => true,
+        :is_editable   => false,
         :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } }
       }, {
         :key           => "enable-query",
@@ -94,7 +94,7 @@ module ApiDeploy
         :type          => :string,
         :title         => "",
         :default_value => nil,
-        :is_editable   => false,
+        :is_editable   => true,
         :validations   => {}
       }, {
         :key           => "force-gamemode",
@@ -246,7 +246,7 @@ module ApiDeploy
       }, {
         :key           => "motd",
         :type          => :string,
-        :title         => "Motd",
+        :title         => "Server name",
         :default_value => "A Minecraft Server",
         :is_editable   => true,
         :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } }

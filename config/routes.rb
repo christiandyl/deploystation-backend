@@ -31,15 +31,17 @@ Rails.application.routes.draw do
       
       resources :containers, :only => [:index, :create, :update, :show, :destroy] do
         member do
-          post     :start
-          post     :stop
-          post     :restart
-          post     :execute_command
-          post     :invitation
-          get      :command
-          get      :commands
-          get      :players_online
-          get      :logs
+          post :start
+          post :stop
+          post :reset
+          post :restart
+          post :execute_command
+          post :invitation
+          get  :command
+          get  :commands
+          get  :players_online
+          get  :logs
+          
           resource :config, :only => [:show, :update]
         end
         resources :accesses, :only => [:index, :create, :destroy]

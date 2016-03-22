@@ -129,6 +129,22 @@ module ApiDeploy
       }
       super(opts, now)
     end
+    
+    def reset now=false
+      unless now    
+        ApiDeploy::ContainerResetWorker.perform_async(id)
+        return true
+      end
+
+      Rails.logger.debug "Resetting container(#{id})"
+      
+      level_name = config.get_property_value("level-name")
+      docker_container.exec ["rm", "-rf", level_name]
+      
+      sleep 2
+      
+      Rails.logger.debug "Container(#{id}) is resetted"
+    end
   
     def players_online now=false
       return false unless started?

@@ -42,7 +42,7 @@ if Rails.env.production? # Production seeds
     }
   ]
   
-  hosts = [{ name: 'production', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'ubuntu' }]
+  hosts = [{ name: 'production', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'ubuntu', country_code: "ua" }]
 elsif Rails.env.staging? # Staging seeds
   plans = [
    {
@@ -77,7 +77,7 @@ elsif Rails.env.staging? # Staging seeds
    }
  ]
  
- hosts = [{ name: 'staging', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'ubuntu' }]
+ hosts = [{ name: 'staging', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'ubuntu', country_code: "ua" }]
 elsif Rails.env.beta? # Beta seeds
   plans = [
    {
@@ -112,7 +112,7 @@ elsif Rails.env.beta? # Beta seeds
    }
  ]
  
- hosts = [{ name: 'beta', ip: '195.69.187.74', domain: 'ua.deploystation.com', location: 'Ukraine', host_user: 'ubuntu' }]
+ hosts = [{ name: 'beta', ip: '195.69.187.74', domain: 'ua.deploystation.com', location: 'Ukraine', host_user: 'ubuntu', country_code: "ua" }]
 else # Development and Testing seeds
   plans = [
    {
@@ -146,7 +146,7 @@ else # Development and Testing seeds
     }
  ]
 
- hosts = [{ name: 'localhost', ip: '127.0.0.1', domain: 'localhost', location: 'Localhost', host_user: 'vagrant' }]
+ hosts = [{ name: 'localhost', ip: '127.0.0.1', domain: 'localhost', location: 'Localhost', host_user: 'vagrant', country_code: "us" }]
 #  plans = [
 #   {
 #     :game         => 'Minecraft',

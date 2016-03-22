@@ -12,13 +12,11 @@ module ApiDeploy
       # @response_field [Integer] result[].id Host id
       # @response_field [String] result[].name Host name
       # @response_field [String] result[].location Host location
+      # @response_field [String] result[].country_code Host country code
       # @response_field [Array] result[].plans_list Plans list array
       # @response_field [Integer] result[].plans_list[].id Plan id
       # @response_field [String] result[].plans_list[].name Plan name
       # @response_field [Integer] result[].plans_list[].max_players Plan max players count
-      # @response_field [Hash] result[].plans_list[].game_info Plans game info
-      # @response_field [Integer] result[].plans_list[].game_info.id Game id
-      # @response_field [String] result[].plans_list[].game_info.name Game name
       def index
         render success_response( Host.all.map { |h| h.to_api(:public) } )
       end

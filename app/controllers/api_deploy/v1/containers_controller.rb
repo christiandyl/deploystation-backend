@@ -247,6 +247,23 @@ module ApiDeploy
       end
 
       ##
+      # Stop container
+      # @resource /v1/containers/:container_id/reset
+      # @action POST
+      #
+      # @response_field [Boolean] success
+      # @response_field [_________________________] _________________________
+      # @response_field [PUSHER_CHANNEL_NAME] container-{id}
+      # @response_field [PUSHER_KEY] reset
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
+      def reset
+        @container.reset
+      
+        render success_response
+      end
+
+      ##
       # Destroy container
       # @resource /v1/containers/:container_id
       # @action DELETE

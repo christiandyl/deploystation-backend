@@ -5,7 +5,15 @@ describe 'Users API', :type => :request do
 
   it 'Allows to create user with login connect' do
     email = 'test@test.com'
-    params = { connect_login: { full_name: 'Gordon Freeman', email: email, password: 'test123' } }.to_json
+    locale = "fr"
+    params = { 
+      connect_login: { 
+        full_name: 'Gordon Freeman',
+        email: email,
+        password: 'test123',
+        locale: locale
+      }
+    }.to_json
     send :post, "/v1/users", :params => params
 
     expect(response.status).to eq(200)
@@ -17,6 +25,10 @@ describe 'Users API', :type => :request do
     expect(obj['result']).to be_instance_of(Hash)
     expect(obj['result']['auth_token']).to be_truthy
     expect(obj['result']['expires']).to be_truthy
+  
+    user = User.find_by_email(email)
+    byebug
+    expect(user.locale == locale).to be(true)
   
     @context.token = obj['result']['auth_token']
     @context.email = email
