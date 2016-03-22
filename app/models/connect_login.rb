@@ -66,7 +66,7 @@ class ConnectLogin < Connect
     c = self.new data
     d = c.existing_connect
     return nil if d.nil?
-    return d if d.partner_id == data['email'] && d.partner_auth_data == encrypt_password(data['password'])
+    return d if d.partner_id == data['email'] && d.partner_auth_data == d.encrypt_password(data['password'])
     return nil
   end
 
