@@ -18,8 +18,8 @@ class ConnectLogin < Connect
       
       
       self.partner_data = {
-        :full_name => data["full_name"],
-        :locale    => data["locale"] || I18n.default_locale
+        "full_name" => data["full_name"],
+        "locale"    => data["locale"] || I18n.default_locale.to_s
       }
     end
   end

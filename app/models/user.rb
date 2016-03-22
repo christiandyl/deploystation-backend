@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :new_password
 
-  attr_api [:id, :email, :full_name, :avatar_url]
+  attr_api [:id, :email, :full_name, :avatar_url, :locale]
 
   AWS_FOLDER = "users/:user_id"
   AVATAR_UPLOAD_TYPES = [:direct_upload, :url]
