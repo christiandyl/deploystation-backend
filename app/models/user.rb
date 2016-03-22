@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   include ApiConverter
 
-  attr_accessor :password
+  attr_accessor :current_password, :new_password
 
   attr_api [:id, :email, :full_name, :avatar_url]
 
@@ -21,8 +21,6 @@ class User < ActiveRecord::Base
   after_create   :define_s3_bucket
   after_update   :on_after_update
   before_destroy :on_before_destroy
-
-  validates :email, :presence => true, uniqueness: true
 
   def send_welcome_mail
     UserMailer.delay.welcome_email(self)
@@ -106,9 +104,13 @@ class User < ActiveRecord::Base
     if email_changed? && email != connect_login.partner_id
       connect_login.update!(partner_id: email)
     end
-    unless password.nil?
-      connect_login.update(partner_auth_data: password)
-      self.password = nil
+    if !current_password.nil? || !new_password.nil?
+      raise "Current password doesn't exists" if current_password.nil?
+      raise "New password doesn't exists" if new_password.nil?
+      
+      connect_login.change_password(current_password, new_password)
+      self.current_password = nil
+      self.new_password = nil
     end
   end
   

@@ -41,8 +41,7 @@ describe 'Users API', :type => :request do
     params = {
       :user => {
         :email     => new_email,
-        :full_name => "Adam Janson",
-        :password  => "gtibgtgbrei3"
+        :full_name => "Adam Janson"
       }
     }.to_json
     send :put, user_path(1), :params => params, :token => @context.token
@@ -55,6 +54,36 @@ describe 'Users API', :type => :request do
     expect(obj['success']).to be(true)
     
     @context.email = new_email
+  end
+  
+  it 'Allows user to update password' do
+    params = {
+      :user => {
+        :current_password => 'test12',
+        :new_password     => 'newtest123'
+      }
+    }.to_json
+    send :put, user_path(1), :params => params, :token => @context.token
+    
+    expect(response.status).to eq(500)
+    
+    params = {
+      :user => {
+        :current_password => 'test123',
+        :new_password     => 'newtest123'
+      }
+    }.to_json
+    send :put, user_path(1), :params => params, :token => @context.token
+    
+    valid = User.find_by_email(@context.email).connect_login.valid_password? 'newtest123'
+    expect(valid).to be(true)
+    
+    expect(response.status).to eq(200)
+
+    obj = JSON.parse(response.body)
+
+    expect(obj).to be_instance_of(Hash)
+    expect(obj['success']).to be(true)
   end
   
   it 'Allows user to upload avatar (direct upload)' do
