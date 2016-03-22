@@ -441,15 +441,15 @@ module ApiDeploy
       
       starting = (/ Starting minecraft server version (.+?)\r\n/).match(logs_str)
       unless starting.nil?
-        return { progress: 0.5, message: "Starting server" }
+        return { progress: 0.5, message: "Starting server (change)" }
       end
       
       downloading = (/Downloading minecraft_server.(.+?).jar/).match(logs_str)
       unless downloading.nil?
-        return { progress: 0.4, message: "Downloading server" }
+        return { progress: 0.4, message: "Downloading server (change)" }
       end
       
-      return { progress: 0.2, message: "Initializing server" }
+      return { progress: 0.2, message: "Initializing server (change)" }
     end
     
     def started?
