@@ -92,7 +92,7 @@ module ApiDeploy
       }, {
         :key           => "level-seed",
         :type          => :string,
-        :title         => "",
+        :title         => "Level seed",
         :default_value => nil,
         :is_editable   => true,
         :validations   => {}

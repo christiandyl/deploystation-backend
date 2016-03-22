@@ -136,6 +136,11 @@ module ApiDeploy
         return true
       end
 
+      unless started?
+        Rails.logger.debug "Can't reset container, container is stopped"
+        return
+      end
+
       Rails.logger.debug "Resetting container(#{id})"
       
       level_name = config.get_property_value("level-name")
