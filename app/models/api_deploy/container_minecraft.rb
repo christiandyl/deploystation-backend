@@ -136,7 +136,7 @@ module ApiDeploy
         return true
       end
 
-      unless started?
+      if stopped?
         Rails.logger.debug "Can't reset container, container is stopped"
         return
       end
@@ -152,7 +152,7 @@ module ApiDeploy
     end
   
     def players_online now=false
-      return false unless started?
+      return false if stopped?
       
       unless now    
         ApiDeploy::ContainerPlayersOnlineWorker.perform_async(id)
