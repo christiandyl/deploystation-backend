@@ -27,7 +27,6 @@ describe 'Users API', :type => :request do
     expect(obj['result']['expires']).to be_truthy
   
     user = User.find_by_email(email)
-    byebug
     expect(user.locale == locale).to be(true)
   
     @context.token = obj['result']['auth_token']
