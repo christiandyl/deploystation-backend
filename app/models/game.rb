@@ -7,7 +7,7 @@ class Game < ActiveRecord::Base
 
   ASSETS_FOLDER_NAME = "games"
 
-  attr_api [:id, :name, :sname, :images, :status, :plans_list]
+  attr_api [:id, :name, :sname, :images, :status, :plans_list, :features_list]
 
   has_many :plans
   
@@ -23,6 +23,16 @@ class Game < ActiveRecord::Base
       :wide => root + "wide.jpg",
       :icon => root + "icon.jpg"
     }
+  end
+  
+  def features_list
+    begin
+      data = JSON.parse(features)
+    rescue
+      data = []
+    end
+    
+    return data
   end
 
 end

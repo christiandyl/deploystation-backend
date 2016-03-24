@@ -1,11 +1,17 @@
+features = [
+  { lib: "awesome", icon: "tasks", text: "Track server in real time\nGet notifications about server" },
+  { lib: "awesome", icon: "gear", text: "Run commands without console\nEdit your server configuration" },
+  { lib: "awesome", icon: "users", text: "Invite 5 friends max to play\nShare your server with friends" }
+].to_json
+
 games = [
-  { name: 'Minecraft', sname: 'minecraft', status: Game::STATUS_ENABLED },
-  { name: 'Minecraft pocket edition', sname: 'minecraft_pe', status: Game::STATUS_COMING_SOON },
-  { name: 'Counter-strike go', sname: 'counter_strike_go', status: Game::STATUS_COMING_SOON },
-  { name: 'Battlefield 4', sname: 'battlefield_4', status: Game::STATUS_COMING_SOON },
-  { name: 'Battlefield hard line', sname: 'battlefield_hl', status: Game::STATUS_COMING_SOON },
-  { name: '7 days to die', sname: 'seven_days_to_die', status: Game::STATUS_ENABLED },
-  { name: 'DayZ Standalone', sname: 'dayz_standalone', status: Game::STATUS_COMING_SOON }
+  { name: 'Minecraft', sname: 'minecraft', status: Game::STATUS_ENABLED, features: features },
+  { name: 'Minecraft pocket edition', sname: 'minecraft_pe', status: Game::STATUS_COMING_SOON, features: features },
+  { name: 'Counter-strike go', sname: 'counter_strike_go', status: Game::STATUS_COMING_SOON, features: features },
+  { name: 'Battlefield 4', sname: 'battlefield_4', status: Game::STATUS_COMING_SOON, features: features },
+  { name: 'Battlefield hard line', sname: 'battlefield_hl', status: Game::STATUS_COMING_SOON, features: features },
+  { name: '7 days to die', sname: 'seven_days_to_die', status: Game::STATUS_ENABLED, features: features },
+  { name: 'DayZ Standalone', sname: 'dayz_standalone', status: Game::STATUS_COMING_SOON, features: features }
 ]
 
 if Rails.env.production? # Production seeds
