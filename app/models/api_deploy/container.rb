@@ -51,6 +51,7 @@ module ApiDeploy
           c.host_id    = host.id
           c.status     = STATUS_CREATED
           c.active_until = (Date.today + 7).to_datetime
+          c.is_paid = false
           c.is_private = false
         end
         
