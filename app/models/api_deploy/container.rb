@@ -2,7 +2,7 @@ module ApiDeploy
   class Container < ActiveRecord::Base
     include ApiConverter
 
-    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :is_private, :user_id, :is_active]
+    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :is_private, :user_id, :is_active, :is_paid]
     
     before_destroy :on_before_destroy
     
@@ -198,7 +198,13 @@ module ApiDeploy
     end
     
     def is_active
-      active_until > Date.today
+      begin
+        status = active_until > Date.today
+      rescue
+        status = false
+      end
+      
+      return status
     end
     
     def ip
