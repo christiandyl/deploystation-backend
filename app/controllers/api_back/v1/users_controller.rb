@@ -14,7 +14,7 @@ module ApiBack
       # @optional [Hash] connect_login
       # @optional [String] connect_login.email User email
       # @optional [String] connect_login.password User password
-      # @optional [String] connect_login.fullname User full name
+      # @optional [String] connect_login.full_name User full name
       # @optional [String] connect_login.locale User locale (by default is "en")
       #
       # @optional [Hash] connect_facebook
