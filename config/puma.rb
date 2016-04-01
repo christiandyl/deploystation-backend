@@ -1,5 +1,6 @@
 # Change to match your CPU core count
-workers 2
+workers_count = ENV['PUMA_WORKERS'] || 3
+workers workers_count
 
 # Min and Max threads per worker
 threads 1, 6
