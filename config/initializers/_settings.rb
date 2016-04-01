@@ -40,7 +40,7 @@ Settings = OpenStruct.new(
   :braintree => OpenStruct.new(
     :merchant_id => ENV['BRAINTREE_MERCHANT_ID'] || '8vz9fygsrydrggqb',
     :public_key  => ENV['BRAINTREE_PUBLIC_KEY']|| 'kprr7gxx549pc7jp',
-    :private_key => ENV['BRAINTREE_PUBLIC_KEY'] || 'ffb5fbe45d4ed915ab9c590dba340025'
+    :private_key => ENV['BRAINTREE_PRIVATE_KEY'] || 'ffb5fbe45d4ed915ab9c590dba340025'
   ),
   :connects => OpenStruct.new(
     :facebook => OpenStruct.new(
