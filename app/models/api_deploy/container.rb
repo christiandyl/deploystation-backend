@@ -2,7 +2,7 @@ module ApiDeploy
   class Container < ActiveRecord::Base
     include ApiConverter
 
-    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :is_private, :user_id]
+    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :is_private, :user_id, :is_active, :is_paid]
     
     before_destroy :on_before_destroy
     
@@ -32,6 +32,7 @@ module ApiDeploy
     def logs; raise "SubclassResponsibility"; end
     def started?; raise "SubclassResponsibility"; end
     def starting_progress; raise "SubclassResponsibility"; end
+    def reset; raise "SubclassResponsibility"; end
   
     class << self
       def class_for game
@@ -49,12 +50,14 @@ module ApiDeploy
           c.plan_id    = plan.id
           c.host_id    = host.id
           c.status     = STATUS_CREATED
+          c.active_until = (Date.today + 7).to_datetime
+          c.is_paid = false
           c.is_private = false
         end
         
         container.save!
         Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.attributes.to_s}"
-        
+
         unless now          
           ApiDeploy::ContainerCreateWorker.perform_async(container.id, opts)
         else          
@@ -193,6 +196,16 @@ module ApiDeploy
     
     def game_info
       game.to_api(:public)
+    end
+    
+    def is_active
+      begin
+        status = active_until > Date.today
+      rescue
+        status = false
+      end
+      
+      return status
     end
     
     def ip

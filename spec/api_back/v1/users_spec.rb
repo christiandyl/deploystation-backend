@@ -5,7 +5,15 @@ describe 'Users API', :type => :request do
 
   it 'Allows to create user with login connect' do
     email = 'test@test.com'
-    params = { connect_login: { full_name: 'Gordon Freeman', email: email, password: 'test123' } }.to_json
+    locale = "fr"
+    params = { 
+      connect_login: { 
+        full_name: 'Gordon Freeman',
+        email: email,
+        password: 'test123',
+        locale: locale
+      }
+    }.to_json
     send :post, "/v1/users", :params => params
 
     expect(response.status).to eq(200)
@@ -17,6 +25,9 @@ describe 'Users API', :type => :request do
     expect(obj['result']).to be_instance_of(Hash)
     expect(obj['result']['auth_token']).to be_truthy
     expect(obj['result']['expires']).to be_truthy
+  
+    user = User.find_by_email(email)
+    expect(user.locale == locale).to be(true)
   
     @context.token = obj['result']['auth_token']
     @context.email = email
@@ -41,8 +52,7 @@ describe 'Users API', :type => :request do
     params = {
       :user => {
         :email     => new_email,
-        :full_name => "Adam Janson",
-        :password  => "gtibgtgbrei3"
+        :full_name => "Adam Janson"
       }
     }.to_json
     send :put, user_path(1), :params => params, :token => @context.token
@@ -55,6 +65,36 @@ describe 'Users API', :type => :request do
     expect(obj['success']).to be(true)
     
     @context.email = new_email
+  end
+  
+  it 'Allows user to update password' do
+    params = {
+      :user => {
+        :current_password => 'test12',
+        :new_password     => 'newtest123'
+      }
+    }.to_json
+    send :put, user_path(1), :params => params, :token => @context.token
+    
+    expect(response.status).to eq(500)
+    
+    params = {
+      :user => {
+        :current_password => 'test123',
+        :new_password     => 'newtest123'
+      }
+    }.to_json
+    send :put, user_path(1), :params => params, :token => @context.token
+    
+    valid = User.find_by_email(@context.email).connect_login.valid_password? 'newtest123'
+    expect(valid).to be(true)
+    
+    expect(response.status).to eq(200)
+
+    obj = JSON.parse(response.body)
+
+    expect(obj).to be_instance_of(Hash)
+    expect(obj['success']).to be(true)
   end
   
   it 'Allows user to upload avatar (direct upload)' do

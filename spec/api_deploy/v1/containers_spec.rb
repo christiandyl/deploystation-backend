@@ -79,6 +79,19 @@ describe 'Containers API', :type => :request do
     expect(container).not_to be_nil
   end
   
+  it 'Allows to reset container' do
+    send :post, reset_container_path(@context.container_id), :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    # expect(obj["result"]["id"]).not_to be_empty
+
+    container = ApiDeploy::Container.find(@context.container_id) rescue nil
+    expect(container).not_to be_nil
+  end
+  
   it 'Allows to get containers list' do
     send :get, containers_path, :token => @context.token
 

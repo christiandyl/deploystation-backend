@@ -26,4 +26,7 @@
 public/api_doc
 .yardoc/
 
-.apns_pem
+.byebug_history
+
+# Local evn vars
+/config/local_env.yml

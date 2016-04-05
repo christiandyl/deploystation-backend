@@ -16,6 +16,7 @@ module ApiDeploy
           if (done = (progress[:progress] == 1.0))
             Rails.logger.debug "Container #{container_id} started successfully"
             Pusher.trigger "container-#{container_id}", "start", { success: true }
+            notification = Notification.create user_id: container.user_id, alert: "Server started"
             break
           end
           Rails.logger.debug "Container start status is #{progress.to_s}"
