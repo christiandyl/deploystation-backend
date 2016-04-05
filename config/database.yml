@@ -5,28 +5,20 @@ default: &default
 
 development:
   <<: *default
-  database: gameservers_development
+  database: deploystation_development
 
 test:
   <<: *default
-  database: gameservers_test
+  database: deploystation_test
   
 staging:
   <<: *default
-  database: gameservers_staging
+  database: deploystation_staging
 
+staging:
+  <<: *default
+  database: deploystation_beta
+  
 production:
   <<: *default
-  database: <%= ENV['RDS_DB_NAME'] || 'deploystation' %>
-  username: <%= ENV['RDS_USERNAME'] || 'deploystation' %>
-  password: <%= ENV['RDS_PASSWORD'] || 'deploystation' %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>
-  
-beta:
-  <<: *default
-  database: <%= ENV['RDS_DB_NAME'] || 'deploystation' %>
-  username: <%= ENV['RDS_USERNAME'] || 'deploystation' %>
-  password: <%= ENV['RDS_PASSWORD'] || 'deploystation' %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>
+  database: deploystation_production
