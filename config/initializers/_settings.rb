@@ -3,7 +3,6 @@ Settings = OpenStruct.new(
     :host        => ENV['GENERAL_HOST'] || 'http://localhost:3000',
     :core_ip     => ENV['GENERAL_CORE_IP'] || '127.0.0.1',
     :ssl_path    => ENV['GENERAL_SSL_PATH'] || '/home/ubuntu/.ssl',
-    :tmp_path    => ENV['GENERAL_TMP_PATH'] || Rails.root.join('tmp'),
     :tmp_path    => ENV['GENERAL_TMP_PATH'] ? Pathname.new(ENV['GENERAL_TMP_PATH']) : Rails.root.join('tmp'),
     :assets_host => ENV['GENERAL_ASSETS_HOST'] || 'https://s3.eu-central-1.amazonaws.com/com.deploystation.assets/'
   ),
