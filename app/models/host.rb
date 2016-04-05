@@ -40,6 +40,7 @@ class Host < ActiveRecord::Base
     port = nil
     
     unless ip == "127.0.0.1"
+      ssl_path = Pathname.new(Settings.general.ssl_path).join(name)
       keys = [ssl_path.join('id_rsa').to_s]
       Net::SSH.start(ip, host_user, keys: keys) do |ssh|
         out  = ssh.exec!("sh /opt/scripts/get_free_port/run.sh")
