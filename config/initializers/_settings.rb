@@ -11,6 +11,11 @@ Settings = OpenStruct.new(
     :encryption_key => ENV['TOKEN_ENCRYPTION_KEY'] || 'w421g4uk',
     :decryption_key => ENV['TOKEN_DECRYPTION_KEY'] || 'w421g4uk'
   ),
+  :redis => OpenStruct.new(
+    :host     => ENV['REDIS_HOST']       || '127.0.0.1',
+    :port     => ENV['REDIS_PORT']       || 6379,
+    :password => ENV['REDIS_PASSWORD']   || nil
+  ),
   :airbrake => OpenStruct.new(
     :api_key => ENV['AIRBRAKE_API_KEY'] || '4baa8bb8fc18a836dcc04fb0a756742b',
     :host    => ENV['AIRBRAKE_HOST']    || 'errbit.deploystation.com'
@@ -40,7 +45,7 @@ Settings = OpenStruct.new(
   :braintree => OpenStruct.new(
     :merchant_id => ENV['BRAINTREE_MERCHANT_ID'] || '8vz9fygsrydrggqb',
     :public_key  => ENV['BRAINTREE_PUBLIC_KEY']|| 'kprr7gxx549pc7jp',
-    :private_key => ENV['BRAINTREE_PUBLIC_KEY'] || 'ffb5fbe45d4ed915ab9c590dba340025'
+    :private_key => ENV['BRAINTREE_PRIVATE_KEY'] || 'ffb5fbe45d4ed915ab9c590dba340025'
   ),
   :connects => OpenStruct.new(
     :facebook => OpenStruct.new(
