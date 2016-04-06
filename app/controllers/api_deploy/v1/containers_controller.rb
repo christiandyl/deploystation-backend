@@ -362,9 +362,9 @@ module ApiDeploy
       # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
       def players_online
         players_online = @container.players_online
-        unless players_online
-          raise "Can't get players online, server doesn't started"
-        end
+        # unless players_online
+        #   raise "Can't get players online, server doesn't started"
+        # end
         
         render success_response
       end
