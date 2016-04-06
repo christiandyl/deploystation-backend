@@ -15,7 +15,7 @@ staging:
   <<: *default
   database: deploystation_staging
 
-staging:
+beta:
   <<: *default
   database: deploystation_beta
   
