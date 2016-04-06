@@ -1,11 +1,17 @@
+features = [
+  { lib: "awesome", icon: "tasks", text: "Track server in real time\nGet notifications about server" },
+  { lib: "awesome", icon: "gear", text: "Run commands without console\nEdit your server configuration" },
+  { lib: "awesome", icon: "users", text: "Invite 5 friends max to play\nShare your server with friends" }
+].to_json
+
 games = [
-  { name: 'Minecraft', sname: 'minecraft', status: Game::STATUS_ENABLED },
-  { name: 'Minecraft pocket edition', sname: 'minecraft_pe', status: Game::STATUS_COMING_SOON },
-  { name: 'Counter-strike go', sname: 'counter_strike_go', status: Game::STATUS_COMING_SOON },
-  { name: 'Battlefield 4', sname: 'battlefield_4', status: Game::STATUS_COMING_SOON },
-  { name: 'Battlefield hard line', sname: 'battlefield_hl', status: Game::STATUS_COMING_SOON },
-  { name: '7 days to die', sname: 'seven_days_to_die', status: Game::STATUS_ENABLED },
-  { name: 'DayZ Standalone', sname: 'dayz_standalone', status: Game::STATUS_COMING_SOON }
+  { name: 'Minecraft', sname: 'minecraft', status: Game::STATUS_ENABLED, features: features },
+  { name: 'Minecraft pocket edition', sname: 'minecraft_pe', status: Game::STATUS_COMING_SOON, features: features },
+  { name: 'Counter-strike go', sname: 'counter_strike_go', status: Game::STATUS_COMING_SOON, features: features },
+  { name: 'Battlefield 4', sname: 'battlefield_4', status: Game::STATUS_COMING_SOON, features: features },
+  { name: 'Battlefield hard line', sname: 'battlefield_hl', status: Game::STATUS_COMING_SOON, features: features },
+  { name: '7 days to die', sname: 'seven_days_to_die', status: Game::STATUS_ENABLED, features: features },
+  { name: 'DayZ Standalone', sname: 'dayz_standalone', status: Game::STATUS_COMING_SOON, features: features }
 ]
 
 if Rails.env.production? # Production seeds
@@ -42,7 +48,7 @@ if Rails.env.production? # Production seeds
     }
   ]
   
-  hosts = [{ name: 'production', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'ubuntu' }]
+  hosts = [{ name: 'production', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'ubuntu', country_code: "ua" }]
 elsif Rails.env.staging? # Staging seeds
   plans = [
    {
@@ -77,7 +83,7 @@ elsif Rails.env.staging? # Staging seeds
    }
  ]
  
- hosts = [{ name: 'staging', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'ubuntu' }]
+ hosts = [{ name: 'staging', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'ubuntu', country_code: "ua" }]
 elsif Rails.env.beta? # Beta seeds
   plans = [
    {
@@ -112,7 +118,7 @@ elsif Rails.env.beta? # Beta seeds
    }
  ]
  
- hosts = [{ name: 'beta', ip: '195.69.187.74', domain: 'ua.deploystation.com', location: 'Ukraine', host_user: 'ubuntu' }]
+ hosts = [{ name: 'beta', ip: '195.69.187.74', domain: 'ua.deploystation.com', location: 'Ukraine', host_user: 'ubuntu', country_code: "ua" }]
 else # Development and Testing seeds
   plans = [
    {
@@ -146,7 +152,7 @@ else # Development and Testing seeds
     }
  ]
 
- hosts = [{ name: 'localhost', ip: '127.0.0.1', domain: 'localhost', location: 'Localhost', host_user: 'vagrant' }]
+ hosts = [{ name: 'localhost', ip: '127.0.0.1', domain: 'localhost', location: 'Localhost', host_user: 'vagrant', country_code: "us" }]
 #  plans = [
 #   {
 #     :game         => 'Minecraft',

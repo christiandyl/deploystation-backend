@@ -3,7 +3,7 @@ Settings = OpenStruct.new(
     :host        => ENV['GENERAL_HOST'] || 'http://localhost:3000',
     :core_ip     => ENV['GENERAL_CORE_IP'] || '127.0.0.1',
     :ssl_path    => ENV['GENERAL_SSL_PATH'] || '/home/ubuntu/.ssl',
-    :tmp_path    => ENV['GENERAL_TMP_PATH'] || Rails.root.join('tmp'),
+    :tmp_path    => ENV['GENERAL_TMP_PATH'] ? Pathname.new(ENV['GENERAL_TMP_PATH']) : Rails.root.join('tmp'),
     :assets_host => ENV['GENERAL_ASSETS_HOST'] || 'https://s3.eu-central-1.amazonaws.com/com.deploystation.assets/'
   ),
   :token_encoding => OpenStruct.new(
@@ -11,11 +11,17 @@ Settings = OpenStruct.new(
     :encryption_key => ENV['TOKEN_ENCRYPTION_KEY'] || 'w421g4uk',
     :decryption_key => ENV['TOKEN_DECRYPTION_KEY'] || 'w421g4uk'
   ),
+  :redis => OpenStruct.new(
+    :host     => ENV['REDIS_HOST']       || '127.0.0.1',
+    :port     => ENV['REDIS_PORT']       || 6379,
+    :password => ENV['REDIS_PASSWORD']   || nil
+  ),
   :airbrake => OpenStruct.new(
     :api_key => ENV['AIRBRAKE_API_KEY'] || '4baa8bb8fc18a836dcc04fb0a756742b',
     :host    => ENV['AIRBRAKE_HOST']    || 'errbit.deploystation.com'
   ),
   :pusher => OpenStruct.new(
+    :host   => ENV['PUSHER_HOST']   || 'api-mt1.pusher.com',
     :app_id => ENV['PUSHER_APP_ID'] || '158644',
     :key    => ENV['PUSHER_KEY']    || '9e3aa42715e92c6e12b2',
     :secret => ENV['PUSHER_SECRET'] || '210f3bc51210d73d4b39'
@@ -39,7 +45,7 @@ Settings = OpenStruct.new(
   :braintree => OpenStruct.new(
     :merchant_id => ENV['BRAINTREE_MERCHANT_ID'] || '8vz9fygsrydrggqb',
     :public_key  => ENV['BRAINTREE_PUBLIC_KEY']|| 'kprr7gxx549pc7jp',
-    :private_key => ENV['BRAINTREE_PUBLIC_KEY'] || 'ffb5fbe45d4ed915ab9c590dba340025'
+    :private_key => ENV['BRAINTREE_PRIVATE_KEY'] || 'ffb5fbe45d4ed915ab9c590dba340025'
   ),
   :connects => OpenStruct.new(
     :facebook => OpenStruct.new(

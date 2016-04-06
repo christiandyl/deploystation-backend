@@ -7,6 +7,7 @@ module ApiDeploy
       before_filter :get_container, :except => [:index, :shared, :create, :bookmarked, :popular, :search]
       before_action :check_permissions, :except => [:index, :shared, :create, :destroy, :bookmarked, :popular, :show, :search, :players_online]
       before_action :check_super_permissions, :only => [:destroy]
+      before_filter :check_is_active, :except => [:index, :shared, :create, :bookmarked, :popular, :search, :show]
 
       ##
       # Get popular containers
@@ -247,6 +248,23 @@ module ApiDeploy
       end
 
       ##
+      # Stop container
+      # @resource /v1/containers/:container_id/reset
+      # @action POST
+      #
+      # @response_field [Boolean] success
+      # @response_field [_________________________] _________________________
+      # @response_field [PUSHER_CHANNEL_NAME] container-{id}
+      # @response_field [PUSHER_KEY] reset
+      # @response_field [PUSHER_SUCCESS_RESULT] { success: true }
+      # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
+      def reset
+        @container.reset
+      
+        render success_response
+      end
+
+      ##
       # Destroy container
       # @resource /v1/containers/:container_id
       # @action DELETE
@@ -409,6 +427,10 @@ module ApiDeploy
       
       def check_super_permissions
         raise PermissionDenied unless @container.is_super_owner? current_user
+      end
+      
+      def check_is_active
+        raise "Container is not active" unless @container.is_active
       end
 
     end

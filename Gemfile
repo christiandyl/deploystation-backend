@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.6'
 gem 'rails-api', '0.4.0'
 gem 'pg'
 
@@ -23,7 +23,7 @@ gem 'airbrake', '4.3.3'
 # Makes http fun! Also, makes consuming restful web services dead easy.
 gem 'httparty', '0.13.7'
 # will_paginate provides a simple API for performing paginated queries with Active Record
-gem 'will_paginate', '~> 3.0.7'
+gem 'will_paginate', '~> 3.1.0'
 # pusher
 gem 'pusher'
 # net ssh
@@ -42,7 +42,7 @@ gem 'minecraft-query'
 gem "braintree"
 
 group :development, :staging do
-  gem 'spring', '1.3.6'
+  gem 'spring'
   
   gem 'redcarpet'
   gem 'yard'

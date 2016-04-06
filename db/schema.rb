@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160303134952) do
+ActiveRecord::Schema.define(version: 20160324150440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 20160303134952) do
     t.hstore   "server_config"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.boolean  "is_payed",      null: false
+  end
+
+  create_table "devices", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "device_type"
+    t.string   "push_token"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "games", force: :cascade do |t|
@@ -59,16 +68,25 @@ ActiveRecord::Schema.define(version: 20160303134952) do
     t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text     "features"
   end
 
   create_table "hosts", force: :cascade do |t|
     t.string   "name"
-    t.integer  "ip",         limit: 8
+    t.integer  "ip",           limit: 8
     t.string   "domain"
     t.string   "location"
     t.string   "host_user"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "country_code"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "alert"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "plans", force: :cascade do |t|
@@ -92,6 +110,7 @@ ActiveRecord::Schema.define(version: 20160303134952) do
     t.boolean  "has_avatar", default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.string   "locale"
   end
 
 end

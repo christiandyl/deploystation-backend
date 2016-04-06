@@ -5,20 +5,20 @@ default: &default
 
 development:
   <<: *default
-  database: gameservers_development
+  database: deploystation_development
 
 test:
   <<: *default
-  database: gameservers_test
+  database: deploystation_test
   
 staging:
   <<: *default
-  database: gameservers_staging
+  database: deploystation_staging
 
-production:
-  <<: *default
-  database: gameservers
-  
 beta:
   <<: *default
   database: deploystation_beta
+  
+production:
+  <<: *default
+  database: deploystation_production
