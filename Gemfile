@@ -1,9 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.6'
 gem 'rails-api', '0.4.0'
 gem 'pg'
-
 
 # A lightweight Ruby client for the Docker Remote API
 gem 'docker-api', '1.22.4'
@@ -15,23 +14,35 @@ gem 'jwt', '1.5.1'
 gem 'koala', '2.2.0'
 # Simple, efficient background processing for Ruby
 gem 'sidekiq', '3.5.1'
+# Additional sidekiq middleware
+gem 'sidekiq-middleware', '0.3.0'
 # The official AWS SDK for Ruby
-gem 'aws-sdk', '2.1.31'
+gem 'aws-sdk'
 # Exception notification for Rails apps
 gem 'airbrake', '4.3.3'
 # Makes http fun! Also, makes consuming restful web services dead easy.
 gem 'httparty', '0.13.7'
 # will_paginate provides a simple API for performing paginated queries with Active Record
-gem 'will_paginate', '~> 3.0.7'
+gem 'will_paginate', '~> 3.1.0'
 # pusher
 gem 'pusher'
 # net ssh
 gem 'net-ssh'
 # Rack cors
 gem 'rack-cors', :require => 'rack/cors'
+# Sendgrid for mailing
+gem 'sendgrid'
+# Minimagick
+gem 'mini_magick'
+# Apple Push Notification Service client
+gem 'apns'
+# Minecraft query
+gem 'minecraft-query'
+# Payment system
+gem "braintree"
 
 group :development, :staging do
-  gem 'spring', '1.3.6'
+  gem 'spring'
   
   gem 'redcarpet'
   gem 'yard'
@@ -55,6 +66,6 @@ group :test do
   gem 'pusher-fake'
 end
 
-group :development, :test do
+group :development, :test, :staging do
   gem 'awesome_print'
 end

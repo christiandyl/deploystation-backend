@@ -27,6 +27,11 @@ module Node
       g.helper_specs    false
     end
 
+    # Using smtp to deliver emails
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.perform_deliveries = true
+    config.action_mailer.delivery_method = :smtp
+
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     
@@ -34,8 +39,16 @@ module Node
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
         origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :options]
+        resource '*', :headers => :any, :methods => [:get, :post, :options, :delete, :put, :patch]
       end
+    end
+    
+    config.before_configuration do
+      env_file = File.join(Rails.root, 'config', 'local_env.yml')
+
+      YAML.load(File.open(env_file)).each do |key, value|
+        ENV[key.to_s] = value
+      end if File.exists?(env_file)
     end
     
     # custom logger formatter

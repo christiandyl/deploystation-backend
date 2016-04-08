@@ -2,28 +2,37 @@ module ApiDeploy
   class Container < ActiveRecord::Base
     include ApiConverter
 
-    attr_api [:id, :status, :host_info, :plan_info, :ip]
+    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :is_private, :user_id, :is_active, :is_paid]
     
     before_destroy :on_before_destroy
     
+    STATUS_CREATED = "created"
     STATUS_ONLINE  = "online"
     STATUS_OFFLINE = "offline"
     
     ASYNC = false
+    
+    PERMIT_LIST_UPDATE = [:name, :is_private]
     
     # Relations
     belongs_to :user
     belongs_to :plan
     belongs_to :host
     has_one    :game, :through => :plan
+    has_many   :accesses
+    has_many   :bookmarks
     
     # Validations
     validates :user_id, :presence => true
-    # validates :docker_id, :presence => true
     validates :host_id, :presence => true
-    # validates :port, :presence => true
+    validates :is_private, inclusion: { in: [true, false] }
   
     def command; raise "SubclassResponsibility"; end
+    def players_online; raise "SubclassResponsibility"; end
+    def logs; raise "SubclassResponsibility"; end
+    def started?; raise "SubclassResponsibility"; end
+    def starting_progress; raise "SubclassResponsibility"; end
+    def reset; raise "SubclassResponsibility"; end
   
     class << self
       def class_for game
@@ -36,16 +45,19 @@ module ApiDeploy
       def create user, plan, opts, now=false
         host = plan.host
         
-        container = Container.new.tap do |c|
-          c.user_id = user.id
-          c.plan_id = plan.id
-          c.host_id = host.id
-          c.status  = STATUS_OFFLINE
+        container = self.new.tap do |c|
+          c.user_id    = user.id
+          c.plan_id    = plan.id
+          c.host_id    = host.id
+          c.status     = STATUS_CREATED
+          c.active_until = (Date.today + 7).to_datetime
+          c.is_paid = false
+          c.is_private = false
         end
         
         container.save!
         Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.attributes.to_s}"
-        
+
         unless now          
           ApiDeploy::ContainerCreateWorker.perform_async(container.id, opts)
         else          
@@ -106,6 +118,7 @@ module ApiDeploy
       
       Rails.logger.debug "Starting container(#{id})"
       docker_container.start(opts)
+      config.export_to_docker if status == STATUS_CREATED
       Rails.logger.debug "Container(#{id}) has started"
       
       self.status = STATUS_ONLINE
@@ -136,7 +149,11 @@ module ApiDeploy
       end
 
       Rails.logger.debug "Stopping container(#{id})"
+      config.export_to_docker
       docker_container.stop
+      
+      raise "Container #{id} stopping error" unless stopped?
+      
       Rails.logger.debug "Container(#{id}) has stopped"
       
       self.status = STATUS_OFFLINE
@@ -151,10 +168,21 @@ module ApiDeploy
       
       Rails.logger.debug "Destroying container(#{id})"
       destroy
+      
+      dc = docker_container rescue true
+      
+      raise "Container #{id} destroying error" unless dc == true
+      
       Rails.logger.debug "Container(#{id}) has destroyed"
+      
+      return true
     end
     
     def is_owner? user
+      user_id == user.id || Access.exists?(container_id: container_id, user_id: user.id)
+    end
+    
+    def is_super_owner? user
       user_id == user.id
     end
     
@@ -166,8 +194,22 @@ module ApiDeploy
       plan.to_api(:public)
     end
     
+    def game_info
+      game.to_api(:public)
+    end
+    
+    def is_active
+      begin
+        status = active_until > Date.today
+      rescue
+        status = false
+      end
+      
+      return status
+    end
+    
     def ip
-      (host.ip + ":" + port) rescue nil
+      (host.domain + ":" + port) rescue nil
     end
     
     def command name, args, now=false
@@ -194,7 +236,25 @@ module ApiDeploy
       
       return docker_container
     end
+    
+    def stopped?
+      s = docker_container.info["State"]
       
+      s["Running"] == false && s["Paused"] == false && s["Restarting"] == false && s["Dead"] == false
+    end
+    
+    def game
+      plan.game
+    end
+    
+    def config
+      @config ||= ("ApiDeploy::Config#{game.sname.capitalize}".constantize).new(id)
+    end
+    
+    def invitation method_name, method_data
+      Invitation.new(self, method_name, method_data)
+    end
+    
     private
     
     def on_before_destroy

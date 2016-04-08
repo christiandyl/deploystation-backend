@@ -7,9 +7,11 @@ module ApiDeploy
         container = Container.find(container_id)
         container.stop(true)
       
-        Pusher.trigger "container-#{container_id}", "container_has_stopped", container.to_api(:public)
+        Pusher.trigger "container-#{container_id}", "stop", { success: true }
+        notification = Notification.create user_id: container.user_id, alert: "Server stopped"
       rescue => e
-        Pusher.trigger "container-#{container_id}", "container_stopping_error", {}
+        Pusher.trigger "container-#{container_id}", "stop", { success: false }
+        raise e
       end
     end
 

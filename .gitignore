@@ -16,7 +16,7 @@
 /.idea/
 
 # Vagrant
-.vagrant
+/.vagrant
 
 # Mac
 .DS_Store
@@ -25,3 +25,8 @@
 .ruby-version
 public/api_doc
 .yardoc/
+
+.byebug_history
+
+# Local evn vars
+/config/local_env.yml

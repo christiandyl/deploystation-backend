@@ -6,19 +6,19 @@ describe 'Facebook API', :type => :request do
     config = Settings.connects.facebook
     raise "Impossible to load facebook configuration" if config.nil?
 
-    @context.test_users = Koala::Facebook::TestUsers.new(:app_id => config.client_id, :secret => config.client_secret)
-    @context.fb_user = @context.test_users.create(true, "public_profile,email")
-  end
-  
-  after(:all) do
-    @context.test_users.delete(@context.fb_user)
+    @context.code  = get_fb_token
+    @context.fb_email = @context.code[:email]
+    @context.fb_password = @context.code[:password]
   end
   
   it "allows to check the absence of a user" do
     params = {
-      connect_facebook: { token: @context.fb_user['access_token'] }
+      connect_facebook: {
+        code: @context.code[:code],
+        redirect_uri: @context.code[:redirect_uri]
+      }
     }.to_json
-
+    
     send :post, check_connect_path, :params => params
 
     expect(response).to be_success
@@ -28,8 +28,13 @@ describe 'Facebook API', :type => :request do
   end
   
   it "allows to create user" do
+    @context.code = get_fb_token @context.fb_email, @context.fb_password
+    
     params = {
-      connect_facebook: { token: @context.fb_user['access_token'] }
+      connect_facebook: {
+        code: @context.code[:code],
+        redirect_uri: @context.code[:redirect_uri]
+      }
     }.to_json
     
     send :post, users_path, :params => params

@@ -1,4 +1,5 @@
 module BaseHelper
+  include Capybara::DSL
 
   DEFAULT_HEADERS    = { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
 
@@ -53,29 +54,44 @@ module BaseHelper
     headers
   end
 
-  def get_fb_token
+  def get_fb_token email=nil, password=nil
     Capybara.current_driver = :poltergeist
 
-    oauth = Koala::Facebook::OAuth.new Settings.connects.facebook.app_id, Settings.connects.facebook.app_secret, 'https://mindcasts-api.herokuapp.com'
-    visit oauth.url_for_oauth_code
+    client_id     = Settings.connects.facebook.client_id
+    client_secret = Settings.connects.facebook.client_secret
+    redirect_uri  = "https://www.facebook.com/connect/login_success.html"
+        
+    if email.nil? || password.nil?
+      fb_test_users = Koala::Facebook::TestUsers.new(:app_id => client_id, :secret => client_secret)
+      fb_test_users.delete_all
+      fb_test_user  =  fb_test_users.create(true, "public_profile,email")
+    
+      email    = fb_test_user["email"]
+      password = fb_test_user["password"]
+    end
+
+    oauth = Koala::Facebook::OAuth.new client_id, client_secret, redirect_uri
+    url = oauth.url_for_oauth_code
+    
+    visit url
 
     expect(page).to have_content('Facebook Login')
 
-    fill_in :email, with: 'ydpcixg_baoman_1433080842@tfbnw.net'
-    fill_in :pass, with: 'mindcaststest'
+    fill_in :email, with: email
+    fill_in :pass, with: password
 
     click_button 'Log In'
 
     click_button 'Okay' if body.include? 'will receive the following info'
 
-    # expect(page).to have_content('actvt')
+    params = current_params
+    expect(page).to have_content('Success')
 
-    code = current_params[:code]
-    byebug
+    code = params[:code]
     expect(code).to be_truthy
     expect(code).to be_instance_of(String)
 
-    return code
+    return { code: code, redirect_uri: redirect_uri, email: email, password: password }
   end
 
 end

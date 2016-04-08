@@ -6,10 +6,12 @@ module ApiDeploy
       begin
         container = Container.find(container_id)
         container.destroy_container(true)
+        sleep 1
       
-        Pusher.trigger "container-#{container_id}", "container_has_deleted", {}
+        Pusher.trigger "container-#{container_id}", "destroy", { success: true }
       rescue => e
-        Pusher.trigger "container-#{container_id}", "container_deleting_error", {}
+        Pusher.trigger "container-#{container_id}", "destroy", { success: false }
+        raise e
       end
     end
 

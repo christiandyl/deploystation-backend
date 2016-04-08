@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'Container(Minecraft) API', :type => :request do
 
   before :all do
+    `docker rm --force container_1` if `docker ps -a`.include?("container_1")
     authenticate_test_user
   end
 
@@ -13,7 +14,7 @@ describe 'Container(Minecraft) API', :type => :request do
 
   it 'Allows to create container' do
     params = {
-      container: { plan_id: 1 }
+      container: { plan_id: 1, name: "Server name" }
     }.to_json
 
     send :post, containers_path, :params => params, :token => @context.token
@@ -43,15 +44,34 @@ describe 'Container(Minecraft) API', :type => :request do
     expect(container).not_to be_nil
   end
   
+  it 'Allows to get players online' do
+    send :get, players_online_container_path(@context.container_id), :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+  end
+  
+  it 'Allows to get command details' do
+    params = { command_id: "kill_player" }
+    send :get, command_container_path(@context.container_id), :params => params, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+  end  
+  
   it 'Allows to send command (list)' do
-    params = { 
+    params = {
       command: {
-        name: 'list',
-        args: {}
+        name: 'kill_player',
+        args: { player_name: "Skarpy" }
       }
     }.to_json
     
-    send :post, command_container_path(@context.container_id), :params => params, :token => @context.token
+    send :post, execute_command_container_path(@context.container_id), :params => params, :token => @context.token
 
     expect(response.status).to eq(200)
     obj = JSON.parse(response.body)
