@@ -26,7 +26,11 @@
 public/api_doc
 .yardoc/
 
+# Byebug
 .byebug_history
 
 # Local evn vars
 /config/local_env.yml
+
+# Chef
+cookbooks/
