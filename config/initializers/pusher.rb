@@ -1,5 +1,5 @@
 Pusher.host   = Settings.pusher.host
-Pusher.port   = Settings.pusher.port
+Pusher.port   = Settings.pusher.port if Settings.pusher.port == "443"
 Pusher.app_id = Settings.pusher.app_id
 Pusher.key    = Settings.pusher.key
 Pusher.secret = Settings.pusher.secret
