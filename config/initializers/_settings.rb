@@ -22,6 +22,7 @@ Settings = OpenStruct.new(
   ),
   :pusher => OpenStruct.new(
     :host   => ENV['PUSHER_HOST']   || 'api-mt1.pusher.com',
+    :port   => ENV['PUSHER_PORT']   || '443',
     :app_id => ENV['PUSHER_APP_ID'] || '158644',
     :key    => ENV['PUSHER_KEY']    || '9e3aa42715e92c6e12b2',
     :secret => ENV['PUSHER_SECRET'] || '210f3bc51210d73d4b39'
