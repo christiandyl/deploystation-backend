@@ -1,0 +1,14 @@
+site 'http://supermarket.getchef.com/api/v1'
+
+# Configures apt and apt services. Ships resources for managing apt repositories
+cookbook 'apt', '~> 3.0.0'
+# Installs deb packages via attributes or data bag metadata.
+cookbook 'dpkg_packages', git: 'https://gitlab.acid.cl/acidlabs/chef-dpkg-packages.git'
+# Manages system-wide and per-user RVMs and manages installed Rubies.
+cookbook 'rvm'
+# Installs and configures postgresql for clients or servers
+cookbook 'postgresql', git: "https://github.com/phlipper/chef-postgresql.git"
+# Redis: a fast, flexible datastore offering an extremely useful set of data structure primitives
+cookbook 'redis', git: "https://github.com/phlipper/chef-redis.git"
+# Installs/Configures postgresql_studio
+cookbook 'postgresql_studio', '~> 0.1.0'

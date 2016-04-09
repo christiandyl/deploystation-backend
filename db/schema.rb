@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20160324150440) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "dblink"
 
   create_table "accesses", force: :cascade do |t|
     t.integer "container_id"
@@ -51,7 +52,7 @@ ActiveRecord::Schema.define(version: 20160324150440) do
     t.hstore   "server_config"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.boolean  "is_payed",      null: false
+    t.boolean  "is_paid"
   end
 
   create_table "devices", force: :cascade do |t|
