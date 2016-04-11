@@ -18,7 +18,7 @@ if Rails.env.production? # Production seeds
   plans = [
     {
       :game         => 'Minecraft',
-      :host         => 'production',
+      :host         => 'europe_1',
       :name         => 'starter',
       :max_players  => 2,
       :ram          => 256,
@@ -28,7 +28,7 @@ if Rails.env.production? # Production seeds
     },
     {
       :game         => 'Minecraft',
-      :host         => 'production',
+      :host         => 'europe_1',
       :name         => 'lite',
       :max_players  => 7,
       :ram          => 384,
@@ -38,7 +38,7 @@ if Rails.env.production? # Production seeds
     },
     {
       :game         => 'Minecraft',
-      :host         => 'production',
+      :host         => 'europe_1',
       :name         => 'medium',
       :max_players  => 12,
       :ram          => 512,
