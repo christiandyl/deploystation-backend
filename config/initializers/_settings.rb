@@ -1,10 +1,11 @@
 Settings = OpenStruct.new(
   :general => OpenStruct.new(
-    :host        => ENV['GENERAL_HOST'] || 'http://localhost:3000',
-    :core_ip     => ENV['GENERAL_CORE_IP'] || '127.0.0.1',
-    :ssl_path    => ENV['GENERAL_SSL_PATH'] || '/home/ubuntu/.ssl',
-    :tmp_path    => ENV['GENERAL_TMP_PATH'] ? Pathname.new(ENV['GENERAL_TMP_PATH']) : Rails.root.join('tmp'),
-    :assets_host => ENV['GENERAL_ASSETS_HOST'] || 'https://s3.eu-central-1.amazonaws.com/com.deploystation.assets/'
+    :host                => ENV['GENERAL_HOST'] || 'http://localhost:3000',
+    :core_ip             => ENV['GENERAL_CORE_IP'] || '127.0.0.1',
+    :ssl_path            => ENV['GENERAL_SSL_PATH'] || '/home/ubuntu/.ssl',
+    :tmp_path            => ENV['GENERAL_TMP_PATH'] ? Pathname.new(ENV['GENERAL_TMP_PATH']) : Rails.root.join('tmp'),
+    :assets_host         => ENV['GENERAL_ASSETS_HOST'] || 'https://s3.eu-central-1.amazonaws.com/com.deploystation.assets/',
+    :client_settings_key => ENV['GENERAL_CLIENT_SETTINGS_KEY'] || 'yzmLbY2ZWvgW5raaxSa9AcQMVB24N9',
   ),
   :token_encoding => OpenStruct.new(
     :algorithm      => ENV['TOKEN_ALGORITHM']      || 'HS512',
