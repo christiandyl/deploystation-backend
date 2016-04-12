@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   include AbstractController::Translation
 
   before_filter :check_auth_token, :check_app_key
-  before_filter :ensure_logged_in, :except => [:root]
+  before_filter :ensure_logged_in, :except => [:root, :v1_client_settings]
 
   rescue_from Exception, :with => :render_error
   rescue_from StandardError, :with => :render_error
@@ -12,8 +12,38 @@ class ApplicationController < ActionController::API
 
   # Routes handlers
 
+  ##
+  # Root route for ping
+  # @resource /
+  # @action GET
   def root
     render json: {}
+  end
+  
+  ##
+  # Client settings
+  # @resource /v1/client_settings
+  # @action GET
+  #
+  # @required [String] key
+  #
+  # @response_field [Hash] result
+  def v1_client_settings
+    unless params[:key] == Settings.general.client_settings_key
+      raise PermissionDenied
+    end
+    
+    data = {
+      :pusher => {
+        :cluster => Settings.pusher.host,
+        :key     => Settings.pusher.key
+      },
+      :facebook => {
+        :app_id => Settings.connects.facebook.client_id
+      }
+    }
+    
+    render json: data
   end
 
   def raise_not_found!
