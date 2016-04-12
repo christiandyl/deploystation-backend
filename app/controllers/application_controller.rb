@@ -35,7 +35,7 @@ class ApplicationController < ActionController::API
     
     data = {
       :pusher => {
-        :cluster => Settings.pusher.host
+        :cluster => Settings.pusher.host,
         :key     => Settings.pusher.key
       },
       :facebook => {
