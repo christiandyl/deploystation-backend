@@ -29,8 +29,18 @@ Settings = OpenStruct.new(
     :secret => ENV['PUSHER_SECRET'] || '210f3bc51210d73d4b39'
   ),
   :sendgrid => OpenStruct.new(
-    :user_name => ENV['SENDGRID_USER_NAME']|| 'christiandyl',
-    :password  => ENV['SENDGRID_PASSWORD'] || 'dsTest2015'
+    :user_name => ENV['SENDGRID_USER_NAME'] || 'christiandyl',
+    :password  => ENV['SENDGRID_PASSWORD']  || 'dsTest2015'
+  ),
+  :gibbon => OpenStruct.new(
+    :api_key => ENV['MAILCHIMP_API_KEY'] || '24940f2fef207c7ff9bc20af8280eb1f-us13',
+    :list_id => ENV['MAILCHIMP_LIST_ID'] || 'c86380935e'
+  ),
+  :mandrill => OpenStruct.new(
+    :smtp_address  => ENV['MANDRILL_SMTP_ADDRESS']  || 'smtp.mandrillapp.com',
+    :smtp_domain   => ENV['MANDRILL_SMTP_DOMAIN']   || 'deploystation.com',
+    :smtp_username => ENV['MANDRILL_SMTP_USERNAME'] || 'christiandyl',
+    :smtp_password => ENV['MANDRILL_SMTP_PASSWORD'] || 'G2ntE8pRZCmaE0roXUn89Q'
   ),
   :aws => OpenStruct.new(
     :key    => ENV['AWS_KEY']    || 'AKIAJIP5KTJWEMQPGQZQ',
