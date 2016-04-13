@@ -18,7 +18,7 @@ if Rails.env.production? # Production seeds
   plans = [
     {
       :game         => 'Minecraft',
-      :host         => 'production',
+      :host         => 'europe_1',
       :name         => 'starter',
       :max_players  => 2,
       :ram          => 256,
@@ -28,7 +28,7 @@ if Rails.env.production? # Production seeds
     },
     {
       :game         => 'Minecraft',
-      :host         => 'production',
+      :host         => 'europe_1',
       :name         => 'lite',
       :max_players  => 7,
       :ram          => 384,
@@ -38,7 +38,7 @@ if Rails.env.production? # Production seeds
     },
     {
       :game         => 'Minecraft',
-      :host         => 'production',
+      :host         => 'europe_1',
       :name         => 'medium',
       :max_players  => 12,
       :ram          => 512,
@@ -48,7 +48,7 @@ if Rails.env.production? # Production seeds
     }
   ]
   
-  hosts = [{ name: 'production', ip: '195.69.187.71', domain: '195.69.187.71', location: 'Kharkiv', host_user: 'ubuntu', country_code: "ua" }]
+  hosts = [{ name: 'europe_1', ip: '195.69.187.74', domain: 'ua.deploystation.com', location: 'Kharkiv (Ukraine)', host_user: 'ubuntu', country_code: "ua" }]
 elsif Rails.env.staging? # Staging seeds
   plans = [
    {
