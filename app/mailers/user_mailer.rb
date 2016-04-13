@@ -32,7 +32,7 @@ class UserMailer < BaseMandrillMailer
       "FNAME" => container.user.full_name
     }
 
-    send_mail(user.email, tpl_name, tpl_vars, subject_vars)
+    send_mail(email, tpl_name, tpl_vars, subject_vars)
   end
 
 end
