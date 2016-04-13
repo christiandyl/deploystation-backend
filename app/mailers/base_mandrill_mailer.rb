@@ -1,10 +1,7 @@
 require 'mandrill'
 
 class BaseMandrillMailer < ActionMailer::Base
-  default(
-    from: "DeployStation App",
-    reply_to: nil
-  )
+  default from: "DeployStation App <contact@deploystation.com>", reply_to: nil
 
   private
 
