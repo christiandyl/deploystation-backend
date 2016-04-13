@@ -26,7 +26,7 @@ class UserMailer < BaseMandrillMailer
     tpl_vars = {
       "FNAME"     => container.user.full_name,
       "GAME_NAME" => container.game.name,
-      "IPADD"     => container.address
+      "IPADD"     => container.ip
     }
     subject_vars = {
       "FNAME" => container.user.full_name
