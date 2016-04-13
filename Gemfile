@@ -39,7 +39,11 @@ gem 'apns'
 # Minecraft query
 gem 'minecraft-query'
 # Payment system
-gem "braintree"
+gem 'braintree'
+# Gibbon is an API wrapper for MailChimp's AP
+gem 'gibbon'
+# A Ruby API library for the Mandrill email as a service platform
+gem 'mandrill-api'
 
 group :development, :staging do
   gem 'spring'

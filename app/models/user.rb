@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
 
   after_create   :send_welcome_mail
   after_create   :define_s3_bucket
+  after_create   :subscribe_email
   after_update   :on_after_update
   before_destroy :on_before_destroy
   
@@ -32,6 +33,10 @@ class User < ActiveRecord::Base
     self.s3_region = get_s3_region
     self.s3_bucket = get_s3_bucket
     self.save!
+  end
+  
+  def subscribe_email
+    ApiBack::UserSubscribeEmail.perform_async(id)
   end
   
   def avatar_url

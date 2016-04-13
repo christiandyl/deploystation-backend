@@ -1,23 +1,38 @@
-class UserMailer < ApplicationMailer
-  default from: "noreply@deploystation.com"
+class UserMailer < BaseMandrillMailer
 
   def welcome_email(user)
-    @user = user
-    mail(to: @user.email, subject: 'Welcome to DeployStation')
+    tpl_name = "welcome-en"
+    tpl_vars = {
+      "FNAME" => user.full_name,
+    }
+    subject_vars = {}
+
+    send_mail(user.email, tpl_name, tpl_vars, subject_vars)
   end
   
-  def password_recovery(user, new_password)
-    @user         = user
-    @email        = user.email
-    @new_password = new_password
-    
-    mail(to: @email, subject: 'Your password is reseted')
+  def password_recovery(user, new_password)    
+    tpl_name = "recovery-password-en"
+    tpl_vars = {
+      "FNAME"    => user.full_name,
+      "NEW_PASS" => new_password
+    }
+    subject_vars = {}
+
+    send_mail(user.email, tpl_name, tpl_vars, subject_vars)
   end
   
   def invitation(container, email)
-    @container = container
-    
-    mail(to: email, subject: "Let's start to play")
+    tpl_name = "invitation-en"
+    tpl_vars = {
+      "FNAME"     => container.user.full_name,
+      "GAME_NAME" => container.game.name,
+      "IPADD"     => container.ip
+    }
+    subject_vars = {
+      "FNAME" => container.user.full_name
+    }
+
+    send_mail(email, tpl_name, tpl_vars, subject_vars)
   end
 
 end

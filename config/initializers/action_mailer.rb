@@ -1,9 +1,13 @@
 ActionMailer::Base.smtp_settings = {
-  :address => "smtp.sendgrid.net",
-  :port => 587,
-  :domain => "deploystation.com",
-  :authentication => :plain,
-  :user_name => Settings.sendgrid.user_name,
-  :password => Settings.sendgrid.password,
-  :enable_starttls_auto => true
+  :address              => Settings.mandrill.smtp_address,
+  :authentication       => :plain,
+  :domain               => Settings.mandrill.smtp_domain,
+  :enable_starttls_auto => true,
+  :password             => Settings.mandrill.smtp_password,
+  :port                 => "587",
+  :user_name            => Settings.mandrill.smtp_username
+}
+
+ActionMailer::Base.default_url_options = {
+  :host => Settings.mandrill.smtp_domain
 }
