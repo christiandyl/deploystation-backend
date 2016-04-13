@@ -51,6 +51,20 @@ module Node
       end if File.exists?(env_file)
     end
     
+    config.action_mailer.smtp_settings = {
+      :address              => Settings.mandrill.smtp_address,
+      :authentication       => :plain,
+      :domain               => Settings.mandrill.smtp_domain,
+      :enable_starttls_auto => true,
+      :password             => Settings.mandrill.smtp_password,
+      :port                 => "587",
+      :user_name            => Settings.mandrill.smtp_username
+    }
+
+    config.action_mailer.default_url_options = {
+      :host => Settings.mandrill.smtp_domain
+    }
+    
     # custom logger formatter
     class LoggerFormatter
       USE_HUMOROUS_SEVERITIES = true
