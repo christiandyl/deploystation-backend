@@ -13,8 +13,6 @@ class App < Thor
         raise "env is incorrect"
     end
     
-    puts git_branch
-    
     commands = [
       "git checkout #{git_branch}",
       "git add --all",
