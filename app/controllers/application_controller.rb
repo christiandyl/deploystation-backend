@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
   # @resource /
   # @action GET
   def root
-    render json: {test: true}
+    render json: {}
   end
   
   ##
