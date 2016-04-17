@@ -4,15 +4,18 @@ module ApiDeploy
 
     attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :is_private, :user_id, :is_active, :is_paid]
     
-    before_destroy :on_before_destroy
+    # default_scope -> { where.not(status: STATUS_SUSPENDED) }
     
-    STATUS_CREATED = "created"
-    STATUS_ONLINE  = "online"
-    STATUS_OFFLINE = "offline"
+    STATUS_CREATED   = "created"
+    STATUS_ONLINE    = "online"
+    STATUS_OFFLINE   = "offline"
+    STATUS_SUSPENDED = "suspended"
     
     ASYNC = false
     
     PERMIT_LIST_UPDATE = [:name, :is_private]
+    
+    TRIAL_DAYS = 7
     
     # Relations
     belongs_to :user
@@ -26,6 +29,10 @@ module ApiDeploy
     validates :user_id, :presence => true
     validates :host_id, :presence => true
     validates :is_private, inclusion: { in: [true, false] }
+  
+    # Callbacks
+    after_create :send_details_email
+    before_destroy :destroy_docker_container
   
     def command; raise "SubclassResponsibility"; end
     def players_online; raise "SubclassResponsibility"; end
@@ -50,7 +57,8 @@ module ApiDeploy
           c.plan_id    = plan.id
           c.host_id    = host.id
           c.status     = STATUS_CREATED
-          c.active_until = (Date.today + 7).to_datetime
+          # c.active_until = (Date.today + 7).to_datetime
+          c.active_until = TRIAL_DAYS.days.from_now.to_time
           c.is_paid = false
           c.is_private = false
         end
@@ -66,17 +74,9 @@ module ApiDeploy
         
         return container
       end
-      
-      def available_port
-        exists = true
-        while exists
-          port = Helper::available_port
-          exists = self.exists? port: port
-        end
-      
-        return port
-      end
     end
+  
+    # Actions
   
     def create_docker_container opts
       Rails.logger.debug "Creating docker container with params: #{opts.to_s}"
@@ -125,23 +125,6 @@ module ApiDeploy
       save!
     end
   
-    def restart now=false
-      unless now          
-        ApiDeploy::ContainerRestartWorker.perform_async(id)
-        return true
-      end
-      
-      self.status = STATUS_OFFLINE
-      save!
-      
-      Rails.logger.debug "Restarting container(#{id})"
-      docker_container.restart
-      Rails.logger.debug "Container(#{id}) has restarted"
-      
-      self.status = STATUS_ONLINE
-      save!
-    end
-  
     def stop now=false
       unless now    
         ApiDeploy::ContainerStopWorker.perform_async(id)
@@ -157,6 +140,23 @@ module ApiDeploy
       Rails.logger.debug "Container(#{id}) has stopped"
       
       self.status = STATUS_OFFLINE
+      save!
+    end
+  
+    def restart now=false
+      unless now          
+        ApiDeploy::ContainerRestartWorker.perform_async(id)
+        return true
+      end
+      
+      self.status = STATUS_OFFLINE
+      save!
+      
+      Rails.logger.debug "Restarting container(#{id})"
+      docker_container.restart
+      Rails.logger.debug "Container(#{id}) has restarted"
+      
+      self.status = STATUS_ONLINE
       save!
     end
     
@@ -177,6 +177,31 @@ module ApiDeploy
       
       return true
     end
+    
+    def command name, args, now=false
+      unless now    
+        ApiDeploy::ContainerCommandWorker.perform_async(id, name, args)
+        return true
+      end
+          
+      command_settings = self.class::COMMANDS.find { |c| c[:name] == name }
+      raise ArgumentError.new("Command #{name} doesn't exists") if command_settings.nil?
+      
+      return send("command_#{name}", args)
+    end
+    
+    def invitation method_name, method_data
+      Invitation.new(self, method_name, method_data)
+    end
+    
+    # def suspend
+    #   self.status = STATUS_SUSPENDED
+    #   save
+    #
+    #   ContainerMailer.delay.welcome_email(id)
+    # end
+    
+    # Getters
     
     def is_owner? user
       user_id == user.id || Access.exists?(container_id: container_id, user_id: user.id)
@@ -212,18 +237,6 @@ module ApiDeploy
       (host.domain + ":" + port) rescue nil
     end
     
-    def command name, args, now=false
-      unless now    
-        ApiDeploy::ContainerCommandWorker.perform_async(id, name, args)
-        return true
-      end
-          
-      command_settings = self.class::COMMANDS.find { |c| c[:name] == name }
-      raise ArgumentError.new("Command #{name} doesn't exists") if command_settings.nil?
-      
-      return send("command_#{name}", args)
-    end
-    
     def docker_container
       if docker_id.nil?
         raise "Container(#{docker_id}) can't get docker container, docker_id is empty"
@@ -251,13 +264,15 @@ module ApiDeploy
       @config ||= ("ApiDeploy::Config#{game.sname.capitalize}".constantize).new(id)
     end
     
-    def invitation method_name, method_data
-      Invitation.new(self, method_name, method_data)
+    # Callbacks endpoints
+    
+    def send_details_email
+      ContainerMailer.delay.container_created_email(id)
     end
     
     private
     
-    def on_before_destroy
+    def destroy_docker_container
       host.use
       docker_container.delete(:force => true)
     end

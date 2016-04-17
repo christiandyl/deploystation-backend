@@ -10,7 +10,7 @@ class BaseMandrillMailer < ActionMailer::Base
     info = mandrill_template_info(tpl_name)
 
     subject = info["subject"]
-    subject_vars.each { |k,v| subject.gsub!("*|#{k}|*", v) }
+    subject_vars.each { |k,v| subject.gsub!("*|#{k.to_s}|*", v.to_s) }
     
     from_name  = info["publish_from_name"]
     from_email = info["publish_from_email"]

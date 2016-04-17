@@ -1,5 +1,16 @@
 VAGRANTFILE_API_VERSION = '2'
 
+$script = <<SCRIPT
+echo Adding docker permissions to vagrant user
+sudo groupadd docker
+sudo usermod -aG docker vagrant
+echo Pulling docker images
+docker pull itzg/minecraft-server
+echo Finishing provision
+echo 'yes' | sudo apt-get autoremove
+date > /etc/vagrant_provisioned_at
+SCRIPT
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = 'ubuntu/trusty64'
@@ -25,6 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe 'postgresql::contrib'
     chef.add_recipe 'postgresql::libpq'
     chef.add_recipe 'redis::server'
+    chef.add_recipe 'timezone-ii'
 
     # Install Redis, PostgreSQL and Ruby with RVM
     chef.json = {
@@ -34,7 +46,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           'imagemagick' => { "action": "install" },
           'vim'         => { "action": "install" },
           'git'         => { "action": "install" },
-          'nodejs'      => { "action": "install" }
+          'nodejs'      => { "action": "install" },
+          'docker.io'   => { "action": "install" }
         }
       },
       postgresql: {
@@ -73,9 +86,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vagrant: {
           system_chef_solo: '/opt/chef/bin/chef-solo'
         }
-      }
+      },
+      tz: "UTC"
     }
   end
 
-  config.vm.provision 'shell', inline: "echo 'yes' | sudo apt-get autoremove"
+  config.vm.provision 'shell', inline: $script
 end

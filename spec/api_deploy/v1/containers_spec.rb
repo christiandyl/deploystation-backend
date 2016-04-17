@@ -113,9 +113,9 @@ describe 'Containers API', :type => :request do
     
     expect(obj['success']).to be(true)
     # expect(obj["result"][0]["date"]).to be_truthy
-    expect(obj["result"][0]["time"]).to be_truthy
-    expect(obj["result"][0]["type"]).to be_truthy
-    expect(obj["result"][0]["message"]).to be_truthy
+    # expect(obj["result"][0]["time"]).to be_truthy
+    # expect(obj["result"][0]["type"]).to be_truthy
+    # expect(obj["result"][0]["message"]).to be_truthy
   end 
 
   it 'Allows to restart container' do

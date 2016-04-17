@@ -40,7 +40,7 @@ Settings = OpenStruct.new(
     :smtp_address  => ENV['MANDRILL_SMTP_ADDRESS']  || 'smtp.mandrillapp.com',
     :smtp_domain   => ENV['MANDRILL_SMTP_DOMAIN']   || 'deploystation.com',
     :smtp_username => ENV['MANDRILL_SMTP_USERNAME'] || 'christiandyl',
-    :smtp_password => ENV['MANDRILL_SMTP_PASSWORD'] || 'G2ntE8pRZCmaE0roXUn89Q'
+    :smtp_password => ENV['MANDRILL_SMTP_PASSWORD'] || 'PDsg43iGxEkq_d1OR3rY7w'
   ),
   :aws => OpenStruct.new(
     :key    => ENV['AWS_KEY']    || 'AKIAJIP5KTJWEMQPGQZQ',

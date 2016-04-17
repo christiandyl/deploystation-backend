@@ -23,7 +23,7 @@ module BaseHelper
   end
 
   def authenticate_test_user
-    params = { connect_login: { email: 'test@test.com', password: 'test123' } }
+    params = { connect_login: { email: 'test@test.com', password: 'test123', full_name: Faker::Name.name } }
     token = create_user_token(params)
 
     @context.token = token.token
@@ -34,7 +34,7 @@ module BaseHelper
   end
 
   def create_user_token params = nil
-    params = (params || { connect_login: { email: 'test@test.com', password: 'test123' } }).to_json
+    params = (params || { connect_login: { email: 'test@test.com', password: 'test123', full_name: Faker::Name.name } }).to_json
     send :post, "/v1/users", :params => params
     expect(response.status).to eq(200)
 

@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   end
   
   def subscribe_email
-    ApiBack::UserSubscribeEmail.perform_async(id)
+    ApiBack::UserSubscribeEmail.perform_async(id) unless Rails.env.test?
   end
   
   def avatar_url
