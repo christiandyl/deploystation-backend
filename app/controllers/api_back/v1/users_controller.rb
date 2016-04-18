@@ -48,6 +48,9 @@ module ApiBack
             connect_login = ConnectLogin.new(login_data).tap { |c| c.user_id = connect.user.id }
             connect_login.save
           end
+    
+          notifier = Slack::Notifier.new(Settings.slack.webhooks.events.url)
+          notifier.ping "User created #{connect.user.email}", icon_emoji: ":#{Settings.slack.webhooks.events.icon_emoji}:"
         else
           raise "This user is already exists" if connect.is_a?(ConnectLogin)
           connect.user = User.find_by_email(connect.email)

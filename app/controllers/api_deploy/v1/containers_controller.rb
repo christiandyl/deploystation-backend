@@ -143,6 +143,9 @@ module ApiDeploy
         container.name = name
         container.save!
 
+        notifier = Slack::Notifier.new(Settings.slack.webhooks.events.url)
+        notifier.ping "User #{current_user.full_name} is creating server", icon_emoji: ":#{Settings.slack.webhooks.events.icon_emoji}:"
+
         render success_response container.to_api(:public)
       end
   
