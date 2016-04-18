@@ -22,10 +22,13 @@ module ApiBack
       # @optional [String] connect_facebook.redirect_uri OAUTH redirect uri
       # @optional [String] connect_facebook.locale User locale (by default is "en")
       #
+      # @optional [String] referral_token Referral token
+      #
       # @response_field [Boolean] success
       # @response_field [Hash] result
-      # @response_field [String] result.id User id
       # @response_field [String] result.auth_token User access token
+      # @response_field [Timestamp] result.expires Token expiration
+      # @response_field [Hash] result.user User data
       def create
         connect_name = Connect::SUPPORTED_CONNECTS.find { |c| !params["connect_#{c}"].nil? }
         raise "Connect doesn't exists" if connect_name.nil?
@@ -186,6 +189,10 @@ module ApiBack
       # @required [String] confirmation.token
       #
       # @response_field [Boolean] success
+      # @response_field [Hash] result
+      # @response_field [String] result.auth_token User access token
+      # @response_field [Timestamp] result.expires Token expiration
+      # @response_field [Hash] result.user User data
       def confirmation
         opts = require_param :confirmation, :permit => [:token]
         
