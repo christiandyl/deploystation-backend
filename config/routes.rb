@@ -16,6 +16,8 @@ Rails.application.routes.draw do
       end
       get "users/me", :controller => :users, :action => :me
       post "users/request_password_recovery", :controller => :users, :action => :request_password_recovery
+      post "user/confirmation", :controller => :users, :action => :confirmation
+      post "user/request_email_confirmation", :controller => :users, :action => :request_email_confirmation
       
       resource :payment, :only => [:create] do
         member do

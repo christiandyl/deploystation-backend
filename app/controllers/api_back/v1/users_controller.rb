@@ -2,9 +2,9 @@ module ApiBack
   module V1
     class UsersController < ApplicationController
 
-      skip_before_filter :ensure_logged_in, :only => [:create, :request_password_recovery]
-      before_filter :get_user, :except => [:create, :me, :request_password_recovery]
-      before_filter :check_permissions, :except => [:create, :me, :request_password_recovery]
+      skip_before_filter :ensure_logged_in, :only => [:create, :request_password_recovery, :confirmation]
+      before_filter :get_user, :except => [:create, :me, :request_password_recovery, :confirmation]
+      before_filter :check_permissions, :except => [:create, :me, :request_password_recovery, :confirmation]
 
       ##
       # Creating user profile (Sign up)
@@ -51,6 +51,11 @@ module ApiBack
         else
           raise "This user is already exists" if connect.is_a?(ConnectLogin)
           connect.user = User.find_by_email(connect.email)
+        end
+
+        unless params["referral_token"].nil?
+          rtoken = params["referral_token"]
+          inviter = connect.user.find_by_referral_token rtoken, give_reward: true
         end
 
         token = Token.new connect.user
@@ -172,8 +177,54 @@ module ApiBack
         render success_response
       end
       
+      ##
+      # Confirm account
+      # @resource /v1/user/confirmation
+      # @action POST
+      #
+      # @required [Hash] confirmation
+      # @required [String] confirmation.token
+      #
+      # @response_field [Boolean] success
+      def confirmation
+        opts = require_param :confirmation, :permit => [:token]
+        
+        # Confirmation token
+        ctoken = opts[:token] or raise ArgumentError.new("There are no confirmation token")
+        
+        user = User.find_by_confirmation_token ctoken, confirm_email: true
+        
+        unless user
+          raise "User confirmation failed"
+        end
+        
+        # Access token
+        atoken = Token.new(user)
+        atoken.generate_token
+        
+        opts = {
+          :auth_token => atoken.token,
+          :expires    => atoken.expires,
+          :user       => user.to_api(:public)
+        }
+
+        render success_response opts
+      end
+      
+      ##
+      # Request email confirmation
+      # @resource /v1/user/request_email_confirmation
+      # @action POST
+      #
+      # @response_field [Boolean] success
+      def request_email_confirmation
+        @user.send_confirmation_mail
+        
+        render success_response
+      end
+      
       def get_user     
-        id = params[:id] || params[:user_id]
+        id = params[:id] || params[:user_id] || current_user.id
         @user = User.find(id)
       end
       

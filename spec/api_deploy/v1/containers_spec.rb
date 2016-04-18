@@ -208,6 +208,34 @@ describe 'Containers API', :type => :request do
     # expect(obj['result'][0]['user_data']['id']).to eq(@context.second_user.id)
   end
   
+  # Referral
+  
+  it 'Allows to invite user by referral token' do
+    referral_user_params = { connect_login: { email: 'test3@test.com', password: 'test123' } }
+    @context.referral_user_token = create_user_token(referral_user_params)
+    @context.referral_user_token.find_user
+    @context.referral_user = @context.referral_user_token.user
+
+    container = ApiDeploy::Container.find(@context.container_id)
+    referral_token = container.referral_token_extra_time
+    
+    active_until_stamp = container.active_until
+
+    params = { 
+      connect_login: { 
+        full_name: Faker::Name.name,
+        email: Faker::Internet.email,
+        password: Faker::Internet.password(8),
+        locale: "en"
+      },
+      referral_token: referral_token
+    }.to_json
+    send :post, "/v1/users", :params => params
+    
+    container = ApiDeploy::Container.find(@context.container_id)
+    expect(container.active_until > active_until_stamp).to be(true)
+  end
+  
   # Access logics
   
   it 'Allows to create access for user' do

@@ -8,9 +8,11 @@ Settings = OpenStruct.new(
     :client_settings_key => ENV['GENERAL_CLIENT_SETTINGS_KEY'] || 'yzmLbY2ZWvgW5raaxSa9AcQMVB24N9',
   ),
   :token_encoding => OpenStruct.new(
-    :algorithm      => ENV['TOKEN_ALGORITHM']      || 'HS512',
-    :encryption_key => ENV['TOKEN_ENCRYPTION_KEY'] || 'w421g4uk',
-    :decryption_key => ENV['TOKEN_DECRYPTION_KEY'] || 'w421g4uk'
+    :algorithm        => ENV['TOKEN_ALGORITHM']        || 'HS512',
+    :encryption_key   => ENV['TOKEN_ENCRYPTION_KEY']   || 'w421g4uk',
+    :decryption_key   => ENV['TOKEN_DECRYPTION_KEY']   || 'w421g4uk',
+    :referral_key     => ENV['TOKEN_REFERRAL_KEY']     || '5wwtnw7ifzalwas',
+    :confirmation_key => ENV['TOKEN_CONFIRMATION_KEY'] || 'lrxoju9adfz5uya'
   ),
   :redis => OpenStruct.new(
     :host     => ENV['REDIS_HOST']       || '127.0.0.1',

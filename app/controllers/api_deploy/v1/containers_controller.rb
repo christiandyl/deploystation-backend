@@ -29,7 +29,7 @@ module ApiDeploy
 
       ##
       # Search containers
-      # @resource /v1/containers/search
+      # @resource /v1/containers/search_containers
       # @action GET
       #
       # @required [String] query
@@ -306,7 +306,7 @@ module ApiDeploy
       
       ##
       # Execute game server command
-      # @resource /v1/containers/:container_id/command
+      # @resource /v1/containers/:container_id/execute_command
       # @action POST
       #
       # @required [Hash] command

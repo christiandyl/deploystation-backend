@@ -17,6 +17,8 @@ module ApiDeploy
     
     TRIAL_DAYS = 7
     
+    REWARD_HOURS = 24
+    
     # Relations
     belongs_to :user
     belongs_to :plan
@@ -262,6 +264,15 @@ module ApiDeploy
     
     def config
       @config ||= ("ApiDeploy::Config#{game.sname.capitalize}".constantize).new(id)
+    end
+    
+    def referral_token_extra_time
+      user.referral_token({
+        :reward => {
+          :type => "time",
+          :cid  => id.to_s
+        }
+      })
     end
     
     # Callbacks endpoints
