@@ -50,6 +50,10 @@ module ApiBack
             login_data = { "email" => connect.email, "password" => Digest::SHA1.hexdigest(new_password) }
             connect_login = ConnectLogin.new(login_data).tap { |c| c.user_id = connect.user.id }
             connect_login.save
+            
+            connect.user.update! confirmation: true
+          else
+            connect.user.send_confirmation_mail
           end
         else
           raise "This user is already exists" if connect.is_a?(ConnectLogin)

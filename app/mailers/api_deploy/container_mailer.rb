@@ -6,8 +6,9 @@ module ApiDeploy
     
       tpl_name = "server-created-en"
       tpl_vars = {
-        "GAME"    => container.game.name,
-        "COUNTRY" => container.host.location
+        "GAME"     => container.game.name,
+        "LOCATION" => container.host.location,
+        "IP"       => container.ip
       }
       subject_vars = {}
 

@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :new_password
 
-  attr_api [:id, :email, :full_name, :avatar_url, :locale]
+  attr_api [:id, :email, :full_name, :avatar_url, :locale, :confirmation]
 
   AWS_FOLDER = "users/:user_id"
   AVATAR_UPLOAD_TYPES = [:direct_upload, :url]
@@ -18,7 +18,6 @@ class User < ActiveRecord::Base
   has_many :devices
 
   after_create   :send_welcome_mail
-  # after_create   :send_confirmation_mail
   after_create   :define_s3_bucket
   after_create   :subscribe_email
   after_update   :on_after_update
@@ -172,7 +171,7 @@ class User < ActiveRecord::Base
   def find_by_referral_token token, opts={}
     opts[:give_reward] ||= false
     
-    # begin
+    begin
       hs = JWT.decode token, Settings.token_encoding.referral_key
       user = User.find(hs[0]["id"])
       if opts[:give_reward]
@@ -184,9 +183,9 @@ class User < ActiveRecord::Base
         end
       end
       return user
-    # rescue
-    #   return false
-    # end
+    rescue
+      return false
+    end
   end
   
   def referral_token payload_extra = {}
