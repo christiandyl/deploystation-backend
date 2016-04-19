@@ -35,6 +35,8 @@ module ApiDeploy
       dcontainer.start
       dcontainer.wait
       
+      Rails.logger.debug "Creating backup for container-#{container_id} is done"
+      
       return true
     end
   
@@ -57,6 +59,8 @@ module ApiDeploy
       dcontainer = Docker::Container.create(opts)
       dcontainer.start
       dcontainer.wait
+      
+      Rails.logger.debug "Restoring backup for container-#{container_id} is done"
       
       return true
     end
