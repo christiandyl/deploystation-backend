@@ -34,5 +34,19 @@ class UserMailer < BaseMandrillMailer
 
     send_mail(email, tpl_name, tpl_vars, subject_vars)
   end
+  
+  def confirmation_email(user_id)
+    user = User.find(user_id)
+    url = "http://app.deploystation.com/confirmation?token=#{user.confirmation_token}"
+    
+    tpl_name = "confirmation-en"
+    tpl_vars = {
+      "FNAME" => user.full_name,
+      "URL"   => url
+    }
+    subject_vars = {}
+    
+    send_mail(user.email, tpl_name, tpl_vars, subject_vars)
+  end
 
 end

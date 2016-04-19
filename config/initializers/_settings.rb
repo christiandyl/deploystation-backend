@@ -8,9 +8,11 @@ Settings = OpenStruct.new(
     :client_settings_key => ENV['GENERAL_CLIENT_SETTINGS_KEY'] || 'yzmLbY2ZWvgW5raaxSa9AcQMVB24N9',
   ),
   :token_encoding => OpenStruct.new(
-    :algorithm      => ENV['TOKEN_ALGORITHM']      || 'HS512',
-    :encryption_key => ENV['TOKEN_ENCRYPTION_KEY'] || 'w421g4uk',
-    :decryption_key => ENV['TOKEN_DECRYPTION_KEY'] || 'w421g4uk'
+    :algorithm        => ENV['TOKEN_ALGORITHM']        || 'HS512',
+    :encryption_key   => ENV['TOKEN_ENCRYPTION_KEY']   || 'w421g4uk',
+    :decryption_key   => ENV['TOKEN_DECRYPTION_KEY']   || 'w421g4uk',
+    :referral_key     => ENV['TOKEN_REFERRAL_KEY']     || '5wwtnw7ifzalwas',
+    :confirmation_key => ENV['TOKEN_CONFIRMATION_KEY'] || 'lrxoju9adfz5uya'
   ),
   :redis => OpenStruct.new(
     :host     => ENV['REDIS_HOST']       || '127.0.0.1',
@@ -40,7 +42,7 @@ Settings = OpenStruct.new(
     :smtp_address  => ENV['MANDRILL_SMTP_ADDRESS']  || 'smtp.mandrillapp.com',
     :smtp_domain   => ENV['MANDRILL_SMTP_DOMAIN']   || 'deploystation.com',
     :smtp_username => ENV['MANDRILL_SMTP_USERNAME'] || 'christiandyl',
-    :smtp_password => ENV['MANDRILL_SMTP_PASSWORD'] || 'G2ntE8pRZCmaE0roXUn89Q'
+    :smtp_password => ENV['MANDRILL_SMTP_PASSWORD'] || 'PDsg43iGxEkq_d1OR3rY7w'
   ),
   :aws => OpenStruct.new(
     :key    => ENV['AWS_KEY']    || 'AKIAJIP5KTJWEMQPGQZQ',
@@ -67,10 +69,7 @@ Settings = OpenStruct.new(
   ),
   :slack => OpenStruct.new(
     :webhooks => OpenStruct.new(
-      :events => OpenStruct.new(
-        :url        => ENV['SLACK_WEBHOOK_EVENTS_URL'] || "https://hooks.slack.com/services/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",
-        :icon_emoji => ENV['SLACK_WEBHOOK_EVENTS_ICON_EMOJI'] ||"door"
-      )
+      :events => ENV['SLACK_WEBHOOKS_EVENTS'] || "https://hooks.slack.com/services/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"
     )
   )
 )

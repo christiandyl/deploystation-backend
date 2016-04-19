@@ -29,7 +29,7 @@ module ApiDeploy
 
       ##
       # Search containers
-      # @resource /v1/containers/search
+      # @resource /v1/containers/search_containers
       # @action GET
       #
       # @required [String] query
@@ -142,9 +142,6 @@ module ApiDeploy
         container = Container.class_for(game).create(current_user, plan)
         container.name = name
         container.save!
-
-        notifier = Slack::Notifier.new(Settings.slack.webhooks.events.url)
-        notifier.ping "User #{current_user.full_name} is creating server", icon_emoji: ":#{Settings.slack.webhooks.events.icon_emoji}:"
 
         render success_response container.to_api(:public)
       end
@@ -309,7 +306,7 @@ module ApiDeploy
       
       ##
       # Execute game server command
-      # @resource /v1/containers/:container_id/command
+      # @resource /v1/containers/:container_id/execute_command
       # @action POST
       #
       # @required [Hash] command

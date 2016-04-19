@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :new_password
 
-  attr_api [:id, :email, :full_name, :avatar_url, :locale]
+  attr_api [:id, :email, :full_name, :avatar_url, :locale, :confirmation]
 
   AWS_FOLDER = "users/:user_id"
   AVATAR_UPLOAD_TYPES = [:direct_upload, :url]
@@ -24,9 +24,18 @@ class User < ActiveRecord::Base
   before_destroy :on_before_destroy
   
   validates :email, uniqueness: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)*[^@.\s]+\z/ }
+  validates :confirmation, inclusion: { in: [true, false] }
+
+  def after_initialize 
+   self.confirmation ||= false
+  end
 
   def send_welcome_mail
     UserMailer.delay.welcome_email(self)
+  end
+  
+  def send_confirmation_mail
+    UserMailer.delay.confirmation_email(id)
   end
   
   def define_s3_bucket
@@ -36,7 +45,7 @@ class User < ActiveRecord::Base
   end
   
   def subscribe_email
-    ApiBack::UserSubscribeEmail.perform_async(id)
+    ApiBack::UserSubscribeEmail.perform_async(id) unless Rails.env.test?
   end
   
   def avatar_url
@@ -124,6 +133,100 @@ class User < ActiveRecord::Base
   def connect_login
     @connect_login ||= ConnectLogin.find_by_user_id(id)
   end
+  
+  # Email confirmation
+  
+  def self.find_by_confirmation_token token, opts={}
+    opts[:confirm_email] ||= false
+    
+    begin
+      hs = JWT.decode token, Settings.token_encoding.confirmation_key
+      user = self.find(hs[0]["id"])
+      
+      if opts[:confirm_email]
+        user.update! confirmation: true
+      end
+      
+      return user
+    rescue
+      return false
+    end
+  end
+  
+  def confirmation_token
+    expires = (90.days.from_now).to_i
+    
+    payload = {
+      :id => id,
+      :exp => expires
+    }
+    
+    token = JWT.encode payload, Settings.token_encoding.confirmation_key, Settings.token_encoding.algorithm
+    
+    return token
+  end
+  
+  # Referral
+  
+  def find_by_referral_token token, opts={}
+    opts[:give_reward] ||= false
+    
+    begin
+      hs = JWT.decode token, Settings.token_encoding.referral_key
+      user = User.find(hs[0]["id"])
+      if opts[:give_reward]
+        reward = hs[0]["reward"] || {}
+        status = user.give_reward(reward)
+
+        if status == true
+          Reward.create!(inviter_id: user.id, invited_id: self.id, referral_data: reward )
+        end
+      end
+      return user
+    rescue
+      return false
+    end
+  end
+  
+  def referral_token payload_extra = {}
+    expires = (Time.now + 5.years).to_i
+    
+    payload = {
+      :id => id,
+      :reward => {},
+      :exp => expires
+    }
+    payload_extra.each { |k,v| payload[k] = v }
+    
+    token = JWT.encode payload, Settings.token_encoding.referral_key, Settings.token_encoding.algorithm
+    
+    return token
+  end
+  
+  def give_reward data = {}
+    type = data["type"] or raise ArgumentError.new("Reward type doesn't exists")
+    
+    status = case type
+      when "time"
+        cid = data["cid"] or raise ArgumentError.new("Container id doesn't exists for this reward")
+        container = ApiDeploy::Container.find(cid) rescue ArgumentError.new("Container id #{cid.to_s} doesn't exists for this reward")
+        
+        time_now = Time.now.to_time
+        active_until = container.active_until.to_time
+        time = active_until > time_now ? active_until : time_now
+        
+        active_until = time + container.class::REWARD_HOURS.hours
+        container.update(active_until: active_until)
+        
+        true
+      else
+        raise ArgumentError.new("Reward type #{type} is incorrect")
+    end
+    
+    return status
+  end
+  
+  # Additional
   
   private
   

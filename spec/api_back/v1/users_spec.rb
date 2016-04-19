@@ -33,6 +33,44 @@ describe 'Users API', :type => :request do
     @context.email = email
   end
   
+  it 'Allows user to request email confirmation' do
+    send :post, user_request_email_confirmation_path, :token => @context.token
+    
+    expect(response.status).to eq(200)
+
+    obj = JSON.parse(response.body)
+
+    expect(obj).to be_instance_of(Hash)
+    expect(obj['success']).to be(true)
+  end
+  
+  it 'Allows user to confirm account' do
+    user = User.find_by_email(@context.email)
+    expect(user.confirmation).to be(false)
+    
+    confirmation_token = user.confirmation_token
+    
+    params = { 
+      confirmation: { 
+        token: confirmation_token
+      }
+    }.to_json
+    send :post, user_confirmation_path, :params => params
+    
+    expect(response.status).to eq(200)
+
+    obj = JSON.parse(response.body)
+
+    expect(obj).to be_instance_of(Hash)
+    expect(obj['success']).to be(true)
+    expect(obj['result']).to be_instance_of(Hash)
+    expect(obj['result']['auth_token']).to be_truthy
+    expect(obj['result']['expires']).to be_truthy
+    
+    user = User.find_by_email(@context.email)
+    expect(user.confirmation).to be(true)
+  end
+  
   it 'Allows user to get own data' do
     send :get, users_me_path, :token => @context.token
     
