@@ -68,7 +68,7 @@ module ApiDeploy
         "name"         => s3_container_name,
         "Image"        => REPOSITORY,
         "Args"         => ["--rm"],
-        "VolumesFrom"  => container.docker_container_id,
+        "VolumesFrom"  => [container.docker_container_id],
         "Env"          => [
           "AWS_ACCESS_KEY_ID=#{Settings.aws.key}",
           "AWS_SECRET_ACCESS_KEY=#{Settings.aws.secret}",
