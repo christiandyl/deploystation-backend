@@ -29,6 +29,8 @@ module ApiDeploy
       container.host.use
       Docker::Container.get(s3_container_name).delete(:force => true) rescue nil
 
+      Rails.logger.debug "Creating backup for container-#{container_id} with opts: #{opts.to_s}"
+
       dcontainer = Docker::Container.create(opts)
       dcontainer.start
       dcontainer.wait
@@ -49,6 +51,8 @@ module ApiDeploy
     
       container.host.use
       Docker::Container.get(s3_container_name).delete(:force => true) rescue nil
+    
+      Rails.logger.debug "Restoring backup for container-#{container_id} with opts: #{opts.to_s}"
     
       dcontainer = Docker::Container.create(opts)
       dcontainer.start
