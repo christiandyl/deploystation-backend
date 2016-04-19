@@ -109,6 +109,8 @@ module ApiDeploy
         Rails.logger.debug "Container(#{id}) docker has created"
       end
       
+      Helper::slack_ping("User #{user.full_name} has created a new server for #{game.name}, ip is #{ip}")
+      
       return container_docker
     end
   

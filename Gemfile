@@ -44,6 +44,8 @@ gem 'braintree'
 gem 'gibbon'
 # A Ruby API library for the Mandrill email as a service platform
 gem 'mandrill-api'
+# A slim ruby wrapper for posting to slack webhooks
+gem 'slack-notifier'
 
 group :development, :staging do
   gem 'spring'

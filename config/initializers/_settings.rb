@@ -66,5 +66,10 @@ Settings = OpenStruct.new(
       :client_id     => ENV['CONNECTS_FACEBOOK_APP_ID']     || '705287956273054',
       :client_secret => ENV['CONNECTS_FACEBOOK_APP_SECRET'] || '5feb1fbebdd2e3ba5026e9719d380217'
     )
+  ),
+  :slack => OpenStruct.new(
+    :webhooks => OpenStruct.new(
+      :events => ENV['SLACK_WEBHOOKS_EVENTS'] || "https://hooks.slack.com/services/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"
+    )
   )
 )
