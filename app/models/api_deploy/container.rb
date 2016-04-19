@@ -87,7 +87,7 @@ module ApiDeploy
       
       host.use
 
-      opts["name"] = "container_" + id.to_s
+      opts["name"] = docker_container_id
 
       begin
         container_docker = Docker::Container.create(opts)
@@ -281,6 +281,14 @@ module ApiDeploy
     
     def send_details_email
       ContainerMailer.delay.container_created_email(id)
+    end
+    
+    def backup
+      @backup ||= Backup.new(container: self)
+    end
+    
+    def docker_container_id
+      "container_" + id.to_s
     end
     
     private
