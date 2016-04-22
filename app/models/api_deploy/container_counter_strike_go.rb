@@ -1,52 +1,78 @@
+require 'securerandom'
+
 module ApiDeploy
   class ContainerCounterStrikeGo < Container
 
-    REPOSITORY = 'johnjelinek/csgoserver'
+    REPOSITORY = 'deploystation/csgoserver'
     
-    COMMANDS = []
+    COMMANDS = [
+      {
+        :name  => "kick",
+        :title => "Kick player",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" }
+        ]
+      },{
+        :name  => "changelevel",
+        :title => "Change level",
+        :args  => [
+          { name: "level", type: "list", required: true, options: "levels_list" }
+        ]
+      },
+    ]
   
-    after_create :define_config
-  
-    def self.create user, plan
-      memory = plan.ram * 1000000
-      port   = plan.host.free_port
+    def docker_container_create_opts
+      cfg_file_name = "server_#{id.to_s}.cfg"
 
-      cmd = self.docker_cmd({
-        port: port
-      })
-      
-      docker_opts = {
+      opts = {
         "Image"        => REPOSITORY,
-        "Cmd"          => cmd,
         "Tty"          => true,
         "OpenStdin"    => true,
         'StdinOnce'    => true,
-        "ExposedPorts" => { "#{port}/tcp": {}, "#{port}/udp": {} },
-        "PortBindings" => {
-          "#{port}/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port }],
-          "#{port}/udp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port }]
-        },
-        "Volumes" => [
-          "/home/csgoserver" => {}
-        ],
-        "WorkingDir" => "/home/csgoserver",
-        "Entrypoint" => ["/home/csgoserver/serverfiles/srcds_run"],
+        "ExposedPorts" => { "#{port!}/tcp": {}, "#{port!}/udp": {} },
+        "Env" => [
+          "PORT=#{port!}",
+          "CFG_FILE_NAME=#{cfg_file_name}",
+          "SERVER_NAME=#{name}",
+          "SERVER_PASS=#{config.get_property_value(:server_password)}",
+          "RCON_PASS=#{config.get_property_value(:rcon_password)}",
+          "MAX_PLAYERS=#{config.get_property_value(:max_players)}",
+          "DEFAULT_MAP=#{config.get_property_value(:default_map)}",
+          "GSLT=2A4587B393F40ED045746E2F1AB0FC85"
+        ]
       }
-      
-      container = super(user, plan, docker_opts)
+
+      return opts
     end
   
-    def start opts={}, now=false
-      cmd = docker_cmd({
-        port: port
-      })
-      
+    def docker_container_start_opts
       opts = {
-        "Binds" => ["/var/docker/csgoserver:/home/csgoserver:ro"],
-        "Cmd"   => cmd
+        "PortBindings" => {
+          "#{port}/tcp" => [{ "HostIp" => "0.0.0.0", "HostPort" => port }],
+          "#{port}/udp" => [{ "HostIp" => "0.0.0.0", "HostPort" => port }]
+        },
+        "Binds" => ["/var/docker/csgoserver:/home/csgoserver:rw"]
       }
       
-      super(opts, now)
+      return opts
+    end
+  
+    def reset now=false
+      unless now    
+        ApiDeploy::ContainerResetWorker.perform_async(id)
+        return true
+      end
+
+      if stopped?
+        Rails.logger.debug "Can't reset container, container is stopped"
+        return
+      end
+
+      Rails.logger.debug "Resetting container(#{id})"
+    
+      # TODO reset logics
+      
+      Rails.logger.debug "Container(#{id}) is resetted"
     end
   
     def players_online now=false
@@ -58,16 +84,14 @@ module ApiDeploy
       end
       
       players_online = 0
-      max_players    = 5
+      max_players    = config.get_property_value(:max_players)
       
-      # begin
-      #   query = ::Query::fullQuery(host.ip, port)
-      #
-      #   players_online = query[:numplayers].to_i
-      #   max_players    = query[:maxplayers].to_i
-      # rescue
-      #   Rails.logger.debug "Can't get query from Minecraft server in container-#{id}"
-      # end
+      rcon_auth do |server|
+        unless server.nil?
+          players_online = server.server_info[:number_of_players]
+          max_players    = server.server_info[:max_players]
+        end
+      end
       
       return { players_online: players_online, max_players: max_players }
     end
@@ -76,58 +100,39 @@ module ApiDeploy
       return [] unless started?
       
       list = []
+      
+      rcon_auth do |server|
+        break if server.nil?
+        out = server.rcon_exec('users')
+        out.gsub!("<slot:userid:\"name\">", "")
+        list = out.scan(/"(.+?)\"/).map { |v| v[0] }
+      end
             
       return list
     end
-  
-    def command_data command_id, now=false
-      unless now    
-        ApiDeploy::ContainerCommandDataWorker.perform_async(id, command_id)
-        return true
+    
+    def levels_list
+      return [] unless started?
+      
+      list = []
+      
+      rcon_auth do |server|
+        break if server.nil?
+        out = server.rcon_exec("maps *")
+        list = out.scan(/\) (.+?).bsp\n/).map { |v| v[0] }
       end
-      
-      command = {}
-      
-      # command = (COMMANDS.find { |c| c[:name] == command_id }).clone
-      # raise "Command #{id} doesn't exists" if command.nil?
-      #
-      # # TODO shit code !!!!!!!!!!!!!!!!!!!!!!
-      # command = JSON.parse command.to_json
-      #
-      # command["args"].each_with_index do |hs,i|
-      #   if hs["type"] == "list" && hs["options"].is_a?(String)
-      #     command["args"][i]["options"] = send(hs["options"])
-      #   end
-      # end
-      
-      return command
+            
+      return list
     end
     
     def logs
-      # logs = docker_container.logs(stdout: true).split("GameServer.Init successful").last
-
-      # list = logs.scan(/([0-9]{4}-[0-9]{2}-[0-9]{2})T([0-9]{2}:[0-9]{2}:[0-9]{2}) (.+?) INF (.+?)\r\n/)
-      
       output = []
-      # list.each do |s|
-      #   spl = s[0].split("-")
-      #   output << {
-      #     :date      => s[0],
-      #     :time      => s[1],
-      #     :timestamp => s[2],
-      #     :type      => "INF",
-      #     :message   => s[3]
-      #   }
-      # end
-      
-      # TODO write some logics to get know last day
       
       return output
     end
     
     def starting_progress
       logs_str = docker_container.logs(stdout: true).split("Console initialized.").last
-      logs_str = docker_container.logs(stdout: true)
 
       return { progress: 0.2, message: "Initializing server" } if logs_str.blank?
 
@@ -154,50 +159,49 @@ module ApiDeploy
     
     def define_config
       config.super_access = true
-      # config.set_property("max-players", plan.max_players)
-      # config.set_property("level-name", name)
+      config.set_property("rcon_password", SecureRandom.hex)
       config.export_to_database
     end
     
-    def docker_cmd hs
-      self.class.docker_cmd(hs)
+    def command_kick args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      
+      rcon_auth do |server|
+        out = server.rcon_exec("kick #{player_name}")
+      end 
+      
+      Rails.logger.info "Container(#{id}) - CSGO : Player #{player_name} has been kicked"
+      
+      return { success: true }
     end
     
-    def self.docker_cmd hs
-      port = hs[:port] or raise "Port is absent"
+    def command_changelevel args
+      level = args["level"] or raise ArgumentError.new("level doesn't exists")
+
+      rcon_auth do |server|
+        out = server.rcon_exec("changelevel #{level}")
+        raise "Change level exception" unless out.blank?
+      end 
       
-      cmd = [
-        "-game",
-        "csgo",
-        "-usercon",
-        "-strictportbind",
-        "-ip",
-        "0.0.0.0",
-        "-port",
-        port,
-        # "+clientport",
-        # "34082",
-        # "+tv_port",
-        # "47395",
-        "-tickrate",
-        "64",
-        "+map",
-        "cs_italy",
-        # "+servercfgfile",
-        # "csgo-server.cfg",
-        # "+sv_setsteamaccount",
-        # "2A4587B393F40ED045746E2F1AB0FC85",
-        "-maxplayers_override",
-        "8",
-        "+mapgroup",
-        "random_classic",
-        "+game_mode",
-        "0",
-        "+game_type",
-        "0",
-        # "+host_workshop_collection",
-        # "+workshop_start_map",
-      ]
+      Rails.logger.info "Container(#{id}) - CSGO : Level changed to #{level}"
+      
+      return { success: true }
+    end
+    
+    def rcon_auth
+      server = SourceServer.new(host.ip, port)
+      begin
+        server.rcon_auth(config.get_property_value(:rcon_password))
+        yield(server)
+      rescue RCONNoAuthException
+        Rails.logger.debug 'Could not authenticate with the game server.'
+        
+        yield(nil)
+      end
+    end
+    
+    def commands
+      COMMANDS
     end
   
   end

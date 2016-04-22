@@ -40,10 +40,12 @@ describe 'Container(CS GO) API', :type => :request do
     expect(obj['success']).to be(true)
     # expect(obj["result"]["id"]).not_to be_empty
 
-    container = ApiDeploy::Container.find(@context.container_id) rescue nil
+    container = ApiDeploy::ContainerCounterStrikeGo.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
     
     ap "Port is #{container.port}"
+    byebug
+    container.players_online
     byebug
   end
   #

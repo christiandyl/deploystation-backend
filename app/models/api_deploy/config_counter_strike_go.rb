@@ -7,20 +7,34 @@ module ApiDeploy
     
     SCHEMA = [
       {
-        :key           => "map",
+        :key           => "server_password",
         :type          => :string,
-        :title         => "Default map",
-        :default_value => "cs_assault",
+        :title         => "Server password",
+        :default_value => nil,
         :is_editable   => true,
         :validations   => {}
       },{
-        :key           => "mapgroup",
+        :key           => "rcon_password",
         :type          => :string,
-        :title         => "Map group",
-        :default_value => "random_classic",
-        :is_editable   => true,
+        :title         => "Rcon password",
+        :default_value => nil,
+        :is_editable   => false,
         :validations   => {}
-      },
+      },{
+        :key           => "max_players",
+        :type          => :integer,
+        :title         => "Max players",
+        :default_value => 16,
+        :is_editable   => false,
+        :validations   => {}
+      },{
+        :key           => "default_map",
+        :type          => :string,
+        :title         => "Default map",
+        :default_value => "cs_italy",
+        :is_editable   => false,
+        :validations   => {}
+      }
     ]
     
     def initialize container_id, props=nil

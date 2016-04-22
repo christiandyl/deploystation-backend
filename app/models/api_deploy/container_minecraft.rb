@@ -91,43 +91,39 @@ module ApiDeploy
         ]
       }
     ]
-  
-    after_create :define_config
-  
-    def self.create user, plan
+    
+    def docker_container_create_opts
       memory = plan.ram * 1000000
-      port   = plan.host.free_port
       
-      docker_opts = {
+      opts = {
         "Image"        => REPOSITORY,
-        # "Cmd"          => "/start",
         "Tty"          => true,
         "OpenStdin"    => true,
         'StdinOnce'    => true,
         "HostConfig"   => {
           "Memory"     => memory,
-          "MemorySwap" => -1,
-          # "CpuShares"  => 1
+          "MemorySwap" => -1
         },
         "ExposedPorts" => { "25565/tcp": {}, "25565/udp": {} },
         "PortBindings" => {
-          "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port }],
-          "25565/udp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port }]
+          "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port! }],
+          "25565/udp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port! }]
         },
-        "Env"          => ["EULA=TRUE", "JVM_OPTS=-Xmx#{plan.ram}M"]
+        "Env" => ["EULA=TRUE", "JVM_OPTS=-Xmx#{plan.ram}M"]
       }
       
-      container = super(user, plan, docker_opts)
+      return opts
     end
-  
-    def start opts={}, now=false
+    
+    def docker_container_start_opts
       opts = {
         "PortBindings" => { 
           "25565/tcp" => [{ "HostIp" => "", "HostPort" => port }],
           "25565/udp" => [{ "HostIp" => "", "HostPort" => port }]
         }
       }
-      super(opts, now)
+      
+      return opts
     end
     
     def reset now=false
@@ -170,38 +166,6 @@ module ApiDeploy
       rescue
         Rails.logger.debug "Can't get query from Minecraft server in container-#{id}"
       end
-      
-      # if status == STATUS_ONLINE
-      #   init_stamp = logs.last[:time].split(":")
-      #   init_stamp = (init_stamp[0].to_i * 3600) + (init_stamp[1].to_i * 60) + init_stamp[2].to_i
-      #
-      #   docker_container.attach stdin: StringIO.new("list\n")
-      #   # (docker_container.wait(5) rescue nil) unless Rails.env.test?
-      #
-      #   x = 5
-      #   seconds_delay = 2
-      #   done = false
-      #
-      #   x.times do
-      #     str = docker_container.logs(stdout: true).split("usermod: no changes").last
-      #
-      #     regex = /\[([0-9]{2}:[0-9]{2}:[0-9]{2})\] \[[a-zA-Z ]*\/([A-Z]*)\]: There are ([0-9]*)\/([0-9]*) players online:/
-      #     match = str.scan(regex).last
-      #     unless match.nil?
-      #       stamp = match[0].split(":")
-      #       stamp = (stamp[0].to_i * 3600) + (stamp[1].to_i * 60) + stamp[2].to_i
-      #       if stamp >= init_stamp
-      #         players_online = match[2].to_i
-      #         done = true
-      #         break
-      #       end
-      #     end
-      #
-      #     sleep(seconds_delay)
-      #   end
-      #
-      #   raise "Can't get players online" unless done
-      # end
       
       return { players_online: players_online, max_players: max_players }
     end
@@ -470,6 +434,10 @@ module ApiDeploy
       config.set_property("max-players", plan.max_players)
       # config.set_property("level-name", name)
       config.export_to_database
+    end
+    
+    def commands
+      COMMANDS
     end
   
   end

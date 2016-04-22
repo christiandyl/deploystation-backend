@@ -32,7 +32,7 @@ module ApiDeploy
           if type == :boolean
             raise ArgumentError.new("Property #{key} doesn't have type #{type}") unless [true,false].include?(value)
           elsif type == :string
-            value = value.to_s.split.join(" ").tr('^A-Za-z0-9 ', '')[0..20]            
+            value = value.to_s.split.join(" ").tr('^A-Za-z0-9_\- ', '')[0..20]            
           elsif type == :integer
             raise ArgumentError.new("Property #{key} doesn't have type #{type}") unless value.is_a?(Integer)
           end

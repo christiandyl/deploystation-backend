@@ -223,6 +223,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    steam-condenser (1.3.11)
+      multi_json (~> 1.6)
+      multi_xml (~> 0.5)
     thin (1.6.4)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -280,6 +283,7 @@ DEPENDENCIES
   sidekiq-middleware (= 0.3.0)
   slack-notifier
   spring
+  steam-condenser
   will_paginate (~> 3.1.0)
   yard
   yard-rest

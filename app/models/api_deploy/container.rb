@@ -33,6 +33,7 @@ module ApiDeploy
     validates :is_private, inclusion: { in: [true, false] }
   
     # Callbacks
+    after_create :define_config
     after_create :send_details_email
     before_destroy :destroy_docker_container
   
@@ -51,7 +52,7 @@ module ApiDeploy
         return cname
       end
       
-      def create user, plan, opts, now=false
+      def create user, plan, name, now=false
         host = plan.host
         
         container = self.new.tap do |c|
@@ -59,6 +60,7 @@ module ApiDeploy
           c.plan_id    = plan.id
           c.host_id    = host.id
           c.status     = STATUS_CREATED
+          c.name       = name
           # c.active_until = (Date.today + 7).to_datetime
           c.active_until = TRIAL_DAYS.days.from_now.to_time
           c.is_paid = false
@@ -69,7 +71,7 @@ module ApiDeploy
         Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.attributes.to_s}"
 
         unless now          
-          ApiDeploy::ContainerCreateWorker.perform_async(container.id, opts)
+          ApiDeploy::ContainerCreateWorker.perform_async(container.id)
         else          
           container.create_docker_container
         end
@@ -80,10 +82,9 @@ module ApiDeploy
   
     # Actions
   
-    def create_docker_container opts
+    def create_docker_container
+      opts = docker_container_create_opts
       Rails.logger.debug "Creating docker container with params: #{opts.to_s}"
-
-      port = opts["PortBindings"].first[1].first["HostPort"] or raise ArgumentError.new("HostPort is absent")
       
       host.use
 
@@ -100,7 +101,6 @@ module ApiDeploy
       end
       
       self.docker_id = container_docker.id
-      self.port      = port
       
       save!
   
@@ -114,9 +114,10 @@ module ApiDeploy
       return container_docker
     end
   
-    def start opts={}, now=false
+    def start now=false
+      opts = docker_container_start_opts
       unless now          
-        ApiDeploy::ContainerStartWorker.perform_async(id, opts)
+        ApiDeploy::ContainerStartWorker.perform_async(id)
         return true
       end
       
@@ -264,6 +265,10 @@ module ApiDeploy
       plan.game
     end
     
+    def port!
+      self.port ||= plan.host.free_port
+    end
+    
     def config
       @config ||= ("ApiDeploy::Config#{game.sname.capitalize}".constantize).new(id)
     end
@@ -275,6 +280,29 @@ module ApiDeploy
           :cid  => id.to_s
         }
       })
+    end
+    
+    def command_data command_id, now=false
+      unless now    
+        ApiDeploy::ContainerCommandDataWorker.perform_async(id, command_id)
+        return true
+      end
+      
+      command = {}
+      
+      command = (commands.find { |c| c[:name] == command_id }).clone
+      raise "Command #{id} doesn't exists" if command.nil?
+
+      # TODO shit code !!!!!!!!!!!!!!!!!!!!!!
+      command = JSON.parse command.to_json
+
+      command["args"].each_with_index do |hs,i|
+        if hs["type"] == "list" && hs["options"].is_a?(String)
+          command["args"][i]["options"] = send(hs["options"])
+        end
+      end
+      
+      return command
     end
     
     # Callbacks endpoints

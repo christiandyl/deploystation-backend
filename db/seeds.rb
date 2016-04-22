@@ -5,13 +5,13 @@ features = [
 ].to_json
 
 games = [
-  { name: 'Minecraft', sname: 'minecraft', status: Game::STATUS_ENABLED, features: features },
-  { name: 'Minecraft pocket edition', sname: 'minecraft_pe', status: Game::STATUS_COMING_SOON, features: features },
-  { name: 'Counter-strike go', sname: 'counter_strike_go', status: Game::STATUS_ENABLED, features: features },
-  { name: 'Battlefield 4', sname: 'battlefield_4', status: Game::STATUS_COMING_SOON, features: features },
-  { name: 'Battlefield hard line', sname: 'battlefield_hl', status: Game::STATUS_COMING_SOON, features: features },
-  { name: '7 days to die', sname: 'seven_days_to_die', status: Game::STATUS_ENABLED, features: features },
-  { name: 'DayZ Standalone', sname: 'dayz_standalone', status: Game::STATUS_COMING_SOON, features: features }
+  { name: 'Minecraft', sname: 'minecraft', status: Game::STATUS_ENABLED, features: features, order: 1 },
+  { name: 'Minecraft pocket edition', sname: 'minecraft_pe', status: Game::STATUS_COMING_SOON, features: features, order: 3 },
+  { name: 'Counter-strike go', sname: 'counter_strike_go', status: Game::STATUS_ENABLED, features: features, order: 2 },
+  { name: 'Battlefield 4', sname: 'battlefield_4', status: Game::STATUS_COMING_SOON, features: features, order: 4 },
+  { name: 'Battlefield hard line', sname: 'battlefield_hl', status: Game::STATUS_COMING_SOON, features: features, order: 5 },
+  { name: '7 days to die', sname: 'seven_days_to_die', status: Game::STATUS_ENABLED, features: features, order: 6 },
+  { name: 'DayZ Standalone', sname: 'dayz_standalone', status: Game::STATUS_COMING_SOON, features: features, order: 7 }
 ]
 
 if Rails.env.production? # Production seeds
