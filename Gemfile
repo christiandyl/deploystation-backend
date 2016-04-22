@@ -46,6 +46,8 @@ gem 'gibbon'
 gem 'mandrill-api'
 # A slim ruby wrapper for posting to slack webhooks
 gem 'slack-notifier'
+# A multi-language library for querying the Steam Community, Source, GoldSrc servers and Steam master servers
+gem 'steam-condenser'
 
 group :development, :staging do
   gem 'spring'

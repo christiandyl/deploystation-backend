@@ -139,9 +139,7 @@ module ApiDeploy
         plan = Plan.find(plan_id) or raise "Plan with id #{plan_id} doesn't exists"
         game = plan.game.sname
 
-        container = Container.class_for(game).create(current_user, plan)
-        container.name = name
-        container.save!
+        container = Container.class_for(game).create(current_user, plan, name)
 
         render success_response container.to_api(:public)
       end

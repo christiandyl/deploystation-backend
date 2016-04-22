@@ -7,6 +7,8 @@ class Game < ActiveRecord::Base
 
   ASSETS_FOLDER_NAME = "games"
 
+  default_scope { order(:order)}
+
   attr_api [:id, :name, :sname, :images, :status, :plans_list, :features_list]
 
   has_many :plans

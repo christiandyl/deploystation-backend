@@ -2,12 +2,12 @@ module ApiDeploy
   class ContainerCreateWorker
     include Sidekiq::Worker
 
-    def perform(container_id, opts)
+    def perform(container_id)
       begin
         container = Container.find(container_id)
         container = Container.class_for(container.game.sname).find(container_id)
         
-        container.create_docker_container(opts)
+        container.create_docker_container
         container.start
         
         Rails.logger.debug "Checking container #{container.id} status..."

@@ -5,7 +5,7 @@ module ApiDeploy
     def perform(container_id, command_name, command_args)
       begin
         container = Container.find(container_id)
-        container = Container.class_for(container.game.name).find(container_id)
+        container = Container.class_for(container.game.sname).find(container_id)
 
         output = container.command(command_name, command_args, true)
         

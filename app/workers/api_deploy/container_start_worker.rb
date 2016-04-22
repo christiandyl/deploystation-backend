@@ -2,11 +2,11 @@ module ApiDeploy
   class ContainerStartWorker
     include Sidekiq::Worker
 
-    def perform(container_id, opts)
+    def perform(container_id)
       begin
         container = Container.find(container_id)
         container = Container.class_for(container.game.sname).find(container_id)
-        container.start(opts, true)
+        container.start(true)
         
         Rails.logger.debug "Checking container #{container.id} status..."
         done = false
