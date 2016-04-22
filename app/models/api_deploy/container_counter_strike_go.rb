@@ -54,6 +54,8 @@ module ApiDeploy
     end
   
     def docker_container_start_opts
+      cfg_file_name = "server_#{id.to_s}.cfg"
+      
       opts = {
         "PortBindings" => {
           "#{port}/tcp" => [{ "HostIp" => "0.0.0.0", "HostPort" => port }],
