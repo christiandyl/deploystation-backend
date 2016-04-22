@@ -59,6 +59,11 @@ module ApiDeploy
     end
     
     def export_to_docker
+      str = ""
+      container.docker_container_env_vars.each { |v| str << "export #{v}\n" }
+
+      container.docker_container.exec ["bash", "-c", "echo \"#{str}\" > /data/envs"]
+      
       return true
     end
     
@@ -68,6 +73,10 @@ module ApiDeploy
     
     def last_time_updated
       LAST_TIME_UPDATED
+    end
+    
+    def container
+      @container ||= ContainerCounterStrikeGo.find(self.container_id)
     end
     
   end

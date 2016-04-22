@@ -30,27 +30,30 @@ module ApiDeploy
     end
   
     def docker_container_create_opts
-      cfg_file_name = "server_#{id.to_s}.cfg"
-      
       opts = {
         "Image"        => REPOSITORY,
         "Tty"          => true,
         "OpenStdin"    => true,
         'StdinOnce'    => true,
         "ExposedPorts" => { "#{port!}/tcp": {}, "#{port!}/udp": {} },
-        "Env" => [
-          "PORT=#{port!}",
-          "CFG_FILE_NAME=#{cfg_file_name}",
-          "SERVER_NAME=#{name}",
-          "SERVER_PASS=#{config.get_property_value(:server_password)}",
-          "RCON_PASS=#{config.get_property_value(:rcon_password)}",
-          "MAX_PLAYERS=#{config.get_property_value(:max_players)}",
-          "DEFAULT_MAP=#{config.get_property_value(:default_map)}",
-          "GSLT=#{config.get_property_value(:gslt)}"
-        ]
+        "Env" => docker_container_env_vars
       }
 
       return opts
+    end
+  
+    def docker_container_env_vars
+      cfg_file_name = "server_#{id.to_s}.cfg"
+      return [
+        "PORT=#{port!}",
+        "CFG_FILE_NAME=#{cfg_file_name}",
+        "SERVER_NAME=#{name}",
+        "SERVER_PASS=#{config.get_property_value(:server_password)}",
+        "RCON_PASS=#{config.get_property_value(:rcon_password)}",
+        "MAX_PLAYERS=#{config.get_property_value(:max_players)}",
+        "DEFAULT_MAP=#{config.get_property_value(:default_map)}",
+        "GSLT=#{config.get_property_value(:gslt)}"
+      ]
     end
   
     def docker_container_start_opts
@@ -61,17 +64,7 @@ module ApiDeploy
           "#{port}/tcp" => [{ "HostIp" => "0.0.0.0", "HostPort" => port }],
           "#{port}/udp" => [{ "HostIp" => "0.0.0.0", "HostPort" => port }]
         },
-        "Binds" => ["/var/docker/csgoserver:/home/csgoserver:rw"],
-        "Env" => [
-          "PORT=#{port}",
-          "CFG_FILE_NAME=#{cfg_file_name}",
-          "SERVER_NAME=#{name}",
-          "SERVER_PASS=#{config.get_property_value(:server_password)}",
-          "RCON_PASS=#{config.get_property_value(:rcon_password)}",
-          "MAX_PLAYERS=#{config.get_property_value(:max_players)}",
-          "DEFAULT_MAP=#{config.get_property_value(:default_map)}",
-          "GSLT=#{config.get_property_value(:gslt)}"
-        ]
+        "Binds" => ["/var/docker/csgoserver:/home/csgoserver:rw"]
       }
       
       return opts

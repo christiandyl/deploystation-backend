@@ -124,6 +124,10 @@ describe 'Container(CS GO) API', :type => :request do
   end
 
   it 'Allows to destroy container' do
+    container = ApiDeploy::Container.find(@context.container_id) rescue nil
+    app_id = ApiDeploy::ContainerCounterStrikeGo::STEAM_APP_ID
+    gslt = container.config.get_property_value("gslt")
+    
     send :delete, container_path(@context.container_id), :token => @context.token
 
     expect(response.status).to eq(200)
@@ -134,6 +138,9 @@ describe 'Container(CS GO) API', :type => :request do
 
     container = ApiDeploy::Container.find(@context.container_id) rescue nil
     expect(container).to be_nil
+    
+    gslt_is_valid = ApiDeploy::SteamServerLoginToken.exists?(app_id: app_id, token: gslt, in_use: false)
+    expect(gslt_is_valid).to be(true)
   end
 
 end

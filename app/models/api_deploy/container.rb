@@ -100,8 +100,7 @@ module ApiDeploy
         return nil
       end
       
-      self.docker_id = container_docker.id
-      
+      self.docker_id = container_docker.id  
       save!
   
       unless ASYNC
@@ -116,7 +115,7 @@ module ApiDeploy
   
     def start now=false
       opts = docker_container_start_opts
-      unless now          
+      unless now
         ApiDeploy::ContainerStartWorker.perform_async(id)
         return true
       end
