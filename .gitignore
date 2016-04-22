@@ -36,4 +36,4 @@ public/api_doc
 cookbooks/
 shared/
 
-csimage/
+lib/docker/
