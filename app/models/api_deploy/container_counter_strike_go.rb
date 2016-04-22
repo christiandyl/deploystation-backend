@@ -59,7 +59,17 @@ module ApiDeploy
           "#{port}/tcp" => [{ "HostIp" => "0.0.0.0", "HostPort" => port }],
           "#{port}/udp" => [{ "HostIp" => "0.0.0.0", "HostPort" => port }]
         },
-        "Binds" => ["/var/docker/csgoserver:/home/csgoserver:rw"]
+        "Binds" => ["/var/docker/csgoserver:/home/csgoserver:rw"],
+        "Env" => [
+          "PORT=#{port}",
+          "CFG_FILE_NAME=#{cfg_file_name}",
+          "SERVER_NAME=#{name}",
+          "SERVER_PASS=#{config.get_property_value(:server_password)}",
+          "RCON_PASS=#{config.get_property_value(:rcon_password)}",
+          "MAX_PLAYERS=#{config.get_property_value(:max_players)}",
+          "DEFAULT_MAP=#{config.get_property_value(:default_map)}",
+          "GSLT=#{config.get_property_value(:gslt)}"
+        ]
       }
       
       return opts
