@@ -7,6 +7,13 @@ module ApiDeploy
     
     SCHEMA = [
       {
+        :key           => "gslt",
+        :type          => :string,
+        :title         => "Steam server login token",
+        :default_value => nil,
+        :is_editable   => false,
+        :validations   => {}
+      },{
         :key           => "server_password",
         :type          => :string,
         :title         => "Server password",
@@ -36,6 +43,10 @@ module ApiDeploy
         :validations   => {}
       }
     ]
+    
+    def self.permit
+      SCHEMA.map { |p| p[:key] }
+    end
     
     def initialize container_id, props=nil
       super(container_id, props)

@@ -44,22 +44,62 @@ describe 'Container(CS GO) API', :type => :request do
     expect(container).not_to be_nil
     
     ap "Port is #{container.port}"
-    byebug
-    container.players_online
+
+    app_id = ApiDeploy::ContainerCounterStrikeGo::STEAM_APP_ID
+    gslt = container.config.get_property_value("gslt")
+    
+    gslt_is_valid = ApiDeploy::SteamServerLoginToken.exists?(app_id: app_id, token: gslt, in_use: true)
+    expect(gslt_is_valid).to be(true)
+    
     byebug
   end
-  #
-  # it 'Allows to destroy container' do
-  #   send :delete, container_path(@context.container_id), :token => @context.token
-  #
-  #   expect(response.status).to eq(200)
-  #   obj = JSON.parse(response.body)
-  #
-  #   expect(obj['success']).to be(true)
-  #   # expect(obj["result"]["id"]).not_to be_empty
-  #
-  #   container = ApiDeploy::Container.find(@context.container_id) rescue nil
-  #   expect(container).to be_nil
-  # end
+
+  
+  # Config
+  
+  it 'Allows to get container config list' do
+    send :get, config_path(@context.container_id), :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    expect(obj['result'].class).to be(Array)
+    expect(obj['result'][0].class).to be(Hash)
+    expect(obj['result'][0]['key'].class).to be_truthy
+    expect(obj['result'][0]['type']).to be_truthy
+    expect(obj['result'][0]['title']).to be_truthy
+    expect(obj['result'][0]['default_value']).to be_nil
+    expect(obj['result'][0]['is_editable']).to be_truthy
+    expect(obj['result'][0]['validations']).to be_truthy
+    
+    @context.config = obj['result']
+  end
+  
+  it 'Allows to update container config list' do
+    params = { :config => {} }
+    @context.config.map { |p| params[:config][p["key"]] = p["default_value"] }
+    params = params.to_json
+
+    send :put, config_path(@context.container_id), :params => params, :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+  end
+
+  it 'Allows to destroy container' do
+    send :delete, container_path(@context.container_id), :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    # expect(obj["result"]["id"]).not_to be_empty
+
+    container = ApiDeploy::Container.find(@context.container_id) rescue nil
+    expect(container).to be_nil
+  end
 
 end

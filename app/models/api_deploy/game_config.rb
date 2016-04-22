@@ -5,10 +5,6 @@ module ApiDeploy
     def last_time_updated; raise "SubclassResponsibility"; end
     def command; raise "SubclassResponsibility"; end
     
-    def self.permit
-      schema.map { |p| p[:key] }
-    end
-    
     def initialize container_id, props=nil
       self.properties = schema
       self.container_id = container_id
@@ -32,7 +28,7 @@ module ApiDeploy
           if type == :boolean
             raise ArgumentError.new("Property #{key} doesn't have type #{type}") unless [true,false].include?(value)
           elsif type == :string
-            value = value.to_s.split.join(" ").tr('^A-Za-z0-9_\- ', '')[0..20]            
+            value = value.to_s.split.join(" ").tr('^A-Za-z0-9_\- ', '')[0..50]            
           elsif type == :integer
             raise ArgumentError.new("Property #{key} doesn't have type #{type}") unless value.is_a?(Integer)
           end

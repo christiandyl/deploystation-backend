@@ -3,7 +3,8 @@ require 'securerandom'
 module ApiDeploy
   class ContainerCounterStrikeGo < Container
 
-    REPOSITORY = 'deploystation/csgoserver'
+    REPOSITORY   = 'deploystation/csgoserver'
+    STEAM_APP_ID = 730
     
     COMMANDS = [
       {
@@ -21,9 +22,16 @@ module ApiDeploy
       },
     ]
   
+    before_destroy :return_gslt
+  
+    def return_gslt
+      token = config.get_property_value(:gslt)
+      SteamServerLoginToken.return_token(STEAM_APP_ID, token)
+    end
+  
     def docker_container_create_opts
       cfg_file_name = "server_#{id.to_s}.cfg"
-
+      
       opts = {
         "Image"        => REPOSITORY,
         "Tty"          => true,
@@ -38,7 +46,7 @@ module ApiDeploy
           "RCON_PASS=#{config.get_property_value(:rcon_password)}",
           "MAX_PLAYERS=#{config.get_property_value(:max_players)}",
           "DEFAULT_MAP=#{config.get_property_value(:default_map)}",
-          "GSLT=2A4587B393F40ED045746E2F1AB0FC85"
+          "GSLT=#{config.get_property_value(:gslt)}"
         ]
       }
 
@@ -160,6 +168,7 @@ module ApiDeploy
     def define_config
       config.super_access = true
       config.set_property("rcon_password", SecureRandom.hex)
+      config.set_property("gslt", SteamServerLoginToken.take_token(STEAM_APP_ID))
       config.export_to_database
     end
     
