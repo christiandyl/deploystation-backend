@@ -50,6 +50,40 @@ describe 'Container(CS GO) API', :type => :request do
     
     gslt_is_valid = ApiDeploy::SteamServerLoginToken.exists?(app_id: app_id, token: gslt, in_use: true)
     expect(gslt_is_valid).to be(true)
+  end
+  
+  it 'Allows to stop container' do
+    send :post, stop_container_path(@context.container_id), :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    # expect(obj["result"]["id"]).not_to be_empty
+
+    container = ApiDeploy::Container.find(@context.container_id) rescue nil
+    expect(container).not_to be_nil
+  end
+  
+  it 'Allows to start container again' do
+    send :post, start_container_path(@context.container_id), :token => @context.token
+
+    expect(response.status).to eq(200)
+    obj = JSON.parse(response.body)
+
+    expect(obj['success']).to be(true)
+    # expect(obj["result"]["id"]).not_to be_empty
+
+    container = ApiDeploy::ContainerCounterStrikeGo.find(@context.container_id) rescue nil
+    expect(container).not_to be_nil
+    
+    ap "Port is #{container.port}"
+
+    app_id = ApiDeploy::ContainerCounterStrikeGo::STEAM_APP_ID
+    gslt = container.config.get_property_value("gslt")
+    
+    gslt_is_valid = ApiDeploy::SteamServerLoginToken.exists?(app_id: app_id, token: gslt, in_use: true)
+    expect(gslt_is_valid).to be(true)
     
     byebug
   end

@@ -270,7 +270,7 @@ module ApiDeploy
     end
     
     def config
-      @config ||= ("ApiDeploy::Config#{game.sname.capitalize}".constantize).new(id)
+      @config ||= GameConfig.class_for(game.sname).new(id)
     end
     
     def referral_token_extra_time

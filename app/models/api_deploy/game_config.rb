@@ -3,7 +3,13 @@ module ApiDeploy
     
     def schema; raise "SubclassResponsibility"; end
     def last_time_updated; raise "SubclassResponsibility"; end
-    def command; raise "SubclassResponsibility"; end
+    
+    def self.class_for game
+      cname = "api_deploy/config_#{game}".classify.constantize
+      raise "#{cname} is not supported" if defined?(cname) == nil
+  
+      return cname
+    end
     
     def initialize container_id, props=nil
       self.properties = schema
