@@ -35,3 +35,5 @@ public/api_doc
 # Chef
 cookbooks/
 shared/
+
+/lib/docker
