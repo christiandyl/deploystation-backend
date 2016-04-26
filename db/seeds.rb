@@ -6,7 +6,7 @@ features = [
 
 games = [
   { name: 'Minecraft', sname: 'minecraft', status: Game::STATUS_ENABLED, features: features, order: 1 },
-  { name: 'Minecraft pocket edition', sname: 'minecraft_pe', status: Game::STATUS_COMING_SOON, features: features, order: 3 },
+  { name: 'Minecraft pocket edition', sname: 'minecraft_pe', status: Game::STATUS_ENABLED, features: features, order: 3 },
   { name: 'Counter-strike go', sname: 'counter_strike_go', status: Game::STATUS_ENABLED, features: features, order: 2 },
   { name: 'Battlefield 4', sname: 'battlefield_4', status: Game::STATUS_COMING_SOON, features: features, order: 4 },
   { name: 'Battlefield hard line', sname: 'battlefield_hl', status: Game::STATUS_COMING_SOON, features: features, order: 5 },
@@ -159,6 +159,16 @@ else # Development and Testing seeds
       :storage      => 1024,
       :storage_type => 'ssd',
       :price        => "5"
+    },
+    {
+      :game         => 'Minecraft pocket edition',
+      :host         => 'localhost',
+      :name         => 'starter',
+      :max_players  => 5,
+      :ram          => 256,
+      :storage      => 1024,
+      :storage_type => 'ssd',
+      :price        => "2"
     }
  ]
 

@@ -15,7 +15,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = 'ubuntu/trusty64'
 
-  config.vm.network :private_network, ip: "192.168.50.50"
+  # config.vm.network :private_network, ip: "192.168.50.50"
+  config.vm.network :public_network
+  # config.vm.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+  # config.vm.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+
 
   config.ssh.forward_agent = true
 

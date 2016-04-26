@@ -101,6 +101,7 @@ module ApiDeploy
       end
       
       self.docker_id = container_docker.id  
+      port!
       save!
   
       unless ASYNC
