@@ -17,7 +17,7 @@ module ApiDeploy
     
     TRIAL_DAYS = 7
     
-    REWARD_HOURS = 24
+    REWARD_HOURS = 48
     
     # Relations
     belongs_to :user
