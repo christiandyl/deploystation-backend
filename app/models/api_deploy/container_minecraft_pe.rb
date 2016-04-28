@@ -158,9 +158,12 @@ module ApiDeploy
       Rails.logger.debug "Resetting container(#{id})"
       
       level_name = config.get_property_value("level-name")
-      level_path = "nukkit/nukkit_server/worlds/#{level_name}"
       
+      level_path = "nukkit/nukkit_server/worlds/#{level_name}"
       docker_container.exec ["rm", "-rf", level_path]
+      
+      players_path = "nukkit/nukkit_server/players"
+      docker_container.exec ["rm", "-rf", players_path]
       
       sleep 2
       
