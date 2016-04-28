@@ -157,13 +157,20 @@ module ApiDeploy
 
       Rails.logger.debug "Resetting container(#{id})"
       
-      level_name = config.get_property_value("level-name")
+      files = [
+        'banned-ips.json',
+        'banned-players.json',
+        'ops.txt',
+        'server.log', 
+        'server.properties',
+        'white-list.txt'
+      ]
       
-      level_path = "nukkit/nukkit_server/worlds/#{level_name}"
-      docker_container.exec ["rm", "-rf", level_path]
+      files.each { |f| docker_container.exec ["rm", "nukkit/nukkit_server/#{f}"] }
       
-      players_path = "nukkit/nukkit_server/players"
-      docker_container.exec ["rm", "-rf", players_path]
+      folders = ['worlds', 'players', 'plugins']
+      
+      folders.each { |f| docker_container.exec ["rm", ,"-rf", "nukkit/nukkit_server/#{f}"] }
       
       sleep 2
       
