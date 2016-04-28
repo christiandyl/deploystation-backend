@@ -15,6 +15,7 @@ module ApiDeploy
         sleep 3
         20.times do
           progress = container.starting_progress
+
           if (done = (progress[:progress] == 1.0))
             Rails.logger.debug "Container #{container_id} started successfully"
             Pusher.trigger "container-#{container_id}", "create", { success: true, result: progress }

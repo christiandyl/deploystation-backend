@@ -1,11 +1,21 @@
 require 'securerandom'
+require 'rcon/rcon'
 
 module ApiDeploy
   class ContainerMinecraftPe < Container
 
     REPOSITORY = 'deploystation/mcpeserver'
     
-    COMMANDS = []
+    COMMANDS = [
+      {
+        :name  => "kick",
+        :title => "Kicks a player off a server.",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" },
+          { name: "reason", type: "text", required: false }
+        ]
+      }
+    ]
   
     def docker_container_env_vars
       return [
@@ -32,7 +42,8 @@ module ApiDeploy
         "CONFIG_LEVEL_SEED=#{config.get_property_value('level-seed')}",
         "CONFIG_LEVEL_TYPE=#{config.get_property_value('level-type')}",
         "CONFIG_RCON_PASSWORD=#{config.get_property_value('rcon.password')}",
-        "CONFIG_AUTO_SAVE=#{config.get_property_value('auto-save')}"
+        "CONFIG_AUTO_SAVE=#{config.get_property_value('auto-save')}",
+        "UPDATE_LATEST_DEV=YES"
       ]
     end
   
@@ -92,19 +103,27 @@ module ApiDeploy
       return { players_online: players_online, max_players: max_players }
     end
   
-    def players_list
-      return [] unless started?
+    def players_online now=false
+      return false if stopped?
       
-      list = []
+      unless now    
+        ApiDeploy::ContainerPlayersOnlineWorker.perform_async(id)
+        return true
+      end
       
-      # rcon_auth do |server|
-      #   break if server.nil?
-      #   out = server.rcon_exec('users')
-      #   out.gsub!("<slot:userid:\"name\">", "")
-      #   list = out.scan(/"(.+?)\"/).map { |v| v[0] }
-      # end
-            
-      return list
+      players_online = 0
+      max_players    = config.get_property_value("max-players")
+      
+      begin
+        query = ::Query::fullQuery(host.ip, port)
+      
+        players_online = query[:numplayers].to_i
+        max_players    = query[:maxplayers].to_i
+      rescue
+        Rails.logger.debug "Can't get query from Minecraft server in container-#{id}"
+      end
+      
+      return { players_online: players_online, max_players: max_players }
     end
     
     def logs
@@ -115,21 +134,22 @@ module ApiDeploy
     
     def starting_progress
       logs_str = docker_container.logs(stdout: true)
-
-      # 5.times { puts "======================================" }
-      # ap logs_str.split("\n")
+      logs_str = logs_str.split("nukkit/envs").last || ""
 
       return { progress: 0.2, message: "Initializing server" } if logs_str.blank?
 
       unless (/Done \(/).match(logs_str).nil?
-
         return { progress: 1.0, message: "Done" }
       end
 
-      unless (/Installing the latest stable release/).match(logs_str).nil?
-        return { progress: 0.7, message: "Installing server" }
-      end
+      download = logs_str.scan(/([0-9]+)%\[/)
+      unless download.blank?
+        progress = download.last[0].to_f
+        progress_global = ((50 + (progress * 0.5)) / 100).round(2)
 
+        return { progress: progress_global, message: "Starting server" }
+      end
+      
       return { progress: 0.4, message: "Setting up server" }
     end
     
@@ -151,17 +171,17 @@ module ApiDeploy
       config.export_to_database
     end
     
-    # def rcon_auth
-    #   server = SourceServer.new(host.ip, port)
-    #   begin
-    #     server.rcon_auth(config.get_property_value(:rcon_password))
-    #     yield(server)
-    #   rescue RCONNoAuthException
-    #     Rails.logger.debug 'Could not authenticate with the game server.'
-    #
-    #     yield(nil)
-    #   end
-    # end
+    def command_kick args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      reason      = args["reason"] or raise ArgumentError.new("Reason doesn't exists")
+      input       = "kick #{player_name} #{reason}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} has been kicked"
+      
+      return { success: true }
+    end
     
     def commands
       COMMANDS

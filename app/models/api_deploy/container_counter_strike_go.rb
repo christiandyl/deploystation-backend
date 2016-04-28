@@ -56,6 +56,17 @@ module ApiDeploy
       ]
     end
   
+    def start now=false
+      if now == false
+        # destroy_docker_container
+        # create_docker_container
+        # byebug
+        # config.set_property("gslt", SteamServerLoginToken.take_token(STEAM_APP_ID))
+      end
+      
+      super(now)
+    end
+  
     def docker_container_start_opts
       cfg_file_name = "server_#{id.to_s}.cfg"
       
@@ -145,6 +156,7 @@ module ApiDeploy
     end
     
     def starting_progress
+      # byebug
       logs_str = docker_container.logs(stdout: true).split("Console initialized.").last
 
       return { progress: 0.2, message: "Initializing server" } if logs_str.blank?

@@ -62,7 +62,7 @@ module ApiDeploy
       str = ""
       container.docker_container_env_vars.each { |v| str << "export #{v}\n" }
 
-      container.docker_container.exec ["bash", "-c", "echo \"#{str}\" > /data/envs"]
+      # container.docker_container.exec ["bash", "-c", "echo \"#{str}\" > /data/envs"]
       
       return true
     end

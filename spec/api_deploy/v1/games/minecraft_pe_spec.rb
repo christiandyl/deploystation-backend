@@ -40,7 +40,7 @@ describe 'Container(Minecraft PE) API', :type => :request do
     expect(obj['success']).to be(true)
     # expect(obj["result"]["id"]).not_to be_empty
 
-    container = ApiDeploy::ContainerCounterStrikeGo.find(@context.container_id) rescue nil
+    container = ApiDeploy::ContainerMinecraftPe.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
     
     ap "Port is #{container.port}"
