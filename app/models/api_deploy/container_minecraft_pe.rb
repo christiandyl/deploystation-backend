@@ -190,6 +190,31 @@ module ApiDeploy
       return { players_online: players_online, max_players: max_players }
     end
     
+    def players_list
+      return [] unless started?
+      
+      list = []
+      
+      begin
+        query = ::Query::fullQuery(host.ip, port)
+      
+        list = query[:players]
+      rescue
+        Rails.logger.debug "Can't get query from Minecraft server in container-#{id}"
+      end
+            
+      return list
+    end
+    
+    def blocks_list
+      # file = File.read('lib/api_deploy/minecraft/items.json')
+      # data_hash = JSON.parse(file)
+      
+      # list = data_hash.map { |hs| hs["text_id"] }
+      
+      return ["minecraft:stone","minecraft:lava","minecraft:diamond_block","minecraft:diamond_sword","minecraft:diamond_pickaxe","minecraft:bowl"]
+    end
+    
     def logs
       output = []
       
