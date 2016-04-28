@@ -58,7 +58,7 @@ module ApiDeploy
       }, {      
         :key           => "announce-player-achievements",
         :type          => :boolean,
-        :title         => "",
+        :title         => "Player achievements",
         :default_value => true,
         :is_editable   => true,
         :validations   => {}
