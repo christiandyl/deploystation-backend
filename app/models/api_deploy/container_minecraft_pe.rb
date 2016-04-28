@@ -20,7 +20,7 @@ module ApiDeploy
     def docker_container_env_vars
       return [
         "CONFIG_SERVER_NAME=#{name}",
-        "CONFIG_SERVER_PORT=19132",
+        "CONFIG_SERVER_PORT=#{port!}",
         "CONFIG_MEMORY_LIMIT=#{config.get_property_value('memory-limit')}",
         "CONFIG_GAMEMODE=#{config.get_property_value('gamemode')}",
         "CONFIG_MAX_PLAYERS=#{config.get_property_value('max-players')}",
@@ -53,7 +53,7 @@ module ApiDeploy
         "Tty"          => true,
         "OpenStdin"    => true,
         'StdinOnce'    => true,
-        "ExposedPorts" => { "19132/tcp": {}, "19132/udp": {} },
+        "ExposedPorts" => { "#{port!}/tcp": {}, "#{port!}/udp": {} },
         "Env"          => docker_container_env_vars
       }
 
@@ -63,8 +63,8 @@ module ApiDeploy
     def docker_container_start_opts
       opts = {
         "PortBindings" => { 
-          "19132/tcp" => [{ "HostIp" => "", "HostPort" => port }],
-          "19132/udp" => [{ "HostIp" => "", "HostPort" => port }]
+          "#{port}/tcp" => [{ "HostIp" => "", "HostPort" => port }],
+          "#{port}/udp" => [{ "HostIp" => "", "HostPort" => port }]
         }
       }
       
