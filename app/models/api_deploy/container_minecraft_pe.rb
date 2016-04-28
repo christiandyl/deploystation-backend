@@ -8,6 +8,77 @@ module ApiDeploy
     
     COMMANDS = [
       {
+        :name  => "kill_player",
+        :title => "Kill player",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" }
+        ]
+      },{
+        :name  => "ban",
+        :title => "Ban player",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" },
+          { name: "reason", type: "text", required: false }
+        ]
+      },{
+        :name  => "unban",
+        :title => "Unban player",
+        :args  => [
+          { name: "player", type: "string", required: true }
+        ]
+      },{
+        :name  => "give",
+        :title => "Give item to player",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" },
+          { name: "block_id", type: "list", required: true, options: "blocks_list" },
+          { name: "amount", type: "int", required: true }
+        ]
+      },{
+        :name  => "time",
+        :title => "Change day time",
+        :args  => [
+          { name: "value", type: "list", required: true, options: ["day","night"] }
+        ]
+      },{
+        :name  => "tell",
+        :title => "Tell something to the player",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" },
+          { name: "message", type: "string", required: true }
+        ]
+      },{
+        :name  => "weather",
+        :title => "Change weather in game",
+        :args  => [
+          { name: "value", type: "list", required: true, options: ["clear","rain","thunder"] }
+        ]  
+      },{
+        :name  => "xp",
+        :title => "Give level to player",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" },
+          { name: "level", type: "list", required: true, options: [1,2,3,4,5,6,7,8,9,10,11,12] }
+        ]
+      },{
+        :name  => "op",
+        :title => "Grants operator status to a player",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" }
+        ]
+      },{
+        :name  => "deop",
+        :title => "Revoke operator status from a player",
+        :args  => [
+          { name: "player", type: "list", required: true, options: "players_list" }
+        ]
+      },{
+        :name  => "say",
+        :title => "Displays a message to multiple players.",
+        :args  => [
+          { name: "message", type: "string", required: true }
+        ]
+      },{
         :name  => "kick",
         :title => "Kicks a player off a server.",
         :args  => [
@@ -18,10 +89,12 @@ module ApiDeploy
     ]
   
     def docker_container_env_vars
+      ram = plan.ram.to_s
+      
       return [
+        "JVM_OPTS=-Xmx#{ram}M -Xms#{ram}M",
         "CONFIG_SERVER_NAME=#{name}",
         "CONFIG_SERVER_PORT=#{port!}",
-        "CONFIG_MEMORY_LIMIT=#{config.get_property_value('memory-limit')}",
         "CONFIG_GAMEMODE=#{config.get_property_value('gamemode')}",
         "CONFIG_MAX_PLAYERS=#{config.get_property_value('max-players')}",
         "CONFIG_SPAWN_PROTECTION=#{config.get_property_value('spawn-protection')}",
@@ -83,24 +156,15 @@ module ApiDeploy
       end
 
       Rails.logger.debug "Resetting container(#{id})"
-    
-      # TODO reset logics
+      
+      level_name = config.get_property_value("level-name")
+      level_path = "nukkit/nukkit_server/worlds/#{level_name}"
+      
+      docker_container.exec ["rm", "-rf", level_path]
+      
+      sleep 2
       
       Rails.logger.debug "Container(#{id}) is resetted"
-    end
-  
-    def players_online now=false
-      return false unless started?
-      
-      unless now    
-        ApiDeploy::ContainerPlayersOnlineWorker.perform_async(id)
-        return true
-      end
-      
-      players_online = 0
-      max_players    = config.get_property_value("max-players")
-      
-      return { players_online: players_online, max_players: max_players }
     end
   
     def players_online now=false
@@ -142,13 +206,17 @@ module ApiDeploy
         return { progress: 1.0, message: "Done" }
       end
 
-      download = logs_str.scan(/([0-9]+)%\[/)
-      unless download.blank?
-        progress = download.last[0].to_f
-        progress_global = ((50 + (progress * 0.5)) / 100).round(2)
-
-        return { progress: progress_global, message: "Starting server" }
+      unless (/Saving to/).match(logs_str).nil?
+        return { progress: 0.6, message: "Updating server" }
       end
+
+      # download = logs_str.scan(/([0-9]+)%\[/)
+      # unless download.blank?
+      #   progress = download.last[0].to_f
+      #   progress_global = ((60 + (progress * 0.5)) / 100).round(2)
+      #
+      #   return { progress: progress_global, message: "Starting server" }
+      # end
       
       return { progress: 0.4, message: "Setting up server" }
     end
@@ -166,9 +234,151 @@ module ApiDeploy
     def define_config
       config.super_access = true
       config.set_property("rcon.password", SecureRandom.hex)
-      config.set_property("memory-limit", "#{plan.ram}m")
       config.set_property("max-players", plan.max_players)
       config.export_to_database
+    end
+    
+    ############################################################
+    ### Commands
+    ############################################################
+    
+    def command_xp args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      level       = args["level"] or raise ArgumentError.new("Level doesn't exists")
+      input       = "xp #{level}L #{player_name}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} just received #{level} levels"
+      
+      return { success: true }
+    end
+    
+    def command_weather args
+      value = args["value"] or raise ArgumentError.new("Value doesn't exists")
+      input       = "weather #{value}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Weather has changed to #{value}"
+      
+      return { success: true }
+    end
+  
+    def command_kill_player args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      input       = "kill #{player_name}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} has killed by the adminstrator request"
+      
+      return { success: true }
+    end
+    
+    def command_ban args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      reason      = args["reason"] or raise ArgumentError.new("Reason doesn't exists")
+      input       = "ban #{player_name} #{reason}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} has banned by the adminstrator request"
+      
+      return { success: true }
+    end
+    
+    def command_unban args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      input       = "pardon #{player_name}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} has unbunned by the adminstrator request"
+      
+      return { success: true }
+    end
+    
+    def command_tp args
+      player = args["player"] or raise ArgumentError.new("Player doesn't exists")
+      target = args["target"] or raise ArgumentError.new("Target doesn't exists")
+      
+      input  = "tp #{player} #{target}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player} has been teleported to #{target}"
+      
+      return { success: true }
+    end
+    
+    def command_give args
+      player   = args["player"] or raise ArgumentError.new("Player doesn't exists")
+      block_id = args["block_id"] or raise ArgumentError.new("Block_id doesn't exists")
+      amount   = args["amount"] or raise ArgumentError.new("Amount doesn't exists")
+      
+      input  = "give #{player} #{block_id} #{amount}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player} has received #{amount}x#{block_id}"
+      
+      return { success: true }
+    end
+    
+    def command_time args
+      value = args["value"] or raise ArgumentError.new("Value doesn't exists")
+      
+      input = "time set #{value}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      Rails.logger.info "Container(#{id}) - Minecraft : Day time has changed to #{value}"
+      
+      return { success: true }
+    end
+    
+    def command_tell args
+      player  = args["player"] or raise ArgumentError.new("Player doesn't exists")
+      message = args["message"] or raise ArgumentError.new("Message doesn't exists")
+      raise "Message is blank" if message.blank?
+      
+      input = "tell #{player} #{message}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player} received message \"#{message}\""
+      
+      return { success: true }
+    end
+    
+    def command_op args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      input       = "op #{player_name}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} is now an admin"
+      
+      return { success: true }
+    end
+    
+    def command_deop args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      input       = "deop #{player_name}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} is now not admin"
+      
+      return { success: true }
+    end
+    
+    def command_say args
+      message = args["message"] or raise ArgumentError.new("Message doesn't exists")
+      input   = "say #{message}\n"
+      
+      docker_container.attach stdin: StringIO.new(input)
+      
+      Rails.logger.info "Container(#{id}) - Minecraft : Sayed to all #{message}"
+      
+      return { success: true }
     end
     
     def command_kick args

@@ -6,21 +6,7 @@ module ApiDeploy
     LAST_TIME_UPDATED = 1450115967
     
     SCHEMA = [
-      {
-        :key           => "server-name",
-        :type          => :string,
-        :title         => "Server name",
-        :default_value => "Minecraft: PE Server",
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
-        :key           => "memory-limit",
-        :type          => :string,
-        :title         => "",
-        :default_value => "256m",
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
+      {     
         :key           => "gamemode",
         :type          => :integer,
         :title         => "",
