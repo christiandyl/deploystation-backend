@@ -65,49 +65,49 @@ module ApiDeploy
       }, {      
         :key           => "allow-flight",
         :type          => :boolean,
-        :title         => "",
+        :title         => "Allow flight",
         :default_value => false,
         :is_editable   => true,
         :validations   => {}
       }, {      
         :key           => "spawn-animals",
         :type          => :boolean,
-        :title         => "",
+        :title         => "Spawn animals",
         :default_value => true,
         :is_editable   => true,
         :validations   => {}
       }, {      
         :key           => "spawn-mobs",
         :type          => :boolean,
-        :title         => "",
+        :title         => "Spawn mobs",
         :default_value => true,
         :is_editable   => true,
         :validations   => {}
       }, {      
         :key           => "force-gamemode",
         :type          => :boolean,
-        :title         => "",
+        :title         => "Force gamemode",
         :default_value => false,
         :is_editable   => true,
         :validations   => {}
       }, {      
         :key           => "hardcore",
         :type          => :boolean,
-        :title         => "",
+        :title         => "Hardcore",
         :default_value => false,
         :is_editable   => true,
         :validations   => {}
       }, {      
         :key           => "pvp",
         :type          => :boolean,
-        :title         => "",
+        :title         => "PVP",
         :default_value => true,
         :is_editable   => true,
         :validations   => {}
       }, {      
         :key           => "difficulty",
         :type          => :integer,
-        :title         => "",
+        :title         => "Difficulty",
         :default_value => 1,
         :is_editable   => true,
         :validations   => {}
@@ -149,7 +149,7 @@ module ApiDeploy
       }, {      
         :key           => "auto-save",
         :type          => :boolean,
-        :title         => "",
+        :title         => "Auto save",
         :default_value => true,
         :is_editable   => true,
         :validations   => {}
