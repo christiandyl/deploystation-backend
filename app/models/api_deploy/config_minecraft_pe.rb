@@ -109,7 +109,7 @@ module ApiDeploy
         :type          => :integer,
         :title         => "Difficulty",
         :default_value => 1,
-        :is_editable   => true,
+        :is_editable   => false,
         :validations   => {}
       }, {      
         :key           => "generator-settings",
