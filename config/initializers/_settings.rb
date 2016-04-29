@@ -45,11 +45,12 @@ Settings = OpenStruct.new(
     :smtp_password => ENV['MANDRILL_SMTP_PASSWORD'] || 'PDsg43iGxEkq_d1OR3rY7w'
   ),
   :aws => OpenStruct.new(
-    :key    => ENV['AWS_KEY']    || 'AKIAJIP5KTJWEMQPGQZQ',
-    :secret => ENV['AWS_SECRET'] || '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',
+    :key    => ENV['AWS_KEY']    || 'AKIAJVMDNUVIY64XXDOA',
+    :secret => ENV['AWS_SECRET'] || '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',
     :s3 => OpenStruct.new(
-      :bucket => ENV['AWS_S3_BUCKET'] || 'com.deploystation.staging',
-      :region => ENV['AWS_S3_REGION'] || 'eu-central-1'
+      :bucket         => ENV['AWS_S3_BUCKET']         || 'com.deploystation.staging',
+      :region         => ENV['AWS_S3_REGION']         || 'eu-central-1',
+      :bucket_backups => ENV['AWS_S3_BUCKET_BACKUPS'] || 'com.deploystation.staging.backups',
     )
   ),
   :apns => OpenStruct.new(

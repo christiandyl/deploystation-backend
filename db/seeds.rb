@@ -5,13 +5,13 @@ features = [
 ].to_json
 
 games = [
-  { name: 'Minecraft', sname: 'minecraft', status: Game::STATUS_ENABLED, features: features },
-  { name: 'Minecraft pocket edition', sname: 'minecraft_pe', status: Game::STATUS_COMING_SOON, features: features },
-  { name: 'Counter-strike go', sname: 'counter_strike_go', status: Game::STATUS_COMING_SOON, features: features },
-  { name: 'Battlefield 4', sname: 'battlefield_4', status: Game::STATUS_COMING_SOON, features: features },
-  { name: 'Battlefield hard line', sname: 'battlefield_hl', status: Game::STATUS_COMING_SOON, features: features },
-  { name: '7 days to die', sname: 'seven_days_to_die', status: Game::STATUS_ENABLED, features: features },
-  { name: 'DayZ Standalone', sname: 'dayz_standalone', status: Game::STATUS_COMING_SOON, features: features }
+  { name: 'Minecraft', sname: 'minecraft', status: Game::STATUS_ENABLED, features: features, order: 1 },
+  { name: 'Minecraft pocket edition', sname: 'minecraft_pe', status: Game::STATUS_ENABLED, features: features, order: 3 },
+  { name: 'Counter-strike go', sname: 'counter_strike_go', status: Game::STATUS_ENABLED, features: features, order: 2 },
+  { name: 'Battlefield 4', sname: 'battlefield_4', status: Game::STATUS_COMING_SOON, features: features, order: 4 },
+  { name: 'Battlefield hard line', sname: 'battlefield_hl', status: Game::STATUS_COMING_SOON, features: features, order: 5 },
+  { name: '7 days to die', sname: 'seven_days_to_die', status: Game::STATUS_ENABLED, features: features, order: 6 },
+  { name: 'DayZ Standalone', sname: 'dayz_standalone', status: Game::STATUS_COMING_SOON, features: features, order: 7 }
 ]
 
 if Rails.env.production? # Production seeds
@@ -149,6 +149,26 @@ else # Development and Testing seeds
       :storage      => 1024,
       :storage_type => 'ssd',
       :price        => '15'
+    },
+    {
+      :game         => 'Counter-strike go',
+      :host         => 'localhost',
+      :name         => 'starter',
+      :max_players  => 16,
+      :ram          => 512,
+      :storage      => 1024,
+      :storage_type => 'ssd',
+      :price        => "5"
+    },
+    {
+      :game         => 'Minecraft pocket edition',
+      :host         => 'localhost',
+      :name         => 'starter',
+      :max_players  => 5,
+      :ram          => 256,
+      :storage      => 1024,
+      :storage_type => 'ssd',
+      :price        => "2"
     }
  ]
 
@@ -203,5 +223,19 @@ plans.each do |attrs|
   Plan.create(attrs)
 end
 puts 'Plans table is ready'
+
+ApiDeploy::SteamServerLoginToken.delete_all
+# cs go
+model = ApiDeploy::SteamServerLoginToken.create({
+  :app_id  => 730,
+  :token   => "D57CE64E91A2EB9942200110BE79C848",
+  :in_use  => false
+})
+model = ApiDeploy::SteamServerLoginToken.create({
+  :app_id  => 730,
+  :token   => "2A4587B393F40ED045746E2F1AB0FC85",
+  :in_use  => false
+})
+puts 'SteamServerLoginToken table is ready'
 
 puts 'Done'

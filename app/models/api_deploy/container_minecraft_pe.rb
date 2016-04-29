@@ -1,7 +1,10 @@
+require 'securerandom'
+require 'rcon/rcon'
+
 module ApiDeploy
-  class ContainerMinecraft < Container
-  
-    REPOSITORY = 'itzg/minecraft-server'
+  class ContainerMinecraftPe < Container
+
+    REPOSITORY = 'deploystation/mcpeserver'
     
     COMMANDS = [
       {
@@ -23,13 +26,6 @@ module ApiDeploy
         :args  => [
           { name: "player", type: "string", required: true }
         ]
-      # },{
-      #   :name  => "tp",
-      #   :title => "Teleport player",
-      #   :args  => [
-      #     { name: "player", type: "list", required: true, options: "players_list" },
-      #     { name: "target", type: "string", required: true }
-      #   ]
       },{
         :name  => "give",
         :title => "Give item to player",
@@ -91,41 +87,63 @@ module ApiDeploy
         ]
       }
     ]
-    
-    def docker_container_create_opts
-      memory = plan.ram * 1000000
+  
+    def docker_container_env_vars
+      ram = plan.ram.to_s
       
+      return [
+        "JVM_OPTS=-Xmx#{ram}M -Xms#{ram}M",
+        "CONFIG_SERVER_NAME=#{name}",
+        "CONFIG_SERVER_PORT=#{port!}",
+        "CONFIG_GAMEMODE=#{config.get_property_value('gamemode')}",
+        "CONFIG_MAX_PLAYERS=#{config.get_property_value('max-players')}",
+        "CONFIG_SPAWN_PROTECTION=#{config.get_property_value('spawn-protection')}",
+        "CONFIG_WHITE_LIST=#{config.get_property_value('white-list')}",
+        "CONFIG_ENABLE_QUERY=#{config.get_property_value('enable-query')}",
+        "CONFIG_ENABLE_RCON=#{config.get_property_value('enable-rcon')}",
+        "CONFIG_MOTD=#{config.get_property_value('motd')}",
+        "CONFIG_ANNOUNCE_PLAYER_ACHIEVEMENTS=#{config.get_property_value('announce-player-achievements')}",
+        "CONFIG_ALLOW_FLIGHT=#{config.get_property_value('allow-flight')}",
+        "CONFIG_SPAWN_ANIMALS=#{config.get_property_value('spawn-animals')}",
+        "CONFIG_SPAWN_MOBS=#{config.get_property_value('spawn-mobs')}",
+        "CONFIG_FORCE_GAMEMODE=#{config.get_property_value('force-gamemode')}",
+        "CONFIG_HARDCORE=#{config.get_property_value('hardcore')}",
+        "CONFIG_PVP=#{config.get_property_value('pvp')}",
+        "CONFIG_DIFFICULTY=#{config.get_property_value('difficulty')}",
+        "CONFIG_GENERATOR_SETTINGS=#{config.get_property_value('generator-settings')}",
+        "CONFIG_LEVEL_NAME=#{config.get_property_value('level-name')}",
+        "CONFIG_LEVEL_SEED=#{config.get_property_value('level-seed')}",
+        "CONFIG_LEVEL_TYPE=#{config.get_property_value('level-type')}",
+        "CONFIG_RCON_PASSWORD=#{config.get_property_value('rcon.password')}",
+        "CONFIG_AUTO_SAVE=#{config.get_property_value('auto-save')}",
+        "UPDATE_LATEST_DEV=YES"
+      ]
+    end
+  
+    def docker_container_create_opts
       opts = {
         "Image"        => REPOSITORY,
         "Tty"          => true,
         "OpenStdin"    => true,
         'StdinOnce'    => true,
-        "HostConfig"   => {
-          "Memory"     => memory,
-          "MemorySwap" => -1
-        },
-        "ExposedPorts" => { "25565/tcp": {}, "25565/udp": {} },
-        "PortBindings" => {
-          "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port! }],
-          "25565/udp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port! }]
-        },
-        "Env" => ["EULA=TRUE", "JVM_OPTS=-Xmx#{plan.ram}M"]
+        "ExposedPorts" => { "#{port!}/tcp": {}, "#{port!}/udp": {} },
+        "Env"          => docker_container_env_vars
       }
-      
+
       return opts
     end
-    
+  
     def docker_container_start_opts
       opts = {
         "PortBindings" => { 
-          "25565/tcp" => [{ "HostIp" => "", "HostPort" => port }],
-          "25565/udp" => [{ "HostIp" => "", "HostPort" => port }]
+          "#{port}/tcp" => [{ "HostIp" => "", "HostPort" => port }],
+          "#{port}/udp" => [{ "HostIp" => "", "HostPort" => port }]
         }
       }
       
       return opts
     end
-    
+  
     def reset now=false
       unless now    
         ApiDeploy::ContainerResetWorker.perform_async(id)
@@ -139,8 +157,13 @@ module ApiDeploy
 
       Rails.logger.debug "Resetting container(#{id})"
       
-      level_name = config.get_property_value("level-name")
-      docker_container.exec ["rm", "-rf", level_name]
+      # level_name = config.get_property_value("level-name")
+      #
+      # level_path = "nukkit/nukkit_server/worlds/#{level_name}"
+      # docker_container.exec ["rm", "-rf", level_path]
+      #
+      # players_path = "nukkit/nukkit_server/players"
+      # docker_container.exec ["rm", "-rf", players_path]
       
       sleep 2
       
@@ -169,7 +192,7 @@ module ApiDeploy
       
       return { players_online: players_online, max_players: max_players }
     end
-  
+    
     def players_list
       return [] unless started?
       
@@ -194,28 +217,59 @@ module ApiDeploy
       
       return ["minecraft:stone","minecraft:lava","minecraft:diamond_block","minecraft:diamond_sword","minecraft:diamond_pickaxe","minecraft:bowl"]
     end
-  
-    def command_data command_id, now=false
-      unless now    
-        ApiDeploy::ContainerCommandDataWorker.perform_async(id, command_id)
-        return true
-      end
+    
+    def logs
+      output = []
       
-      command = (COMMANDS.find { |c| c[:name] == command_id }).clone
-      raise "Command #{id} doesn't exists" if command.nil?
-      
-      # TODO shit code !!!!!!!!!!!!!!!!!!!!!!
-      command = JSON.parse command.to_json
-      
-      command["args"].each_with_index do |hs,i|
-        if hs["type"] == "list" && hs["options"].is_a?(String)
-          command["args"][i]["options"] = send(hs["options"])
-        end
-      end
-      
-      return command
+      return output
     end
-  
+    
+    def starting_progress
+      logs_str = docker_container.logs(stdout: true)
+      logs_str = logs_str.split("nukkit/envs").last || ""
+
+      return { progress: 0.2, message: "Initializing server" } if logs_str.blank?
+
+      unless (/Done \(/).match(logs_str).nil?
+        return { progress: 1.0, message: "Done" }
+      end
+
+      unless (/Saving to/).match(logs_str).nil?
+        return { progress: 0.6, message: "Updating server" }
+      end
+
+      # download = logs_str.scan(/([0-9]+)%\[/)
+      # unless download.blank?
+      #   progress = download.last[0].to_f
+      #   progress_global = ((60 + (progress * 0.5)) / 100).round(2)
+      #
+      #   return { progress: progress_global, message: "Starting server" }
+      # end
+      
+      return { progress: 0.4, message: "Setting up server" }
+    end
+    
+    def started?
+      s = docker_container.info["State"]
+      
+      s["Running"] == true && s["Paused"] == false && s["Restarting"] == false && s["Dead"] == false
+    end
+    
+    def config
+      @config ||= ConfigMinecraftPe.new(id)
+    end
+    
+    def define_config
+      config.super_access = true
+      config.set_property("rcon.password", SecureRandom.hex)
+      config.set_property("max-players", plan.max_players)
+      config.export_to_database
+    end
+    
+    ############################################################
+    ### Commands
+    ############################################################
+    
     def command_xp args
       player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
       level       = args["level"] or raise ArgumentError.new("Level doesn't exists")
@@ -365,75 +419,6 @@ module ApiDeploy
       Rails.logger.info "Container(#{id}) - Minecraft : Player #{player_name} has been kicked"
       
       return { success: true }
-    end
-    
-    def logs
-      logs = docker_container.logs(stdout: true).split("usermod: no changes").last
-
-      list = logs.scan(/\[([0-9]{2}:[0-9]{2}:[0-9]{2})\] \[[a-zA-Z ]*\/([A-Z]*)\]: (.+?)\r\n/)
-      
-      output = []
-      list.each do |s|
-        spl = s[0].split(":")
-        timestamp = (spl[0].to_i * 3600) + (spl[1].to_i * 60) + spl[2].to_i
-        output << {
-          :date      => nil,
-          :time      => s[0],
-          :timestamp => timestamp,
-          :type      => s[1],
-          :message   => s[2]
-        }
-      end
-      
-      # TODO write some logics to get know last day
-      
-      return output
-    end
-    
-    def starting_progress
-      logs_str = docker_container.logs(stdout: true)
-      logs_str = logs_str.split("usermod: no changes").last || ""
-      
-      return { progress: 0.2, message: "Initializing server" } if logs_str.blank?
-      
-      unless (/ Done \(/).match(logs_str).nil?
-        return { progress: 1.0, message: "Done" }
-      end
-      
-      spawn = logs_str.scan(/Preparing spawn area: ([0-9]+)%/)
-      unless spawn.blank?
-        progress = spawn.last[0].to_f
-        progress_global = ((50 + (progress * 0.5)) / 100).round(2)
-        
-        return { progress: progress_global, message: "Creating your world" }
-      end
-      
-      starting = (/ Starting minecraft server version (.+?)\r\n/).match(logs_str)
-      unless starting.nil?
-        return { progress: 0.5, message: "Starting server" }
-      end
-      
-      downloading = (/Downloading minecraft_server.(.+?).jar/).match(logs_str)
-      unless downloading.nil?
-        return { progress: 0.4, message: "Downloading server" }
-      end
-      
-      return { progress: 0.2, message: "Initializing server" }
-    end
-    
-    def started?
-      !logs.blank?
-    end
-    
-    def config
-      @config ||= ConfigMinecraft.new(id)
-    end
-    
-    def define_config
-      config.super_access = true
-      config.set_property("max-players", plan.max_players)
-      # config.set_property("level-name", name)
-      config.export_to_database
     end
     
     def commands

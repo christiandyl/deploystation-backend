@@ -5,6 +5,7 @@ module ApiDeploy
     def perform(container_id)
       begin
         container = Container.find(container_id)
+        container = Container.class_for(container.game.sname).find(container_id)
         container.destroy_container(true)
         sleep 1
       

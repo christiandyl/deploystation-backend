@@ -139,9 +139,7 @@ module ApiDeploy
         plan = Plan.find(plan_id) or raise "Plan with id #{plan_id} doesn't exists"
         game = plan.game.sname
 
-        container = Container.class_for(game).create(current_user, plan)
-        container.name = name
-        container.save!
+        container = Container.class_for(game).create(current_user, plan, name)
 
         render success_response container.to_api(:public)
       end
@@ -159,10 +157,14 @@ module ApiDeploy
       # @response_field [Boolean] result.bookmarked Bookmarked by user?
       def show
         args = @container.to_api(:public)
-        args[:owner] = @container.user_id == current_user.id
-        args[:bookmarked] = false
-        if @container.user_id != current_user.id
-          args[:bookmarked] = Bookmark.exists?(container_id: @container.id, user_id: current_user.id)
+        unless current_user.nil?
+          args[:owner] = @container.user_id == current_user.id
+          if @container.user_id != current_user.id
+            args[:bookmarked] = Bookmark.exists?(container_id: @container.id, user_id: current_user.id)
+          end
+        else
+          args[:owner] = false
+          args[:bookmarked] = false
         end
 
         render success_response args

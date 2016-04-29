@@ -2,12 +2,12 @@ module ApiDeploy
   class ContainerCreateWorker
     include Sidekiq::Worker
 
-    def perform(container_id, opts)
+    def perform(container_id)
       begin
         container = Container.find(container_id)
         container = Container.class_for(container.game.sname).find(container_id)
         
-        container.create_docker_container(opts)
+        container.create_docker_container
         container.start
         
         Rails.logger.debug "Checking container #{container.id} status..."
@@ -15,6 +15,7 @@ module ApiDeploy
         sleep 3
         20.times do
           progress = container.starting_progress
+
           if (done = (progress[:progress] == 1.0))
             Rails.logger.debug "Container #{container_id} started successfully"
             Pusher.trigger "container-#{container_id}", "create", { success: true, result: progress }
