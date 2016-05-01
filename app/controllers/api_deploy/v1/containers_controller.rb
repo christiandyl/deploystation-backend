@@ -22,7 +22,7 @@ module ApiDeploy
       # @response_field [Integer] result[].id Container id
       # @response_field [Hash] result[].info Docker container info (blank by default)
       def popular
-        containers = Container.active.where(is_private: false).paginate(pagination_params)
+        containers = Container.where(is_private: false, status: Container::STATUS_ONLINE).paginate(pagination_params)
 
         render success_response_with_pagination containers
       end
@@ -47,7 +47,7 @@ module ApiDeploy
 
         # Generating sql inputs
         condition = "containers.is_private is false and containers.status <> :status and "
-        args      = { status: ApiDeploy::Container::STATUS_SUSPENDED }
+        args      = { status: Container::STATUS_SUSPENDED }
 
         query.split(" ").each_with_index do |word, index|
           key = "q" + index.to_s
