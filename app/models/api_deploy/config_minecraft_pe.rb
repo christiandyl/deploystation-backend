@@ -74,14 +74,14 @@ module ApiDeploy
         :type          => :boolean,
         :title         => "Spawn animals",
         :default_value => true,
-        :is_editable   => true,
+        :is_editable   => false,
         :validations   => {}
       }, {      
         :key           => "spawn-mobs",
         :type          => :boolean,
         :title         => "Spawn mobs",
         :default_value => true,
-        :is_editable   => true,
+        :is_editable   => false,
         :validations   => {}
       }, {      
         :key           => "force-gamemode",

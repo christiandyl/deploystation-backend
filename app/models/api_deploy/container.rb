@@ -4,7 +4,7 @@ module ApiDeploy
 
     attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :is_private, :user_id, :is_active, :is_paid]
     
-    # default_scope -> { where.not(status: STATUS_SUSPENDED) }
+    default_scope -> { where.not(status: STATUS_SUSPENDED) }
     
     STATUS_CREATED   = "created"
     STATUS_ONLINE    = "online"
