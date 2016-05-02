@@ -5,6 +5,7 @@ module ApiDeploy
     attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :is_private, :user_id, :is_active, :is_paid]
     
     # default_scope -> { where.not(status: STATUS_SUSPENDED) }
+    scope :active, -> { where.not(status: STATUS_SUSPENDED) }
     
     STATUS_CREATED   = "created"
     STATUS_ONLINE    = "online"
@@ -17,7 +18,7 @@ module ApiDeploy
     
     TRIAL_DAYS = 7
     
-    REWARD_HOURS = 24
+    REWARD_HOURS = 48
     
     # Relations
     belongs_to :user

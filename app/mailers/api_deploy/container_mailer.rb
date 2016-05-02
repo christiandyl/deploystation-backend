@@ -14,6 +14,23 @@ module ApiDeploy
 
       send_mail(container.user.email, tpl_name, tpl_vars, subject_vars)   
     end
+    
+    def container_prolongation_email(container_id)
+      container = ApiDeploy::Container.find(container_id)
+      user = container.user
+    
+      token = container.referral_token_extra_time
+      link  = "http://app.deploystation.com/sign-up?rt=#{token}"
+    
+      tpl_name = "server-prolongation-en"
+      tpl_vars = {
+        "FNAME"      => user.full_name,
+        "SHARE_LINK" => link
+      }
+      subject_vars = {}
+
+      send_mail(container.user.email, tpl_name, tpl_vars, subject_vars)   
+    end
 
   end
 end

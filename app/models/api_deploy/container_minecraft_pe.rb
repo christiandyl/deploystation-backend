@@ -215,7 +215,23 @@ module ApiDeploy
       
       # list = data_hash.map { |hs| hs["text_id"] }
       
-      return ["minecraft:stone","minecraft:lava","minecraft:diamond_block","minecraft:diamond_sword","minecraft:diamond_pickaxe","minecraft:bowl"]
+      return [
+        "minecraft:stone",
+        "minecraft:planks",
+        "minecraft:stick",
+        "minecraft:water",
+        "minecraft:lava",
+        "minecraft:diamond_block",
+        "minecraft:diamond_sword",
+        "minecraft:diamond_pickaxe",
+        "minecraft:diamond_axe",
+        "minecraft:diamond_shovel",
+        "minecraft:bowl",
+        "minecraft:bed",
+        "minecraft:tnt",
+        "minecraft:bow",
+        "minecraft:arrow"
+      ]
     end
     
     def logs
