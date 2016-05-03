@@ -8,6 +8,11 @@ module ApiDeploy
         hs = container.players_online(true)
         unless hs == false
           container.players = hs[:players_online].to_s + "/" + hs[:max_players].to_s
+          
+          Pusher.trigger("container-#{container.id}", "players_online", {
+            :success => true,
+            :result  => hs
+          })
         end
       end
     end
