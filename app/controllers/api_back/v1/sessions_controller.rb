@@ -36,7 +36,7 @@ module ApiBack
         token = Token.new user
         token.generate_token
         
-        render success_response(auth_token: token.token, expires: token.expires, user: user.to_api(:public))
+        render response_ok(auth_token: token.token, expires: token.expires, user: user.to_api(:public))
       end
 
     end

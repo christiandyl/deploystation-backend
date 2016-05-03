@@ -8,8 +8,8 @@ module ApiConverter
 
     def attr_api public, **opts
       attrs = {
-          :public  => public,
-          :private => public + (opts[:private] || [])
+        :public  => public,
+        :private => public + (opts[:private] || [])
       }
 
       send :define_method, :to_api do |flavor|

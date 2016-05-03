@@ -18,7 +18,7 @@ module ApiBack
       # @response_field [String] result[].partner_id Connect partner id
       def index
         connects = @user.connects.map { |c| c.to_api(:public) }
-        render success_response connects
+        render response_ok connects
       end
       
       ##
@@ -50,7 +50,7 @@ module ApiBack
         connect.user_id = @user.id
         connect.save
         
-        render success_response
+        render response_ok
       end
       
       ##
@@ -64,7 +64,7 @@ module ApiBack
         raise "You can't destroy connect_login" if @connect.partner == "connect_login"
         @connect.destroy
         
-        render success_response
+        render response_ok
       end
 
       private

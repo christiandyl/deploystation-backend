@@ -57,7 +57,9 @@ Rails.application.routes.draw do
       get :search_containers, :controller => :containers, :action => :search
       
       resources :hosts, :only => [:index]
-      resources :games, :only => [:index]
+      resources :games, :only => [:index] do
+        get :random_name
+      end
     
     end
   end

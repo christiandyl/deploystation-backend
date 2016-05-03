@@ -14,6 +14,7 @@ describe 'Users API', :type => :request do
         locale: locale
       }
     }.to_json
+
     send :post, "/v1/users", :params => params
 
     expect(response.status).to eq(200)
@@ -25,6 +26,7 @@ describe 'Users API', :type => :request do
     expect(obj['result']).to be_instance_of(Hash)
     expect(obj['result']['auth_token']).to be_truthy
     expect(obj['result']['expires']).to be_truthy
+    expect(obj['result']['user']['confirmation_required']).to be(false)
   
     user = User.find_by_email(email)
     expect(user.locale == locale).to be(true)
@@ -50,12 +52,13 @@ describe 'Users API', :type => :request do
     
     confirmation_token = user.confirmation_token
     
-    params = { 
+    @context[:confirmation_params] = { 
       confirmation: { 
         token: confirmation_token
       }
-    }.to_json
-    send :post, user_confirmation_path, :params => params
+    }
+
+    send :post, user_confirmation_path, :params => @context[:confirmation_params].to_json
     
     expect(response.status).to eq(200)
 
@@ -69,6 +72,34 @@ describe 'Users API', :type => :request do
     
     user = User.find_by_email(@context.email)
     expect(user.confirmation).to be(true)
+  end
+  
+  it 'Allows user to confirm account with old token (false)' do
+    params = { 
+      confirmation: { 
+        token: "incorrecttoken"
+      }
+    }
+    
+    send :post, user_confirmation_path, :params => params.to_json
+
+    expect(response.status).to eq(404)
+
+    obj = JSON.parse(response.body)
+
+    expect(obj).to be_instance_of(Hash)
+    expect(obj['success']).to be(false)
+  end
+  
+  it 'Allows user to confirm account with incorrect token (false)' do
+    send :post, user_confirmation_path, :params => @context[:confirmation_params].to_json
+    
+    expect(response.status).to eq(404)
+
+    obj = JSON.parse(response.body)
+
+    expect(obj).to be_instance_of(Hash)
+    expect(obj['success']).to be(false)
   end
   
   it 'Allows user to get own data' do

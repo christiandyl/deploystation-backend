@@ -48,6 +48,10 @@ gem 'mandrill-api'
 gem 'slack-notifier'
 # A multi-language library for querying the Steam Community, Source, GoldSrc servers and Steam master servers
 gem 'steam-condenser'
+# Map Redis types directly to Ruby objects
+gem 'redis-objects'
+# A fast JSON parser and Object marshaller as a Ruby gem
+gem 'oj'
 
 group :development, :staging do
   gem 'spring'
@@ -76,4 +80,5 @@ end
 
 group :development, :test, :staging do
   gem 'awesome_print'
+  gem 'sidetiq'
 end

@@ -1,11 +1,16 @@
 module ApiDeploy
   class Container < ActiveRecord::Base
     include ApiConverter
+    include Redis::Objects
 
-    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :is_private, :user_id, :is_active, :is_paid]
+    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :players_on_server, :is_private, :user_id, :is_active, :is_paid]
+    
+    # redis mapper
+    value :players, :type => String, :expiration => 1.hour
     
     # default_scope -> { where.not(status: STATUS_SUSPENDED) }
     scope :active, -> { where.not(status: STATUS_SUSPENDED) }
+    scope :online, -> { where(status: STATUS_ONLINE) }
     
     STATUS_CREATED   = "created"
     STATUS_ONLINE    = "online"
@@ -198,6 +203,14 @@ module ApiDeploy
     
     def invitation method_name, method_data
       Invitation.new(self, method_name, method_data)
+    end
+    
+    def players_on_server
+      unless players.nil?
+        return players.value
+      else
+        return "0/#{plan.max_players.to_s}"
+      end
     end
     
     # def suspend

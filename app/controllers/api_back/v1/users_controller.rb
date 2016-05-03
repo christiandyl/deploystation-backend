@@ -77,7 +77,7 @@ module ApiBack
           :user       => connect.user.to_api(:public)
         }
         
-        render success_response opts
+        render response_ok opts
       end
       
       ##
@@ -96,7 +96,7 @@ module ApiBack
         opts = require_param :user, :permit => [:email, :full_name, :current_password, :new_password]
         @user.update(opts.to_hash)
         
-        render success_response
+        render response_ok
       end
       
       ##
@@ -130,7 +130,7 @@ module ApiBack
         
         @user.upload_avatar(source, type)
         
-        render success_response
+        render response_ok
       end
       
       ##
@@ -142,7 +142,7 @@ module ApiBack
       def avatar_destroy
         @user.destroy_avatar
         
-        render success_response
+        render response_ok
       end
       
       ##
@@ -155,7 +155,7 @@ module ApiBack
       # @response_field [String] result.id User id
       # @response_field [String] result.email User email
       def me
-        render success_response current_user.to_api(:public)
+        render response_ok current_user.to_api(:public)
       end
       
       ##
@@ -184,7 +184,7 @@ module ApiBack
           raise "Can't change user password : #{message.to_s}"
         end
 
-        render success_response
+        render response_ok
       end
       
       ##
@@ -195,6 +195,8 @@ module ApiBack
       # @required [Hash] confirmation
       # @required [String] confirmation.token
       #
+      # @response_field [Integer] HTTP_RESPONSE_CODE success - [200], unsuccess: [404]
+      # @response_field [_________________________] _________________________
       # @response_field [Boolean] success
       # @response_field [Hash] result
       # @response_field [String] result.auth_token User access token
@@ -209,20 +211,20 @@ module ApiBack
         user = User.find_by_confirmation_token ctoken, confirm_email: true
         
         unless user
-          raise "User confirmation failed"
+          raise ActiveRecord::RecordNotFound, "Confirmation token is invalid or old"
         end
         
         # Access token
         atoken = Token.new(user)
         atoken.generate_token
         
-        opts = {
+        data = {
           :auth_token => atoken.token,
           :expires    => atoken.expires,
           :user       => user.to_api(:public)
         }
 
-        render success_response opts
+        render response_ok data
       end
       
       ##
@@ -234,7 +236,7 @@ module ApiBack
       def request_email_confirmation
         @user.send_confirmation_mail
         
-        render success_response
+        render response_ok
       end
       
       def get_user     

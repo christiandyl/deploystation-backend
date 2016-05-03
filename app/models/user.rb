@@ -3,10 +3,12 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :new_password
 
-  attr_api [:id, :email, :full_name, :avatar_url, :locale, :confirmation]
+  attr_api [:id, :email, :full_name, :avatar_url, :locale, :confirmation, :confirmation_required]
 
   AWS_FOLDER = "users/:user_id"
   AVATAR_UPLOAD_TYPES = [:direct_upload, :url]
+
+  EMAIL_CONFIRMATION_PERIOD = 1.day
 
   has_many :connects
   has_many :containers, :class_name => "ApiDeploy::Container"
@@ -51,6 +53,10 @@ class User < ActiveRecord::Base
   def avatar_url
     return nil unless has_avatar?
     return s3_root_url + "avatar.jpg"
+  end
+  
+  def confirmation_required
+    !confirmation && Time.now > (created_at + EMAIL_CONFIRMATION_PERIOD)
   end
   
   def upload_avatar source, type, now = false    
@@ -142,6 +148,10 @@ class User < ActiveRecord::Base
     begin
       hs = JWT.decode token, Settings.token_encoding.confirmation_key
       user = self.find(hs[0]["id"])
+      
+      if user.confirmation == true
+        return false
+      end
       
       if opts[:confirm_email]
         user.update! confirmation: true

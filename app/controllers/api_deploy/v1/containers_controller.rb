@@ -24,7 +24,7 @@ module ApiDeploy
       def popular
         containers = Container.where(is_private: false, status: Container::STATUS_ONLINE).paginate(pagination_params)
 
-        render success_response_with_pagination containers
+        render response_ok_with_pagination containers
       end
 
       ##
@@ -59,7 +59,7 @@ module ApiDeploy
         # Getting experiences list
         containers = Container.joins(:user).where(condition, args).paginate(pagination_params)
 
-        render success_response_with_pagination containers
+        render response_ok_with_pagination containers
       end
 
       ##
@@ -76,7 +76,7 @@ module ApiDeploy
           c.to_api(:public)
         end
 
-        render success_response containers
+        render response_ok containers
       end
       
       ##
@@ -93,7 +93,7 @@ module ApiDeploy
           c.to_api(:public)
         end
 
-        render success_response containers
+        render response_ok containers
       end
       
       ##
@@ -110,7 +110,7 @@ module ApiDeploy
           c.to_api(:public)
         end
 
-        render success_response containers
+        render response_ok containers
       end
 
       ##
@@ -141,7 +141,7 @@ module ApiDeploy
 
         container = Container.class_for(game).create(current_user, plan, name)
 
-        render success_response container.to_api(:public)
+        render response_ok container.to_api(:public)
       end
   
       ##
@@ -167,7 +167,7 @@ module ApiDeploy
           args[:bookmarked] = false
         end
 
-        render success_response args
+        render response_ok args
       end
   
       ##
@@ -186,7 +186,7 @@ module ApiDeploy
         @container.update(opts)
         Rails.logger.debug "Container-#{@container.id} info updated: #{opts.to_s}"
         
-        render success_response
+        render response_ok
       end
   
       ##
@@ -206,7 +206,7 @@ module ApiDeploy
       def start
         @container.start
 
-        render success_response @container.to_api(:public)
+        render response_ok @container.to_api(:public)
       end
   
       ##
@@ -226,7 +226,7 @@ module ApiDeploy
       def restart
         @container.restart
       
-        render success_response @container.to_api(:public)
+        render response_ok @container.to_api(:public)
       end
   
       ##
@@ -246,7 +246,7 @@ module ApiDeploy
       def stop
         @container.stop
       
-        render success_response @container.to_api(:public)
+        render response_ok @container.to_api(:public)
       end
 
       ##
@@ -263,7 +263,7 @@ module ApiDeploy
       def reset
         @container.reset
       
-        render success_response
+        render response_ok
       end
 
       ##
@@ -280,7 +280,7 @@ module ApiDeploy
       def destroy
         @container.destroy_container
       
-        render success_response
+        render response_ok
       end
       
       ##
@@ -303,7 +303,7 @@ module ApiDeploy
 
         command = @container.command_data(id)
         
-        render success_response
+        render response_ok
       end
       
       ##
@@ -331,7 +331,7 @@ module ApiDeploy
 
         @container.command(command_name, command_args)
         
-        render success_response
+        render response_ok
       end
       
       ##
@@ -348,7 +348,7 @@ module ApiDeploy
       # @response_field [String] result[].required_args[].type Argument type
       # @response_field [Boolean] result[].required_args[].required Argument is required?
       def commands
-        render success_response @container.class::COMMANDS
+        render response_ok @container.class::COMMANDS
       end
     
       ##
@@ -368,7 +368,7 @@ module ApiDeploy
         #   raise "Can't get players online, server doesn't started"
         # end
         
-        render success_response
+        render response_ok
       end
       
       ##
@@ -385,7 +385,7 @@ module ApiDeploy
       def logs
         logs = @container.logs
         
-        render success_response logs
+        render response_ok logs
       end
       
       ##
@@ -411,7 +411,7 @@ module ApiDeploy
         invitation = @container.invitation(invitation_method, invitation_data)
         invitation.send
         
-        render success_response
+        render response_ok
       end
     
       private

@@ -16,7 +16,7 @@ module ApiDeploy
       # @response_field [Integer] result[].user_data.id User id
       # @response_field [String] result[].user_data.full_name User full name
       def index
-        render success_response( @container.accesses.all.map { |a| a.to_api(:public) } )
+        render response_ok( @container.accesses.all.map { |a| a.to_api(:public) } )
       end
       
       ##
@@ -35,7 +35,7 @@ module ApiDeploy
         user   = User.find_by_email(email)
         access = Access.create container_id: @container.id, user_id: user.id
         
-        render success_response
+        render response_ok
       end
       
       ##
@@ -48,7 +48,7 @@ module ApiDeploy
         access = @container.accesses.find_by_user_id(params[:id])
         access.destroy
         
-        render success_response
+        render response_ok
       end
       
       private

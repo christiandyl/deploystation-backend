@@ -4,8 +4,8 @@ class ApplicationController < ActionController::API
   before_filter :check_auth_token, :check_app_key
   before_filter :ensure_logged_in, :except => [:root, :v1_client_settings]
 
-  rescue_from Exception, :with => :render_error
-  rescue_from StandardError, :with => :render_error
+  rescue_from Exception, :with => :render_internal_server_error
+  rescue_from StandardError, :with => :render_internal_server_error
   rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
   rescue_from ActionController::RoutingError, :with => :render_not_found
   rescue_from PermissionDenied, :with => :render_permission_denied
@@ -107,27 +107,96 @@ class ApplicationController < ActionController::API
 
   # Render helpers
 
-  def render_error(e)
+  # def render_error(e)
+  #   session = current_user.nil? ? {} : { id: current_user.id }
+  #   Airbrake.notify_or_ignore(
+  #       e,
+  #       :parameters => params,
+  #       :cgi_data   => ENV.to_hash,
+  #       :session    => session
+  #   )
+  #
+  #   Rails.logger.error "Exception caught caused return 500 : #{e.message}"
+  #   Rails.logger.debug e.backtrace.join("\n")
+  #
+  #   render json: {success: false, error: [e.message]}, status: 500
+  # end
+
+  # def render_permission_denied e
+  #   render json: {success: false, error: [e.message]}, status: 401
+  # end
+
+  # def render_not_found(e = nil)
+  #   render json: {success: false, error: [e.message]}, status: 404
+  # end
+  
+  def render_args result, success, code
+    return {
+      :json   => Oj.dump({
+        :success => success,
+        :result  => result
+      }),
+      :status => code
+    }
+  end
+  
+  # Response helpers
+  
+  def response_ok result = nil
+    render_args(result, true, 200)
+  end
+  
+  def response_accepted result
+    render_args(result, true, 202)
+  end
+
+  def response_created result
+    render_args(result, true, 201)
+  end
+  
+  def response_unprocessable_entity result
+    render_args(result, false, 422)
+  end
+  
+  def response_not_found result
+    render_args(result, false, 404)
+  end
+  
+  def response_unauthorized result
+    render_args(result, false, 401)
+  end
+  
+  def response_internal_server_error result
+    render_args(result, false, 500)
+  end
+
+  # Render helpers
+
+  def render_internal_server_error error
     session = current_user.nil? ? {} : { id: current_user.id }
     Airbrake.notify_or_ignore(
-        e,
-        :parameters => params,
-        :cgi_data   => ENV.to_hash,
-        :session    => session
+      error,
+      :parameters => params,
+      :cgi_data   => ENV.to_hash,
+      :session    => session
     )
     
-    Rails.logger.error "Exception caught caused return 500 : #{e.message}"
-    Rails.logger.debug e.backtrace.join("\n")
-    
-    render json: {success: false, error: [e.message]}, status: 500
+    Rails.logger.error "Exception caught caused return 500 : #{error.message}"
+    Rails.logger.debug error.backtrace.join("\n")
+
+    render response_internal_server_error error.message
   end
 
-  def render_permission_denied e
-    render json: {success: false, error: [e.message]}, status: 401
+  def render_record_invalid error
+    render response_unprocessable_entity error.record.errors.messages
   end
 
-  def render_not_found(e = nil)
-    render json: {success: false, error: [e.message]}, status: 404
+  def render_not_found error
+    render response_not_found error.message
+  end
+  
+  def render_permission_denied error
+    render response_unauthorized error.message
   end
   
   # Pagination helper

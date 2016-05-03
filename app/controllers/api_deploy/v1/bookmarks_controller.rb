@@ -13,7 +13,7 @@ module ApiDeploy
       def create
         bookmark = Bookmark.create container_id: @container.id, user_id: current_user.id
         
-        render success_response
+        render response_ok
       end
       
       ##
@@ -26,7 +26,7 @@ module ApiDeploy
         bookmark = Bookmark.find_by! container_id: @container.id, user_id: current_user.id
         bookmark.delete
         
-        render success_response
+        render response_ok
       end
       
       private

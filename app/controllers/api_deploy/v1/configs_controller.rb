@@ -19,7 +19,7 @@ module ApiDeploy
       # @response_field [Boolean] result[].is_editable Is editable
       # @response_field [Hash] result[].validations Validations hash
       def show
-        render success_response @container.config.all(:public)
+        render response_ok @container.config.all(:public)
       end
       
       ##
@@ -40,7 +40,7 @@ module ApiDeploy
         @container.config.set_properties(opts)
         @container.config.export_to_database
         
-        render success_response
+        render response_ok
       end
       
       private
