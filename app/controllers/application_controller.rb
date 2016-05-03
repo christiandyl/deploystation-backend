@@ -169,6 +169,16 @@ class ApplicationController < ActionController::API
   def response_internal_server_error result
     render_args(result, false, 500)
   end
+  
+  def response_ok_with_pagination d = nil
+    result = {
+      :list         => d.map { |c| c.to_api(:public) },
+      :current_page => d.current_page,
+      :is_last_page => (d.total_pages == d.current_page)
+    }
+    
+    return response_ok(result)
+  end
 
   # Render helpers
 
