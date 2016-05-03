@@ -63,7 +63,7 @@ module ApiDeploy
         :is_editable   => true,
         :validations   => {
           :length => {
-            :allow_blank => true
+            :allow_blank => true,
             :minimum     => 1,
             :maximum     => 20
           }
