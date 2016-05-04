@@ -231,7 +231,7 @@ module ApiDeploy
         "minecraft:tnt",
         "minecraft:bow",
         "minecraft:arrow"
-      ]
+      ].map { |b| { b => b.split(":")[1] } }
     end
     
     def logs
