@@ -1,6 +1,6 @@
 module ApiDeploy
   module V1
-    class GamesController < ApplicationController
+    class PlansController < ApplicationController
 
       ##
       # Get available games list
