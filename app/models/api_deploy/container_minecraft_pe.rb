@@ -215,7 +215,7 @@ module ApiDeploy
       
       # list = data_hash.map { |hs| hs["text_id"] }
       
-      ls = [
+      return [
         "minecraft:stone",
         "minecraft:planks",
         "minecraft:stick",
@@ -231,12 +231,7 @@ module ApiDeploy
         "minecraft:tnt",
         "minecraft:bow",
         "minecraft:arrow"
-      ]
-      
-      hs = {}
-      ls.each { |b| hs[b.split(":")[0]] = b }
-      
-      return hs
+      ].map { |b| { title: b.split(":")[1].capitalize, value: b } }
     end
     
     def logs
