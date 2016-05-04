@@ -11,7 +11,7 @@ module ApiDeploy
         :type          => :list,
         :title         => "",
         :default_value => 0,
-        :is_editable   => false,
+        :is_editable   => true,
         :validations   => {},
         :options       => [
           { title: "Survival", value: 0 },

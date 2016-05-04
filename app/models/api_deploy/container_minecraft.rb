@@ -42,7 +42,7 @@ module ApiDeploy
         :name  => "time",
         :title => "Change day time",
         :args  => [
-          { name: "value", type: "list", required: true, options: ["day","night"] }
+          { title: "time of day", name: "value", type: "list", required: true, options: ["day","night"] }
         ]
       },{
         :name  => "tell",
@@ -55,7 +55,7 @@ module ApiDeploy
         :name  => "weather",
         :title => "Change weather in game",
         :args  => [
-          { name: "value", type: "list", required: true, options: ["clear","rain","thunder"] }
+          { title: "Weather", name: "value", type: "list", required: true, options: ["clear","rain","thunder"] }
         ]  
       },{
         :name  => "xp",
