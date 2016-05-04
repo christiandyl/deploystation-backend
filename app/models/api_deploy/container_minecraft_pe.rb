@@ -32,7 +32,7 @@ module ApiDeploy
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" },
           { name: "block_id", type: "list", required: true, options: "blocks_list" },
-          { name: "amount", type: "int", required: true }
+          { name: "amount", type: "int", required: true, default_value: 1 }
         ]
       },{
         :name  => "time",
