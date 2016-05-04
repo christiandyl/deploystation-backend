@@ -45,7 +45,7 @@ module ApiDeploy
         :title => "Tell something to the player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" },
-          { name: "message", type: "string", required: true }
+          { name: "message", type: "text", required: true }
         ]
       },{
         :name  => "weather",
