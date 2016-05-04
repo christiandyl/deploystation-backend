@@ -166,6 +166,14 @@ module ApiDeploy
           args[:owner] = false
           args[:bookmarked] = false
         end
+        
+        # TO DO shit code
+        # TO DO shit code
+        # TO DO shit code
+        args[:game_id] = @container.plan.game_id
+        # TO DO shit code
+        # TO DO shit code
+        # TO DO shit code
 
         render response_ok args
       end
