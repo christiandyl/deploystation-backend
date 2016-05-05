@@ -171,6 +171,7 @@ module ApiDeploy
         # TO DO shit code
         # TO DO shit code
         args[:game_id] = @container.plan.game_id
+        args[:active_until] = @container.active_until
         # TO DO shit code
         # TO DO shit code
         # TO DO shit code
