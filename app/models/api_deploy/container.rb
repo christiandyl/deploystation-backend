@@ -35,7 +35,7 @@ module ApiDeploy
   
     # Callbacks
     after_create :define_config
-    after_create :send_details_email
+    # after_create :send_details_email
     before_destroy :destroy_docker_container
   
     def command; raise "SubclassResponsibility"; end
@@ -110,6 +110,7 @@ module ApiDeploy
         Rails.logger.debug "Container(#{id}) docker has created"
       end
       
+      send_details_email
       Helper::slack_ping("User #{user.full_name} has created a new server for #{game.name}, ip is #{ip}")
       
       return container_docker
