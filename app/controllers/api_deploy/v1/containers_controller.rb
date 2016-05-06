@@ -315,14 +315,25 @@ module ApiDeploy
       # @response_field [PUSHER_KEY] command_data
       # @response_field [PUSHER_SUCCESS_RESULT] { success: true, result: [Hash] }
       # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
-      def command
-        raise "Server should be running" if @container.stopped?
-        
+      def command        
         id = params[:command_id] or raise ArgumentError.new("Command id doesn't exists")
-
-        command = @container.command_data(id)
         
-        render response_ok
+        if @container.stopped?
+          data = {
+            :code    => 334,
+            :message => "server is offline"
+          }
+          render response_not_acceptable data
+        elsif @container.players_on_server.split("/").first.to_i == 0 # TODO add normal players count validation
+          data = {
+            :code    => 333,
+            :message => "server is empty"
+          }
+          render response_not_acceptable data
+        else
+          command = @container.command_data(id)
+          render response_ok
+        end
       end
       
       ##
