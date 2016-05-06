@@ -45,6 +45,8 @@ Rails.application.routes.draw do
           get  :commands
           get  :players_online
           get  :logs
+          get  :referral_token
+          post :request_plan
           
           resource :config, :only => [:show, :update]
         end

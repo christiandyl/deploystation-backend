@@ -170,6 +170,10 @@ class ApplicationController < ActionController::API
     render_args(result, false, 500)
   end
   
+  def response_not_acceptable result
+    render_args(result, false, 406)
+  end
+  
   def response_ok_with_pagination d = nil
     result = {
       :list         => d.map { |c| c.to_api(:public) },

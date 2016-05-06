@@ -56,5 +56,9 @@ class Host < ActiveRecord::Base
     
     return port
   end
+  
+  def available?
+    return true
+  end
 
 end

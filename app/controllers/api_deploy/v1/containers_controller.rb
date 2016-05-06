@@ -138,10 +138,20 @@ module ApiDeploy
         
         plan = Plan.find(plan_id) or raise "Plan with id #{plan_id} doesn't exists"
         game = plan.game.sname
+        host = plan.host
 
-        container = Container.class_for(game).create(current_user, plan, name)
+        unless host.available?
+          # TODO add some conditions
+          data = {
+            :code    => 354,
+            :message => "server is overloaded"
+          }
+          render response_not_acceptable data
+        else
+          container = Container.class_for(game).create(current_user, plan, name)
 
-        render response_ok container.to_api(:public)
+          render response_ok container.to_api(:public)
+        end
       end
   
       ##
@@ -419,6 +429,40 @@ module ApiDeploy
         
         invitation = @container.invitation(invitation_method, invitation_data)
         invitation.send
+        
+        render response_ok
+      end
+    
+      ##
+      # Get referral token for container
+      # @resource /v1/containers/:container_id/referral_token
+      # @action GET
+      #
+      # @required [String] type Token type (extra_time,...)
+      #
+      # @response_field [Boolean] success
+      # @response_field [String] result Referral token
+      def referral_token # TODO add spec and conditions
+        # extra_time
+        type = params[:type] or raise ArgumentError
+        
+        referral_token = @container.referral_token_extra_time
+        
+        render response_ok referral_token
+      end
+      
+      ##
+      # Request new plan
+      # @resource /v1/containers/:container_id/request_plan
+      # @action POST
+      #
+      # @required [Hash] request_plan
+      # @required [Integer] request_plan.plan_id Plan id
+      #
+      # @response_field [Boolean] success
+      def request_plan
+        opts = params.require(:request_plan)
+        plan_id = opts[:plan_id] or raise ArgumentError
         
         render response_ok
       end
