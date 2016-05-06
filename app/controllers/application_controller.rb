@@ -178,7 +178,7 @@ class ApplicationController < ActionController::API
     render_args(result, false, 400)
   end
   
-  def response_too_many_requests
+  def response_too_many_requests result
     render_args(result, false, 429)
   end
   
