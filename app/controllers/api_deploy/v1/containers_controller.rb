@@ -146,7 +146,7 @@ module ApiDeploy
             :code    => 354,
             :message => "server is overloaded"
           }
-          render response_bad_request data
+          render response_too_many_requests data
         else
           container = Container.class_for(game).create(current_user, plan, name)
 
@@ -329,7 +329,7 @@ module ApiDeploy
             :code    => 333,
             :message => "server is empty"
           }
-          render response_bad_request data
+          render response_not_acceptable data
         else
           command = @container.command_data(id)
           render response_ok

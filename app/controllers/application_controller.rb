@@ -178,6 +178,10 @@ class ApplicationController < ActionController::API
     render_args(result, false, 400)
   end
   
+  def response_too_many_requests
+    render_args(result, false, 429)
+  end
+  
   def response_ok_with_pagination d = nil
     result = {
       :list         => d.map { |c| c.to_api(:public) },
