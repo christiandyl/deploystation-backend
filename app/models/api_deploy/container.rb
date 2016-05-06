@@ -3,7 +3,7 @@ module ApiDeploy
     include ApiConverter
     include Redis::Objects
 
-    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :players_on_server, :is_private, :user_id, :is_active, :is_paid]
+    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :players_on_server, :is_private, :user_id, :is_active, :is_paid, :host_id]
     
     # redis mapper
     value :players, :type => String, :expiration => 1.hour
