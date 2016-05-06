@@ -58,7 +58,7 @@ class Host < ActiveRecord::Base
   end
   
   def available?
-    return true
+    return false
   end
 
 end
