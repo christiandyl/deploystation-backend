@@ -174,7 +174,7 @@ class ApplicationController < ActionController::API
     render_args(result, false, 406)
   end
   
-  def response_bad_request
+  def response_bad_request result
     render_args(result, false, 400)
   end
   
