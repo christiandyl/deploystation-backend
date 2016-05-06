@@ -146,7 +146,7 @@ module ApiDeploy
             :code    => 354,
             :message => "server is overloaded"
           }
-          render response_not_acceptable data
+          render response_bad_request data
         else
           container = Container.class_for(game).create(current_user, plan, name)
 
@@ -323,13 +323,13 @@ module ApiDeploy
             :code    => 334,
             :message => "server is offline"
           }
-          render response_not_acceptable data
+          render response_bad_request data
         elsif @container.players_on_server.split("/").first.to_i == 0 # TODO add normal players count validation
           data = {
             :code    => 333,
             :message => "server is empty"
           }
-          render response_not_acceptable data
+          render response_bad_request data
         else
           command = @container.command_data(id)
           render response_ok
