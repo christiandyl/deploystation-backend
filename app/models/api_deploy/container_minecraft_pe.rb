@@ -170,9 +170,7 @@ module ApiDeploy
       Rails.logger.debug "Container(#{id}) is resetted"
     end
   
-    def players_online now=false
-      return false if stopped?
-      
+    def players_online now=false      
       unless now    
         ApiDeploy::ContainerPlayersOnlineWorker.perform_async(id)
         return true
@@ -181,13 +179,15 @@ module ApiDeploy
       players_online = 0
       max_players    = config.get_property_value("max-players")
       
-      begin
-        query = ::Query::fullQuery(host.ip, port)
+      unless stopped?
+        begin
+          query = ::Query::fullQuery(host.ip, port)
       
-        players_online = query[:numplayers].to_i
-        max_players    = query[:maxplayers].to_i
-      rescue
-        Rails.logger.debug "Can't get query from Minecraft server in container-#{id}"
+          players_online = query[:numplayers].to_i
+          max_players    = query[:maxplayers].to_i
+        rescue
+          Rails.logger.debug "Can't get query from Minecraft server in container-#{id}"
+        end
       end
       
       return { players_online: players_online, max_players: max_players }

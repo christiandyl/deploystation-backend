@@ -3,10 +3,10 @@ module ApiDeploy
     include Sidekiq::Worker
     include Sidetiq::Schedulable
 
-    recurrence { hourly.minute_of_hour(0, 15, 30, 45) }
+    recurrence { minutely.second_of_minute(9, 19, 29, 39, 49, 59) }
 
     def perform
-      ApiDeploy::ContainerCheckerWorker.perform_async(Container.count,0)
+      ApiDeploy::ContainerCheckerWorker.perform_async(Container.count, 0)
     end
   end
 end

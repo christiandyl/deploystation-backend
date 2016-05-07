@@ -324,7 +324,7 @@ module ApiDeploy
             :message => "server is offline"
           }
           render response_bad_request data
-        elsif @container.players_on_server.split("/").first.to_i == 0 # TODO add normal players count validation
+        elsif @container.players_online(true)[:players_online] == 0 # TODO add normal players count validation
           data = {
             :code    => 333,
             :message => "server is empty"
