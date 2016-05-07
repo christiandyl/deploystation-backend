@@ -7,7 +7,7 @@ module ApiDeploy
       before_filter :get_container, :except => [:index, :shared, :create, :bookmarked, :popular, :search]
       before_action :check_permissions, :except => [:index, :shared, :create, :destroy, :bookmarked, :popular, :show, :search, :players_online]
       before_action :check_super_permissions, :only => [:destroy]
-      before_filter :check_is_active, :except => [:index, :shared, :create, :bookmarked, :popular, :search, :show]
+      before_filter :check_is_active, :except => [:index, :shared, :create, :bookmarked, :popular, :search, :show, :destroy]
 
       ##
       # Get popular containers
