@@ -182,11 +182,17 @@ module ApiDeploy
         :validations   => {}
       }, {
         :key           => "difficulty",
-        :type          => :integer,
+        :type          => :list,
         :title         => "",
         :default_value => 1,
-        :is_editable   => false,
-        :validations   => {}
+        :is_editable   => true,
+        :validations   => {},
+        :options       => [
+          { title: "Peaceful", value: 0 },
+          { title: "Easy", value: 1 },
+          { title: "Normal", value: 2 },
+          { title: "Hard", value: 3 }
+        ]
       }, {
         :key           => "enable-command-block",
         :type          => :boolean,
@@ -196,11 +202,17 @@ module ApiDeploy
         :validations   => {}
       }, {
         :key           => "gamemode",
-        :type          => :integer,
+        :type          => :list,
         :title         => "",
         :default_value => 0,
-        :is_editable   => false,
-        :validations   => {}
+        :is_editable   => true,
+        :validations   => {},
+        :options       => [
+          { title: "Survival", value: 0 },
+          { title: "Creative", value: 1 },
+          { title: "Adventure", value: 2 },
+          { title: "Spectator", value: 3 }
+        ]
       }, {
         :key           => "player-idle-timeout",
         :type          => :integer,

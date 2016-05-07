@@ -19,7 +19,6 @@ module ApiDeploy
           { title: "Adventure", value: 2 },
           { title: "Spectator", value: 3 }
         ]
-        
       }, {      
         :key           => "max-players",
         :type          => :integer,
