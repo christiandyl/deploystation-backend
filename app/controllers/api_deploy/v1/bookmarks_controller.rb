@@ -33,7 +33,7 @@ module ApiDeploy
     
       def get_container
         container = Container.find(params[:container_id])
-        app       = container.game.name
+        app       = container.game.sname
       
         @container = Container.class_for(app).find(params[:container_id])
         
