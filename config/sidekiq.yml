@@ -1,6 +1,10 @@
 ---
 :concurrency: 3
 :pidfile: tmp/pids/sidekiq.pid
+:queues:
+  - critical
+  - default
+  - low
 beta:
   :concurrency: 10
 production:

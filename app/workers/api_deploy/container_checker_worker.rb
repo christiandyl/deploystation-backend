@@ -2,6 +2,8 @@ module ApiDeploy
   class ContainerCheckerWorker
     include Sidekiq::Worker
 
+    sidekiq_options unique: :all, queue: 'critical'
+
     def perform(limit, offset)
       Container.online.limit(limit).offset(offset).each  do |c|
         container = Container.class_for(c.game.sname).find_by_id(c.id)
