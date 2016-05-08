@@ -12,10 +12,22 @@ module ApiDeploy
 
           container.players = hs[:players_online].to_s + "/" + hs[:max_players].to_s
         
-          Pusher.trigger("container-#{container.id}", "players_online", {
-            :success => true,
-            :result  => hs
-          })
+          channel_name = "container-#{container.id}"
+        
+          # TODO channel exists validation for slanger
+          begin
+            channels = Pusher.channels
+            channel_exists = !channels[:channels][channel_name].nil? rescue false
+          rescue
+            channel_exists = true
+          end
+          
+          if channel_exists
+            Pusher.trigger(channel_name, "players_online", {
+              :success => true,
+              :result  => hs
+            })
+          end
         end
 
       end
