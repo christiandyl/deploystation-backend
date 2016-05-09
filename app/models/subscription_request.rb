@@ -7,7 +7,7 @@ class SubscriptionRequest < ActiveRecord::Base
   after_create :slack_ping
   
   def slack_ping
-    Helper::slack_ping("User #{user.full_name} has send request for plan change for container - #{container.id}")
+    ApiDeploy::Helper::slack_ping("User #{user.full_name} has send request for plan change for container - #{container.id}")
   end
   
 end
