@@ -471,9 +471,17 @@ module ApiDeploy
       # @required [Integer] request_plan.plan_id Plan id
       #
       # @response_field [Boolean] success
+      # TODO THERE ARE NO SPEC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       def request_plan
         opts = params.require(:request_plan)
         plan_id = opts[:plan_id] or raise ArgumentError
+        
+        sr = SubscriptionRequest.create!({
+          :user_id      => current_user.id,
+          :container_id => @container.id,
+          :plan_id      => plan_id,
+          :status       => "new"
+        })
         
         render response_ok
       end
