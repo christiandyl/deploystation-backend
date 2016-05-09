@@ -1,7 +1,7 @@
 class SubscriptionRequest < ActiveRecord::Base
   
   belongs_to :user
-  belongs_to :container
+  belongs_to :container, :class_name => "ApiDeploy::Container"
   belongs_to :plan
   
   after_create :slack_ping
