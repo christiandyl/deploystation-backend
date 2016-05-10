@@ -8,5 +8,5 @@ module Clockwork
     ApiDeploy::Periodic::ContainerPlayersOnlineWorker.perform_async(ApiDeploy::Container.count, 0)
   end
 
-  every(10.seconds, 'players_online.job')
+  every(15.seconds, 'players_online.job')
 end
