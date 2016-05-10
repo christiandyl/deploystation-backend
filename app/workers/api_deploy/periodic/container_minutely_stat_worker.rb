@@ -1,4 +1,4 @@
-module Periodic::ApiDeploy
+module ApiDeploy::Periodic
   class ContainerDailyStatWorker
     include Sidekiq::Worker
 
