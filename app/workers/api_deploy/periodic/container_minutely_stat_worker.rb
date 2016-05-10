@@ -7,9 +7,11 @@ module ApiDeploy
 
       def perform(limit, offset)
         Container.all.each do |c|
+          players = c.players_on_server.split("/").first rescue 0
+          
           stat = ContainerStatPlayers.new({
             :container_id   => c.id,
-            :players_online => c.players_on_server
+            :players_online => players
           })
           stat.save
         end
