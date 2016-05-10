@@ -7,7 +7,7 @@ module ApiDeploy
 
       def perform(limit, offset)
         Container.all.each do |c|
-          players = c.players_on_server.split("/").first rescue 0
+          players = c.players_on_server.split("/").first.to_i rescue 0
           
           if players > 0
             stat = ContainerStatPlayers.new({
