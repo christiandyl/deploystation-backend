@@ -9,11 +9,13 @@ module ApiDeploy
         Container.all.each do |c|
           players = c.players_on_server.split("/").first rescue 0
           
-          stat = ContainerStatPlayers.new({
-            :container_id   => c.id,
-            :players_online => players
-          })
-          stat.save
+          if players > 0
+            stat = ContainerStatPlayers.new({
+              :container_id   => c.id,
+              :players_online => players
+            })
+            stat.save
+          end
         end
       end
     end
