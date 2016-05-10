@@ -5,7 +5,7 @@ module ApiDeploy::Periodic
     sidekiq_options unique: :all, queue: 'critical'
 
     def perform(limit, offset)
-      Container.online.limit(limit).offset(offset).each  do |c|
+      ApiDeploy::Container.online.limit(limit).offset(offset).each  do |c|
         container = Container.class_for(c.game.sname).find_by_id(c.id)
         unless container.nil?
           hs = container.players_online(true)
