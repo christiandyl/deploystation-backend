@@ -1,6 +1,6 @@
 module ApiDeploy
   module Periodic
-    class ContainerDailyStatWorker
+    class ContainerMinutelyStatWorker
       include Sidekiq::Worker
 
       sidekiq_options unique: :all, queue: 'low'
