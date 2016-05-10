@@ -323,7 +323,7 @@ module ApiDeploy
       # @response_field [PUSHER_KEY] command_data
       # @response_field [PUSHER_SUCCESS_RESULT] { success: true, result: [Hash] }
       # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
-      def command        
+      def command
         id = params[:command_id] or raise ArgumentError.new("Command id doesn't exists")
         
         if @container.stopped?
@@ -332,7 +332,7 @@ module ApiDeploy
             :message => "server is offline"
           }
           render response_bad_request data
-        elsif @container.players_online(true)[:players_online] == 0 # TODO add normal players count validation
+        elsif @container.players_list.blank? # TODO add normal players count validation
           data = {
             :code    => 333,
             :message => "server is empty"
