@@ -61,6 +61,8 @@ group :development, :staging do
   gem 'redcarpet'
   gem 'yard'
   gem 'yard-rest'
+  
+  gem 'clockwork', :require => false
 end
 
 group :test do
@@ -82,5 +84,4 @@ end
 
 group :development, :test, :staging do
   gem 'awesome_print'
-  gem 'sidetiq'
 end
