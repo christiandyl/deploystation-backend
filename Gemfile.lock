@@ -90,6 +90,10 @@ GEM
     docker-api (1.22.4)
       excon (>= 0.38.0)
       json
+    dynamoid (1.1.0)
+      activemodel (~> 4)
+      aws-sdk-resources (~> 2)
+      concurrent-ruby (>= 1.0)
     em-http-request (1.1.3)
       addressable (>= 2.3.4)
       cookiejar (<= 0.3.0)
@@ -286,6 +290,7 @@ DEPENDENCIES
   capybara-screenshot
   database_cleaner
   docker-api (= 1.22.4)
+  dynamoid (~> 1.1.0)
   factory_girl_rails
   faker
   gibbon

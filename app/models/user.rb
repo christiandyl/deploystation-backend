@@ -189,6 +189,7 @@ class User < ActiveRecord::Base
         status = user.give_reward(reward)
 
         if status == true
+          Helper::slack_ping("#{full_name} was invited by #{User.find(user.id).full_name}") rescue nil
           Reward.create!(inviter_id: user.id, invited_id: self.id, referral_data: reward )
         end
       end

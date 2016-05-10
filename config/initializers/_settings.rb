@@ -47,10 +47,14 @@ Settings = OpenStruct.new(
   :aws => OpenStruct.new(
     :key    => ENV['AWS_KEY']    || 'AKIAJVMDNUVIY64XXDOA',
     :secret => ENV['AWS_SECRET'] || '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',
+    :region => ENV['AWS_REGION'] || 'eu-central-1',
     :s3 => OpenStruct.new(
       :bucket         => ENV['AWS_S3_BUCKET']         || 'com.deploystation.staging',
       :region         => ENV['AWS_S3_REGION']         || 'eu-central-1',
       :bucket_backups => ENV['AWS_S3_BUCKET_BACKUPS'] || 'com.deploystation.staging.backups',
+    ),
+    :dynamo_db => OpenStruct.new(
+      :namespace => ENV['AWS_DYNAMO_DB_NAMESPACE'] || "ds_development"
     )
   ),
   :apns => OpenStruct.new(

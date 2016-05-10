@@ -287,6 +287,23 @@ module ApiDeploy
       @config ||= GameConfig.class_for(game.sname).new(id)
     end
     
+    def push_new_stat_gaming_time attrs
+      total_gaming_time   = attrs[:total_gaming_time] || 0
+      segment_gaming_time = attrs[:segment_gaming_time] || 0
+      
+      begin
+        ContainerStatGamingTime.new({
+          :container_id        => id,
+          :total_gaming_time   => total_gaming_time,
+          :segment_gaming_time => segment_gaming_time
+        }).save
+      
+        return true
+      rescue
+        return false
+      end
+    end
+    
     def referral_token_extra_time
       user.referral_token({
         :reward => {

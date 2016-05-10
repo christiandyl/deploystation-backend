@@ -52,6 +52,8 @@ gem 'steam-condenser'
 gem 'redis-objects'
 # A fast JSON parser and Object marshaller as a Ruby gem
 gem 'oj'
+# Dynamoid is an ORM for Amazon's DynamoDB
+gem 'dynamoid', '~> 1.1.0'
 
 group :development, :staging do
   gem 'spring'

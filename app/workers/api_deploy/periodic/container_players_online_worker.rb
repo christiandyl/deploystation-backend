@@ -1,5 +1,5 @@
-module ApiDeploy
-  class ContainerCheckerWorker
+module ApiDeploy::Periodic
+  class ContainerPlayersOnlineWorker
     include Sidekiq::Worker
 
     sidekiq_options unique: :all, queue: 'critical'

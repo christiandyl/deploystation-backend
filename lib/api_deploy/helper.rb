@@ -8,7 +8,6 @@ module ApiDeploy
       def slack_ping message, opts={}
         url = Settings.slack.webhooks.events
         
-        return if url.blank?
         return if url.blank? || !Rails.env.production?
         
         begin
