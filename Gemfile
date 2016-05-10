@@ -48,6 +48,12 @@ gem 'mandrill-api'
 gem 'slack-notifier'
 # A multi-language library for querying the Steam Community, Source, GoldSrc servers and Steam master servers
 gem 'steam-condenser'
+# Map Redis types directly to Ruby objects
+gem 'redis-objects'
+# A fast JSON parser and Object marshaller as a Ruby gem
+gem 'oj'
+# Dynamoid is an ORM for Amazon's DynamoDB
+gem 'dynamoid', '~> 1.1.0'
 
 group :development, :staging do
   gem 'spring'
@@ -55,6 +61,9 @@ group :development, :staging do
   gem 'redcarpet'
   gem 'yard'
   gem 'yard-rest'
+  
+  gem 'daemons', :require => false
+  gem 'clockwork', :require => false
 end
 
 group :test do

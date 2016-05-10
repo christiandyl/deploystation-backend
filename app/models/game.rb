@@ -36,5 +36,24 @@ class Game < ActiveRecord::Base
     
     return data
   end
+  
+  def random_name
+    name = case sname
+    when "minecraft"
+      rwords = ["Craft", "Mine", "Crafter", "Block", "World", "My", "Super", "Mini"]
+      rwords.sample + rwords.sample + rand(100).to_s
+    when "minecraft_pe"
+      rwords = ["Craft", "Mine", "Crafter", "Block", "World", "My", "Super", "Mini", "Pocket", "PE", "My"]
+      rwords.sample + rwords.sample + rand(100).to_s
+    when "counter_strike_go"
+      rwords = ["Cs", "Go", "Counter", "Strike"]
+      rwords.sample + rwords.sample + rand(100).to_s
+    else
+      rwords = ["Game", "Server", "My", "Super", "Cool"]
+      rwords.sample + rwords.sample + rand(100).to_s
+    end
+    
+    return name
+  end
 
 end

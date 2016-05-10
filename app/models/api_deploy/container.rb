@@ -1,11 +1,16 @@
 module ApiDeploy
   class Container < ActiveRecord::Base
     include ApiConverter
+    include Redis::Objects
 
-    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :is_private, :user_id, :is_active, :is_paid]
+    attr_api [:id, :status, :host_info, :plan_info, :game_info, :ip, :name, :players_on_server, :is_private, :user_id, :is_active, :is_paid, :host_id]
+    
+    # redis mapper
+    value :players, :type => String, :expiration => 1.hour
     
     # default_scope -> { where.not(status: STATUS_SUSPENDED) }
     scope :active, -> { where.not(status: STATUS_SUSPENDED) }
+    scope :online, -> { where(status: STATUS_ONLINE) }
     
     STATUS_CREATED   = "created"
     STATUS_ONLINE    = "online"
@@ -201,6 +206,14 @@ module ApiDeploy
       Invitation.new(self, method_name, method_data)
     end
     
+    def players_on_server
+      unless players.nil?
+        return players.value
+      else
+        return "0/#{plan.max_players.to_s}"
+      end
+    end
+    
     # def suspend
     #   self.status = STATUS_SUSPENDED
     #   save
@@ -273,6 +286,23 @@ module ApiDeploy
     
     def config
       @config ||= GameConfig.class_for(game.sname).new(id)
+    end
+    
+    def push_new_stat_gaming_time attrs
+      total_gaming_time   = attrs[:total_gaming_time] || 0
+      segment_gaming_time = attrs[:segment_gaming_time] || 0
+      
+      begin
+        ContainerStatGamingTime.new({
+          :container_id        => id,
+          :total_gaming_time   => total_gaming_time,
+          :segment_gaming_time => segment_gaming_time
+        }).save
+      
+        return true
+      rescue
+        return false
+      end
     end
     
     def referral_token_extra_time

@@ -45,6 +45,8 @@ Rails.application.routes.draw do
           get  :commands
           get  :players_online
           get  :logs
+          get  :referral_token
+          post :request_plan
           
           resource :config, :only => [:show, :update]
         end
@@ -57,7 +59,10 @@ Rails.application.routes.draw do
       get :search_containers, :controller => :containers, :action => :search
       
       resources :hosts, :only => [:index]
-      resources :games, :only => [:index]
+      resources :plans, :only => [:index]
+      resources :games, :only => [:index] do
+        get :random_name
+      end
     
     end
   end

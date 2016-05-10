@@ -13,7 +13,7 @@ module ApiBack
       def client_token
         client_token = Braintree::ClientToken.generate
         
-        render success_response client_token: client_token
+        render response_ok client_token: client_token
       end
       
       ##
@@ -46,7 +46,7 @@ module ApiBack
         # ap result
         puts result.to_s
         
-        render success_response result
+        render response_ok result
       end
       
     end

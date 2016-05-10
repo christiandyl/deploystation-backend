@@ -18,7 +18,7 @@ module ApiDeploy
       # @response_field [String] result[].plans_list[].name Plan name
       # @response_field [Integer] result[].plans_list[].max_players Plan max players count
       def index
-        render success_response( Host.all.map { |h| h.to_api(:public) } )
+        render response_ok( Host.all.map { |h| h.to_api(:public) } )
       end
 
     end

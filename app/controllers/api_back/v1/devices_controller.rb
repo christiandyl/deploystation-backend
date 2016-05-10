@@ -19,7 +19,7 @@ module ApiBack
         
         device = Device.create user_id: current_user.id, device_type: device_type, push_token: push_token
         
-        render success_response
+        render response_ok
       end
       
       ##
@@ -32,7 +32,7 @@ module ApiBack
         device = Device.find_by_push_token(params[:push_token])
         device.delete
         
-        render success_response
+        render response_ok
       end
       
     end

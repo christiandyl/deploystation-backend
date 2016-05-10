@@ -7,7 +7,7 @@ module ApiDeploy
       before_filter :get_container, :except => [:index, :shared, :create, :bookmarked, :popular, :search]
       before_action :check_permissions, :except => [:index, :shared, :create, :destroy, :bookmarked, :popular, :show, :search, :players_online]
       before_action :check_super_permissions, :only => [:destroy]
-      before_filter :check_is_active, :except => [:index, :shared, :create, :bookmarked, :popular, :search, :show]
+      before_filter :check_is_active, :except => [:index, :shared, :create, :bookmarked, :popular, :search, :show, :destroy]
 
       ##
       # Get popular containers
@@ -24,7 +24,7 @@ module ApiDeploy
       def popular
         containers = Container.where(is_private: false, status: Container::STATUS_ONLINE).paginate(pagination_params)
 
-        render success_response_with_pagination containers
+        render response_ok_with_pagination containers
       end
 
       ##
@@ -59,7 +59,7 @@ module ApiDeploy
         # Getting experiences list
         containers = Container.joins(:user).where(condition, args).paginate(pagination_params)
 
-        render success_response_with_pagination containers
+        render response_ok_with_pagination containers
       end
 
       ##
@@ -76,7 +76,7 @@ module ApiDeploy
           c.to_api(:public)
         end
 
-        render success_response containers
+        render response_ok containers
       end
       
       ##
@@ -93,7 +93,7 @@ module ApiDeploy
           c.to_api(:public)
         end
 
-        render success_response containers
+        render response_ok containers
       end
       
       ##
@@ -110,7 +110,7 @@ module ApiDeploy
           c.to_api(:public)
         end
 
-        render success_response containers
+        render response_ok containers
       end
 
       ##
@@ -138,10 +138,20 @@ module ApiDeploy
         
         plan = Plan.find(plan_id) or raise "Plan with id #{plan_id} doesn't exists"
         game = plan.game.sname
+        host = plan.host
 
-        container = Container.class_for(game).create(current_user, plan, name)
+        unless host.available?
+          # TODO add some conditions
+          data = {
+            :code    => 354,
+            :message => "server is overloaded"
+          }
+          render response_too_many_requests data
+        else
+          container = Container.class_for(game).create(current_user, plan, name)
 
-        render success_response container.to_api(:public)
+          render response_ok container.to_api(:public)
+        end
       end
   
       ##
@@ -166,8 +176,17 @@ module ApiDeploy
           args[:owner] = false
           args[:bookmarked] = false
         end
+        
+        # TO DO shit code
+        # TO DO shit code
+        # TO DO shit code
+        args[:game_id] = @container.plan.game_id
+        args[:active_until] = @container.active_until
+        # TO DO shit code
+        # TO DO shit code
+        # TO DO shit code
 
-        render success_response args
+        render response_ok args
       end
   
       ##
@@ -186,7 +205,7 @@ module ApiDeploy
         @container.update(opts)
         Rails.logger.debug "Container-#{@container.id} info updated: #{opts.to_s}"
         
-        render success_response
+        render response_ok
       end
   
       ##
@@ -206,7 +225,7 @@ module ApiDeploy
       def start
         @container.start
 
-        render success_response @container.to_api(:public)
+        render response_ok @container.to_api(:public)
       end
   
       ##
@@ -226,7 +245,7 @@ module ApiDeploy
       def restart
         @container.restart
       
-        render success_response @container.to_api(:public)
+        render response_ok @container.to_api(:public)
       end
   
       ##
@@ -246,7 +265,7 @@ module ApiDeploy
       def stop
         @container.stop
       
-        render success_response @container.to_api(:public)
+        render response_ok @container.to_api(:public)
       end
 
       ##
@@ -263,7 +282,7 @@ module ApiDeploy
       def reset
         @container.reset
       
-        render success_response
+        render response_ok
       end
 
       ##
@@ -280,7 +299,7 @@ module ApiDeploy
       def destroy
         @container.destroy_container
       
-        render success_response
+        render response_ok
       end
       
       ##
@@ -296,14 +315,25 @@ module ApiDeploy
       # @response_field [PUSHER_KEY] command_data
       # @response_field [PUSHER_SUCCESS_RESULT] { success: true, result: [Hash] }
       # @response_field [PUSHER_UNSUCCESS_RESULT] { success: false }
-      def command
-        raise "Server should be running" if @container.stopped?
-        
+      def command        
         id = params[:command_id] or raise ArgumentError.new("Command id doesn't exists")
-
-        command = @container.command_data(id)
         
-        render success_response
+        if @container.stopped?
+          data = {
+            :code    => 334,
+            :message => "server is offline"
+          }
+          render response_bad_request data
+        elsif @container.players_online(true)[:players_online] == 0 # TODO add normal players count validation
+          data = {
+            :code    => 333,
+            :message => "server is empty"
+          }
+          render response_not_acceptable data
+        else
+          command = @container.command_data(id)
+          render response_ok
+        end
       end
       
       ##
@@ -331,7 +361,7 @@ module ApiDeploy
 
         @container.command(command_name, command_args)
         
-        render success_response
+        render response_ok
       end
       
       ##
@@ -348,7 +378,7 @@ module ApiDeploy
       # @response_field [String] result[].required_args[].type Argument type
       # @response_field [Boolean] result[].required_args[].required Argument is required?
       def commands
-        render success_response @container.class::COMMANDS
+        render response_ok @container.class::COMMANDS
       end
     
       ##
@@ -368,7 +398,7 @@ module ApiDeploy
         #   raise "Can't get players online, server doesn't started"
         # end
         
-        render success_response
+        render response_ok
       end
       
       ##
@@ -385,7 +415,7 @@ module ApiDeploy
       def logs
         logs = @container.logs
         
-        render success_response logs
+        render response_ok logs
       end
       
       ##
@@ -411,7 +441,49 @@ module ApiDeploy
         invitation = @container.invitation(invitation_method, invitation_data)
         invitation.send
         
-        render success_response
+        render response_ok
+      end
+    
+      ##
+      # Get referral token for container
+      # @resource /v1/containers/:container_id/referral_token
+      # @action GET
+      #
+      # @required [String] type Token type (extra_time,...)
+      #
+      # @response_field [Boolean] success
+      # @response_field [String] result Referral token
+      def referral_token # TODO add spec and conditions
+        # extra_time
+        type = params[:type] or raise ArgumentError
+        
+        referral_token = @container.referral_token_extra_time
+        
+        render response_ok referral_token
+      end
+      
+      ##
+      # Request new plan
+      # @resource /v1/containers/:container_id/request_plan
+      # @action POST
+      #
+      # @required [Hash] request_plan
+      # @required [Integer] request_plan.plan_id Plan id
+      #
+      # @response_field [Boolean] success
+      # TODO THERE ARE NO SPEC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      def request_plan
+        opts = params.require(:request_plan)
+        plan_id = opts[:plan_id] or raise ArgumentError
+        
+        sr = SubscriptionRequest.create!({
+          :user_id      => current_user.id,
+          :container_id => @container.id,
+          :plan_id      => plan_id,
+          :status       => "new"
+        })
+        
+        render response_ok
       end
     
       private

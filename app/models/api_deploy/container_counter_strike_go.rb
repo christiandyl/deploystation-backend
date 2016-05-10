@@ -99,9 +99,7 @@ module ApiDeploy
       Rails.logger.debug "Container(#{id}) is resetted"
     end
   
-    def players_online now=false
-      return false unless started?
-      
+    def players_online now=false      
       unless now    
         ApiDeploy::ContainerPlayersOnlineWorker.perform_async(id)
         return true
@@ -110,10 +108,12 @@ module ApiDeploy
       players_online = 0
       max_players    = config.get_property_value(:max_players)
       
-      rcon_auth do |server|
-        unless server.nil?
-          players_online = server.server_info[:number_of_players]
-          max_players    = server.server_info[:max_players]
+      if started?
+        rcon_auth do |server|
+          unless server.nil?
+            players_online = server.server_info[:number_of_players]
+            max_players    = server.server_info[:max_players]
+          end
         end
       end
       

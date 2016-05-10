@@ -25,11 +25,12 @@ describe 'Containers API', :type => :request do
     expect(obj['success']).to be(true)
     # expect(obj["result"]["id"]).not_to be_empty
 
-    container = ApiDeploy::Container.find(obj["result"]["id"]) rescue nil
+    container = ApiDeploy::ContainerMinecraft.find(obj["result"]["id"]) rescue nil
     expect(container).not_to be_nil
 
     @context.container_id = container.id
-    
+    byebug
+    container.calculate_stats_for_today
     byebug
   end
   
@@ -77,6 +78,10 @@ describe 'Containers API', :type => :request do
 
     container = ApiDeploy::Container.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
+    
+    ApiDeploy::ContainerCheckerWorker.perform_async(10,0)
+    
+    expect(container.players_on_server).to be_truthy
   end
   
   it 'Allows to reset container' do

@@ -8,11 +8,17 @@ module ApiDeploy
     SCHEMA = [
       {     
         :key           => "gamemode",
-        :type          => :integer,
+        :type          => :list,
         :title         => "",
         :default_value => 0,
-        :is_editable   => false,
-        :validations   => {}
+        :is_editable   => true,
+        :validations   => {},
+        :options       => [
+          { title: "Survival", value: 0 },
+          { title: "Creative", value: 1 },
+          { title: "Adventure", value: 2 },
+          { title: "Spectator", value: 3 }
+        ]
       }, {      
         :key           => "max-players",
         :type          => :integer,
@@ -54,7 +60,13 @@ module ApiDeploy
         :title         => "Server name",
         :default_value => "Minecraft: PE Server",
         :is_editable   => true,
-        :validations   => {}
+        :validations   => {
+          :length => {
+            :allow_blank => true,
+            :minimum     => 1,
+            :maximum     => 20
+          }
+        }
       }, {      
         :key           => "announce-player-achievements",
         :type          => :boolean,
@@ -106,11 +118,17 @@ module ApiDeploy
         :validations   => {}
       }, {      
         :key           => "difficulty",
-        :type          => :integer,
+        :type          => :list,
         :title         => "Difficulty",
         :default_value => 1,
-        :is_editable   => false,
-        :validations   => {}
+        :is_editable   => true,
+        :validations   => {},
+        :options       => [
+          { title: "Peaceful", value: 0 },
+          { title: "Easy", value: 1 },
+          { title: "Normal", value: 2 },
+          { title: "Hard", value: 3 }
+        ]
       }, {      
         :key           => "generator-settings",
         :type          => :string,

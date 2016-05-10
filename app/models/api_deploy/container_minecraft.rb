@@ -36,13 +36,13 @@ module ApiDeploy
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" },
           { name: "block_id", type: "list", required: true, options: "blocks_list" },
-          { name: "amount", type: "int", required: true }
+          { name: "amount", type: "int", required: true, default_value: 1 }
         ]
       },{
         :name  => "time",
         :title => "Change day time",
         :args  => [
-          { name: "value", type: "list", required: true, options: ["day","night"] }
+          { title: "time of day", name: "value", type: "list", required: true, options: ["day","night"] }
         ]
       },{
         :name  => "tell",
@@ -55,7 +55,7 @@ module ApiDeploy
         :name  => "weather",
         :title => "Change weather in game",
         :args  => [
-          { name: "value", type: "list", required: true, options: ["clear","rain","thunder"] }
+          { title: "Weather", name: "value", type: "list", required: true, options: ["clear","rain","thunder"] }
         ]  
       },{
         :name  => "xp",
@@ -148,8 +148,6 @@ module ApiDeploy
     end
   
     def players_online now=false
-      return false if stopped?
-      
       unless now    
         ApiDeploy::ContainerPlayersOnlineWorker.perform_async(id)
         return true
@@ -158,13 +156,15 @@ module ApiDeploy
       players_online = 0
       max_players    = config.get_property_value("max-players")
       
-      begin
-        query = ::Query::fullQuery(host.ip, port)
+      unless stopped?
+        begin
+          query = ::Query::fullQuery(host.ip, port)
       
-        players_online = query[:numplayers].to_i
-        max_players    = query[:maxplayers].to_i
-      rescue
-        Rails.logger.debug "Can't get query from Minecraft server in container-#{id}"
+          players_online = query[:numplayers].to_i
+          max_players    = query[:maxplayers].to_i
+        rescue
+          Rails.logger.debug "Can't get query from Minecraft server in container-#{id}"
+        end
       end
       
       return { players_online: players_online, max_players: max_players }
@@ -208,7 +208,7 @@ module ApiDeploy
         "minecraft:tnt",
         "minecraft:bow",
         "minecraft:arrow"
-      ]
+      ].map { |b| { title: b.split(":")[1].capitalize, value: b } }
     end
   
     def command_data command_id, now=false
@@ -435,6 +435,58 @@ module ApiDeploy
       end
       
       return { progress: 0.2, message: "Initializing server" }
+    end
+    
+    # Stats
+    
+    def calculate_stats
+      stat_attrs = { total_gaming_time: 0, segment_gaming_time: 0 }
+      
+      logs_str = docker_container.logs(stdout: true)
+      stats = logs_str.scan(/\[([0-9]{2}):([0-9]{2}):([0-9]{2})\] .+?\]: (.+?) (joined the game|left the game)/)
+      
+      users = ((stats.uniq { |m| m[3] }).map { |m| m[3] }) rescue []
+      
+      users.each do |username|
+        stats_by_user = (stats.select { |m| m[3] == username }) rescue []
+
+        unless stats_by_user.blank?
+          total_gaming_time = 0
+          last_join = 0
+          stats_by_user.each do |m|
+            is_join = m[4] == "joined the game"
+            seconds = ((m[0].to_i * 60) * 60) + (m[1].to_i * 60) + m[2].to_i
+            
+            unless is_join
+              total_gaming_time += seconds - last_join if seconds > last_join
+            else
+              last_join = seconds
+            end
+          end
+          
+          stat_attrs[:total_gaming_time] += total_gaming_time unless total_gaming_time == 0
+        end
+        
+        stats_by_user = nil
+      end
+
+      users = nil
+      
+      begin
+        prev_stat = (ContainerStat.where(container_id: id).all.sort_by { |st| st.created_at }).last
+        prev_total_gaming_time = prev_stat.total_gaming_time
+      rescue
+        prev_total_gaming_time = stat_attrs[:total_gaming_time]
+      end
+      
+      stat_attrs[:segment_gaming_time] = stat_attrs[:total_gaming_time] - prev_total_gaming_time
+      stat_attrs[:segment_gaming_time] = 0 if stat_attrs[:segment_gaming_time] < 0
+      
+      prev_stats = pstat = prev_total_gaming_time = nil
+      
+      push_new_stat_gaming_time(stat_attrs)
+      
+      return stat_attrs
     end
     
     def started?
