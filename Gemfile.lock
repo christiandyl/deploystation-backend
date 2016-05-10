@@ -267,6 +267,7 @@ DEPENDENCIES
   capybara
   capybara-screenshot
   clockwork
+  daemons
   database_cleaner
   docker-api (= 1.22.4)
   dynamoid (~> 1.1.0)
