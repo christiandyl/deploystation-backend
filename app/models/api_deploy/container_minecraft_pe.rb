@@ -205,7 +205,7 @@ module ApiDeploy
       rescue
         Rails.logger.debug "Can't get query from Minecraft server in container-#{id}"
       end
-            
+      
       return list
     end
     

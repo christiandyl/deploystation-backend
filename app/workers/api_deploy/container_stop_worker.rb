@@ -2,6 +2,8 @@ module ApiDeploy
   class ContainerStopWorker
     include Sidekiq::Worker
 
+    sidekiq_options queue: 'critical'
+
     def perform(container_id)
       begin
         container = Container.find(container_id)
