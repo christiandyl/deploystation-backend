@@ -54,6 +54,8 @@ gem 'redis-objects'
 gem 'oj'
 # Dynamoid is an ORM for Amazon's DynamoDB
 gem 'dynamoid', '~> 1.1.0'
+# A scheduler process to replace cron.
+gem 'clockwork', :require => false
 
 group :development, :staging do
   gem 'spring'
@@ -61,8 +63,6 @@ group :development, :staging do
   gem 'redcarpet'
   gem 'yard'
   gem 'yard-rest'
-  
-  gem 'clockwork', :require => false
 end
 
 group :test do
