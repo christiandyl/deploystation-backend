@@ -139,6 +139,14 @@ module ApiDeploy
         plan = Plan.find(plan_id) or raise "Plan with id #{plan_id} doesn't exists"
         game = plan.game.sname
         host = plan.host
+        
+        # TODO need to fix in next ios build
+        host_id = plan.host.id
+        game_id = plan.game.id
+        
+        plans = Plan.where(host_id: host_id, game_id: game_id)
+        plan = (plans.sort_by { |p| p.price.to_i }).first
+        # TODO need to fix in next ios build
 
         unless host.available?
           # TODO add some conditions
