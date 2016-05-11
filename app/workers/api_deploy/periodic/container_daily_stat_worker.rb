@@ -6,7 +6,10 @@ module ApiDeploy
       sidekiq_options unique: :all, queue: 'low'
 
       def perform(limit, offset)
-        Container.all.each { |c| c.calculate_stats }
+        Container.all.each do |c|
+          container = Container.class_for(c.game.sname).find(c.id)
+          container.calculate_stats
+        end
       end
 
     end
