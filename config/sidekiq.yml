@@ -8,4 +8,4 @@
 beta:
   :concurrency: 10
 production:
-  :concurrency: 25
+  :concurrency: 50
