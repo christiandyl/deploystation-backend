@@ -271,7 +271,7 @@ module ApiDeploy
       stat_attrs = { total_gaming_time: 0, segment_gaming_time: 0 }
       
       logs_str = docker_container.logs(stdout: true)
-      stats = logs_str.scan(/([0-9]{2}):([0-9]{2}):([0-9]{2}) .+?\] (.+?) (joined the game|left the game)/)
+      stats = logs_str.scan(/([0-9]{2}):([0-9]{2}):([0-9]{2})\e\[0m \e\[37;1m\[INFO\] \e\[33;1m(.+?) (joined the game|left the game)/)
       
       users = ((stats.uniq { |m| m[3] }).map { |m| m[3] }) rescue []
       
