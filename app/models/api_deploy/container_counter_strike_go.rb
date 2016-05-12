@@ -19,14 +19,37 @@ module ApiDeploy
         :args  => [
           { name: "level", type: "list", required: true, options: "levels_list" }
         ]
-      },
+      }
     ]
   
     before_destroy :return_gslt
+    
+    set_callback :start, :after, :clean_port_cache
   
     def return_gslt
       token = config.get_property_value(:gslt)
       SteamServerLoginToken.return_token(STEAM_APP_ID, token)
+    end
+    
+    def clean_port_cache
+      conntrack.clear_udp_cache
+    end
+    
+    def restart now=false
+      unless now          
+        ApiDeploy::ContainerRestartWorker.perform_async(id)
+        return true
+      end
+      
+      Rails.logger.debug "Restarting container(#{id})"
+      rcon_auth do |server|
+        out = server.rcon_exec("restart")
+        raise "Restart server CS GO" unless out.blank?
+      end
+      Rails.logger.debug "Container(#{id}) has restarted"
+      
+      self.status = STATUS_ONLINE
+      save!
     end
   
     def docker_container_create_opts
@@ -48,10 +71,10 @@ module ApiDeploy
         "PORT=#{port!}",
         "CFG_FILE_NAME=#{cfg_file_name}",
         "SERVER_NAME=#{name}",
-        "SERVER_PASS=#{config.get_property_value(:server_password)}",
+        "SERVER_PASS=#{config.get_property_value(:sv_password)}",
         "RCON_PASS=#{config.get_property_value(:rcon_password)}",
-        "MAX_PLAYERS=#{config.get_property_value(:max_players)}",
-        "DEFAULT_MAP=#{config.get_property_value(:default_map)}",
+        "MAX_PLAYERS=#{config.get_property_value(:maxplayers)}",
+        "DEFAULT_MAP=#{config.get_property_value(:map)}",
         "GSLT=#{config.get_property_value(:gslt)}"
       ]
     end

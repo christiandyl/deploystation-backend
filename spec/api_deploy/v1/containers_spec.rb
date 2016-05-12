@@ -30,8 +30,6 @@ describe 'Containers API', :type => :request do
 
     @context.container_id = container.id
     byebug
-    container.calculate_stats_for_today
-    byebug
   end
   
   it 'Allows to stop container' do
@@ -79,7 +77,7 @@ describe 'Containers API', :type => :request do
     container = ApiDeploy::Container.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
     
-    ApiDeploy::ContainerCheckerWorker.perform_async(10,0)
+    ApiDeploy::Periodic::ContainerCheckerWorker.perform_async(10,0)
     
     expect(container.players_on_server).to be_truthy
   end

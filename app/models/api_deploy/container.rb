@@ -39,6 +39,8 @@ module ApiDeploy
     validates :is_private, inclusion: { in: [true, false] }
   
     # Callbacks
+    define_callbacks :start, :stop
+    
     after_create :define_config
     # after_create :send_details_email
     before_destroy :destroy_docker_container
@@ -128,13 +130,15 @@ module ApiDeploy
         return true
       end
       
-      Rails.logger.debug "Starting container(#{id})"
-      docker_container.start(opts)
-      config.export_to_docker if status == STATUS_CREATED
-      Rails.logger.debug "Container(#{id}) has started"
+      run_callbacks :start do
+        Rails.logger.debug "Starting container(#{id})"
+        docker_container.start(opts)
+        config.export_to_docker if status == STATUS_CREATED
+        Rails.logger.debug "Container(#{id}) has started"
       
-      self.status = STATUS_ONLINE
-      save!
+        self.status = STATUS_ONLINE
+        save!
+      end
     end
   
     def stop now=false
@@ -143,16 +147,18 @@ module ApiDeploy
         return true
       end
 
-      Rails.logger.debug "Stopping container(#{id})"
-      config.export_to_docker
-      docker_container.stop
+      run_callbacks :stop do
+        Rails.logger.debug "Stopping container(#{id})"
+        config.export_to_docker
+        docker_container.stop
       
-      raise "Container #{id} stopping error" unless stopped?
+        raise "Container #{id} stopping error" unless stopped?
       
-      Rails.logger.debug "Container(#{id}) has stopped"
+        Rails.logger.debug "Container(#{id}) has stopped"
       
-      self.status = STATUS_OFFLINE
-      save!
+        self.status = STATUS_OFFLINE
+        save! 
+      end
     end
   
     def restart now=false
@@ -345,6 +351,10 @@ module ApiDeploy
     
     def backup
       @backup ||= Backup.new(container: self)
+    end
+    
+    def conntrack
+      @conntrack ||= Conntrack.new(container: self)
     end
     
     def docker_container_id

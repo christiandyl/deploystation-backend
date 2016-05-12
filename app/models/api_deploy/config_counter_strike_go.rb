@@ -14,7 +14,7 @@ module ApiDeploy
         :is_editable   => false,
         :validations   => {}
       },{
-        :key           => "server_password",
+        :key           => "sv_password",
         :type          => :string,
         :title         => "Server password",
         :default_value => nil,
@@ -28,18 +28,26 @@ module ApiDeploy
         :is_editable   => false,
         :validations   => {}
       },{
-        :key           => "max_players",
+        :key           => "maxplayers",
         :type          => :integer,
         :title         => "Max players",
         :default_value => 16,
         :is_editable   => false,
         :validations   => {}
       },{
-        :key           => "default_map",
-        :type          => :string,
+        :key           => "map",
+        :type          => :list,
         :title         => "Default map",
         :default_value => "cs_italy",
         :is_editable   => false,
+        :validations   => {},
+        :options       => ["cs_italy", "de_dust2", "cs_assault"]
+      },{
+        :key           => "sv_cheats",
+        :type          => :boolean,
+        :title         => "Enable cheats",
+        :default_value => false,
+        :is_editable   => true,
         :validations   => {}
       }
     ]
@@ -62,7 +70,7 @@ module ApiDeploy
       str = ""
       container.docker_container_env_vars.each { |v| str << "export #{v}\n" }
 
-      # container.docker_container.exec ["bash", "-c", "echo \"#{str}\" > /data/envs"]
+      container.docker_container.exec ["bash", "-c", "echo \"#{str}\" > /data/envs"]
       
       return true
     end
