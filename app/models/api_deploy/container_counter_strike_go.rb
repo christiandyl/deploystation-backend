@@ -129,7 +129,7 @@ module ApiDeploy
       end
       
       players_online = 0
-      max_players    = config.get_property_value(:max_players)
+      max_players    = config.get_property_value(:maxplayers)
       
       if started?
         rcon_auth do |server|
