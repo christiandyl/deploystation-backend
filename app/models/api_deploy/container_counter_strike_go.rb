@@ -213,9 +213,12 @@ module ApiDeploy
     end
     
     def started?
+      begin
       s = docker_container.info["State"]
-      
-      s["Running"] == true && s["Paused"] == false && s["Restarting"] == false && s["Dead"] == false
+      return s["Running"] == true && s["Paused"] == false && s["Restarting"] == false && s["Dead"] == false
+      rescue
+        return false
+      end
     end
     
     def config
