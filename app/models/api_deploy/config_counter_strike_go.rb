@@ -1,7 +1,8 @@
 module ApiDeploy
   class ConfigCounterStrikeGo < GameConfig
-    
     attr_accessor :properties, :container_id, :super_access
+    
+    set_callback :export_to_database, :after, :apply_config_via_rcon
     
     LAST_TIME_UPDATED = 1450115967
     
