@@ -25,6 +25,12 @@ module ApiDeploy
         :args  => [
           { name: "level", type: "list", required: true, options: "levels_list" }
         ]
+      },{
+        :name  => "sv_gravity",
+        :title => "Change gravity",
+        :args  => [
+          { name: "gravity", type: "int", required: true, default_value: 800 }
+        ]
       }
     ]
   
@@ -256,6 +262,19 @@ module ApiDeploy
       end 
       
       Rails.logger.info "Container(#{id}) - CSGO : Level changed to #{level}"
+      
+      return { success: true }
+    end
+    
+    def command_sv_gravity args
+      gravity = args["gravity"] or raise ArgumentError.new("gravity doesn't exists")
+
+      rcon_auth do |server|
+        out = server.rcon_exec("sv_gravity #{gravity}")
+        raise "Change gravity exception" unless out.blank?
+      end 
+      
+      Rails.logger.info "Container(#{id}) - CSGO : Gravity changed to #{gravity.to_s}"
       
       return { success: true }
     end
