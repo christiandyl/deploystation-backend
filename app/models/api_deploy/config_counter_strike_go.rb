@@ -63,7 +63,7 @@ module ApiDeploy
     def save
       export_to_database
 
-      apply_config_via_rcon if started?
+      apply_config_via_rcon if container.started?
         
       return true
     end
@@ -82,7 +82,7 @@ module ApiDeploy
       
       container.rcon_auth do |server|
         # sv_cheats
-        val = get_property_value(:sv_cheats) == true ? 1 : 0
+        val = get_property_value(:sv_cheats) == true ? "1" : "0"
         out = server.rcon_exec("sv_cheats #{val}")
       end
       

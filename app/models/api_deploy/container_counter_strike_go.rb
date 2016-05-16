@@ -31,7 +31,6 @@ module ApiDeploy
     before_destroy :return_gslt
     
     set_callback :start, :after, :clean_port_cache
-    set_callback :start, :after, :execute_initial_commands
   
     def return_gslt
       token = config.get_property_value(:gslt)
@@ -40,16 +39,6 @@ module ApiDeploy
     
     def clean_port_cache
       conntrack.clear_udp_cache
-    end
-    
-    def execute_initial_commands
-      rcon_auth do |server|
-        # sv_cheats
-        val = config.get_property_value(:sv_cheats) == true ? 1 : 0
-        out = server.rcon_exec("sv_cheats #{val}")
-        
-        
-      end
     end
     
     def restart now=false
