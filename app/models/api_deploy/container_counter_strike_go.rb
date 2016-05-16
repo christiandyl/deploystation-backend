@@ -31,10 +31,15 @@ module ApiDeploy
     before_destroy :return_gslt
     
     set_callback :start, :after, :clean_port_cache
+    set_callback :start, :after, :apply_config
   
     def return_gslt
       token = config.get_property_value(:gslt)
       SteamServerLoginToken.return_token(STEAM_APP_ID, token)
+    end
+  
+    def apply_config
+      config.apply_config
     end
     
     def clean_port_cache
