@@ -45,7 +45,7 @@ module ApiDeploy
     end
   
     def apply_config
-      config.apply_config
+      config.apply_config_via_rcon
     end
     
     def clean_port_cache
