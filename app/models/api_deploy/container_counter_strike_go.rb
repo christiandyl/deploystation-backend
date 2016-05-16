@@ -284,7 +284,7 @@ module ApiDeploy
       begin
         server.rcon_auth(config.get_property_value(:rcon_password))
         yield(server)
-      rescue RCONNoAuthException
+      rescue
         Rails.logger.debug 'Could not authenticate with the game server.'
         
         yield(nil)
