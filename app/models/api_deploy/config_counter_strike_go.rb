@@ -63,6 +63,8 @@ module ApiDeploy
     def save
       export_to_database
 
+      apply_config_via_rcon if started?
+        
       return true
     end
     
@@ -71,6 +73,18 @@ module ApiDeploy
       container.docker_container_env_vars.each { |v| str << "export #{v}\n" }
 
       container.docker_container.exec ["bash", "-c", "echo \"#{str}\" > /data/envs"]
+      
+      return true
+    end
+    
+    def apply_config_via_rcon
+      return false unless started?
+      
+      container.rcon_auth do |server|
+        # sv_cheats
+        val = get_property_value(:sv_cheats) == true ? 1 : 0
+        out = server.rcon_exec("sv_cheats #{val}")
+      end
       
       return true
     end

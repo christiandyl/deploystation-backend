@@ -19,12 +19,19 @@ module ApiDeploy
         :args  => [
           { name: "level", type: "list", required: true, options: "levels_list" }
         ]
+      },{
+        :name  => "kill",
+        :title => "Kill player",
+        :args  => [
+          { name: "level", type: "list", required: true, options: "levels_list" }
+        ]
       }
     ]
   
     before_destroy :return_gslt
     
     set_callback :start, :after, :clean_port_cache
+    set_callback :start, :after, :execute_initial_commands
   
     def return_gslt
       token = config.get_property_value(:gslt)
@@ -33,6 +40,16 @@ module ApiDeploy
     
     def clean_port_cache
       conntrack.clear_udp_cache
+    end
+    
+    def execute_initial_commands
+      rcon_auth do |server|
+        # sv_cheats
+        val = config.get_property_value(:sv_cheats) == true ? 1 : 0
+        out = server.rcon_exec("sv_cheats #{val}")
+        
+        
+      end
     end
     
     def restart now=false
@@ -220,6 +237,18 @@ module ApiDeploy
       end 
       
       Rails.logger.info "Container(#{id}) - CSGO : Player #{player_name} has been kicked"
+      
+      return { success: true }
+    end
+    
+    def command_kill args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      
+      rcon_auth do |server|
+        out = server.rcon_exec("kill #{player_name}")
+      end 
+      
+      Rails.logger.info "Container(#{id}) - CSGO : Player #{player_name} has been killed"
       
       return { success: true }
     end
