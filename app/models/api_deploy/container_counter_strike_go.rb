@@ -23,7 +23,7 @@ module ApiDeploy
         :name  => "kill",
         :title => "Kill player",
         :args  => [
-          { name: "level", type: "list", required: true, options: "levels_list" }
+          { name: "player", type: "list", required: true, options: "players_list" }
         ]
       },{
         :name  => "sv_gravity",
