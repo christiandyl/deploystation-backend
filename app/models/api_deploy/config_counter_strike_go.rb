@@ -78,7 +78,7 @@ module ApiDeploy
     end
     
     def apply_config_via_rcon
-      return false unless started?
+      return false unless container.started?
       
       container.rcon_auth do |server|
         # sv_cheats
