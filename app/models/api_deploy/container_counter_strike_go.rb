@@ -19,14 +19,54 @@ module ApiDeploy
         :args  => [
           { name: "level", type: "list", required: true, options: "levels_list" }
         ]
-      },
+      },{
+        :name  => "kill",
+        :title => "Kill player",
+        :args  => [
+          { name: "level", type: "list", required: true, options: "levels_list" }
+        ]
+      },{
+        :name  => "sv_gravity",
+        :title => "Change gravity",
+        :args  => [
+          { name: "gravity", type: "int", required: true, default_value: 800 }
+        ]
+      }
     ]
   
     before_destroy :return_gslt
+    
+    set_callback :start, :after, :clean_port_cache
+    set_callback :start, :after, :apply_config
   
     def return_gslt
       token = config.get_property_value(:gslt)
       SteamServerLoginToken.return_token(STEAM_APP_ID, token)
+    end
+  
+    def apply_config
+      config.apply_config_via_rcon
+    end
+    
+    def clean_port_cache
+      conntrack.clear_udp_cache
+    end
+    
+    def restart now=false
+      unless now          
+        ApiDeploy::ContainerRestartWorker.perform_async(id)
+        return true
+      end
+      
+      Rails.logger.debug "Restarting container(#{id})"
+      rcon_auth do |server|
+        out = server.rcon_exec("restart")
+        raise "Restart server CS GO" unless out.blank?
+      end
+      Rails.logger.debug "Container(#{id}) has restarted"
+      
+      self.status = STATUS_ONLINE
+      save!
     end
   
     def docker_container_create_opts
@@ -48,10 +88,10 @@ module ApiDeploy
         "PORT=#{port!}",
         "CFG_FILE_NAME=#{cfg_file_name}",
         "SERVER_NAME=#{name}",
-        "SERVER_PASS=#{config.get_property_value(:server_password)}",
+        "SERVER_PASS=#{config.get_property_value(:sv_password)}",
         "RCON_PASS=#{config.get_property_value(:rcon_password)}",
-        "MAX_PLAYERS=#{config.get_property_value(:max_players)}",
-        "DEFAULT_MAP=#{config.get_property_value(:default_map)}",
+        "MAX_PLAYERS=#{config.get_property_value(:maxplayers)}",
+        "DEFAULT_MAP=#{config.get_property_value(:map)}",
         "GSLT=#{config.get_property_value(:gslt)}"
       ]
     end
@@ -106,7 +146,7 @@ module ApiDeploy
       end
       
       players_online = 0
-      max_players    = config.get_property_value(:max_players)
+      max_players    = config.get_property_value(:maxplayers)
       
       if started?
         rcon_auth do |server|
@@ -201,6 +241,18 @@ module ApiDeploy
       return { success: true }
     end
     
+    def command_kill args
+      player_name = args["player"] or raise ArgumentError.new("Player_name doesn't exists")
+      
+      rcon_auth do |server|
+        out = server.rcon_exec("kill #{player_name}")
+      end 
+      
+      Rails.logger.info "Container(#{id}) - CSGO : Player #{player_name} has been killed"
+      
+      return { success: true }
+    end
+    
     def command_changelevel args
       level = args["level"] or raise ArgumentError.new("level doesn't exists")
 
@@ -214,12 +266,26 @@ module ApiDeploy
       return { success: true }
     end
     
+    def command_sv_gravity args
+      gravity = args["gravity"] or raise ArgumentError.new("gravity doesn't exists")
+
+      rcon_auth do |server|
+        out = server.rcon_exec("sv_gravity #{gravity}")
+        raise "Change gravity exception" unless out.blank?
+      end 
+      
+      Rails.logger.info "Container(#{id}) - CSGO : Gravity changed to #{gravity.to_s}"
+      
+      return { success: true }
+    end
+    
     def rcon_auth
       server = SourceServer.new(host.ip, port)
       begin
         server.rcon_auth(config.get_property_value(:rcon_password))
         yield(server)
-      rescue RCONNoAuthException
+      # rescue RCONNoAuthException
+      rescue
         Rails.logger.debug 'Could not authenticate with the game server.'
         
         yield(nil)

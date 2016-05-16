@@ -1,5 +1,8 @@
 module ApiDeploy
   class GameConfig
+    include ActiveSupport::Callbacks
+    
+    define_callbacks :export_to_database
     
     def schema; raise "SubclassResponsibility"; end
     def last_time_updated; raise "SubclassResponsibility"; end
@@ -80,19 +83,21 @@ module ApiDeploy
     end
     
     def export_to_database
-      hs = {
-        :ltu   => last_time_updated,
-        :props => {}
-      }
+      run_callbacks :export_to_database do
+        hs = {
+          :ltu   => last_time_updated,
+          :props => {}
+        }
 
-      props = properties.map do |p|
-        hs[:props][p[:key]] = p[:value].nil? ? p[:default_value] : p[:value]
+        props = properties.map do |p|
+          hs[:props][p[:key]] = p[:value].nil? ? p[:default_value] : p[:value]
+        end
+      
+        hs[:props] = hs[:props].to_json
+      
+        container.server_config = hs
+        container.save
       end
-      
-      hs[:props] = hs[:props].to_json
-      
-      container.server_config = hs
-      container.save
       
       return true
     end

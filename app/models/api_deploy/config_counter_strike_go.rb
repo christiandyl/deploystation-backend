@@ -1,7 +1,8 @@
 module ApiDeploy
   class ConfigCounterStrikeGo < GameConfig
-    
     attr_accessor :properties, :container_id, :super_access
+    
+    set_callback :export_to_database, :after, :apply_config_via_rcon
     
     LAST_TIME_UPDATED = 1450115967
     
@@ -14,7 +15,7 @@ module ApiDeploy
         :is_editable   => false,
         :validations   => {}
       },{
-        :key           => "server_password",
+        :key           => "sv_password",
         :type          => :string,
         :title         => "Server password",
         :default_value => nil,
@@ -28,18 +29,26 @@ module ApiDeploy
         :is_editable   => false,
         :validations   => {}
       },{
-        :key           => "max_players",
+        :key           => "maxplayers",
         :type          => :integer,
         :title         => "Max players",
         :default_value => 16,
         :is_editable   => false,
         :validations   => {}
       },{
-        :key           => "default_map",
-        :type          => :string,
+        :key           => "map",
+        :type          => :list,
         :title         => "Default map",
         :default_value => "cs_italy",
         :is_editable   => false,
+        :validations   => {},
+        :options       => ["cs_italy", "de_dust2", "cs_assault"]
+      },{
+        :key           => "sv_cheats",
+        :type          => :boolean,
+        :title         => "Enable cheats",
+        :default_value => false,
+        :is_editable   => true,
         :validations   => {}
       }
     ]
@@ -55,6 +64,8 @@ module ApiDeploy
     def save
       export_to_database
 
+      apply_config_via_rcon if container.started?
+        
       return true
     end
     
@@ -62,7 +73,19 @@ module ApiDeploy
       str = ""
       container.docker_container_env_vars.each { |v| str << "export #{v}\n" }
 
-      # container.docker_container.exec ["bash", "-c", "echo \"#{str}\" > /data/envs"]
+      container.docker_container.exec ["bash", "-c", "echo \"#{str}\" > /data/envs"]
+      
+      return true
+    end
+    
+    def apply_config_via_rcon
+      return false unless container.started?
+      
+      container.rcon_auth do |server|
+        # sv_cheats
+        val = get_property_value(:sv_cheats) == true ? "1" : "0"
+        out = server.rcon_exec("sv_cheats #{val}")
+      end
       
       return true
     end
