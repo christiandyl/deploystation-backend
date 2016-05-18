@@ -5,177 +5,183 @@ module ApiDeploy
     
     LAST_TIME_UPDATED = 1450115967
     
-    SCHEMA = [
-      {     
-        :key           => "gamemode",
-        :type          => :list,
-        :title         => "",
-        :default_value => 0,
-        :is_editable   => true,
-        :validations   => {},
-        :options       => [
-          { title: "Survival", value: 0 },
-          { title: "Creative", value: 1 },
-          { title: "Adventure", value: 2 },
-          { title: "Spectator", value: 3 }
-        ]
-      }, {      
-        :key           => "max-players",
-        :type          => :integer,
-        :title         => "",
-        :default_value => 5,
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
-        :key           => "spawn-protection",
-        :type          => :integer,
-        :title         => "",
-        :default_value => 16,
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
-        :key           => "white-list",
-        :type          => :boolean,
-        :title         => "",
-        :default_value => false,
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
-        :key           => "enable-query",
-        :type          => :boolean,
-        :title         => "",
-        :default_value => true,
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
-        :key           => "enable-rcon",
-        :type          => :boolean,
-        :title         => "",
-        :default_value => true,
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
-        :key           => "motd",
-        :type          => :string,
-        :title         => "Server name",
-        :default_value => "Minecraft: PE Server",
-        :is_editable   => true,
-        :validations   => {
-          :length => {
-            :allow_blank => true,
-            :minimum     => 1,
-            :maximum     => 20
+    def self.schema
+      return [
+        {     
+          :key           => "gamemode",
+          :type          => :list,
+          :title         => "",
+          :default_value => 0,
+          :is_editable   => true,
+          :validations   => {},
+          :options       => [
+            { title: "Survival", value: 0 },
+            { title: "Creative", value: 1 },
+            { title: "Adventure", value: 2 },
+            { title: "Spectator", value: 3 }
+          ]
+        }, {      
+          :key           => "max-players",
+          :type          => :integer,
+          :title         => "",
+          :default_value => 5,
+          :is_editable   => false,
+          :validations   => {}
+        }, {      
+          :key           => "spawn-protection",
+          :type          => :integer,
+          :title         => "",
+          :default_value => 16,
+          :is_editable   => false,
+          :validations   => {}
+        }, {      
+          :key           => "white-list",
+          :type          => :boolean,
+          :title         => "",
+          :default_value => false,
+          :is_editable   => false,
+          :validations   => {}
+        }, {      
+          :key           => "enable-query",
+          :type          => :boolean,
+          :title         => "",
+          :default_value => true,
+          :is_editable   => false,
+          :validations   => {}
+        }, {      
+          :key           => "enable-rcon",
+          :type          => :boolean,
+          :title         => "",
+          :default_value => true,
+          :is_editable   => false,
+          :validations   => {}
+        }, {      
+          :key           => "motd",
+          :type          => :string,
+          :title         => "Server name",
+          :default_value => "Minecraft: PE Server",
+          :is_editable   => true,
+          :validations   => {
+            :length => {
+              :allow_blank => true,
+              :minimum     => 1,
+              :maximum     => 20
+            }
           }
+        }, {      
+          :key           => "announce-player-achievements",
+          :type          => :boolean,
+          :title         => "Player achievements",
+          :default_value => true,
+          :is_editable   => true,
+          :validations   => {}
+        }, {      
+          :key           => "allow-flight",
+          :type          => :boolean,
+          :title         => "Allow flight",
+          :default_value => false,
+          :is_editable   => true,
+          :validations   => {}
+        }, {      
+          :key           => "spawn-animals",
+          :type          => :boolean,
+          :title         => "Spawn animals",
+          :default_value => true,
+          :is_editable   => false,
+          :validations   => {}
+        }, {      
+          :key           => "spawn-mobs",
+          :type          => :boolean,
+          :title         => "Spawn mobs",
+          :default_value => true,
+          :is_editable   => false,
+          :validations   => {}
+        }, {      
+          :key           => "force-gamemode",
+          :type          => :boolean,
+          :title         => "Force gamemode",
+          :default_value => false,
+          :is_editable   => true,
+          :validations   => {}
+        }, {      
+          :key           => "hardcore",
+          :type          => :boolean,
+          :title         => "Hardcore",
+          :default_value => false,
+          :is_editable   => true,
+          :validations   => {}
+        }, {      
+          :key           => "pvp",
+          :type          => :boolean,
+          :title         => "PVP",
+          :default_value => true,
+          :is_editable   => true,
+          :validations   => {}
+        }, {      
+          :key           => "difficulty",
+          :type          => :list,
+          :title         => "Difficulty",
+          :default_value => 1,
+          :is_editable   => true,
+          :validations   => {},
+          :options       => [
+            { title: "Peaceful", value: 0 },
+            { title: "Easy", value: 1 },
+            { title: "Normal", value: 2 },
+            { title: "Hard", value: 3 }
+          ]
+        }, {      
+          :key           => "generator-settings",
+          :type          => :string,
+          :title         => "",
+          :default_value => nil,
+          :is_editable   => false,
+          :validations   => {}
+        }, {      
+          :key           => "level-name",
+          :type          => :string,
+          :title         => "",
+          :default_value => "world",
+          :is_editable   => false,
+          :validations   => {}
+        }, {      
+          :key           => "level-seed",
+          :type          => :string,
+          :title         => "Level seed",
+          :default_value => nil,
+          :is_editable   => true,
+          :validations   => {}
+        }, {      
+          :key           => "level-type",
+          :type          => :string,
+          :title         => "",
+          :default_value => "DEFAULT",
+          :is_editable   => false,
+          :validations   => {}
+        }, {      
+          :key           => "rcon.password",
+          :type          => :string,
+          :title         => "",
+          :default_value => "uKsq1C8Cqu",
+          :is_editable   => false,
+          :validations   => {}
+        }, {      
+          :key           => "auto-save",
+          :type          => :boolean,
+          :title         => "Auto save",
+          :default_value => true,
+          :is_editable   => true,
+          :validations   => {}
         }
-      }, {      
-        :key           => "announce-player-achievements",
-        :type          => :boolean,
-        :title         => "Player achievements",
-        :default_value => true,
-        :is_editable   => true,
-        :validations   => {}
-      }, {      
-        :key           => "allow-flight",
-        :type          => :boolean,
-        :title         => "Allow flight",
-        :default_value => false,
-        :is_editable   => true,
-        :validations   => {}
-      }, {      
-        :key           => "spawn-animals",
-        :type          => :boolean,
-        :title         => "Spawn animals",
-        :default_value => true,
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
-        :key           => "spawn-mobs",
-        :type          => :boolean,
-        :title         => "Spawn mobs",
-        :default_value => true,
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
-        :key           => "force-gamemode",
-        :type          => :boolean,
-        :title         => "Force gamemode",
-        :default_value => false,
-        :is_editable   => true,
-        :validations   => {}
-      }, {      
-        :key           => "hardcore",
-        :type          => :boolean,
-        :title         => "Hardcore",
-        :default_value => false,
-        :is_editable   => true,
-        :validations   => {}
-      }, {      
-        :key           => "pvp",
-        :type          => :boolean,
-        :title         => "PVP",
-        :default_value => true,
-        :is_editable   => true,
-        :validations   => {}
-      }, {      
-        :key           => "difficulty",
-        :type          => :list,
-        :title         => "Difficulty",
-        :default_value => 1,
-        :is_editable   => true,
-        :validations   => {},
-        :options       => [
-          { title: "Peaceful", value: 0 },
-          { title: "Easy", value: 1 },
-          { title: "Normal", value: 2 },
-          { title: "Hard", value: 3 }
-        ]
-      }, {      
-        :key           => "generator-settings",
-        :type          => :string,
-        :title         => "",
-        :default_value => nil,
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
-        :key           => "level-name",
-        :type          => :string,
-        :title         => "",
-        :default_value => "world",
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
-        :key           => "level-seed",
-        :type          => :string,
-        :title         => "Level seed",
-        :default_value => nil,
-        :is_editable   => true,
-        :validations   => {}
-      }, {      
-        :key           => "level-type",
-        :type          => :string,
-        :title         => "",
-        :default_value => "DEFAULT",
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
-        :key           => "rcon.password",
-        :type          => :string,
-        :title         => "",
-        :default_value => "uKsq1C8Cqu",
-        :is_editable   => false,
-        :validations   => {}
-      }, {      
-        :key           => "auto-save",
-        :type          => :boolean,
-        :title         => "Auto save",
-        :default_value => true,
-        :is_editable   => true,
-        :validations   => {}
-      }
-    ]
+      ]
+    end
+    
+    def schema
+      self.class.schema
+    end
     
     def self.permit
-      SCHEMA.map { |p| p[:key] }
+      schema.map { |p| p[:key] }
     end
     
     def initialize container_id, props=nil
@@ -189,10 +195,6 @@ module ApiDeploy
       container.docker_container.exec ["bash", "-c", "echo \"#{str}\" > /nukkit/envs"]
       
       return true
-    end
-
-    def schema
-      SCHEMA
     end
     
     def last_time_updated

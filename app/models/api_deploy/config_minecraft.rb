@@ -5,272 +5,278 @@ module ApiDeploy
     
     LAST_TIME_UPDATED = 1450115967
     
-    SCHEMA = [
-      {
-        :key           => "generator-settings",
-        :type          => :string,
-        :title         => "",
-        :default_value => nil,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "op-permission-level",
-        :type          => :integer,
-        :title         => "",
-        :default_value => 4,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "allow-nether",
-        :type          => :boolean,
-        :title         => "Allow nether",
-        :default_value => true,
-        :is_editable   => true,
-        :validations   => {}
-      }, {
-        :key           => "resource-pack-hash",
-        :type          => :string,
-        :title         => "",
-        :default_value => nil,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "level-name",
-        :type          => :string,
-        :title         => "Level name",
-        :default_value => "world",
-        :is_editable   => false,
-        :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } }
-      }, {
-        :key           => "enable-query",
-        :type          => :boolean,
-        :title         => "",
-        :default_value => true,
-        :validations   => {}
-      }, {
-        :key           => "allow-flight",
-        :type          => :boolean,
-        :title         => "Allow flight",
-        :default_value => false,
-        :is_editable   => true,
-        :validations   => {}
-      }, {
-        :key           => "announce-player-achievements",
-        :type          => :boolean,
-        :title         => "Annonce player achievements",
-        :default_value => true,
-        :is_editable   => true,
-        :validations   => {}
-      }, {
-        :key           => "server-port",
-        :type          => :integer,
-        :title         => "",
-        :default_value => 25565,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "max-world-size",
-        :type          => :integer,
-        :title         => "",
-        :default_value => 29999984,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "level-type",
-        :type          => :string,
-        :title         => "",
-        :default_value => "DEFAULT",
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "enable-rcon",
-        :type          => :boolean,
-        :title         => "",
-        :default_value => false,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "level-seed",
-        :type          => :string,
-        :title         => "Level seed",
-        :default_value => nil,
-        :is_editable   => true,
-        :validations   => {}
-      }, {
-        :key           => "force-gamemode",
-        :type          => :boolean,
-        :title         => "",
-        :default_value => false,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "server-ip",
-        :type          => :string,
-        :title         => "",
-        :default_value => nil,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "network-compression-threshold",
-        :type          => :integer,
-        :title         => "",
-        :default_value => 256,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "max-build-height",
-        :type          => :integer,
-        :title         => "",
-        :default_value => 256,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "spawn-npcs",
-        :type          => :boolean,
-        :title         => "Spawn npcs",
-        :default_value => true,
-        :is_editable   => true,
-        :validations   => {}
-      }, {
-        :key           => "white-list",
-        :type          => :boolean,
-        :title         => "",
-        :default_value => false,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "spawn-animals",
-        :type          => :boolean,
-        :title         => "Spawn animals",
-        :default_value => true,
-        :is_editable   => true,
-        :validations   => {}
-      }, {
-        :key           => "hardcore",
-        :type          => :boolean,
-        :title         => "Hardcore",
-        :default_value => false,
-        :is_editable   => true,
-        :validations   => {}
-      }, {
-        :key           => "snooper-enabled",
-        :type          => :boolean,
-        :title         => "",
-        :default_value => true,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "online-mode",
-        :type          => :boolean,
-        :title         => "Online mode",
-        :default_value => true,
-        :is_editable   => true,
-        :validations   => {}
-      }, {
-        :key           => "resource-pack",
-        :type          => :string,
-        :title         => "",
-        :default_value => nil,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "pvp",
-        :type          => :boolean,
-        :title         => "PVP",
-        :default_value => true,
-        :is_editable   => true,
-        :validations   => {}
-      }, {
-        :key           => "difficulty",
-        :type          => :list,
-        :title         => "",
-        :default_value => 1,
-        :is_editable   => true,
-        :validations   => {},
-        :options       => [
-          { title: "Peaceful", value: 0 },
-          { title: "Easy", value: 1 },
-          { title: "Normal", value: 2 },
-          { title: "Hard", value: 3 }
-        ]
-      }, {
-        :key           => "enable-command-block",
-        :type          => :boolean,
-        :title         => "",
-        :default_value => false,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "gamemode",
-        :type          => :list,
-        :title         => "",
-        :default_value => 0,
-        :is_editable   => true,
-        :validations   => {},
-        :options       => [
-          { title: "Survival", value: 0 },
-          { title: "Creative", value: 1 },
-          { title: "Adventure", value: 2 },
-          { title: "Spectator", value: 3 }
-        ]
-      }, {
-        :key           => "player-idle-timeout",
-        :type          => :integer,
-        :title         => "",
-        :default_value => 0,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "max-players",
-        :type          => :integer,
-        :title         => "",
-        :default_value => 5,
-        :is_editable   => false,
-        :validations   => {}
-      }, {  
-        :key           => "max-tick-time",
-        :type          => :integer,
-        :title         => "",
-        :default_value => 60000,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "spawn-monsters",
-        :type          => :boolean,
-        :title         => "Spawn monsters",
-        :default_value => true,
-        :is_editable   => true,
-        :validations   => {}
-      }, {
-        :key           => "generate-structures",
-        :type          => :boolean,
-        :title         => "Generate structures",
-        :default_value => true,
-        :is_editable   => true,
-        :validations   => {}
-      }, {
-        :key           => "view-distance",
-        :type          => :integer,
-        :title         => "",
-        :default_value => 10,
-        :is_editable   => false,
-        :validations   => {}
-      }, {
-        :key           => "motd",
-        :type          => :string,
-        :title         => "Server name",
-        :default_value => "A Minecraft Server",
-        :is_editable   => true,
-        :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } }
-      }
-    ]
+    def self.schema
+      return [
+        {
+          :key           => "generator-settings",
+          :type          => :string,
+          :title         => "",
+          :default_value => nil,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "op-permission-level",
+          :type          => :integer,
+          :title         => "",
+          :default_value => 4,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "allow-nether",
+          :type          => :boolean,
+          :title         => "Allow nether",
+          :default_value => true,
+          :is_editable   => true,
+          :validations   => {}
+        }, {
+          :key           => "resource-pack-hash",
+          :type          => :string,
+          :title         => "",
+          :default_value => nil,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "level-name",
+          :type          => :string,
+          :title         => "Level name",
+          :default_value => "world",
+          :is_editable   => false,
+          :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } }
+        }, {
+          :key           => "enable-query",
+          :type          => :boolean,
+          :title         => "",
+          :default_value => true,
+          :validations   => {}
+        }, {
+          :key           => "allow-flight",
+          :type          => :boolean,
+          :title         => "Allow flight",
+          :default_value => false,
+          :is_editable   => true,
+          :validations   => {}
+        }, {
+          :key           => "announce-player-achievements",
+          :type          => :boolean,
+          :title         => "Annonce player achievements",
+          :default_value => true,
+          :is_editable   => true,
+          :validations   => {}
+        }, {
+          :key           => "server-port",
+          :type          => :integer,
+          :title         => "",
+          :default_value => 25565,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "max-world-size",
+          :type          => :integer,
+          :title         => "",
+          :default_value => 29999984,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "level-type",
+          :type          => :string,
+          :title         => "",
+          :default_value => "DEFAULT",
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "enable-rcon",
+          :type          => :boolean,
+          :title         => "",
+          :default_value => false,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "level-seed",
+          :type          => :string,
+          :title         => "Level seed",
+          :default_value => nil,
+          :is_editable   => true,
+          :validations   => {}
+        }, {
+          :key           => "force-gamemode",
+          :type          => :boolean,
+          :title         => "",
+          :default_value => false,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "server-ip",
+          :type          => :string,
+          :title         => "",
+          :default_value => nil,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "network-compression-threshold",
+          :type          => :integer,
+          :title         => "",
+          :default_value => 256,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "max-build-height",
+          :type          => :integer,
+          :title         => "",
+          :default_value => 256,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "spawn-npcs",
+          :type          => :boolean,
+          :title         => "Spawn npcs",
+          :default_value => true,
+          :is_editable   => true,
+          :validations   => {}
+        }, {
+          :key           => "white-list",
+          :type          => :boolean,
+          :title         => "",
+          :default_value => false,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "spawn-animals",
+          :type          => :boolean,
+          :title         => "Spawn animals",
+          :default_value => true,
+          :is_editable   => true,
+          :validations   => {}
+        }, {
+          :key           => "hardcore",
+          :type          => :boolean,
+          :title         => "Hardcore",
+          :default_value => false,
+          :is_editable   => true,
+          :validations   => {}
+        }, {
+          :key           => "snooper-enabled",
+          :type          => :boolean,
+          :title         => "",
+          :default_value => true,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "online-mode",
+          :type          => :boolean,
+          :title         => "Online mode",
+          :default_value => true,
+          :is_editable   => true,
+          :validations   => {}
+        }, {
+          :key           => "resource-pack",
+          :type          => :string,
+          :title         => "",
+          :default_value => nil,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "pvp",
+          :type          => :boolean,
+          :title         => "PVP",
+          :default_value => true,
+          :is_editable   => true,
+          :validations   => {}
+        }, {
+          :key           => "difficulty",
+          :type          => :list,
+          :title         => "",
+          :default_value => 1,
+          :is_editable   => true,
+          :validations   => {},
+          :options       => [
+            { title: "Peaceful", value: 0 },
+            { title: "Easy", value: 1 },
+            { title: "Normal", value: 2 },
+            { title: "Hard", value: 3 }
+          ]
+        }, {
+          :key           => "enable-command-block",
+          :type          => :boolean,
+          :title         => "",
+          :default_value => false,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "gamemode",
+          :type          => :list,
+          :title         => "",
+          :default_value => 0,
+          :is_editable   => true,
+          :validations   => {},
+          :options       => [
+            { title: "Survival", value: 0 },
+            { title: "Creative", value: 1 },
+            { title: "Adventure", value: 2 },
+            { title: "Spectator", value: 3 }
+          ]
+        }, {
+          :key           => "player-idle-timeout",
+          :type          => :integer,
+          :title         => "",
+          :default_value => 0,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "max-players",
+          :type          => :integer,
+          :title         => "",
+          :default_value => 5,
+          :is_editable   => false,
+          :validations   => {}
+        }, {  
+          :key           => "max-tick-time",
+          :type          => :integer,
+          :title         => "",
+          :default_value => 60000,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "spawn-monsters",
+          :type          => :boolean,
+          :title         => "Spawn monsters",
+          :default_value => true,
+          :is_editable   => true,
+          :validations   => {}
+        }, {
+          :key           => "generate-structures",
+          :type          => :boolean,
+          :title         => "Generate structures",
+          :default_value => true,
+          :is_editable   => true,
+          :validations   => {}
+        }, {
+          :key           => "view-distance",
+          :type          => :integer,
+          :title         => "",
+          :default_value => 10,
+          :is_editable   => false,
+          :validations   => {}
+        }, {
+          :key           => "motd",
+          :type          => :string,
+          :title         => "Server name",
+          :default_value => "A Minecraft Server",
+          :is_editable   => true,
+          :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } }
+        }
+      ]
+    end
+    
+    def schema
+      self.class.schema
+    end
     
     def self.permit
-      SCHEMA.map { |p| p[:key] }
+      schema.map { |p| p[:key] }
     end
     
     def initialize container_id, props=nil
-      self.properties = SCHEMA
+      self.properties = schema
       self.container_id = container_id
       self.super_access = false
       
