@@ -326,13 +326,18 @@ module ApiDeploy
       def command
         id = params[:command_id] or raise ArgumentError.new("Command id doesn't exists")
         
+        command = @container.commands.find { |c| c[:name] == id })
+        
+        requires_players = command["requires_players"] || true
+        
         if @container.stopped?
           data = {
             :code    => 334,
             :message => "server is offline"
           }
           render response_bad_request data
-        elsif @container.players_list.blank? # TODO add normal players count validation
+        elsif requires_players == true && @container.players_list.blank?
+        #elsif @container.players_list.blank? # TODO add normal players count validation
           data = {
             :code    => 333,
             :message => "server is empty"

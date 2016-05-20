@@ -12,25 +12,29 @@ module ApiDeploy
         :title => "Kick player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" }
-        ]
+        ],
+        :requires_players => true
       },{
         :name  => "changelevel",
         :title => "Change level",
         :args  => [
           { name: "level", type: "list", required: true, options: "levels_list" }
-        ]
+        ],
+        :requires_players => false
       },{
         :name  => "kill",
         :title => "Kill player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" }
-        ]
+        ],
+        :requires_players => true
       },{
         :name  => "sv_gravity",
         :title => "Change gravity",
         :args  => [
           { name: "gravity", type: "int", required: true, default_value: 800 }
-        ]
+        ],
+        :requires_players => false
       }
     ]
   
