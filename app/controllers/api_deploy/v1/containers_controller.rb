@@ -328,7 +328,7 @@ module ApiDeploy
         
         begin
           command = @container.commands.find { |c| c[:name] == id }
-          requires_players = command["requires_players"] || true
+          requires_players = command[:requires_players]
         rescue
           requires_players = true
         end
