@@ -13,174 +13,224 @@ module ApiDeploy
           :title         => "",
           :default_value => nil,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => true,
+          :requires_restart => true
         }, {
           :key           => "op-permission-level",
           :type          => :integer,
           :title         => "",
           :default_value => 4,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "allow-nether",
           :type          => :boolean,
           :title         => "Allow nether",
           :default_value => true,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "resource-pack-hash",
           :type          => :string,
           :title         => "",
           :default_value => nil,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "level-name",
           :type          => :string,
           :title         => "Level name",
           :default_value => "world",
           :is_editable   => false,
-          :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } }
+          :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } },
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "enable-query",
           :type          => :boolean,
           :title         => "",
           :default_value => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "allow-flight",
           :type          => :boolean,
           :title         => "Allow flight",
           :default_value => false,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "announce-player-achievements",
           :type          => :boolean,
           :title         => "Annonce player achievements",
           :default_value => true,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "server-port",
           :type          => :integer,
           :title         => "",
           :default_value => 25565,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "max-world-size",
           :type          => :integer,
           :title         => "",
           :default_value => 29999984,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => true,
+          :requires_restart => true
         }, {
           :key           => "level-type",
           :type          => :string,
           :title         => "",
           :default_value => "DEFAULT",
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "enable-rcon",
           :type          => :boolean,
           :title         => "",
           :default_value => false,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "level-seed",
           :type          => :string,
           :title         => "Level seed",
           :default_value => nil,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => true,
+          :requires_restart => true
         }, {
           :key           => "force-gamemode",
           :type          => :boolean,
           :title         => "",
           :default_value => false,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "server-ip",
           :type          => :string,
           :title         => "",
           :default_value => nil,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "network-compression-threshold",
           :type          => :integer,
           :title         => "",
           :default_value => 256,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "max-build-height",
           :type          => :integer,
           :title         => "",
           :default_value => 256,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "spawn-npcs",
           :type          => :boolean,
           :title         => "Spawn npcs",
           :default_value => true,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "white-list",
           :type          => :boolean,
           :title         => "",
           :default_value => false,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "spawn-animals",
           :type          => :boolean,
           :title         => "Spawn animals",
           :default_value => true,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "hardcore",
           :type          => :boolean,
           :title         => "Hardcore",
           :default_value => false,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "snooper-enabled",
           :type          => :boolean,
           :title         => "",
           :default_value => true,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "online-mode",
           :type          => :boolean,
           :title         => "Online mode",
           :default_value => true,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "resource-pack",
           :type          => :string,
           :title         => "",
           :default_value => nil,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "pvp",
           :type          => :boolean,
           :title         => "PVP",
           :default_value => true,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "difficulty",
           :type          => :list,
@@ -193,14 +243,18 @@ module ApiDeploy
             { title: "Easy", value: 1 },
             { title: "Normal", value: 2 },
             { title: "Hard", value: 3 }
-          ]
+          ],
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "enable-command-block",
           :type          => :boolean,
           :title         => "",
           :default_value => false,
-          :is_editable   => false,
-          :validations   => {}
+          :is_editable   => true,
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "gamemode",
           :type          => :list,
@@ -213,56 +267,72 @@ module ApiDeploy
             { title: "Creative", value: 1 },
             { title: "Adventure", value: 2 },
             { title: "Spectator", value: 3 }
-          ]
+          ],
+          :requires_reset   => true,
+          :requires_restart => true
         }, {
           :key           => "player-idle-timeout",
           :type          => :integer,
           :title         => "",
           :default_value => 0,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "max-players",
           :type          => :integer,
           :title         => "",
           :default_value => 5,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {  
           :key           => "max-tick-time",
           :type          => :integer,
           :title         => "",
           :default_value => 60000,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "spawn-monsters",
           :type          => :boolean,
           :title         => "Spawn monsters",
           :default_value => true,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "generate-structures",
           :type          => :boolean,
           :title         => "Generate structures",
           :default_value => true,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => true,
+          :requires_restart => true
         }, {
           :key           => "view-distance",
           :type          => :integer,
           :title         => "",
           :default_value => 10,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {
           :key           => "motd",
           :type          => :string,
           :title         => "Server name",
           :default_value => "A Minecraft Server",
           :is_editable   => true,
-          :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } }
+          :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } },
+          :requires_reset   => false,
+          :requires_restart => true
         }
       ]
     end

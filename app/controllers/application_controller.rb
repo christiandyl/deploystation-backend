@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
   include AbstractController::Translation
 
-  before_filter :check_auth_token, :check_app_key
+  before_filter :check_auth_token, :check_app_key, :set_locale
   before_filter :ensure_logged_in, :except => [:root, :v1_client_settings]
 
   rescue_from Exception, :with => :render_internal_server_error
@@ -60,6 +60,10 @@ class ApplicationController < ActionController::API
     token.decode_token unless provided_token.nil?
 
     @current_user = token.find_user
+  end
+  
+  def set_locale
+    I18n.locale = params[:locale] || request.headers['Accept-Language'] || I18n.default_locale
   end
 
   def current_user

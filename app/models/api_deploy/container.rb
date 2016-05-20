@@ -333,6 +333,8 @@ module ApiDeploy
 
       # TODO shit code !!!!!!!!!!!!!!!!!!!!!!
       command = JSON.parse command.to_json
+      
+      command["players_online"] = players_online(true)[:players_online] rescue 0
 
       command["args"].each_with_index do |hs,i|
         if hs["type"] == "list" && hs["options"].is_a?(String)

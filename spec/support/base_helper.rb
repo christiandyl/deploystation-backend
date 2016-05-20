@@ -1,7 +1,11 @@
 module BaseHelper
   include Capybara::DSL
 
-  DEFAULT_HEADERS    = { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+  DEFAULT_HEADERS = {
+    'CONTENT_TYPE' => 'application/json',
+    'ACCEPT' => 'application/json',
+    'Accept-Language' => 'fr'
+  }
 
   def send type, path, **opts
     raise ArgumentError, "Path option must be in hash" unless path
@@ -23,7 +27,7 @@ module BaseHelper
   end
 
   def authenticate_test_user
-    params = { connect_login: { email: 'test@test.com', password: 'test123', full_name: Faker::Name.name } }
+    params = { connect_login: { email: 'test@test.com', password: 'test123', full_name: Faker::Name.name, locale: 'en' } }
     token = create_user_token(params)
 
     @context.token = token.token

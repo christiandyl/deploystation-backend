@@ -62,6 +62,7 @@ Rails.application.routes.draw do
       resources :plans, :only => [:index]
       resources :games, :only => [:index] do
         get :random_name
+        get :check_availability
       end
     
     end

@@ -14,28 +14,36 @@ module ApiDeploy
           :title         => "Steam server login token",
           :default_value => nil,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         },{
           :key           => "sv_password",
           :type          => :string,
           :title         => "Server password",
           :default_value => nil,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         },{
           :key           => "rcon_password",
           :type          => :string,
           :title         => "Rcon password",
           :default_value => nil,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         },{
           :key           => "maxplayers",
           :type          => :integer,
           :title         => "Max players",
           :default_value => 16,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => true,
+          :requires_restart => true
         },{
           :key           => "map",
           :type          => :list,
@@ -43,14 +51,18 @@ module ApiDeploy
           :default_value => "cs_italy",
           :is_editable   => false,
           :validations   => {},
-          :options       => ["cs_italy", "de_dust2", "cs_assault"]
+          :options       => ["cs_italy", "de_dust2", "cs_assault"],
+          :requires_reset   => false,
+          :requires_restart => false
         },{
           :key           => "sv_cheats",
           :type          => :boolean,
           :title         => "Enable cheats",
           :default_value => false,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => false
         }
       ]
     end
