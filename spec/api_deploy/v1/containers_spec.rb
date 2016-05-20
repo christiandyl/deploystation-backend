@@ -77,7 +77,7 @@ describe 'Containers API', :type => :request do
     container = ApiDeploy::Container.find(@context.container_id) rescue nil
     expect(container).not_to be_nil
     
-    ApiDeploy::Periodic::ContainerCheckerWorker.perform_async(10,0)
+    ApiDeploy::Periodic::ContainerPlayersOnlineWorker.perform_async(10,0)
     
     expect(container.players_on_server).to be_truthy
   end
