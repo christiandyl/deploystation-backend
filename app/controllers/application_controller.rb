@@ -63,7 +63,9 @@ class ApplicationController < ActionController::API
   end
   
   def set_locale
-    I18n.locale = params[:locale] || request.headers['Accept-Language'] || I18n.default_locale
+    locale = params[:locale] || request.headers['Accept-Language'] || I18n.default_locale
+    
+    I18n.locale = locale.split("-").first
   end
 
   def current_user
