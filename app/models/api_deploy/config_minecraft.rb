@@ -249,7 +249,7 @@ module ApiDeploy
         }, {
           :key           => "enable-command-block",
           :type          => :boolean,
-          :title         => "",
+          :title         => "Command blocks",
           :default_value => false,
           :is_editable   => true,
           :validations   => {},

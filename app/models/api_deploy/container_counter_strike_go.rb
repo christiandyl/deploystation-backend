@@ -286,6 +286,12 @@ module ApiDeploy
       return { success: true }
     end
     
+    def calculate_stats
+      stat_attrs = { total_gaming_time: 0, segment_gaming_time: 0 }
+      
+      return stat_attrs
+    end
+    
     def rcon_auth
       server = SourceServer.new(host.ip, port)
       begin

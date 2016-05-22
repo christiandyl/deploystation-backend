@@ -41,7 +41,7 @@ module ApiDeploy
         availability = true
         reason = nil
 
-        if Rails.env.production? || true
+        if Rails.env.production?
           not_paid = Container.exists? user_id: current_user.id, is_paid: false
           if not_paid == true
             availability = false
