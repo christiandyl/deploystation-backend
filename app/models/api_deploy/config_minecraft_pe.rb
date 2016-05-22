@@ -19,42 +19,54 @@ module ApiDeploy
             { title: "Creative", value: 1 },
             { title: "Adventure", value: 2 },
             { title: "Spectator", value: 3 }
-          ]
+          ],
+          :requires_reset   => true,
+          :requires_restart => true
         }, {      
           :key           => "max-players",
           :type          => :integer,
           :title         => "",
           :default_value => 5,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "spawn-protection",
           :type          => :integer,
           :title         => "",
           :default_value => 16,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "white-list",
           :type          => :boolean,
           :title         => "",
           :default_value => false,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "enable-query",
           :type          => :boolean,
           :title         => "",
           :default_value => true,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "enable-rcon",
           :type          => :boolean,
           :title         => "",
           :default_value => true,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "motd",
           :type          => :string,
@@ -67,56 +79,72 @@ module ApiDeploy
               :minimum     => 1,
               :maximum     => 20
             }
-          }
+          },
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "announce-player-achievements",
           :type          => :boolean,
           :title         => "Player achievements",
           :default_value => true,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "allow-flight",
           :type          => :boolean,
           :title         => "Allow flight",
           :default_value => false,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "spawn-animals",
           :type          => :boolean,
           :title         => "Spawn animals",
           :default_value => true,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "spawn-mobs",
           :type          => :boolean,
           :title         => "Spawn mobs",
           :default_value => true,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "force-gamemode",
           :type          => :boolean,
           :title         => "Force gamemode",
           :default_value => false,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "hardcore",
           :type          => :boolean,
           :title         => "Hardcore",
           :default_value => false,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "pvp",
           :type          => :boolean,
           :title         => "PVP",
           :default_value => true,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "difficulty",
           :type          => :list,
@@ -129,49 +157,63 @@ module ApiDeploy
             { title: "Easy", value: 1 },
             { title: "Normal", value: 2 },
             { title: "Hard", value: 3 }
-          ]
+          ],
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "generator-settings",
           :type          => :string,
           :title         => "",
           :default_value => nil,
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => true,
+          :requires_restart => true
         }, {      
           :key           => "level-name",
           :type          => :string,
           :title         => "",
           :default_value => "world",
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => true,
+          :requires_restart => true
         }, {      
           :key           => "level-seed",
           :type          => :string,
           :title         => "Level seed",
           :default_value => nil,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "level-type",
           :type          => :string,
           :title         => "",
           :default_value => "DEFAULT",
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "rcon.password",
           :type          => :string,
           :title         => "",
           :default_value => "uKsq1C8Cqu",
           :is_editable   => false,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }, {      
           :key           => "auto-save",
           :type          => :boolean,
           :title         => "Auto save",
           :default_value => true,
           :is_editable   => true,
-          :validations   => {}
+          :validations   => {},
+          :requires_reset   => false,
+          :requires_restart => true
         }
       ]
     end

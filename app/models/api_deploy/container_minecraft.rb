@@ -9,20 +9,23 @@ module ApiDeploy
         :title => "Kill player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" }
-        ]
+        ],
+        :requires_players => true
       },{
         :name  => "ban",
         :title => "Ban player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" },
           { name: "reason", type: "text", required: false }
-        ]
+        ],
+        :requires_players => true
       },{
         :name  => "unban",
         :title => "Unban player",
         :args  => [
           { name: "player", type: "string", required: true }
-        ]
+        ],
+        :requires_players => false
       # },{
       #   :name  => "tp",
       #   :title => "Teleport player",
@@ -37,58 +40,67 @@ module ApiDeploy
           { name: "player", type: "list", required: true, options: "players_list" },
           { name: "block_id", type: "list", required: true, options: "blocks_list" },
           { name: "amount", type: "int", required: true, default_value: 1 }
-        ]
+        ],
+        :requires_players => true
       },{
         :name  => "time",
         :title => "Change day time",
         :args  => [
           { title: "time of day", name: "value", type: "list", required: true, options: ["day","night"] }
-        ]
+        ],
+        :requires_players => false
       },{
         :name  => "tell",
         :title => "Tell something to the player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" },
           { name: "message", type: "string", required: true }
-        ]
+        ],
+        :requires_players => true
       },{
         :name  => "weather",
         :title => "Change weather in game",
         :args  => [
           { title: "Weather", name: "value", type: "list", required: true, options: ["clear","rain","thunder"] }
-        ]  
+        ],
+        :requires_players => false
       },{
         :name  => "xp",
         :title => "Give level to player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" },
           { name: "level", type: "list", required: true, options: [1,2,3,4,5,6,7,8,9,10,11,12] }
-        ]
+        ],
+        :requires_players => true
       },{
         :name  => "op",
         :title => "Grants operator status to a player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" }
-        ]
+        ],
+        :requires_players => true
       },{
         :name  => "deop",
         :title => "Revoke operator status from a player",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" }
-        ]
+        ],
+        :requires_players => true
       },{
         :name  => "say",
         :title => "Displays a message to multiple players.",
         :args  => [
           { name: "message", type: "string", required: true }
-        ]
+        ],
+        :requires_players => true
       },{
         :name  => "kick",
         :title => "Kicks a player off a server.",
         :args  => [
           { name: "player", type: "list", required: true, options: "players_list" },
           { name: "reason", type: "text", required: false }
-        ]
+        ],
+        :requires_players => true
       }
     ]
     
