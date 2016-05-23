@@ -18,7 +18,24 @@ module ApiDeploy
       # @response_field [String] result[].plans_list[].name Plan name
       # @response_field [Integer] result[].plans_list[].max_players Plan max players count
       def index
-        render response_ok( Host.all.map { |h| h.to_api(:public) } )
+        begin
+          results = Geocoder.search(request.ip)
+          unless results.blank?
+            location = results.first
+          
+            if location.country_code == "RU"
+              list = Host.where("country_code = ?", "ua")
+            else
+              list = Host.all
+            end
+          else
+            list = Host.all
+          end
+        rescue
+          list = Host.all
+        end
+
+        render response_ok( list.map { |h| h.to_api(:public) } )
       end
 
     end
