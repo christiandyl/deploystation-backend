@@ -36,13 +36,6 @@ module ApiDeploy
         ],
         :requires_players => false
       },{
-        :name  => "sv_gravity",
-        :title => "Change gravity",
-        :args  => [
-          { name: "gravity", type: "int", required: true, default_value: 800 }
-        ],
-        :requires_players => false
-      },{
         :name  => "mp_restartgame",
         :title => "Restart round",
         :args  => nil,
