@@ -35,6 +35,18 @@ module ApiDeploy
           { name: "gravity", type: "int", required: true, default_value: 800 }
         ],
         :requires_players => false
+      },{
+        :name  => "sv_gravity",
+        :title => "Change gravity",
+        :args  => [
+          { name: "gravity", type: "int", required: true, default_value: 800 }
+        ],
+        :requires_players => false
+      },{
+        :name  => "mp_restartgame",
+        :title => "Restart round",
+        :args  => nil,
+        :requires_players => false
       }
     ]
   
@@ -282,6 +294,17 @@ module ApiDeploy
       end 
       
       Rails.logger.info "Container(#{id}) - CSGO : Gravity changed to #{gravity.to_s}"
+      
+      return { success: true }
+    end
+    
+    def command_mp_restartgame args=nil
+      rcon_auth do |server|
+        out = server.rcon_exec("mp_restartgame 1")
+        raise "Restart round exception" unless out.blank?
+      end 
+      
+      Rails.logger.info "Container(#{id}) - CSGO : Round restarted"
       
       return { success: true }
     end
