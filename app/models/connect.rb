@@ -5,7 +5,7 @@ class Connect < ActiveRecord::Base
   
   belongs_to :user
 
-  SUPPORTED_CONNECTS = ['login', 'facebook']
+  SUPPORTED_CONNECTS = ['login', 'facebook', 'twitter']
 
   def email; raise "SubclassResponsibility"; end
 
