@@ -28,7 +28,7 @@ module ApiDeploy
       #
       # @response_field [Boolean] success
       def activate
-        @container.plugins.find({ |p| p.id == params[:id] }).activate
+        @container.plugins.find { |p| p.id == params[:id] }.activate
         
         render response_ok
       end
@@ -40,7 +40,7 @@ module ApiDeploy
       #
       # @response_field [Boolean] success
       def disactivate
-        @container.plugins.find({ |p| p.id == params[:id] }).disactivate
+        @container.plugins.find { |p| p.id == params[:id] }.disactivate
         
         render response_ok
       end
