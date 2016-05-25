@@ -49,6 +49,10 @@ Rails.application.routes.draw do
           post :request_plan
           
           resource :config, :only => [:show, :update]
+          resources :plugins, :only => [:index] do
+            post :activate
+            delete :disactivate
+          end
         end
         resources :accesses, :only => [:index, :create, :destroy]
         resources :bookmarks, :only => [:create, :destroy]

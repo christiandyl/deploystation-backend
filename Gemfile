@@ -54,6 +54,8 @@ gem 'redis-objects'
 gem 'oj'
 # Dynamoid is an ORM for Amazon's DynamoDB
 gem 'dynamoid', '~> 1.1.0'
+# Provides object geocoding
+gem 'geocoder', '~> 1.3.4'
 
 group :development, :staging do
   gem 'spring'

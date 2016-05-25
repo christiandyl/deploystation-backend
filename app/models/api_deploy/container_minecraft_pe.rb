@@ -339,6 +339,10 @@ module ApiDeploy
       @config ||= ConfigMinecraftPe.new(id)
     end
     
+    def plugins
+      @plugins ||= PluginMinecraftPe.new().all
+    end
+    
     def define_config
       config.super_access = true
       config.set_property("rcon.password", SecureRandom.hex)

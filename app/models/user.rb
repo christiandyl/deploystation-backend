@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   before_destroy :on_before_destroy
   
   validates :email, uniqueness: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)*[^@.\s]+\z/ }
-  validates :confirmation, inclusion: { in: [true, false] }
+  validates :confirmation, allow_nil: true, inclusion: { in: [true, false] }
 
   def after_initialize 
    self.confirmation ||= false
