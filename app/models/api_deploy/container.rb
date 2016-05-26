@@ -345,6 +345,10 @@ module ApiDeploy
       return command
     end
     
+    def plugins
+      @plugins ||= GamePluginsCollection.plugins_for_container(self)
+    end
+    
     # Callbacks endpoints
     
     def send_details_email
