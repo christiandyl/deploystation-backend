@@ -345,6 +345,16 @@ module ApiDeploy
       return command
     end
     
+    def plugins
+      @plugins ||= GamePluginsCollection.plugins_for_container(self)
+    end
+    
+    def has_plugins?
+      cname = "api_deploy/plugin_#{game.sname}".classify.constantize
+      
+      return !cname.default_plugins.blank?
+    end
+    
     # Callbacks endpoints
     
     def send_details_email

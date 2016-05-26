@@ -50,8 +50,8 @@ Rails.application.routes.draw do
           
           resource :config, :only => [:show, :update]
           resources :plugins, :only => [:index] do
-            post :activate
-            delete :disactivate
+            post :enable
+            delete :disable
           end
         end
         resources :accesses, :only => [:index, :create, :destroy]
