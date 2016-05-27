@@ -376,8 +376,11 @@ module ApiDeploy
     private
     
     def destroy_docker_container
-      host.use
-      docker_container.delete(:force => true)
+      begin
+        host.use
+        docker_container.delete(:force => true)
+      rescue
+      end
     end
   
   end
