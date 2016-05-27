@@ -3,7 +3,7 @@ module ApiDeploy
     class ContainerMinutelyStatWorker
       include Sidekiq::Worker
 
-      sidekiq_options unique: :all, queue: 'low'
+      sidekiq_options unique: :all, queue: 'background'
 
       def perform(limit, offset)
         Container.all.each do |c|

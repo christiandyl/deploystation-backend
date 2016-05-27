@@ -5,7 +5,8 @@
   - critical
   - default
   - low
+  - background
 beta:
   :concurrency: 10
 production:
-  :concurrency: 50
+  :concurrency: 35
