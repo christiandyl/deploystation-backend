@@ -8,6 +8,12 @@ module ApiDeploy
       begin
         container = Container.find(container_id)
         container = Container.class_for(container.game.sname).find(container_id)
+        
+        if container.status == Container::STATUS_ONLINE
+          Pusher.trigger "container-#{container_id}", "start", { success: true }
+          return true
+        end
+        
         container.start(true)
         
         Rails.logger.debug "Checking container #{container.id} status..."
