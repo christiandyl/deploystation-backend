@@ -2,7 +2,7 @@ module ApiDeploy
   class ContainerCreateWorker
     include Sidekiq::Worker
 
-    sidekiq_options queue: 'critical'
+    sidekiq_options queue: 'critical', :retry => false, :backtrace => true
 
     def perform(container_id)
       begin

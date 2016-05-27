@@ -2,6 +2,8 @@ module ApiDeploy
   class ContainerRestartWorker
     include Sidekiq::Worker
 
+    sidekiq_options queue: 'critical', :retry => false, :backtrace => true
+
     def perform(container_id)
       begin
         container = Container.find(container_id)
