@@ -96,14 +96,14 @@ module ApiDeploy
       
       host.use
 
-      ram_in_bytes = plan.ram * 1000000
+      ram_in_bytes = (plan.ram * 1000000).to_i
       
       opts.merge!({
         "name"       => docker_container_id,
         "HostConfig" => {
           "Memory"           => ram_in_bytes,
           "MemorySwap"       => 0,
-          "MemorySwappiness" => nil
+          "MemorySwappiness" => -1
         }
       })
 
