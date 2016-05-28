@@ -105,7 +105,7 @@ module ApiDeploy
     ]
     
     def docker_container_create_opts
-      memory = plan.ram * 1000000
+      memory = (plan.ram + 100) * 1000000
       
       opts = {
         "Image"        => REPOSITORY,
