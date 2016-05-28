@@ -112,15 +112,15 @@ module ApiDeploy
         "Tty"          => true,
         "OpenStdin"    => true,
         'StdinOnce'    => true,
+        "Memory"       => memory,
+        "MemorySwap"   => -1,
         "HostConfig"   => {
-          "Memory"     => memory,
-          "MemorySwap" => -1
+          "PortBindings" => {
+            "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port! }],
+            "25565/udp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port! }]
+          }
         },
         "ExposedPorts" => { "25565/tcp": {}, "25565/udp": {} },
-        "PortBindings" => {
-          "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port! }],
-          "25565/udp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port! }]
-        },
         "Env" => [
           "EULA=TRUE",
           "JVM_OPTS=-Xmx#{plan.ram}M"
