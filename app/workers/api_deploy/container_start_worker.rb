@@ -2,12 +2,18 @@ module ApiDeploy
   class ContainerStartWorker
     include Sidekiq::Worker
 
-    sidekiq_options queue: 'critical'
+    sidekiq_options queue: 'critical', :retry => false, :backtrace => true, unique: true
 
     def perform(container_id)
       begin
         container = Container.find(container_id)
         container = Container.class_for(container.game.sname).find(container_id)
+        
+        if container.status == Container::STATUS_ONLINE
+          Pusher.trigger "container-#{container_id}", "start", { success: true }
+          return true
+        end
+        
         container.start(true)
         
         Rails.logger.debug "Checking container #{container.id} status..."
@@ -19,10 +25,12 @@ module ApiDeploy
             Rails.logger.debug "Container #{container_id} started successfully"
             Pusher.trigger "container-#{container_id}", "start", { success: true }
             notification = Notification.create user_id: container.user_id, alert: "Server started"
+            done = true
             break
+          else
+            Rails.logger.debug "Container start status is #{progress.to_s}"
+            sleep 3
           end
-          Rails.logger.debug "Container start status is #{progress.to_s}"
-          sleep 3
         end
         
         raise "Container #{container.id} didn't start" unless done
