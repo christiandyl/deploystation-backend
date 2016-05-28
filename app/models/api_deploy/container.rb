@@ -96,7 +96,14 @@ module ApiDeploy
       
       host.use
 
-      opts["name"] = docker_container_id
+      ram_in_bytes = plan.ram * 1000000
+      
+      opts.merge!({
+        "name"             => docker_container_id
+        "Memory"           => ram_in_bytes
+        "MemorySwap"       => 0,
+        "MemorySwappiness" => nil
+      })
 
       begin
         container_docker = Docker::Container.create(opts)

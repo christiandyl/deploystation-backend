@@ -83,7 +83,7 @@ module ApiDeploy
         "Image"        => REPOSITORY,
         "Tty"          => true,
         "OpenStdin"    => true,
-        'StdinOnce'    => true,
+        "StdinOnce"    => true,
         "ExposedPorts" => { "#{port!}/tcp": {}, "#{port!}/udp": {} },
         "Env" => docker_container_env_vars
       }
