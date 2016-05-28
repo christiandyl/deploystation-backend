@@ -135,13 +135,10 @@ module ApiDeploy
     end
   
     def start now=false
-      memory_is_nil = docker_container.info["Memory"].nil? rescue false
+      # memory_is_nil = docker_container.info["Memory"].nil? rescue false
       
-      if memory_is_nil == true
-        opts = nil
-      else
-        opts = docker_container_start_opts
-      end
+      # opts = memory_is_nil == true ? nil : docker_container_start_opts
+      opts = nil
       unless now
         ApiDeploy::ContainerStartWorker.perform_async(id)
         return true
