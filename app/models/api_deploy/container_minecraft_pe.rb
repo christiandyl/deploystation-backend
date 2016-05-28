@@ -156,27 +156,6 @@ module ApiDeploy
       return opts
     end
   
-    def reset now=false
-      unless now    
-        ApiDeploy::ContainerResetWorker.perform_async(id)
-        return true
-      end
-
-      Rails.logger.debug "Resetting container(#{id})"
-
-      destroy_docker_container
-      create_docker_container
-      start(true)
-      
-      sleep 2
-      
-      conntrack.clear_udp_cache
-      
-      sleep 2
-      
-      Rails.logger.debug "Container(#{id}) is resetted"
-    end
-  
     def players_online now=false      
       unless now    
         ApiDeploy::ContainerPlayersOnlineWorker.perform_async(id)
