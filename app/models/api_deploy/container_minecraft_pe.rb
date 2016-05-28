@@ -166,7 +166,7 @@ module ApiDeploy
 
       destroy_docker_container
       create_docker_container
-      start
+      start(true)
       
       sleep 2
       
