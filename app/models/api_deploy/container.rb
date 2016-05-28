@@ -135,8 +135,7 @@ module ApiDeploy
     end
   
     def start now=false
-      # opts = docker_container_start_opts
-      opts = nil
+      opts = docker_container_start_opts
       unless now
         ApiDeploy::ContainerStartWorker.perform_async(id)
         return true
