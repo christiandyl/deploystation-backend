@@ -105,7 +105,7 @@ module ApiDeploy
     ]
     
     def docker_container_create_opts
-      memory = (plan.ram + 100) * 1000000
+      memory = (plan.ram + 200) * 1000000
       
       opts = {
         "Image"        => REPOSITORY,
@@ -123,7 +123,7 @@ module ApiDeploy
         "ExposedPorts" => { "25565/tcp": {}, "25565/udp": {} },
         "Env" => [
           "EULA=TRUE",
-          # "JVM_OPTS=-Xmx#{plan.ram}M"
+          "JVM_OPTS=-Xmx#{plan.ram}M"
         ]
       }
       
