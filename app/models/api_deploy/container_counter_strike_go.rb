@@ -83,7 +83,7 @@ module ApiDeploy
         "Image"        => REPOSITORY,
         "Tty"          => true,
         "OpenStdin"    => true,
-        'StdinOnce'    => true,
+        "StdinOnce"    => true,
         "ExposedPorts" => { "#{port!}/tcp": {}, "#{port!}/udp": {} },
         "Env" => docker_container_env_vars
       }
@@ -128,24 +128,6 @@ module ApiDeploy
       }
       
       return opts
-    end
-  
-    def reset now=false
-      unless now    
-        ApiDeploy::ContainerResetWorker.perform_async(id)
-        return true
-      end
-
-      if stopped?
-        Rails.logger.debug "Can't reset container, container is stopped"
-        return
-      end
-
-      Rails.logger.debug "Resetting container(#{id})"
-    
-      # TODO reset logics
-      
-      Rails.logger.debug "Container(#{id}) is resetted"
     end
   
     def players_online now=false      

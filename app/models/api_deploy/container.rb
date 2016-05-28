@@ -50,7 +50,6 @@ module ApiDeploy
     def logs; raise "SubclassResponsibility"; end
     def started?; raise "SubclassResponsibility"; end
     def starting_progress; raise "SubclassResponsibility"; end
-    def reset; raise "SubclassResponsibility"; end
   
     class << self
       def class_for game
@@ -69,7 +68,6 @@ module ApiDeploy
           c.host_id    = host.id
           c.status     = STATUS_CREATED
           c.name       = name
-          # c.active_until = (Date.today + 7).to_datetime
           c.active_until = TRIAL_DAYS.days.from_now.to_time
           c.is_paid = false
           c.is_private = false
@@ -90,13 +88,24 @@ module ApiDeploy
   
     # Actions
   
-    def create_docker_container
+    def create_docker_container opts = {}
+      reset = opts[:reset] || false
+      
       opts = docker_container_create_opts
       Rails.logger.debug "Creating docker container with params: #{opts.to_s}"
       
       host.use
 
-      opts["name"] = docker_container_id
+      # ram_in_bytes = (plan.ram * 1000000).to_i
+      
+      opts.merge!({
+        "name"       => docker_container_id,
+        # "HostConfig" => {
+        #   "Memory"           => ram_in_bytes,
+        #   "MemorySwap"       => 0,
+        #   "MemorySwappiness" => -1
+        # }
+      })
 
       begin
         container_docker = Docker::Container.create(opts)
@@ -117,8 +126,10 @@ module ApiDeploy
         Rails.logger.debug "Container(#{id}) docker has created"
       end
       
-      send_details_email
-      Helper::slack_ping("User #{user.full_name} has created a new server for #{game.name}, ip is #{ip}")
+      unless reset
+        send_details_email
+        Helper::slack_ping("User #{user.full_name} has created a new server for #{game.name}, ip is #{ip}")
+      end
       
       return container_docker
     end
@@ -129,6 +140,16 @@ module ApiDeploy
         ApiDeploy::ContainerStartWorker.perform_async(id)
         return true
       end
+      
+      ram_in_bytes = (plan.ram * 1000000).to_i
+      
+      opts.merge!({
+        "HostConfig" => {
+          "Memory"           => ram_in_bytes,
+          "MemorySwap"       => 0,
+          "MemorySwappiness" => -1
+        }
+      })
       
       run_callbacks :start do
         Rails.logger.debug "Starting container(#{id})"
@@ -176,6 +197,27 @@ module ApiDeploy
       
       self.status = STATUS_ONLINE
       save!
+    end
+    
+    def reset now=false
+      unless now    
+        ApiDeploy::ContainerResetWorker.perform_async(id)
+        return true
+      end
+
+      Rails.logger.debug "Resetting container(#{id})"
+
+      destroy_docker_container
+      create_docker_container(reset: true)
+      start(true)
+      
+      sleep 2
+      
+      conntrack.clear_udp_cache
+      
+      sleep 2
+      
+      Rails.logger.debug "Container(#{id}) is resetted"
     end
     
     def destroy_container now=false
