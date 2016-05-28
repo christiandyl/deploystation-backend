@@ -168,7 +168,11 @@ module ApiDeploy
       create_docker_container
       start
       
-      sleep 5
+      sleep 2
+      
+      conntrack.clear_udp_cache
+      
+      sleep 2
       
       Rails.logger.debug "Container(#{id}) is resetted"
     end
