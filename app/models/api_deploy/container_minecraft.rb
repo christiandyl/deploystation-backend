@@ -113,7 +113,7 @@ module ApiDeploy
         "OpenStdin"    => true,
         'StdinOnce'    => true,
         "Memory"       => memory,
-        "MemorySwap"   => -1,
+        "MemorySwap"   => memory * 2,
         "HostConfig"   => {
           "PortBindings" => {
             "25565/tcp" => [{ "HostIp" => "", "HostPort" => port! }],
