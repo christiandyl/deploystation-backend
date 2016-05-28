@@ -99,10 +99,12 @@ module ApiDeploy
       ram_in_bytes = plan.ram * 1000000
       
       opts.merge!({
-        "name"             => docker_container_id,
-        "Memory"           => ram_in_bytes,
-        "MemorySwap"       => 0,
-        "MemorySwappiness" => nil
+        "name"       => docker_container_id,
+        "HostConfig" => {
+          "Memory"           => ram_in_bytes,
+          "MemorySwap"       => 0,
+          "MemorySwappiness" => nil
+        }
       })
 
       begin
