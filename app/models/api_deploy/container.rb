@@ -143,13 +143,11 @@ module ApiDeploy
       
       ram_in_bytes = ((plan.ram + 100) * 1000000).to_i
       
-      opts.merge!({
-        "HostConfig" => {
-          "Memory"           => ram_in_bytes,
-          "MemorySwap"       => 0,
-          "MemorySwappiness" => -1
-        }
-      })
+      opts["HostConfig"] ||= {}
+      
+      opts["HostConfig"]["Memory"]           = ram_in_bytes
+      opts["HostConfig"]["MemorySwap"]       = 0
+      opts["HostConfig"]["MemorySwappiness"] = -1
       
       run_callbacks :start do
         Rails.logger.debug "Starting container(#{id})"

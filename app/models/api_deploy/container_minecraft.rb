@@ -121,7 +121,10 @@ module ApiDeploy
           "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port! }],
           "25565/udp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port! }]
         },
-        "Env" => ["EULA=TRUE", "JVM_OPTS=-Xmx#{plan.ram}M"]
+        "Env" => [
+          "EULA=TRUE",
+          "JVM_OPTS=-Xmx#{plan.ram}M"
+        ]
       }
       
       return opts
