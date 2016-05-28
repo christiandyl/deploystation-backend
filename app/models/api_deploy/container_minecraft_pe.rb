@@ -133,13 +133,23 @@ module ApiDeploy
     end
   
     def docker_container_create_opts
+      memory = plan.ram * 1000000
+      
       opts = {
         "Image"        => REPOSITORY,
         "Tty"          => true,
         "OpenStdin"    => true,
         'StdinOnce'    => true,
+        "Memory"       => memory,
+        "MemorySwap"   => -1,
         "ExposedPorts" => { "#{port!}/tcp": {}, "#{port!}/udp": {} },
-        "Env"          => docker_container_env_vars
+        "Env"          => docker_container_env_vars,
+        "HostConfig"   => {
+          "PortBindings" => { 
+            "#{port}/tcp" => [{ "HostIp" => "", "HostPort" => port }],
+            "#{port}/udp" => [{ "HostIp" => "", "HostPort" => port }]
+          }
+        },
       }
 
       return opts

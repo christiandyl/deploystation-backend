@@ -79,13 +79,24 @@ module ApiDeploy
     end
   
     def docker_container_create_opts
+      memory = plan.ram * 1000000
+      
       opts = {
         "Image"        => REPOSITORY,
         "Tty"          => true,
         "OpenStdin"    => true,
         "StdinOnce"    => true,
+        "Memory"       => memory,
+        "MemorySwap"   => -1,
         "ExposedPorts" => { "#{port!}/tcp": {}, "#{port!}/udp": {} },
-        "Env" => docker_container_env_vars
+        "Env" => docker_container_env_vars,
+        "HostConfig"   => {
+          "PortBindings" => {
+            "#{port}/tcp" => [{ "HostIp" => "0.0.0.0", "HostPort" => port }],
+            "#{port}/udp" => [{ "HostIp" => "0.0.0.0", "HostPort" => port }]
+          },
+          "Binds" => ["/var/docker/csgoserver:/home/csgoserver:rw"]
+        },
       }
 
       return opts
@@ -105,20 +116,7 @@ module ApiDeploy
       ]
     end
   
-    def start now=false
-      if now == false
-        # destroy_docker_container
-        # create_docker_container
-        # byebug
-        # config.set_property("gslt", SteamServerLoginToken.take_token(STEAM_APP_ID))
-      end
-      
-      super(now)
-    end
-  
-    def docker_container_start_opts
-      cfg_file_name = "server_#{id.to_s}.cfg"
-      
+    def docker_container_start_opts      
       opts = {
         "PortBindings" => {
           "#{port}/tcp" => [{ "HostIp" => "0.0.0.0", "HostPort" => port }],

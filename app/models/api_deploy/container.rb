@@ -135,19 +135,18 @@ module ApiDeploy
     end
   
     def start now=false
-      opts = docker_container_start_opts
+      begin
+        memory_is_nil = docker_container.info["HostConfig"]["Memory"] == 0
+      rescue
+        memory_is_nil = false
+      end
+      
+      opts = memory_is_nil == true ? docker_container_start_opts : nil
+
       unless now
         ApiDeploy::ContainerStartWorker.perform_async(id)
         return true
       end
-      
-      # ram_in_bytes = ((plan.ram + 100) * 1000000).to_i
-      #
-      # opts["HostConfig"] ||= {}
-      #
-      # opts["HostConfig"]["Memory"]           = ram_in_bytes
-      # opts["HostConfig"]["MemorySwap"]       = 0
-      # opts["HostConfig"]["MemorySwappiness"] = -1
       
       run_callbacks :start do
         Rails.logger.debug "Starting container(#{id})"
