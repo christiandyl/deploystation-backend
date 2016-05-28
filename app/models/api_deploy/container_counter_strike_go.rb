@@ -116,20 +116,7 @@ module ApiDeploy
       ]
     end
   
-    def start now=false
-      if now == false
-        # destroy_docker_container
-        # create_docker_container
-        # byebug
-        # config.set_property("gslt", SteamServerLoginToken.take_token(STEAM_APP_ID))
-      end
-      
-      super(now)
-    end
-  
-    def docker_container_start_opts
-      cfg_file_name = "server_#{id.to_s}.cfg"
-      
+    def docker_container_start_opts      
       opts = {
         "PortBindings" => {
           "#{port}/tcp" => [{ "HostIp" => "0.0.0.0", "HostPort" => port }],

@@ -135,7 +135,11 @@ module ApiDeploy
     end
   
     def start now=false
-      opts = docker_container_start_opts
+      if Time.now > Time.parse("2016-05-28 15:04:18 +0000")
+        opts = nil
+      else
+        opts = docker_container_start_opts
+      end
       unless now
         ApiDeploy::ContainerStartWorker.perform_async(id)
         return true
