@@ -69,7 +69,6 @@ module ApiDeploy
           c.host_id    = host.id
           c.status     = STATUS_CREATED
           c.name       = name
-          # c.active_until = (Date.today + 7).to_datetime
           c.active_until = TRIAL_DAYS.days.from_now.to_time
           c.is_paid = false
           c.is_private = false

@@ -162,22 +162,13 @@ module ApiDeploy
         return true
       end
 
-      if stopped?
-        Rails.logger.debug "Can't reset container, container is stopped"
-        return
-      end
-
       Rails.logger.debug "Resetting container(#{id})"
+
+      destroy_docker_container
+      create_docker_container
+      start
       
-      # level_name = config.get_property_value("level-name")
-      #
-      # level_path = "nukkit/nukkit_server/worlds/#{level_name}"
-      # docker_container.exec ["rm", "-rf", level_path]
-      #
-      # players_path = "nukkit/nukkit_server/players"
-      # docker_container.exec ["rm", "-rf", players_path]
-      
-      sleep 2
+      sleep 5
       
       Rails.logger.debug "Container(#{id}) is resetted"
     end
