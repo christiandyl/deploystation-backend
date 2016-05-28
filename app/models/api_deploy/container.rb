@@ -135,7 +135,9 @@ module ApiDeploy
     end
   
     def start now=false
-      if Time.now > Time.parse("2016-05-28 15:04:18 +0000")
+      memory_is_nil = docker_container.info["Memory"].nil? rescue false
+      
+      if memory_is_nil == true
         opts = nil
       else
         opts = docker_container_start_opts
