@@ -116,8 +116,8 @@ module ApiDeploy
         "MemorySwap"   => -1,
         "HostConfig"   => {
           "PortBindings" => {
-            "25565/tcp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port! }],
-            "25565/udp" => [{ "HostIp" => "127.0.0.1", "HostPort" => port! }]
+            "25565/tcp" => [{ "HostIp" => "", "HostPort" => port! }],
+            "25565/udp" => [{ "HostIp" => "", "HostPort" => port! }]
           }
         },
         "ExposedPorts" => { "25565/tcp": {}, "25565/udp": {} },
