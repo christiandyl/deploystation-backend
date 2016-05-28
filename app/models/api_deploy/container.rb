@@ -141,7 +141,7 @@ module ApiDeploy
         return true
       end
       
-      ram_in_bytes = (plan.ram * 1000000).to_i
+      ram_in_bytes = ((plan.ram + 100) * 1000000).to_i
       
       opts.merge!({
         "HostConfig" => {
