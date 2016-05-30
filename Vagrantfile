@@ -6,6 +6,8 @@ sudo groupadd docker
 sudo usermod -aG docker vagrant
 echo Pulling docker images
 docker pull itzg/minecraft-server
+docker pull deploystation/mcpeserver
+docker pull deploystation/csgoserver
 echo Finishing provision
 echo 'yes' | sudo apt-get autoremove
 date > /etc/vagrant_provisioned_at
@@ -30,6 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Use Chef Solo to provision our virtual machine
   config.vm.provision :chef_solo do |chef|
+    chef.version = "12.10.40"
     chef.cookbooks_path = ['cookbooks']
 
     chef.add_recipe 'apt'

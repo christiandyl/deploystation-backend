@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20160526104614) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "dblink"
 
   create_table "accesses", force: :cascade do |t|
     t.integer "container_id"

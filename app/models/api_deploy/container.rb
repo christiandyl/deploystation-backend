@@ -75,7 +75,7 @@ module ApiDeploy
         
         container.save!
         Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.attributes.to_s}"
-
+        byebug
         unless now          
           ApiDeploy::ContainerCreateWorker.perform_async(container.id)
         else          

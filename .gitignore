@@ -37,3 +37,5 @@ cookbooks/
 shared/
 
 lib/docker/
+
+csgoserver
