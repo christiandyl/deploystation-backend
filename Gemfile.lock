@@ -219,12 +219,13 @@ GEM
     rspec-support (3.4.1)
     sendgrid (1.2.4)
       json
-    sidekiq (4.1.1)
+    sidekiq (4.1.2)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
       redis (~> 3.2, >= 3.2.1)
-    sidekiq-middleware (0.3.0)
-      sidekiq (>= 2.12.4)
+    sidekiq-unique-jobs (4.0.17)
+      sidekiq (>= 2.6)
+      thor
     slack-notifier (1.5.1)
     spring (1.7.1)
     sprockets (3.6.0)
@@ -296,8 +297,8 @@ DEPENDENCIES
   redis-objects
   rspec-rails
   sendgrid
-  sidekiq (= 4.1.1)
-  sidekiq-middleware (= 0.3.0)
+  sidekiq (= 4.1.2)
+  sidekiq-unique-jobs (= 4.0.17)
   slack-notifier
   spring
   steam-condenser
@@ -306,4 +307,4 @@ DEPENDENCIES
   yard-rest
 
 BUNDLED WITH
-   1.11.2
+   1.12.5

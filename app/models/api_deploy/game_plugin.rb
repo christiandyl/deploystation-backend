@@ -73,6 +73,10 @@ module ApiDeploy
       return container.save
     end
     
+    def enabled?
+      self.status == true
+    end
+    
     def fetch
     end
     

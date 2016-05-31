@@ -2,6 +2,7 @@ module ApiDeploy
   module V1
     class PluginsController < ApplicationController
 
+      skip_before_filter :ensure_logged_in, :only => [:index]
       before_filter :get_container
       before_filter :get_plugin, only: [:enable, :disable]
 

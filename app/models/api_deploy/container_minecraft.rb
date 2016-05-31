@@ -105,7 +105,7 @@ module ApiDeploy
     ]
     
     def docker_container_create_opts
-      memory = plan.ram * 1000000
+      memory = (plan.ram + 200) * 1000000
       
       opts = {
         "Image"        => REPOSITORY,
@@ -113,7 +113,7 @@ module ApiDeploy
         "OpenStdin"    => true,
         'StdinOnce'    => true,
         "Memory"       => memory,
-        "MemorySwap"   => -1,
+        "MemorySwap"   => memory * 2,
         "HostConfig"   => {
           "PortBindings" => {
             "25565/tcp" => [{ "HostIp" => "", "HostPort" => port! }],

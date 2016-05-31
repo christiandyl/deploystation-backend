@@ -140,7 +140,7 @@ module ApiDeploy
         "Tty"          => true,
         "OpenStdin"    => true,
         'StdinOnce'    => true,
-        "Memory"       => memory,
+        "Memory"       => memory * 2,
         "MemorySwap"   => -1,
         "ExposedPorts" => { "#{port!}/tcp": {}, "#{port!}/udp": {} },
         "Env"          => docker_container_env_vars,
@@ -328,6 +328,21 @@ module ApiDeploy
       config.set_property("rcon.password", SecureRandom.hex)
       config.set_property("max-players", plan.max_players)
       config.export_to_database
+    end
+    
+    def export_env_vars      
+      # Generating file content
+      str = ""
+      docker_container_env_vars.each { |v| str << "export #{v}\n" }
+
+      # Plugins
+      plugins_urls = (plugins.enabled.map { |p| p.download_url }).join(";") rescue ""
+      str << "export NUKKIT_PLUGINS='#{plugins_urls}'"
+
+      # Exporting file
+      docker_container.exec ["bash", "-c", "echo \"#{str}\" > /nukkit/envs"]
+
+      return true
     end
     
     ############################################################

@@ -87,7 +87,7 @@ module ApiDeploy
         "OpenStdin"    => true,
         "StdinOnce"    => true,
         "Memory"       => memory,
-        "MemorySwap"   => -1,
+        "MemorySwap"   => memory * 2,
         "ExposedPorts" => { "#{port!}/tcp": {}, "#{port!}/udp": {} },
         "Env" => docker_container_env_vars,
         "HostConfig"   => {

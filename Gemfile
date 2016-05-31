@@ -13,9 +13,10 @@ gem 'jwt', '1.5.1'
 # Koala is a lightweight, flexible Ruby SDK for Facebook
 gem 'koala', '2.2.0'
 # Simple, efficient background processing for Ruby
-gem 'sidekiq', '4.1.1'
+gem 'sidekiq', '4.1.2'
 # Additional sidekiq middleware
-gem 'sidekiq-middleware', '0.3.0'
+# gem 'sidekiq-middleware', '0.3.0'
+gem 'sidekiq-unique-jobs', '4.0.17'
 # The official AWS SDK for Ruby
 gem 'aws-sdk'
 # Exception notification for Rails apps

@@ -231,10 +231,7 @@ module ApiDeploy
     end
 
     def export_to_docker
-      str = ""
-      container.docker_container_env_vars.each { |v| str << "export #{v}\n" }
-
-      container.docker_container.exec ["bash", "-c", "echo \"#{str}\" > /nukkit/envs"]
+      container.export_env_vars
       
       return true
     end
