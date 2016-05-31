@@ -53,8 +53,7 @@ module ApiBack
             
             connect.user.update! confirmation: true
           else
-            # TODO Need to activate for production when web will be ready
-            connect.user.send_confirmation_mail unless Rails.env.production?
+            connect.user.send_confirmation_mail if Rails.env.production?
           end
     
           ApiDeploy::Helper::slack_ping("New user with name #{connect.user.full_name} and email #{connect.user.email}")

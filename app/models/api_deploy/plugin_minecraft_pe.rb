@@ -8,7 +8,7 @@ module ApiDeploy
         :description   => "Authorization system supported SQLite, MySQL, YAML",
         :visible       => true,
         :repo_url      => 'http://forums.nukkit.cn/resources/welcome.4/',
-        :download_url  => '',
+        :download_url  => 'https://s3.eu-central-1.amazonaws.com/com.deploystation.assets/docker/minecraft_pe/plugins/Welcome/Welcome.jar',
         :dependencies  => ['DbLib'],
         :configuration => {}
       }, {
@@ -18,7 +18,7 @@ module ApiDeploy
         :description   => "Protect yourself from griefers by placing a protection block!",
         :visible       => true,
         :repo_url      => 'https://github.com/HiddenMotives/BlockProtect',
-        :download_url  => 'https://github.com/HiddenMotives/BlockProtect/releases/download/1.0.0/BlockProtect.jar',
+        :download_url  => 'https://s3.eu-central-1.amazonaws.com/com.deploystation.assets/docker/minecraft_pe/plugins/BlockProtect/BlockProtect.jar',
         :dependencies  => [],
         :configuration => {}
       }, {
@@ -27,8 +27,8 @@ module ApiDeploy
         :author        => 'fromgate',
         :description   => "DbLib is a library, that allows to get access to database simply",
         :visible       => false,
-        :repo_url      => 'http://nukkit.ru/resources/dblib.14/',
-        :download_url  => '',
+        :repo_url      => '',
+        :download_url  => 'https://s3.eu-central-1.amazonaws.com/com.deploystation.assets/docker/minecraft_pe/plugins/DbLib/DbLib.jar',
         :dependencies  => [],
         :configuration => {}
       }

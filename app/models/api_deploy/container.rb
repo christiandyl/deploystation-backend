@@ -75,10 +75,10 @@ module ApiDeploy
         
         container.save!
         Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.attributes.to_s}"
-        byebug
-        unless now          
+
+        unless now
           ApiDeploy::ContainerCreateWorker.perform_async(container.id)
-        else          
+        else
           container.create_docker_container
         end
         
@@ -147,7 +147,7 @@ module ApiDeploy
         ApiDeploy::ContainerStartWorker.perform_async(id)
         return true
       end
-      
+
       run_callbacks :start do
         Rails.logger.debug "Starting container(#{id})"
         docker_container.start(opts)
