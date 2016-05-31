@@ -21,7 +21,13 @@ module ApiDeploy
       # @response_field [String] result[].repo_url Plugin repository url
       # @response_field [Boolean] result[].status Plugin status
       def index
-        data = @container.plugins.all.map { |p| p.to_api(:public) }
+        private_request = params[:private] == 1 || params[:private] == true || params[:private] == "true"
+        
+        data = unless private_request
+          container.plugins.all.map { |p| p.to_api(:public) }
+        else
+          container.plugins.enabled.map { |p| p.to_api(:private) }
+        end
         
         render response_ok data
       end
