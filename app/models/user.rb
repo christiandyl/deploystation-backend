@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :devices
 
   after_create   :send_welcome_mail
+  after_create   :send_confirmation_mail
   after_create   :define_s3_bucket
   after_create   :subscribe_email
   after_update   :on_after_update

@@ -26,13 +26,15 @@ module ApiDeploy
             if location.country_code == "RU"
               list = Host.where("country_code = ?", "ua")
             else
-              list = Host.where("country_code <> ?", "us")
+              list = Host.all
+              # list = Host.where("country_code <> ?", "us")
             end
           else
-            list = Host.where("country_code <> ?", "us")
+            # list = Host.where("country_code <> ?", "us")
+            list = Host.all
           end
         rescue
-          list = Host.where("country_code <> ?", "us")
+          list = Host.all
         end
 
         render response_ok( list.map { |h| h.to_api(:public) } )

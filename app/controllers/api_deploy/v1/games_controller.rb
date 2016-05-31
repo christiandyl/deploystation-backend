@@ -42,11 +42,18 @@ module ApiDeploy
         reason = nil
 
         if Rails.env.production?
-          not_paid = Container.exists? user_id: current_user.id, is_paid: false
-          if not_paid == true
+          
+          if current_user.confirmation == false
             availability = false
-            reason = I18n.t("games.availability.reason_not_paid")
+            reason = I18n.t("games.availability.reason_email_confirmation")
+          else
+            not_paid = Container.exists? user_id: current_user.id, is_paid: false
+            if not_paid == true
+              availability = false
+              reason = I18n.t("games.availability.reason_not_paid")
+            end
           end
+          
         end
         
         data = {
