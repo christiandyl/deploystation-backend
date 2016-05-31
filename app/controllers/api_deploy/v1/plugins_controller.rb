@@ -24,9 +24,9 @@ module ApiDeploy
         private_request = params[:private] == 1 || params[:private] == true || params[:private] == "true"
         
         data = unless private_request
-          container.plugins.all.map { |p| p.to_api(:public) }
+          @container.plugins.all.map { |p| p.to_api(:public) }
         else
-          container.plugins.enabled.map { |p| p.to_api(:private) }
+          @container.plugins.enabled.map { |p| p.to_api(:private) }
         end
         
         render response_ok data
