@@ -3,7 +3,7 @@ module ApiDeploy
     class ContainerPlayersOnlineWorker
       include Sidekiq::Worker
 
-      sidekiq_options unique: :all, queue: 'background'
+      sidekiq_options :unique => :while_executing, :queue => 'background'
 
       def perform(limit, offset)
         Container.online.limit(limit).offset(offset).each  do |c|
