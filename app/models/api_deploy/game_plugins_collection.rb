@@ -24,6 +24,7 @@ module ApiDeploy
         unless p.dependencies.blank?
           p.dependencies.each do |dname|
             dp = find { |dp| dp.name == dname }
+            dp.status == true
             if (ls.find { |sp| sp.id == dp.id }).nil?
               ls << dp
             end
