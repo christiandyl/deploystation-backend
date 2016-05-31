@@ -103,7 +103,13 @@ module ApiDeploy
     def docker_container_env_vars
       ram = plan.ram.to_s
       
+      api_prefix = Rails.env.production? ? "api" : "api-stage"
+      api_base_url = "http://#{api_prefix}.deploystation.com/v1/"
+      
       return [
+        "DS_CONTAINER_ID=#{id.to_s}",
+        "DS_API_ENV=#{Rails.env}",
+        "DS_API_BASE_URL=#{api_base_url}",
         "JVM_OPTS=-Xmx#{ram}M -Xms#{ram}M",
         "CONFIG_SERVER_NAME=#{name}",
         "CONFIG_SERVER_PORT=#{port!}",

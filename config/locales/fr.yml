@@ -2,3 +2,4 @@ fr:
   games:
     availability:
       reason_not_paid: "Vous ne pouvez pas créer un nouveau serveur, parce que vous avez déjà un serveur trial"
+      reason_email_confirmation: "Désolé, d'abord vous devez confirmer votre email"

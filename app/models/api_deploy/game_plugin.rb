@@ -44,6 +44,11 @@ module ApiDeploy
         :repo_url      => repo_url
       }
       
+      if data_type == :private
+        hs[:dependencies] = dependencies
+        hs[:download_url] = download_url
+      end
+      
       return hs
     end
 
