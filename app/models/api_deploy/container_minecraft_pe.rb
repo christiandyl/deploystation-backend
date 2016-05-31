@@ -103,7 +103,7 @@ module ApiDeploy
     def docker_container_env_vars
       ram = plan.ram.to_s
       
-      api_prefix = Rails.env.production? ? "api" : "ap_stage"
+      api_prefix = Rails.env.production? ? "api" : "api_stage"
       api_base_url = "http://#{api_prefix}.deploystation.com/v1/"
       
       return [
