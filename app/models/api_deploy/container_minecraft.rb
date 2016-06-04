@@ -124,7 +124,8 @@ module ApiDeploy
         "Env" => [
           "EULA=TRUE",
           "JVM_OPTS=-Xmx#{plan.ram}M",
-          "ENABLE_QUERY=true"
+          "ENABLE_QUERY=true",
+          "MAX_PLAYERS=#{plan.max_players.to_s}"
         ]
       }
       
