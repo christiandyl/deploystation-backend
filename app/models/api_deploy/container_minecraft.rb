@@ -123,7 +123,8 @@ module ApiDeploy
         "ExposedPorts" => { "25565/tcp": {}, "25565/udp": {} },
         "Env" => [
           "EULA=TRUE",
-          "JVM_OPTS=-Xmx#{plan.ram}M"
+          "JVM_OPTS=-Xmx#{plan.ram}M",
+          "ENABLE_QUERY=true"
         ]
       }
       
