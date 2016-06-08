@@ -321,6 +321,10 @@ module ApiDeploy
       s["Running"] == false && s["Paused"] == false && s["Restarting"] == false && s["Dead"] == false
     end
     
+    def running?
+      docker_container.info["State"]["Status"] == "running" rescue false
+    end
+    
     def game
       plan.game
     end

@@ -9,7 +9,7 @@ module ApiDeploy
         container = Container.find(container_id)
         container = Container.class_for(container.game.sname).find(container_id)
         
-        if container.status == Container::STATUS_ONLINE
+        if container.running?
           Pusher.trigger "container-#{container_id}", "start", { success: true }
           return true
         end
