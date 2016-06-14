@@ -54,11 +54,11 @@ module ApiDeploy
             end
           # end
           
-          game = Game.find(params[:id])
-          if game.sname == "minecraft_pe"
-            availability = false
-            reason = I18n.t("games.availability.reason_temporarily_unavailable")
-          end
+          # game = Game.find(params[:id])
+          # if game.sname == "minecraft_pe"
+          #   availability = false
+          #   reason = I18n.t("games.availability.reason_temporarily_unavailable")
+          # end
         end
         
         data = {
