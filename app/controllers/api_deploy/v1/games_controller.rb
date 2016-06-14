@@ -55,7 +55,7 @@ module ApiDeploy
           # end
           
           game = Game.find(params[:id])
-          if game.sname == "minecraft_pe" && current_user.email != "christian.dyl@outlook.com"
+          if game.sname == "minecraft_pe"
             availability = false
             reason = I18n.t("games.availability.reason_temporarily_unavailable")
           end
