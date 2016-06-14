@@ -3,3 +3,4 @@ fr:
     availability:
       reason_not_paid: "Vous ne pouvez pas créer un nouveau serveur, parce que vous avez déjà un serveur trial"
       reason_email_confirmation: "Désolé, d'abord vous devez confirmer votre email"
+      reason_temporarily_unavailable: "Sorry, but this game is temporary under maintenance, please try later."
