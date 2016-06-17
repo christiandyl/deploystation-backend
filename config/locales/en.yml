@@ -3,4 +3,4 @@ en:
     availability:
       reason_not_paid: "You can't create new server, because you already have one trial server"
       reason_email_confirmation: "Sorry, first you should confirm your email"
-      reason_temporarily_unavailable: "Sorry, but this game is temporary under maintenance, please try later."
+      reason_temporarily_unavailable: "Sorry, this game is currently unavailable. We’re updating MCPE to the version 0.15.0."
