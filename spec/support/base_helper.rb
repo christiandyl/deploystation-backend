@@ -79,7 +79,7 @@ module BaseHelper
     
     visit url
 
-    expect(page).to have_content('Facebook Login')
+    expect(page).to have_content('Log into Facebook')
 
     fill_in :email, with: email
     fill_in :pass, with: password
@@ -89,6 +89,7 @@ module BaseHelper
     click_button 'Okay' if body.include? 'will receive the following info'
 
     params = current_params
+
     expect(page).to have_content('Success')
 
     code = params[:code]

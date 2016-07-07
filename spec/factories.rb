@@ -30,7 +30,7 @@ FactoryGirl.define do
   factory :game do
     name   { Faker::Lorem.word }
     sname  { Faker::Lorem.word }
-    status { [ApiDeploy::Container::STATUS_ONLINE, ApiDeploy::Container::STATUS_OFFLINE].sample }
+    status { [Container::STATUS_ONLINE, Container::STATUS_OFFLINE].sample }
     features do
       list = []
       3.times do

@@ -1,5 +1,5 @@
 class Game < ActiveRecord::Base
-  include ApiConverter
+  include ApiExtension
 
   STATUS_ENABLED     = "enabled"
   STATUS_DISABLED    = "disabled"
@@ -9,14 +9,22 @@ class Game < ActiveRecord::Base
 
   default_scope { order(:order)}
 
-  attr_api [:id, :name, :sname, :images, :status, :plans_list, :features_list]
-
   has_many :plans
   
   validates :name, :presence => true, :length => { in: 2..50 }
-  
-  def plans_list
-    plans.map { |p| p.to_api(:public) }
+
+  def api_attributes(_layers)
+    h = {
+      id: id,
+      name: name,
+      sname: sname,
+      images: images,
+      status: status,
+      plans_list: plans.map { |p| p.to_api },
+      features_list: features_list
+    }
+
+    h
   end
   
   def images

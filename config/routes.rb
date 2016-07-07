@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   get "v1/client_settings", :controller => :application, :action => :v1_client_settings
 
-  scope :module => :api_back do
+  scope :module => :api do
     scope :v1, :module => :v1 do
 
       resource :session, :only => [:create]
@@ -27,12 +27,6 @@ Rails.application.routes.draw do
       
       resources :devices, :only => [:create, :destroy]
 
-    end
-  end
-
-  scope :module => :api_deploy do
-    scope :v1, :module => :v1 do
-      
       resources :containers, :only => [:index, :create, :update, :show, :destroy] do
         member do
           post :start
@@ -68,7 +62,7 @@ Rails.application.routes.draw do
         get :random_name
         get :check_availability
       end
-    
+
     end
   end
 

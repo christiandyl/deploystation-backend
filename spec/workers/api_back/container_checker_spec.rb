@@ -10,13 +10,13 @@ describe 'Container checker', :type => :request do
     plans = Plan.all
 
     5.times do
-      model = ApiDeploy::Container.new.tap do |m|
+      model = Container.new.tap do |m|
         m.user_id      = users.sample.id
         m.plan_id      = plans.sample.id
         m.host_id      = plans.sample.host_id
         m.port         = "25565"
         m.name         = Faker::Lorem.word
-        m.status       = ApiDeploy::Container::STATUS_ONLINE
+        m.status       = Container::STATUS_ONLINE
         m.is_private   = [true,false].sample
         m.active_until = (-0.5).days.from_now
         m.is_paid      = false
@@ -26,7 +26,7 @@ describe 'Container checker', :type => :request do
   end
   
   it 'Run container checker' do
-    ApiBack::ContainerCheckerWorker.perform_async
+    ContainerWorkers::CheckerWorker.perform_async
   end
 
 end

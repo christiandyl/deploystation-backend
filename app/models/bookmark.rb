@@ -1,20 +1,21 @@
 class Bookmark < ActiveRecord::Base
-  include ApiConverter
+  include ApiExtension
 
   PERMIT = [:email]
 
-  attr_api [:user_data]
-
   # Relations
-  belongs_to :container, :class_name => "ApiDeploy::Container"
+  belongs_to :container
   belongs_to :user
   
   # Validations
   validates :container_id, :presence => true, uniqueness: { scope: :user_id }
   validates :user_id, :presence => true
-  
-  def user_data
-    user.to_api(:public)
-  end
 
+  def api_attributes(_layers)
+    h = {
+      user_data: user.to_api
+    }
+
+    h
+  end
 end

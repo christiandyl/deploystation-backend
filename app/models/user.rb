@@ -1,9 +1,7 @@
 class User < ActiveRecord::Base
-  include ApiConverter
+  include ApiExtension
 
   attr_accessor :current_password, :new_password
-
-  attr_api [:id, :email, :full_name, :avatar_url, :locale, :confirmation, :confirmation_required]
 
   AWS_FOLDER = "users/:user_id"
   AVATAR_UPLOAD_TYPES = [:direct_upload, :url]
@@ -11,7 +9,7 @@ class User < ActiveRecord::Base
   EMAIL_CONFIRMATION_PERIOD = 1.day
 
   has_many :connects
-  has_many :containers, :class_name => "ApiDeploy::Container"
+  has_many :containers
   has_many :shared_containers, through: :accesses, :source => :container
   # has_many :bookmarked_containers, through: :bookmarks, :source => :container
   has_many :bookmarked_containers, through: :bookmarks, :source => :container
@@ -28,6 +26,20 @@ class User < ActiveRecord::Base
   
   validates :email, uniqueness: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)*[^@.\s]+\z/ }
   validates :confirmation, allow_nil: true, inclusion: { in: [true, false] }
+
+  def api_attributes(_layers)
+    h = {
+      id: id,
+      email: email,
+      full_name: full_name,
+      avatar_url: avatar_url,
+      locale: locale,
+      confirmation: confirmation,
+      confirmation_required: confirmation_required
+    }
+
+    h
+  end
 
   def after_initialize 
    self.confirmation ||= false
@@ -48,7 +60,7 @@ class User < ActiveRecord::Base
   end
   
   def subscribe_email
-    ApiBack::UserSubscribeEmail.perform_async(id) unless Rails.env.test?
+    UserSubscribeEmail.perform_async(id) unless Rails.env.test?
   end
   
   def avatar_url
@@ -62,7 +74,7 @@ class User < ActiveRecord::Base
   
   def upload_avatar source, type, now = false    
     unless now
-      ApiBack::UserUploadAvatarWorker.perform_async(id, source, type)
+      UserWorkers::UploadAvatarWorker.perform_async(id, source, type)
       return true
     end
     type = type.to_sym
@@ -97,7 +109,7 @@ class User < ActiveRecord::Base
   
   def destroy_avatar now = false
     unless now          
-      ApiBack::UserDestroyAvatarWorker.perform_async(id)
+      UserWorkers::DestroyAvatarWorker.perform_async(id)
       return true
     end
     
@@ -138,7 +150,7 @@ class User < ActiveRecord::Base
   end
   
   def connect_login
-    @connect_login ||= ConnectLogin.find_by_user_id(id)
+    @connect_login ||= Connects::Login.find_by_user_id(id)
   end
   
   # Email confirmation
@@ -190,7 +202,7 @@ class User < ActiveRecord::Base
         status = user.give_reward(reward)
 
         if status == true
-          Helper::slack_ping("#{full_name} was invited by #{User.find(user.id).full_name}") rescue nil
+          Backend::Helper::slack_ping("#{full_name} was invited by #{User.find(user.id).full_name}") rescue nil
           Reward.create!(inviter_id: user.id, invited_id: self.id, referral_data: reward )
         end
       end
@@ -221,7 +233,7 @@ class User < ActiveRecord::Base
     status = case type
       when "time"
         cid = data["cid"] or raise ArgumentError.new("Container id doesn't exists for this reward")
-        container = ApiDeploy::Container.find(cid) rescue ArgumentError.new("Container id #{cid.to_s} doesn't exists for this reward")
+        container = Container.find(cid) rescue ArgumentError.new("Container id #{cid.to_s} doesn't exists for this reward")
         
         time_now = Time.now.to_time
         active_until = container.active_until.to_time
