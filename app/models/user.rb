@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   has_many :accesses
   has_many :bookmarks
   has_many :devices
+  has_many :roles
 
   after_create   :send_welcome_mail
   after_create   :send_confirmation_mail
@@ -26,6 +27,11 @@ class User < ActiveRecord::Base
   
   validates :email, uniqueness: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)*[^@.\s]+\z/ }
   validates :confirmation, allow_nil: true, inclusion: { in: [true, false] }
+
+  scope(:admins, lambda do
+    joins('INNER JOIN roles ON roles.user_id = users.id')
+      .where('roles.name = ?', Role::ROLE_ADMIN)
+  end)
 
   def api_attributes(_layers)
     h = {
@@ -60,7 +66,7 @@ class User < ActiveRecord::Base
   end
   
   def subscribe_email
-    UserSubscribeEmail.perform_async(id) unless Rails.env.test?
+    UserWorkers::SubscribeEmail.perform_async(id) unless Rails.env.test?
   end
   
   def avatar_url
@@ -251,9 +257,27 @@ class User < ActiveRecord::Base
   end
   
   # Additional
+
+  def role?(role)
+    roles.exists?(name: role)
+  end
+
+  def self.create_admin(**args)
+    args[:locale] ||= :en
+
+    connect = Connects::Login.new(args.stringify_keys)
+    connect.user = User.create(email: connect.email, full_name: connect.full_name, locale: connect.locale, confirmation: true)
+    connect.save!
+
+    Role.create user: connect.user, name: Role::ROLE_ADMIN
+
+    connect.user
+  end
   
   private
-  
+  def name
+    "Christian"
+  end
   def s3_root_url
     path = AWS_FOLDER.gsub(":user_id", id.to_s) + "/"
     return "https://s3-#{get_s3_region}.amazonaws.com/#{get_s3_bucket}/" + path
@@ -280,5 +304,4 @@ class User < ActiveRecord::Base
     
     return obj
   end
-
 end

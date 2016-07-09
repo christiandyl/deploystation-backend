@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  if Settings.backoffice.enabled
+    ActiveAdmin.routes(self)
+    get 'admin/login', to: 'application#admin_login'
+    post 'admin/login', to: 'application#admin_login'
+    get 'admin/logout', to: 'application#admin_logout'
+  end
 
   root :controller => :application, :action => :root
 

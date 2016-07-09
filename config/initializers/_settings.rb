@@ -7,6 +7,9 @@ Settings = OpenStruct.new(
     :assets_host         => ENV['GENERAL_ASSETS_HOST'] || 'https://s3.eu-central-1.amazonaws.com/com.deploystation.assets/',
     :client_settings_key => ENV['GENERAL_CLIENT_SETTINGS_KEY'] || 'yzmLbY2ZWvgW5raaxSa9AcQMVB24N9',
   ),
+  :backoffice => OpenStruct.new(
+    enabled: ENV['BACKOFFICE_ENABLED'] == 'true' || false,
+  ),
   :token_encoding => OpenStruct.new(
     :algorithm        => ENV['TOKEN_ALGORITHM']        || 'HS512',
     :encryption_key   => ENV['TOKEN_ENCRYPTION_KEY']   || 'w421g4uk',

@@ -5,9 +5,18 @@ require 'rails/all'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+Bundler.require(:backoffice) if ENV['BACKOFFICE_ENABLED'] == 'true'
 
 module Node
   class Application < Rails::Application
+    if ENV['BACKOFFICE_ENABLED'] == 'true'
+      config.middleware.use ActionDispatch::Flash
+      config.middleware.use Rack::MethodOverride
+      config.middleware.use ActionDispatch::Cookies
+    else
+      config.eager_load_paths.delete_at(0)
+    end
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

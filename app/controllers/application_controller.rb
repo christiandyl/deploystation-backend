@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  # include BackOffice if Settings.backoffice.enabled
+  include BackOffice if Settings.backoffice.enabled
 
   def root
     render json: {}

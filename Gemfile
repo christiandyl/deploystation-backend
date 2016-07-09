@@ -82,10 +82,15 @@ group :test do
   # Poltergeist is a driver for Capybara that allows you to run your tests on a headless WebKit browser
   gem 'poltergeist'
   # Byebug is a Ruby 2 debugger
-  gem 'byebug'
   gem 'pusher-fake'
 end
 
 group :development, :test, :staging do
+  gem 'byebug'
   gem 'awesome_print'
+end
+
+group :backoffice do
+  gem 'activeadmin', '~> 1.0.0.pre4'
+  gem 'activeadmin_hstore_editor'
 end
