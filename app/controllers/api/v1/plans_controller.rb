@@ -1,6 +1,6 @@
 module ApiController
   module V1
-    class PlansController < Api
+    class PlansController < ApiController
 
       ##
       # Get available games list
