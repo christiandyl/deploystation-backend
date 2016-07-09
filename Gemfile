@@ -90,7 +90,5 @@ group :development, :test, :staging do
   gem 'awesome_print'
 end
 
-group :backoffice do
-  gem 'activeadmin', '~> 1.0.0.pre4'
-  gem 'activeadmin_hstore_editor'
-end
+gem 'activeadmin', '~> 1.0.0.pre4', require: false
+gem 'activeadmin_hstore_editor', require: false

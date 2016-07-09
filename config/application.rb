@@ -5,7 +5,11 @@ require 'rails/all'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-Bundler.require(:backoffice) if ENV['BACKOFFICE_ENABLED'] == 'true'
+# Bundler.require(:backoffice) if ENV['BACKOFFICE_ENABLED'] == 'true'
+if ENV['BACKOFFICE_ENABLED'] == 'true'
+  require 'activeadmin'
+  require 'activeadmin_hstore_editor'
+end
 
 module Node
   class Application < Rails::Application
