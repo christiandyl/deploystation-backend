@@ -90,7 +90,10 @@ group :development, :test, :staging do
   gem 'awesome_print'
 end
 
+group :assets do
+  gem 'therubyracer'
+  gem 'uglifier'
+end
+
 gem 'activeadmin', '~> 1.0.0.pre4', require: false
 gem 'activeadmin_hstore_editor', require: false
-gem 'therubyracer'
-gem 'uglifier'
