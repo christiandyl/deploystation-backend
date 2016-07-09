@@ -1,4 +1,4 @@
-module ApiController
+module Api
   module V1
     class PlansController < ApiController
 
