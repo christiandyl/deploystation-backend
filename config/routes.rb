@@ -1,5 +1,5 @@
 if Settings.backoffice.enabled
-  require 'sidekiq/web' 
+  require 'sidekiq/web'
   class SidekiqAuthConstraint
     def self.admin?(request)
       if request.cookies['auth_token'].nil?
