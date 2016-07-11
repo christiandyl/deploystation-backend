@@ -30,7 +30,11 @@ module Clockwork
     end
   end
 
-  every(20.seconds, 'players_online.job')
-  every(10.minute, 'minutly_stat.job')
-  every(1.day, 'daily_stat.job', :at => '00:00')
+  time = if Rails.env.production? ? 20 : 40
+  every(time.seconds, 'players_online.job')
+
+  if Rails.env.production?
+    every(10.minute, 'minutly_stat.job')
+    every(1.day, 'daily_stat.job', :at => '00:00')
+  end
 end
