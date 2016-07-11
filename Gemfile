@@ -97,5 +97,6 @@ group :assets do
   gem 'uglifier'
 end
 
+gem 'sinatra', :require => false
 gem 'activeadmin', '~> 1.0.0.pre4', require: false
 gem 'activeadmin_hstore_editor', require: false

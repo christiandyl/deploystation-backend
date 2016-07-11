@@ -1,9 +1,29 @@
+if Settings.backoffice.enabled
+  require 'sidekiq/web' 
+  class SidekiqAuthConstraint
+    def self.admin?(request)
+      if request.cookies['auth_token'].nil?
+        return false
+      else
+        auth_token = request.cookies['auth_token']
+        (token = ::Token.new(auth_token)).decode_token
+        user = token.find_user
+        return (!user.nil? && user.role?(:admin))
+      end
+    end
+  end
+end
+
 Rails.application.routes.draw do
   if Settings.backoffice.enabled
     ActiveAdmin.routes(self)
     get 'admin/login', to: 'application#admin_login'
     post 'admin/login', to: 'application#admin_login'
     get 'admin/logout', to: 'application#admin_logout'
+    constraints lambda { |request| SidekiqAuthConstraint.admin?(request) } do
+      mount Sidekiq::Web => '/admin/sidekiq'
+    end
+    get '/admin/sidekiq', to: redirect('admin/login')
   end
 
   root :controller => :application, :action => :root

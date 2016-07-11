@@ -218,6 +218,12 @@ if Settings.backoffice.enabled
       config.namespace :admin do |admin|
         admin.build_menu :utility_navigation do |menu|
             menu.add(
+                label: 'Sidekiq',
+                url:  proc{  sidekiq_web_path },
+                id: 'sidekiq',
+                html_options: { target: :blank }
+            )
+            menu.add(
                 label: proc{ current_active_admin_user.email },
                 url:  proc{  edit_admin_admin_path(current_active_admin_user) }  ,#link_to current_active_admin_user,
                 id: 'current_user',
