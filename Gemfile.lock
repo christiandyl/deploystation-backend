@@ -1,3 +1,8 @@
+PATH
+  remote: lib/gems/local_env
+  specs:
+    local_env (1.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -357,6 +362,7 @@ DEPENDENCIES
   httparty (= 0.13.7)
   jwt (= 1.5.1)
   koala (= 2.2.0)
+  local_env (= 1.0.0)!
   mandrill-api
   minecraft-query
   mini_magick

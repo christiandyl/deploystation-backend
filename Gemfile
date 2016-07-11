@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'local_env', '1.0.0', path: 'lib/gems/local_env', require: 'local_env/rails-now'
+
 gem 'rails', '4.2.6'
 gem 'rails-api', '0.4.0'
 gem 'pg'
