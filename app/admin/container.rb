@@ -28,6 +28,7 @@ ActiveAdmin.register Container do
 
   member_action :remove, method: :delete do
     Container.find(resource.id).destroy_container
+    sleep(2)
     redirect_to :back, notice: "Container will be deleted in the nearest time"
   end
   
