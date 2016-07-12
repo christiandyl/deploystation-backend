@@ -6,8 +6,11 @@ ActiveAdmin.register Container do
   config.per_page = 50
   
   scope :all, default: true
-  scope("Active") { |scope| scope.where("active_until > ?", Time.now.to_datetime) }
-  scope("Inactive") { |scope| scope.where("active_until < ?", Time.now.to_datetime) }
+  scope_to { Container.active }
+  scope_to { Container.inactive }
+  scope_to { Container.will_stop }
+  scope_to { Container.paid }
+  scope_to { Container.unpaid }
   
   member_action :send_prolongation, method: :get do
     ContainerMailer.delay.container_prolongation_email(resource.id)
