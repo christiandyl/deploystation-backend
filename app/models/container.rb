@@ -1,7 +1,9 @@
 class Container < ActiveRecord::Base
   include ApiExtension
   include Redis::Objects
-  
+
+  store_accessor :metadata, :is_paid, :notified_expiration
+
   # redis mapper
   value :players, :type => String, :expiration => 1.hour
   
@@ -34,6 +36,8 @@ class Container < ActiveRecord::Base
   validates :user_id, :presence => true
   validates :host_id, :presence => true
   validates :is_private, inclusion: { in: [true, false] }
+  validates :is_paid, inclusion: { in: [true, false] }
+  validates :notified_expiration, inclusion: { in: [true, false] }
 
   # Callbacks
   define_callbacks :start, :stop
@@ -41,6 +45,7 @@ class Container < ActiveRecord::Base
   after_create :define_config
   # after_create :send_details_email
   before_destroy :destroy_docker_container
+  after_initialize :define_default_values
 
   def api_attributes(_layers)
     h = {
@@ -100,6 +105,13 @@ class Container < ActiveRecord::Base
       end
       
       return container
+    end
+  end
+
+ def define_default_values
+    if self.new_record?
+      self.notified_expiration ||= false
+      self.is_paid ||= false
     end
   end
 
