@@ -30,7 +30,7 @@ module Clockwork
     end
   end
 
-  time = if Rails.env.production? ? 20 : 40
+  time = Rails.env.production? ? 20 : 40
   every(time.seconds, 'players_online.job')
 
   if Rails.env.production?
