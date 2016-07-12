@@ -6,11 +6,11 @@ ActiveAdmin.register Container do
   config.per_page = 50
   
   scope :all, default: true
-  scope_to { Container.active }
-  scope_to { Container.inactive }
-  scope_to { Container.will_stop }
-  scope_to { Container.paid }
-  scope_to { Container.unpaid }
+  scope :active
+  scope :inactive
+  scope :will_stop
+  scope :paid
+  scope :unpaid
   
   member_action :send_prolongation, method: :get do
     ContainerMailer.delay.container_prolongation_email(resource.id)
@@ -18,19 +18,19 @@ ActiveAdmin.register Container do
   end
   
   member_action :start, method: :post do
-    Sidekiq::Client.push('class' => "ApiDeploy::ContainerStartWorker", 'args' => [resource.id])
+    resource.start
     sleep(2)
     redirect_to :back, notice: "Server will start in few seconds"
   end
   
   member_action :stop, method: :post do
-    Sidekiq::Client.push('class' => "ApiDeploy::ContainerStopWorker", 'args' => [resource.id])
+    resource.stop
     sleep(2)
     redirect_to :back, notice: "Server will stop in few seconds"
   end
 
   member_action :remove, method: :delete do
-    Container.find(resource.id).destroy_container
+    resource.destroy_container
     redirect_to :back, notice: "Container will be deleted in the nearest time"
   end
   
