@@ -10,6 +10,11 @@ class Container < ActiveRecord::Base
   # default_scope -> { where.not(status: STATUS_SUSPENDED) }
   scope :active, -> { where.not(status: STATUS_SUSPENDED) }
   scope :online, -> { where(status: STATUS_ONLINE) }
+  scope(:will_stop, -> do
+    where('metadata @> hstore(:key, :value)', key: 'notified_expiration', value: 'true').active
+  end)
+  scope :paid, -> { where('metadata @> hstore(:key, :value)', key: 'is_paid', value: 'true') }
+  scope :unpaid, -> { where('metadata @> hstore(:key, :value)', key: 'is_paid', value: 'false') }
   
   STATUS_CREATED   = "created"
   STATUS_ONLINE    = "online"
