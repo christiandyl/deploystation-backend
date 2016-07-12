@@ -109,7 +109,7 @@ module GameConfigs
           :key           => "enable-rcon",
           :type          => :boolean,
           :title         => "",
-          :default_value => false,
+          :default_value => true,
           :is_editable   => false,
           :validations   => {},
           :requires_reset   => false,
@@ -330,6 +330,15 @@ module GameConfigs
           :title         => "Server name",
           :default_value => "A Minecraft Server",
           :is_editable   => true,
+          :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } },
+          :requires_reset   => false,
+          :requires_restart => true
+        }, {
+          :key           => "rcon.password",
+          :type          => :string,
+          :title         => "Rcon password",
+          :default_value => nil,
+          :is_editable   => false,
           :validations   => { allow_blank: false, :length => { minimum: 2, maximum: 20 } },
           :requires_reset   => false,
           :requires_restart => true

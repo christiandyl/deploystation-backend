@@ -123,7 +123,9 @@ module Containers
         "ExposedPorts" => { "25565/tcp": {}, "25565/udp": {} },
         "Env" => [
           "EULA=TRUE",
-          "JVM_OPTS=-Xmx#{plan.ram}M"
+          "JVM_OPTS=-Xmx#{plan.ram}M",
+          "ENABLE_RCON=#{config.get_property_value('enable-rcon')}",
+          "RCON_PASSWORD=#{config.get_property_value('rcon.password')}"
         ]
       }
       
@@ -514,6 +516,7 @@ module Containers
     
     def define_config
       config.super_access = true
+      config.set_property("rcon.password", SecureRandom.hex)
       config.set_property("max-players", plan.max_players)
       # config.set_property("level-name", name)
       config.export_to_database
