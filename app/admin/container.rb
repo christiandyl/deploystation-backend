@@ -10,7 +10,7 @@ ActiveAdmin.register Container do
   scope("Inactive") { |scope| scope.where("active_until < ?", Time.now.to_datetime) }
   
   member_action :send_prolongation, method: :get do
-    ApiDeploy::ContainerMailer.delay.container_prolongation_email(resource.id)
+    ContainerMailer.delay.container_prolongation_email(resource.id)
     redirect_to :back, notice: "Done"
   end
   
@@ -24,6 +24,11 @@ ActiveAdmin.register Container do
     Sidekiq::Client.push('class' => "ApiDeploy::ContainerStopWorker", 'args' => [resource.id])
     sleep(2)
     redirect_to :back, notice: "Server will stop in few seconds"
+  end
+
+  member_action :destroy, method: :delete do
+    Container.find(resource.id).destroy_container
+    redirect_to :back, notice: "Container will be deleted in the nearest time"
   end
   
   index do
@@ -56,6 +61,8 @@ ActiveAdmin.register Container do
       else
         str << link_to("Start", start_admin_container_path(c), method: :post, class: "edit_link member_link")
       end
+
+      str << link_to("Destroy", destroy_admin_container_path(c), method: :delete, class: "edit_link member_link")
       
       str
     end
