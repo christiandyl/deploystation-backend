@@ -120,6 +120,16 @@ class Container < ActiveRecord::Base
     end
   end
 
+  def notified_expiration  
+    return (super == 'true') if %w{true false}.include? super
+    super
+  end
+
+  def is_paid  
+    return (super == 'true') if %w{true false}.include? super
+    super
+  end 
+
   # Actions
 
   def create_docker_container opts = {}
