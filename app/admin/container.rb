@@ -26,7 +26,7 @@ ActiveAdmin.register Container do
     redirect_to :back, notice: "Server will stop in few seconds"
   end
 
-  member_action :destroy, method: :delete do
+  member_action :remove, method: :delete do
     Container.find(resource.id).destroy_container
     redirect_to :back, notice: "Container will be deleted in the nearest time"
   end
@@ -62,7 +62,7 @@ ActiveAdmin.register Container do
         str << link_to("Start", start_admin_container_path(c), method: :post, class: "edit_link member_link")
       end
 
-      str << link_to("Destroy", destroy_admin_container_path(c), method: :delete, class: "edit_link member_link")
+      str << link_to("Destroy", remove_admin_container_path(c), method: :delete, class: "edit_link member_link")
       
       str
     end
