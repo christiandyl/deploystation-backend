@@ -86,8 +86,8 @@ ActiveAdmin.register Container do
       input :active_until, as: :date_time_picker
     end
     inputs 'Metadata' do
-      input :is_paid, as: :boolean, input_html: { value: 'true' }
-      input :notified_expiration, as: :boolean, input_html: { value: 'true' }
+      input :is_paid, as: :select, collection: [true, false]
+      input :notified_expiration, as: :select, collection: [true, false]
     end
     actions
   end
