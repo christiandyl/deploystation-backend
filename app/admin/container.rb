@@ -9,8 +9,6 @@ ActiveAdmin.register Container do
   scope :active
   scope :inactive
   scope :will_stop
-  scope :paid
-  scope :unpaid
   
   member_action :send_prolongation, method: :get do
     ContainerMailer.delay.container_prolongation_email(resource.id)
@@ -73,8 +71,8 @@ ActiveAdmin.register Container do
   
   filter :name
   filter :game
-  filter :is_paid, as: :select, collection: ['true', 'false']
-  filter :status, as: :select, collection: ["online", "offline"]
+  filter :is_paid
+  filter :status, as: :select, collection: ['online', 'offline']
   filter :active_until
   filter :owner
   filter :user
