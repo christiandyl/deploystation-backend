@@ -8,6 +8,7 @@ Bundler.require(*Rails.groups)
 # Bundler.require(:backoffice) if ENV['BACKOFFICE_ENABLED'] == 'true'
 if ENV['BACKOFFICE_ENABLED'] == 'true'
   require 'activeadmin'
+  require 'activeadmin_addons'
   require 'activeadmin_hstore_editor'
 end
 
