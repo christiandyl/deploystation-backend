@@ -73,7 +73,7 @@ ActiveAdmin.register Container do
   
   filter :name
   filter :game
-  filter :is_paid, as: :select, collection: [true, false]
+  filter :is_paid, as: :select, collection: ['true', 'false']
   filter :status, as: :select, collection: ["online", "offline"]
   filter :active_until
   filter :owner
