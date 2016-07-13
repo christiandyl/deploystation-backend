@@ -114,7 +114,7 @@ class Container < ActiveRecord::Base
     end
   end
 
- def define_default_values
+  def define_default_values
     if self.new_record?
       self.notified_expiration ||= false
       self.is_paid ||= false
@@ -122,12 +122,12 @@ class Container < ActiveRecord::Base
   end
 
   def notified_expiration  
-    return (super == 'true' || super == 1) if %w{true false 1 0}.include? super
+    return (super == 'true') if %w{true false}.include? super
     super
   end
 
   def is_paid  
-    return (super == 'true' || super == 1) if %w{true false 1 0}.include? super
+    return (super == 'true') if %w{true false}.include? super
     super
   end 
 
