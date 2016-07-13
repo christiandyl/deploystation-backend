@@ -73,7 +73,7 @@ ActiveAdmin.register Container do
   
   filter :name
   filter :game
-  filter :is_paid
+  filter :is_paid, as: :select, collection: [true, false]
   filter :status, as: :select, collection: ["online", "offline"]
   filter :active_until
   filter :owner
@@ -84,7 +84,7 @@ ActiveAdmin.register Container do
   form do |f|
     inputs 'Details' do
       input :active_until
-      input :is_paid
+      input :is_paid, as: :select, collection: [true, false]
     end
     actions
   end
