@@ -122,12 +122,12 @@ class Container < ActiveRecord::Base
   end
 
   def notified_expiration  
-    return (super == 'true') if %w{true false}.include? super
+    return (super == 'true' || super == 1) if %w{true false 1 0}.include? super
     super
   end
 
   def is_paid  
-    return (super == 'true') if %w{true false}.include? super
+    return (super == 'true' || super == 1) if %w{true false 1 0}.include? super
     super
   end 
 
