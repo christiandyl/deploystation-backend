@@ -74,7 +74,7 @@ ActiveAdmin.register Container do
   filter :name
   filter :game
   filter :status, as: :select, collection: ['online', 'offline']
-  filter :active_until
+  filter :active_until, as: :date_time_picker
   filter :owner
   filter :user
   
@@ -84,11 +84,10 @@ ActiveAdmin.register Container do
     inputs 'Details' do
       input :name
       input :active_until, as: :date_time_picker
-      input :user, as: :select, collection: User.all
     end
     inputs 'Metadata' do
-      input :is_paid, as: :select, collection: [true, false]
-      input :notified_expiration, as: :select, collection: [true, false]
+      input :is_paid, as: :boolean
+      input :notified_expiration, as: :boolean
     end
     actions
   end
