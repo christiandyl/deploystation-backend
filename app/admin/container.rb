@@ -1,5 +1,5 @@
 ActiveAdmin.register Container do
-  permit_params :name, :active_until, :is_paid
+  permit_params :name, :active_until, :is_paid, :user
   actions :all, :except => [:destroy]
   
   config.clear_action_items!
@@ -39,7 +39,7 @@ ActiveAdmin.register Container do
     column :name
     column :status
     column :active_until
-    column :is_paid
+    bool_column :is_paid
     column "Game" do |c|
       link_to c.game.name, admin_game_path(c.game)
     end
@@ -83,7 +83,7 @@ ActiveAdmin.register Container do
   form do |f|
     inputs 'Details' do
       input :name
-      input :active_until
+      input :active_until, as: :date_time_picker
       input :user, as: :select, collection: User.all
     end
     inputs 'Metadata' do
