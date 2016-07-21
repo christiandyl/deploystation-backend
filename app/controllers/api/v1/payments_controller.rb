@@ -43,7 +43,7 @@ module Api
 
       ##
       # Get braintree client token
-      # @resource /v1/payments/client_token
+      # @resource /v1/payments/braintree_client_token
       # @action GET
       #
       # @response_field [Boolean] success
