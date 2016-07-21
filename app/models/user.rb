@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   #### API attributes
   #############################################################
 
-  def api_attributes(_layers)
+  def api_attributes(layers)
     h = {
       id: id,
       email: email,
@@ -66,8 +66,10 @@ class User < ActiveRecord::Base
       locale: locale,
       confirmation: confirmation,
       confirmation_required: confirmation_required,
-      credits: credits
     }
+    if layers.include? :private
+      h[:credits] = credits
+    end
 
     h
   end

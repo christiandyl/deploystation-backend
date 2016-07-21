@@ -156,7 +156,7 @@ module Api
       # @response_field [String] result.id User id
       # @response_field [String] result.email User email
       def me
-        render response_ok current_user.to_api
+        render response_ok current_user.to_api(layouts: [:private])
       end
       
       ##
