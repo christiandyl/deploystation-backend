@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       post "user/confirmation", :controller => :users, :action => :confirmation
       post "user/request_email_confirmation", :controller => :users, :action => :request_email_confirmation
 
+      get 'payments/credits_sets', to: 'payments#credits_sets'
       get 'payments/client_token', to: 'payments#client_token'
       resources :payments, :only => [:index, :create]
       

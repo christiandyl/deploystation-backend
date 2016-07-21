@@ -15,19 +15,6 @@ module Api
         data = current_user.payments.to_api(paginate: pagination_params)
         render response_ok data
       end
-
-      ##
-      # Get braintree client token
-      # @resource /v1/payments/client_token
-      # @action GET
-      #
-      # @response_field [Boolean] success
-      # @response_field [Hash] result
-      # @response_field [String] result.client_token Braintree client token
-      def client_token
-        client_token = Payment.client_token
-        render response_ok client_token: client_token
-      end
       
       ##
       # Braintree checkout
@@ -52,6 +39,32 @@ module Api
         api_layers << :debug unless Rails.env.production?
 
         render response_ok payment.to_api(layers: api_layers)
+      end
+
+      ##
+      # Get braintree client token
+      # @resource /v1/payments/client_token
+      # @action GET
+      #
+      # @response_field [Boolean] success
+      # @response_field [Hash] result
+      # @response_field [String] result.client_token Braintree client token
+      def client_token
+        client_token = Payment.client_token
+        render response_ok client_token: client_token
+      end
+
+      ##
+      # Get braintree client token
+      # @resource /v1/payments/credits_sets
+      # @action GET
+      #
+      # @response_field [Boolean] success
+      # @response_field [Array] result
+      # @response_field [Float] result[].amount Amount
+      def credits_sets
+        data = Payment.amounts_list
+        render response_ok data
       end
     end
   end
