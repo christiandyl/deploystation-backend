@@ -103,7 +103,7 @@ class Payment < ActiveRecord::Base
         payment.save
 
         user_credits = user.credits + amount
-        user.update credits: credits
+        user.update credits: user_credits
       end
     end
 
