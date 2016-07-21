@@ -24,7 +24,8 @@ if Rails.env.production? # Production seeds
       :ram          => 256,
       :storage      => 1024,
       :storage_type => 'ssd',
-      :price        => "3"
+      :price        => "3",
+      :price_per_hour => 0.01
     },
     {
       :game         => 'Minecraft',
@@ -34,7 +35,8 @@ if Rails.env.production? # Production seeds
       :ram          => 384,
       :storage      => 1024,
       :storage_type => 'ssd',
-      :price        => "5"
+      :price        => "5",
+      :price_per_hour => 0.02
     },
     {
       :game         => 'Minecraft',
@@ -44,7 +46,8 @@ if Rails.env.production? # Production seeds
       :ram          => 512,
       :storage      => 1024,
       :storage_type => 'ssd',
-      :price        => "8"
+      :price        => "8",
+      :price_per_hour => 0.03
     }
   ]
   
@@ -60,6 +63,7 @@ elsif Rails.env.staging? # Staging seeds
      :storage      => 1024,
      :storage_type => 'ssd',
      :price        => "3",
+     :price_per_hour => 0.01
    },
    {
      :game         => 'Minecraft',
@@ -70,6 +74,7 @@ elsif Rails.env.staging? # Staging seeds
      :storage      => 1024,
      :storage_type => 'ssd',
      :price        => "5",
+     :price_per_hour => 0.02
    },
    {
      :game         => 'Minecraft',
@@ -79,7 +84,8 @@ elsif Rails.env.staging? # Staging seeds
      :ram          => 512,
      :storage      => 1024,
      :storage_type => 'ssd',
-     :price        => "8"
+     :price        => "8",
+     :price_per_hour => 0.03
    }
  ]
  
@@ -95,6 +101,7 @@ elsif Rails.env.beta? # Beta seeds
      :storage      => 1024,
      :storage_type => 'ssd',
      :price        => "0",
+     :price_per_hour => 0.03
    },
    {
      :game         => 'Minecraft',
@@ -105,6 +112,7 @@ elsif Rails.env.beta? # Beta seeds
      :storage      => 1024,
      :storage_type => 'ssd',
      :price        => "0",
+     :price_per_hour => 0.03
    },
    {
      :game         => 'Minecraft',
@@ -114,7 +122,8 @@ elsif Rails.env.beta? # Beta seeds
      :ram          => 512,
      :storage      => 1024,
      :storage_type => 'ssd',
-     :price        => "0"
+     :price        => "0",
+     :price_per_hour => 0.03
    }
  ]
  
@@ -129,7 +138,8 @@ else # Development and Testing seeds
      :ram          => 256,
      :storage      => 1024,
      :storage_type => 'ssd',
-     :price        => '5'
+     :price        => '5',
+     :price_per_hour => 0.01
    },
    {
      :game         => 'Minecraft',
@@ -139,7 +149,8 @@ else # Development and Testing seeds
      :ram          => 384,
      :storage      => 1024,
      :storage_type => 'ssd',
-     :price        => '10'
+     :price        => '10',
+     :price_per_hour => 0.02
     },{
       :game         => '7 days to die',
       :host         => 'localhost',
@@ -148,7 +159,8 @@ else # Development and Testing seeds
       :ram          => 1024,
       :storage      => 1024,
       :storage_type => 'ssd',
-      :price        => '15'
+      :price        => '15',
+      :price_per_hour => 0.03
     },
     {
       :game         => 'Counter-strike go',
@@ -158,7 +170,8 @@ else # Development and Testing seeds
       :ram          => 512,
       :storage      => 1024,
       :storage_type => 'ssd',
-      :price        => "5"
+      :price        => "5",
+      :price_per_hour => 0.01
     },
     {
       :game         => 'Minecraft pocket edition',
@@ -168,7 +181,8 @@ else # Development and Testing seeds
       :ram          => 256,
       :storage      => 1024,
       :storage_type => 'ssd',
-      :price        => "2"
+      :price        => "2",
+      :price_per_hour => 0.02
     }
  ]
 

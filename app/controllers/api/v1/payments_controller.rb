@@ -1,54 +1,58 @@
 module Api
   module V1
     class PaymentsController < ApiController
-      
+      ##
+      # Get payments list
+      # @resource /v1/payments
+      # @action GET
+      #
+      # @response_field [Boolean] success
+      # @response_field [Array] result
+      # @response_field [Integer] result[].user_id User id
+      # @response_field [Float] result[].amount Amount
+      # @response_field [Datetime] result[].created_at Created at
+      def index
+        data = current_user.payments.to_api(paginate: pagination_params)
+        render response_ok data
+      end
+
       ##
       # Get braintree client token
-      # @resource /v1/payment/client_token
+      # @resource /v1/payments/client_token
       # @action GET
       #
       # @response_field [Boolean] success
       # @response_field [Hash] result
       # @response_field [String] result.client_token Braintree client token
       def client_token
-        client_token = Braintree::ClientToken.generate
-        
+        client_token = Payment.client_token
         render response_ok client_token: client_token
       end
       
       ##
       # Braintree checkout
-      # @resource /v1/payment
+      # @resource /v1/payments
       # @action POST
       #
       # @required [Hash] payment
       # @required [String] payment.payment_method_nonce
-      # @required [Integer] payment.plan_id
-      # @required [Integer] payment.duration
+      # @required [Integer] payment.amount
       #
-      # @response_field [Boolean] success
+      # @response_field [Array] result
+      # @response_field [Integer] result.user_id User id
+      # @response_field [Float] result.amount Amount
+      # @response_field [Datetime] result.created_at Created at
+      # @response_field [Hash] result.metadata Meta data (only in testing mode)
       def create
-        opts = params.require(:payment)
-        nonce    = opts[:payment_method_nonce] or raise ArgumentError.new("Nonce doesn't exists")
-        plan_id  = opts[:plan_id] or raise ArgumentError.new("Plan id doesn't exists")
-        duration = opts[:duration] or raise ArgumentError.new("Duration doesn't exists")
-        
-        plan = Plan.find(plan_id) or raise "Plan with id #{plan_id} doesn't exists"
+        opts = params.require(:payment).permit(Payment::PERMIT)
+        opts[:user] = current_user
+        payment = Payment.create_transaction(opts)
 
-        result = Braintree::Transaction.sale(
-          :amount => plan.price,
-          :payment_method_nonce => nonce,
-          :options => {
-            :submit_for_settlement => true
-          }
-        )
-        
-        # ap result
-        puts result.to_s
-        
-        render response_ok result
+        api_layers = []
+        api_layers << :debug unless Rails.env.production?
+
+        render response_ok payment.to_api(layers: api_layers)
       end
-      
     end
   end
 end

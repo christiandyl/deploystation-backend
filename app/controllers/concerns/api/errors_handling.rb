@@ -8,6 +8,7 @@ module Api
       rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
       rescue_from ActionController::RoutingError, :with => :render_not_found
       rescue_from PermissionDenied, :with => :render_permission_denied
+      rescue_from CustomError, :with => :render_custom_error
     end
 
     def render_record_invalid(error)
@@ -26,6 +27,10 @@ module Api
 
     def render_permission_denied(error)
       render response_unauthorized error.message
+    end
+
+    def render_custom_error(error)
+      render response_custom_error error.to_api
     end
 
     private

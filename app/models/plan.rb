@@ -9,6 +9,7 @@ class Plan < ActiveRecord::Base
   validates :ram, :presence => true, :numericality => { only_integer: true, :greater_than_or_equal_to => 1 }
   validates :storage, :presence => true, :numericality => { only_integer: true, :greater_than_or_equal_to => 1 }
   validates :storage_type, :presence => true, :inclusion => { in: %w(hdd ssd) }
+  validates :price_per_hour, presence: true, numericality: true
 
   def api_attributes(_layers)
     h = {

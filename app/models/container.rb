@@ -2,21 +2,6 @@ class Container < ActiveRecord::Base
   include ApiExtension
   include Redis::Objects
 
-  store_accessor :metadata, :is_paid, :notified_expiration
-
-  # redis mapper
-  value :players, :type => String, :expiration => 1.hour
-  
-  # default_scope -> { where.not(status: STATUS_SUSPENDED) }
-  scope :active, -> { where.not(status: STATUS_SUSPENDED) }
-  scope :inactive, -> { where(status: STATUS_SUSPENDED) }
-  scope :online, -> { where(status: STATUS_ONLINE) }
-  scope(:will_stop, -> do
-    where('metadata @> hstore(:key, :value)', key: 'notified_expiration', value: 'true').active
-  end)
-  scope :paid, -> { where('metadata @> hstore(:key, :value)', key: 'is_paid', value: 'true') }
-  scope :unpaid, -> { where('metadata @> hstore(:key, :value)', key: 'is_paid', value: 'false') }
-  
   STATUS_CREATED   = "created"
   STATUS_ONLINE    = "online"
   STATUS_OFFLINE   = "offline"
@@ -29,8 +14,33 @@ class Container < ActiveRecord::Base
   TRIAL_DAYS = 7
   
   REWARD_HOURS = 48
+
+  #############################################################
+  #### Accessors
+  #############################################################
+
+  store_accessor :metadata, :is_paid, :notified_expiration, :started_at, :charged_at
+
+  value :players, :type => String, :expiration => 1.hour
+
+  #############################################################
+  #### Scopes
+  #############################################################
+
+  # default_scope -> { where.not(status: STATUS_SUSPENDED) }
+  scope :active, -> { where.not(status: STATUS_SUSPENDED) }
+  scope :inactive, -> { where(status: STATUS_SUSPENDED) }
+  scope :online, -> { where(status: STATUS_ONLINE) }
+  scope(:will_stop, -> do
+    where('metadata @> hstore(:key, :value)', key: 'notified_expiration', value: 'true').active
+  end)
+  scope :paid, -> { where('metadata @> hstore(:key, :value)', key: 'is_paid', value: 'true') }
+  scope :unpaid, -> { where('metadata @> hstore(:key, :value)', key: 'is_paid', value: 'false') }
   
-  # Relations
+  #############################################################
+  #### Relations
+  #############################################################
+
   belongs_to :user
   belongs_to :plan
   belongs_to :host
@@ -38,20 +48,33 @@ class Container < ActiveRecord::Base
   has_many   :accesses
   has_many   :bookmarks
   
-  # Validations
+  #############################################################
+  #### Validations
+  #############################################################
+
   validates :user_id, :presence => true
   validates :host_id, :presence => true
   validates :is_private, inclusion: { in: [true, false] }
   validates :is_paid, inclusion: { in: [true, false] }
   validates :notified_expiration, inclusion: { in: [true, false] }
 
-  # Callbacks
+  #############################################################
+  #### Callbacks setup
+  #############################################################
+
   define_callbacks :start, :stop
-  
+
+  set_callback :stop, :before, :charge_credits
+
   after_create :define_config
   # after_create :send_details_email
   before_destroy :destroy_docker_container
   after_initialize :define_default_values
+  after_update :change_container_size, if: Proc.new { |c| c.plan_id_changed? }
+
+  #############################################################
+  #### API attributes
+  #############################################################
 
   def api_attributes(_layers)
     h = {
@@ -73,11 +96,20 @@ class Container < ActiveRecord::Base
     h
   end
 
+  #############################################################
+  #### Methods to override
+  #############################################################
+
+  def define_config; raise "SubclassResponsibility"; end
   def command; raise "SubclassResponsibility"; end
   def players_online; raise "SubclassResponsibility"; end
   def logs; raise "SubclassResponsibility"; end
   def started?; raise "SubclassResponsibility"; end
   def starting_progress; raise "SubclassResponsibility"; end
+
+  #############################################################
+  #### Static methods
+  #############################################################
 
   class << self
     def class_for game
@@ -112,13 +144,64 @@ class Container < ActiveRecord::Base
       
       return container
     end
+
+    def worker(name)
+      cname = "container_workers/#{name}_worker".classify.constantize
+      raise "#{cname} is not supported" if defined?(cname) == nil
+      cname      
+    end
+
+    def periodic_worker(name)
+      cname = "container_workers/periodic/#{name}_worker".classify.constantize
+      raise "#{cname} is not supported" if defined?(cname) == nil
+      cname      
+    end
   end
+
+  #############################################################
+  #### Callbacks
+  #############################################################
 
   def define_default_values
     if self.new_record?
+      self.status = STATUS_OFFLINE
       self.notified_expiration ||= false
       self.is_paid ||= false
+      self.is_private ||= false
     end
+  end
+
+  def send_details_email
+    ContainerMailer.delay.container_created_email(id)
+  end
+
+  def destroy_docker_container
+    begin
+      host.use
+      docker_container.delete(:force => true)
+    rescue
+    end
+  end
+
+  def change_container_size(**opts)
+    now = opts[:now] || false
+
+    unless now
+      method_name = 'change_container_size'
+      method_args = { now: true }
+      ContainerWorkers::MethodWorker.perform_async(id, method_name, method_args)
+    else
+      # TODO
+    end
+  end
+
+  #############################################################
+  #### Helpers
+  #############################################################
+
+  def to_game_class
+    klass = class_for(plan.game.sname)
+    klass.new(attributes)
   end
 
   def notified_expiration  
@@ -129,9 +212,106 @@ class Container < ActiveRecord::Base
   def is_paid  
     return (super == 'true') if %w{true false}.include? super
     super
-  end 
+  end
 
-  # Actions
+  def charged_at
+    Time.parse(super) rescue nil
+  end
+
+  def started_at
+    Time.parse(super) rescue nil
+  end
+
+  def invitation method_name, method_data
+    Invitation.new(self, method_name, method_data)
+  end
+  
+  def players_on_server
+    unless players.nil?
+      return players.value
+    else
+      return "0/#{plan.max_players.to_s}"
+    end
+  end
+
+  def is_owner? user
+    user_id == user.id || Access.exists?(container_id: container_id, user_id: user.id)
+  end
+  
+  def is_super_owner? user
+    user_id == user.id
+  end
+  
+  def is_active
+    begin
+      status = active_until > Date.today
+    rescue
+      status = false
+    end
+    
+    return status
+  end
+  
+  def ip
+    (host.domain + ":" + port) rescue nil
+  end
+
+  def docker_container
+    if docker_id.nil?
+      raise "Container(#{docker_id}) can't get docker container, docker_id is empty"
+    end
+    
+    host.use
+    
+    docker_container = Docker::Container.get(docker_id)
+    raise "Container(#{docker_id}) does not exists" if docker_container.nil?
+    
+    return docker_container
+  end
+  
+  def stopped?
+    s = docker_container.info["State"]
+    
+    s["Running"] == false && s["Paused"] == false && s["Restarting"] == false && s["Dead"] == false
+  end
+  
+  def game
+    plan.game
+  end
+  
+  def port!
+    self.port ||= plan.host.free_port
+  end
+  
+  def config
+    @config ||= GameConfig.class_for(game.sname).new(id)
+  end
+
+  def plugins
+    @plugins ||= GamePluginsCollection.plugins_for_container(self)
+  end
+  
+  def has_plugins?
+    cname = "game_plugins/#{game.sname}".classify.constantize
+    
+    return !cname.default_plugins.blank?
+  end
+  
+  def backup
+    @backup ||= DockerServices::Backup.new(container: self)
+  end
+  
+  def conntrack
+    @conntrack ||= DockerServices::Conntrack.new(container: self)
+  end
+  
+  def docker_container_id
+    "container_" + id.to_s
+  end
+
+  #############################################################
+  #### Actions
+  #############################################################
 
   def create_docker_container opts = {}
     reset = opts[:reset] || false
@@ -200,6 +380,7 @@ class Container < ActiveRecord::Base
       Rails.logger.debug "Container(#{id}) has started"
     
       self.status = STATUS_ONLINE
+      self.started_at = Time.now.to_s
       save!
     end
   end
@@ -280,117 +461,12 @@ class Container < ActiveRecord::Base
     return true
   end
   
-  def command name, args, now=false
-    unless now    
-      ContainerWorkers::CommandWorker.perform_async(id, name, args)
-      return true
-    end
-        
-    command_settings = self.class::COMMANDS.find { |c| c[:name] == name }
-    raise ArgumentError.new("Command #{name} doesn't exists") if command_settings.nil?
-    
-    return send("command_#{name}", args)
-  end
-  
-  def invitation method_name, method_data
-    Invitation.new(self, method_name, method_data)
-  end
-  
-  def players_on_server
-    unless players.nil?
-      return players.value
-    else
-      return "0/#{plan.max_players.to_s}"
-    end
-  end
-  
   # def suspend
   #   self.status = STATUS_SUSPENDED
   #   save
   #
   #   ContainerMailer.delay.welcome_email(id)
   # end
-  
-  # Getters
-  
-  def is_owner? user
-    user_id == user.id || Access.exists?(container_id: container_id, user_id: user.id)
-  end
-  
-  def is_super_owner? user
-    user_id == user.id
-  end
-  
-  def is_active
-    begin
-      status = active_until > Date.today
-    rescue
-      status = false
-    end
-    
-    return status
-  end
-  
-  def ip
-    (host.domain + ":" + port) rescue nil
-  end
-  
-  def docker_container
-    if docker_id.nil?
-      raise "Container(#{docker_id}) can't get docker container, docker_id is empty"
-    end
-    
-    host.use
-    
-    docker_container = Docker::Container.get(docker_id)
-    raise "Container(#{docker_id}) does not exists" if docker_container.nil?
-    
-    return docker_container
-  end
-  
-  def stopped?
-    s = docker_container.info["State"]
-    
-    s["Running"] == false && s["Paused"] == false && s["Restarting"] == false && s["Dead"] == false
-  end
-  
-  def game
-    plan.game
-  end
-  
-  def port!
-    self.port ||= plan.host.free_port
-  end
-  
-  def config
-    @config ||= GameConfig.class_for(game.sname).new(id)
-  end
-  
-  def push_new_stat_gaming_time attrs
-    total_gaming_time   = attrs[:total_gaming_time] || 0
-    segment_gaming_time = attrs[:segment_gaming_time] || 0
-    
-    begin
-      ContainerStatGamingTime.new({
-        :container_id        => id,
-        :total_gaming_time   => total_gaming_time,
-        :segment_gaming_time => segment_gaming_time
-      }).save
-    
-      return true
-    rescue
-      return false
-    end
-  end
-  
-  def referral_token_extra_time
-    user.referral_token({
-      :reward => {
-        :type => "time",
-        :cid  => id.to_s
-      }
-    })
-  end
   
   def command_data command_id, now=false
     unless now    
@@ -416,42 +492,63 @@ class Container < ActiveRecord::Base
     
     return command
   end
-  
-  def plugins
-    @plugins ||= GamePluginsCollection.plugins_for_container(self)
-  end
-  
-  def has_plugins?
-    cname = "game_plugins/#{game.sname}".classify.constantize
-    
-    return !cname.default_plugins.blank?
-  end
-  
-  # Callbacks endpoints
-  
-  def send_details_email
-    ContainerMailer.delay.container_created_email(id)
-  end
-  
-  def backup
-    @backup ||= DockerServices::Backup.new(container: self)
-  end
-  
-  def conntrack
-    @conntrack ||= DockerServices::Conntrack.new(container: self)
-  end
-  
-  def docker_container_id
-    "container_" + id.to_s
-  end
-  
-  private
-  
-  def destroy_docker_container
-    begin
-      host.use
-      docker_container.delete(:force => true)
-    rescue
+
+  def command name, args, now=false
+    unless now    
+      ContainerWorkers::CommandWorker.perform_async(id, name, args)
+      return true
     end
+        
+    command_settings = self.class::COMMANDS.find { |c| c[:name] == name }
+    raise ArgumentError.new("Command #{name} doesn't exists") if command_settings.nil?
+    
+    return send("command_#{name}", args)
+  end
+
+  def charge_credits
+    if [STATUS_ONLINE].include?(status)
+      price_per_hour = plan.price_per_hour
+
+      if charged_at.nil? || started_at > charged_at
+        time_to_charge = ((Time.now.to_f - started_at.to_f) / 60.0).ceil
+      else
+        time_to_charge = ((Time.now.to_f - charged_at.to_f) / 60.0).ceil
+      end
+
+      user_credits = user.credits - (price_per_hour * time_to_charge)
+      user_credits = 0 if user_credits < 0
+
+      user.update credits: user_credits
+    end
+  end
+
+  #############################################################
+  #### Additional
+  #############################################################
+
+  def push_new_stat_gaming_time attrs
+    total_gaming_time   = attrs[:total_gaming_time] || 0
+    segment_gaming_time = attrs[:segment_gaming_time] || 0
+    
+    begin
+      ContainerStatGamingTime.new({
+        :container_id        => id,
+        :total_gaming_time   => total_gaming_time,
+        :segment_gaming_time => segment_gaming_time
+      }).save
+    
+      return true
+    rescue
+      return false
+    end
+  end
+  
+  def referral_token_extra_time
+    user.referral_token({
+      :reward => {
+        :type => "time",
+        :cid  => id.to_s
+      }
+    })
   end
 end

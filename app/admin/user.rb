@@ -1,6 +1,6 @@
 ActiveAdmin.register User do
   menu parent: 'Users'
-  permit_params :email, :full_name
+  permit_params :email, :full_name, :credits
   actions :all, :except => [:destroy]
   config.clear_action_items!
   
@@ -12,6 +12,7 @@ ActiveAdmin.register User do
     column "Has servers" do |u|
       !Container.where(user_id: u.id).blank?
     end
+    column :credits
     column :created_at
     actions
   end
@@ -25,6 +26,7 @@ ActiveAdmin.register User do
     inputs 'Details' do
       input :email
       input :full_name
+      input :credits
     end
     actions
   end
@@ -35,5 +37,4 @@ ActiveAdmin.register User do
     column :locale
     column("Has servers") { |u| !Container.where(user_id: u.id).blank? }
   end
-
 end

@@ -99,4 +99,27 @@ module BaseHelper
     return { code: code, redirect_uri: redirect_uri, email: email, password: password }
   end
 
+  def json_response
+    JSON.parse(response.body)
+  end
+
+  def response_success?
+    hs = json_response
+    success = hs['success']
+    expect(success).to be(true)
+
+    response_code_is_success = ['200', '201'].include?(response.code)
+    expect(response_code_is_success).to be(true)
+
+    return true
+  end
+
+  def response_body
+    hs = json_response
+    expect(hs['result']).not_to be_nil
+
+    data = hs['result']
+
+    return data
+  end
 end

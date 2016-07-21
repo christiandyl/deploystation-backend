@@ -56,6 +56,10 @@ module Api
       render_args(result, false, 429)
     end
 
+    def response_custom_error(result)
+      render_args(result, false, 406)
+    end
+
     private
 
     def log_response(args)

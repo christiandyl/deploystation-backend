@@ -8,28 +8,30 @@ describe 'Braintree API', :type => :request do
   end
   
   it 'Allows to get client token' do
-    send :get, client_token_payment_path, :token => @context.token
-
-    expect(response.status).to eq(200)
-    obj = JSON.parse(response.body)
-    
-    expect(obj['success']).to be(true)
-    
-    @context.client_token = obj["result"]["client_token"]
+    send :get, payments_client_token_path, :token => @context.token
+    if response_success?      
+      @context.client_token = response_body['client_token']
+    end
   end
   
   it 'Allows to send checkout' do
     params = {
-      payment: { payment_method_nonce: "fwefwef", plan_id: 1, duration: 2 }
+      payment: {
+        nonce_from_the_client: "fake-valid-nonce",
+        amount: Payment.amounts_list[0][:amount]
+      }
     }.to_json
-    send :post, payment_path, :token => @context.token, :params => params
+    send :post, payments_path, :token => @context.token, :params => params
 
-    # expect(response.status).to eq(200)
-    # obj = JSON.parse(response.body)
-    #
-    # expect(obj['success']).to be(true)
-    #
-    # @context.client_token = obj["result"]["client_token"]
+    if response_success?
+      expect(response_body['id']).to be_a(Integer)
+      expect(response_body['user_id']).to be_a(Integer)
+      expect(response_body['amount']).to be_a(Float)
+
+      created_at = DateTime.parse response_body['created_at']
+      expect(created_at).to be_a(DateTime)
+
+      expect(response_body['metadata']).to be_a(Hash)
+    end
   end
-
 end
