@@ -63,7 +63,7 @@ class Payment < ActiveRecord::Base
   #### Static methods
   #############################################################
 
-  def self.client_token
+  def self.braintree_client_token
     Braintree::ClientToken.generate
   end
 

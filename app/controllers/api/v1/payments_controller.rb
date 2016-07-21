@@ -49,13 +49,13 @@ module Api
       # @response_field [Boolean] success
       # @response_field [Hash] result
       # @response_field [String] result.client_token Braintree client token
-      def client_token
-        client_token = Payment.client_token
+      def braintree_client_token
+        client_token = Payment.braintree_client_token
         render response_ok client_token: client_token
       end
 
       ##
-      # Get braintree client token
+      # Get credits sets
       # @resource /v1/payments/credits_sets
       # @action GET
       #
