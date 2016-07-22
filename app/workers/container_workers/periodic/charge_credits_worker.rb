@@ -14,7 +14,7 @@ module ContainerWorkers
         list = limit && offset ? Container.active.limit(limit).offset(offset) : Container.active
 
         list.each do |c|
-
+          c.charge_credits
         end
       end
     end

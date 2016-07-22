@@ -27,6 +27,7 @@ module Clockwork
         ContainerWorkers::Periodic::MinutelyStatWorker.perform_async(500, 0)
       when 'daily_stat.job'
         ContainerWorkers::Periodic::DailyStatWorker.perform_async(500, 0)
+        ContainerWorkers::Periodic::ChargeCreditsWorker.permorm_async
     end
   end
 

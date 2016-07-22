@@ -215,11 +215,11 @@ class Container < ActiveRecord::Base
   end
 
   def charged_at
-    Time.parse(super) rescue nil
+    DateTime.parse(super) rescue nil
   end
 
   def started_at
-    Time.parse(super) rescue nil
+    DateTime.parse(super) rescue nil
   end
 
   def invitation method_name, method_data
