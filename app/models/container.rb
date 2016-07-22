@@ -522,13 +522,13 @@ class Container < ActiveRecord::Base
 
       user.update credits: user_credits
 
-      charged_minutes = (time_to_charge / 60).round(5)
+      charged_minutes = time_to_charge / 60
       charged_minutes = charged_minutes == 0 ? 1 : charged_minutes
 
       Charge.create(
         user: user,
         container_id: id,
-        amount: charge_amount,
+        amount: charge_amount.round(5),
         type: 'container_charge',
         comment: "#{charged_minutes} minutes"
       )
