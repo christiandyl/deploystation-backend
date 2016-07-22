@@ -48,6 +48,8 @@ Rails.application.routes.draw do
       get 'payments/credits_sets', to: 'payments#credits_sets'
       get 'payments/braintree_client_token', to: 'payments#braintree_client_token'
       resources :payments, :only => [:index, :create]
+
+      resources :charges, only: [:index]
       
       resources :devices, :only => [:create, :destroy]
 

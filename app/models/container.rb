@@ -515,10 +515,23 @@ class Container < ActiveRecord::Base
         time_to_charge = ((Time.now.to_f - charged_at.to_f) / 60.0).ceil
       end
 
-      user_credits = user.credits - (price_per_hour * time_to_charge)
+      charge_amount = price_per_hour * time_to_charge
+
+      user_credits = user.credits - charge_amount
       user_credits = 0 if user_credits < 0
 
       user.update credits: user_credits
+
+      charged_minutes = time_to_charge / 60
+      charged_minutes = charged_minutes == 0 ? 1 : charged_minutes
+
+      Charge.create(
+        user: user,
+        container_id: id,
+        amount: charge_amount,
+        type: 'container_charge',
+        comment: "#{charged_minutes} minutes"
+      )
     end
   end
 

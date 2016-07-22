@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
   has_many :devices
   has_many :roles
   has_many :payments
+  has_many :charges
 
   #############################################################
   #### Callbacks setup
