@@ -6,6 +6,8 @@ class Payment < ActiveRecord::Base
   STATUS_PAID = 'paid'.freeze
   STATUS_REFUNDED = 'refunded'.freeze
 
+  default_scope { order('payments.created_at DESC') }
+
   #############################################################
   #### Accessors
   #############################################################

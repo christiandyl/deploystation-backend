@@ -3,6 +3,8 @@ class Charge < ActiveRecord::Base
 
   attr_accessor :details
 
+  default_scope { order('charges.created_at DESC') }
+
   #############################################################
   #### Accessors
   #############################################################

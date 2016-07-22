@@ -510,9 +510,9 @@ class Container < ActiveRecord::Base
       price_per_hour = plan.price_per_hour
 
       if charged_at.nil? || started_at > charged_at
-        time_to_charge = (((Time.now.to_f - started_at.to_f) / 60.0) / 60.0).ceil
+        time_to_charge = (((Time.now.to_f - started_at.to_f) / 60.0) / 60.0)
       else
-        time_to_charge = (((Time.now.to_f - charged_at.to_f) / 60.0) / 60.0).ceil
+        time_to_charge = (((Time.now.to_f - charged_at.to_f) / 60.0) / 60.0)
       end
 
       charge_amount = price_per_hour * time_to_charge
