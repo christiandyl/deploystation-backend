@@ -532,6 +532,9 @@ class Container < ActiveRecord::Base
         type: 'container_charge',
         comment: "#{charged_minutes} minutes"
       )
+
+      self.charged_at = Time.now
+      update(charged_at: charged_at)
     end
   end
 
