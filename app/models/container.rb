@@ -534,7 +534,7 @@ class Container < ActiveRecord::Base
       )
 
       self.charged_at = Time.now
-      update(charged_at: charged_at)
+      save
     end
   end
 
