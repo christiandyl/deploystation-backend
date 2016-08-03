@@ -8,7 +8,7 @@ describe 'Braintree API', :type => :request do
   end
   
   it 'Allows to get client token' do
-    send :get, payments_client_token_path, :token => @context.token
+    send :get, payments_braintree_client_token_path, :token => @context.token
     if response_success?      
       @context.client_token = response_body['client_token']
     end

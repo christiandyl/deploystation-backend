@@ -6,10 +6,11 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :new_password
 
-  store_accessor :metadata, :credits
+  store_accessor :metadata, :credits, :low_balance_remind
 
   EMAIL_CONFIRMATION_PERIOD = 1.day
   DEFAULT_CREDITS = 5.freeze
+  LOW_BALANCE_REMIND_AMOUNT = 2.freeze
 
   #############################################################
   #### Relations
@@ -36,6 +37,8 @@ class User < ActiveRecord::Base
   after_create     :send_confirmation_mail
   after_create     :subscribe_email
   after_update     :update_user_data
+  after_update     :stop_containers, if: :low_balance?
+  after_update     :send_low_balance_remind, if: :ending_balance?
 
   #############################################################
   #### Validations
@@ -86,12 +89,22 @@ class User < ActiveRecord::Base
     end
   end
 
+  def low_balance_remind
+    return (super == 'true') if %w{true false}.include? super
+    super
+  end
+
   def send_welcome_mail
     UserMailer.delay.welcome_email(self)
   end
   
   def send_confirmation_mail
     UserMailer.delay.confirmation_email(id)
+  end
+
+  def send_low_balance_remind(**opts)
+    permitted = opts[:force] ? opts[:force] : low_balance_remind
+    UserMailer.delay.low_balance_remind(id) if permitted
   end
   
   def subscribe_email
@@ -116,6 +129,10 @@ class User < ActiveRecord::Base
       self.new_password = nil
     end
   end
+
+  def stop_containers
+    containers.each { |c| c.stop }
+  end
   
   #############################################################
   #### Helpers
@@ -135,6 +152,14 @@ class User < ActiveRecord::Base
 
   def role?(role)
     roles.exists?(name: role)
+  end
+
+  def low_balance?
+    credits == 0
+  end
+
+  def ending_balance?
+    credits <= LOW_BALANCE_REMIND_AMOUNT
   end
   
   #############################################################

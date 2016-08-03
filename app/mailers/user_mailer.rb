@@ -49,4 +49,16 @@ class UserMailer < BaseMandrillMailer
     send_mail(user.email, tpl_name, tpl_vars, subject_vars)
   end
 
+  def low_balance_remind(user_id)
+    user = User.find(user_id)
+    
+    tpl_name = "low-balance-en"
+    tpl_vars = {
+      "FNAME"   => user.full_name,
+      "CREDITS" => user.credits
+    }
+    subject_vars = {}
+    
+    send_mail(user.email, tpl_name, tpl_vars, subject_vars)
+  end
 end
