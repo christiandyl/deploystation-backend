@@ -137,7 +137,11 @@ class User < ActiveRecord::Base
   end
 
   def stop_containers
-    containers.each { |c| c.stop }
+    containers.each do |c|
+      c.is_active = false
+      c.save
+      c.stop
+    end
     send_low_balance_container_stop_email
   end
   

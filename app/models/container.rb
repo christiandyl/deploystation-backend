@@ -19,7 +19,7 @@ class Container < ActiveRecord::Base
   #### Accessors
   #############################################################
 
-  store_accessor :metadata, :is_paid, :notified_expiration, :started_at, :charged_at
+  store_accessor :metadata, :is_paid, :notified_expiration, :is_active, :started_at, :charged_at
 
   value :players, :type => String, :expiration => 1.hour
 
@@ -168,6 +168,7 @@ class Container < ActiveRecord::Base
       self.notified_expiration ||= false
       self.is_paid ||= false
       self.is_private ||= false
+      self.is_active ||= true
     end
   end
 
@@ -210,6 +211,12 @@ class Container < ActiveRecord::Base
   end
 
   def is_paid  
+    return (super == 'true') if %w{true false}.include? super
+    super
+  end
+
+
+  def is_active
     return (super == 'true') if %w{true false}.include? super
     super
   end
@@ -273,6 +280,10 @@ class Container < ActiveRecord::Base
     s = docker_container.info["State"]
     
     s["Running"] == false && s["Paused"] == false && s["Restarting"] == false && s["Dead"] == false
+  end
+
+  def active?
+    is_active == true
   end
   
   def game

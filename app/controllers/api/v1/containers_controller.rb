@@ -523,7 +523,7 @@ module Api
       end
       
       def check_is_active
-        raise "Container is not active" unless @container.is_active
+        raise "Container is not active" unless @container.active?
       end
 
     end
