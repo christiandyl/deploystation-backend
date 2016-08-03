@@ -510,7 +510,7 @@ class Container < ActiveRecord::Base
   end
 
   def charge_credits
-    if [STATUS_ONLINE].include?(status)
+    if [STATUS_ONLINE].include?(status) && !user.low_balance?
       price_per_hour = plan.price_per_hour
 
       if charged_at.nil? || started_at > charged_at
