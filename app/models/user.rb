@@ -104,10 +104,14 @@ class User < ActiveRecord::Base
   end
 
   def send_low_balance_remind(**opts)
-    permitted = opts[:force] ? opts[:force] : low_balance_remind
+    permitted = opts[:force] ? opts[:force] : !low_balance_remind
     UserMailer.delay.low_balance_remind(id) if permitted
   end
-  
+
+  def send_low_balance_container_stop_email
+    UserMailer.delay.low_balance_container_stop_email(id)
+  end
+
   def subscribe_email
     UserWorkers::SubscribeEmail.perform_async(id) unless Rails.env.test?
   end
@@ -133,6 +137,7 @@ class User < ActiveRecord::Base
 
   def stop_containers
     containers.each { |c| c.stop }
+    send_low_balance_container_stop_email
   end
   
   #############################################################

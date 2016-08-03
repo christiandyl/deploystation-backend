@@ -406,8 +406,6 @@ class Container < ActiveRecord::Base
     
       self.status = STATUS_OFFLINE
       save!
-
-      send_low_balance_container_stop_email if user.low_balance?
     end
   end
 

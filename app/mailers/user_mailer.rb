@@ -55,10 +55,22 @@ class UserMailer < BaseMandrillMailer
     tpl_name = "low-balance-en"
     tpl_vars = {
       "FNAME"   => user.full_name,
-      "CREDITS" => user.credits
+      "BALANCE" => user.credits
     }
     subject_vars = {}
     
     send_mail(user.email, tpl_name, tpl_vars, subject_vars)
+  end
+
+  def low_balance_container_stop_email(user_id)
+    user = User.find(user_id)
+  
+    tpl_name = "low-balance-container-stop-en"
+    tpl_vars = {
+      "FNAME" => user.full_name
+    }
+    subject_vars = {}
+
+    send_mail(container.user.email, tpl_name, tpl_vars, subject_vars)   
   end
 end
