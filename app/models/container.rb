@@ -175,10 +175,6 @@ class Container < ActiveRecord::Base
     ContainerMailer.delay.container_created_email(id)
   end
 
-  def send_low_balance_container_stop_email
-    ContainerMailer.delay.low_balance_container_stop_email(id)
-  end
-
   def destroy_docker_container
     begin
       host.use
