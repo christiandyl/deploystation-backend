@@ -105,6 +105,7 @@ class User < ActiveRecord::Base
 
   def send_low_balance_remind(**opts)
     permitted = opts[:force] ? opts[:force] : !low_balance_remind
+    self.low_balance_remind = true
     UserMailer.delay.low_balance_remind(id) if permitted
   end
 

@@ -71,6 +71,6 @@ class UserMailer < BaseMandrillMailer
     }
     subject_vars = {}
 
-    send_mail(container.user.email, tpl_name, tpl_vars, subject_vars)   
+    send_mail(user.email, tpl_name, tpl_vars, subject_vars)   
   end
 end
