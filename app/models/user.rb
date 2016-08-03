@@ -86,6 +86,7 @@ class User < ActiveRecord::Base
     if self.new_record?
       self.confirmation ||= false
       self.credits = DEFAULT_CREDITS if credits == 0.0
+      self.low_balance_remind = false
     end
   end
 
