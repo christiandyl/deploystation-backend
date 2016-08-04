@@ -16,11 +16,11 @@ class User < ActiveRecord::Base
   #### Dirty hack !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   #############################################################
 
-  stored_attributes.each do |store, keys|
-    keys.each do |key|
-      define_method :"#{key}_changed?" do
-        changes[store] && changes[store].map { |v| v.try(:[], key) }.uniq.length > 1
-      end
+  def credits_changed?
+    if user.changes[:metadata]
+      return user.changes[:metadata][0][:credits] != user.changes[:metadata][1][:credits]
+    else
+      return false
     end
   end
 
