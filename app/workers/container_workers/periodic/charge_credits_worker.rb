@@ -5,7 +5,7 @@ module ContainerWorkers
 
       LAUNCH_EVERY = 1.hour.freeze
 
-      sidekiq_options :unique => :while_executing, :queue => 'background'
+      sidekiq_options queue: 'background'
 
       def perform(**opts)
         limit  = opts[:limit]
