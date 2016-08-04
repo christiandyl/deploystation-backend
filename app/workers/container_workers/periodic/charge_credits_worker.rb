@@ -7,9 +7,9 @@ module ContainerWorkers
 
       sidekiq_options queue: 'background'
 
-      def perform(**opts)
-        limit  = opts[:limit]
-        offset = opts[:offset]
+      def perform(limit=nil, offset=nil)
+        # limit  = opts[:limit]
+        # offset = opts[:offset]
 
         list = limit && offset ? Container.active.limit(limit).offset(offset) : Container.active
         list.each { |c| c.charge_credits }
