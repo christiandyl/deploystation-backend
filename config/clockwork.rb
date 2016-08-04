@@ -8,7 +8,7 @@ module Clockwork
     
     case job
       when 'players_online.job'
-        Container.periodic_worker(:minutely_stat).perform_async_workers
+        Container.periodic_worker(:players_online).perform_async_workers
       when 'minutly_stat.job'
         Container.periodic_worker(:minutely_stat).perform_async(500, 0)
       when 'daily_stat.job'
