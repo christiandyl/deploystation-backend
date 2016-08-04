@@ -106,7 +106,10 @@ class Payment < ActiveRecord::Base
 
         user_credits = user.credits + amount
         user.update credits: user_credits, low_balance_remind: true
-        user.containers.update_all is_active: true
+        user.containers.each do |c|
+          c.is_active = true
+          c.save
+        end
       end
     end
 

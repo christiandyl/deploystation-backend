@@ -249,15 +249,15 @@ class Container < ActiveRecord::Base
     user_id == user.id
   end
   
-  def is_active
-    begin
-      status = active_until > Date.today
-    rescue
-      status = false
-    end
+  # def is_active
+  #   begin
+  #     status = active_until > Date.today
+  #   rescue
+  #     status = false
+  #   end
     
-    return status
-  end
+  #   return status
+  # end
   
   def ip
     (host.domain + ":" + port) rescue nil
