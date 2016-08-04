@@ -95,7 +95,7 @@ class User < ActiveRecord::Base
   def reset_reminders
     if low_balance_remind && credits > LOW_BALANCE_REMIND_AMOUNT
       self.low_balance_remind = false
-      save
+      update_column(:metadata, user.metadata)
     end
   end
 
@@ -126,7 +126,6 @@ class User < ActiveRecord::Base
   def send_low_balance_remind(**opts)
     permitted = opts[:force] ? opts[:force] : !low_balance_remind
     self.low_balance_remind = true
-    save
     UserMailer.delay.low_balance_remind(id) if permitted
   end
 
