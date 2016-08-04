@@ -510,6 +510,7 @@ class Container < ActiveRecord::Base
     Rails.logger.debug "==================================================="
     Rails.logger.debug "Charging container(#{id})"
     if [STATUS_ONLINE].include?(status) && !user.low_balance?
+      Rails.logger.debug "Container(#{id}) is ready for charge"
       price_per_hour = plan.price_per_hour
       Rails.logger.debug "price_per_hour = #{price_per_hour}"
 
@@ -545,6 +546,8 @@ class Container < ActiveRecord::Base
       self.charged_at = Time.now
       Rails.logger.debug "charged_at = #{charged_at}"
       save
+    else
+      Rails.logger.debug "Container(#{id}) is stopped or inactive"
     end
   end
 

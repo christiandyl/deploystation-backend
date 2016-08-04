@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
   after_update     :update_user_data
   after_update     :stop_containers, if: :low_balance?
   after_update     :send_low_balance_remind, if: :ending_balance?
+  after_update     :active_containers, if: :credits_changed?
+  before_save      :reset_reminders, if: :credits_changed?
 
   #############################################################
   #### Validations
@@ -87,6 +89,21 @@ class User < ActiveRecord::Base
       self.confirmation ||= false
       self.credits = DEFAULT_CREDITS if credits == 0.0
       self.low_balance_remind = false
+    end
+  end
+
+  def reset_reminders
+    self.low_balance_remind = false if credits > 0.0
+  end
+
+  def activate_containers
+    if credits > 0.0
+      containers.each do |c|
+        unless c.active?
+          c.is_active = true
+          c.save
+        end
+      end
     end
   end
 
