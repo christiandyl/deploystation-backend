@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   after_create     :send_confirmation_mail
   after_create     :subscribe_email
   after_update     :update_user_data
-  after_update     :stop_containers, if: :low_balance?
+  after_update     :disactivate_containers, if: :low_balance?
   after_update     :send_low_balance_remind, if: :ending_balance?
   after_update     :activate_containers, unless: :low_balance?
   before_save      :reset_reminders, unless: :low_balance?
@@ -99,14 +99,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def activate_containers
-    if credits > 0.0
-      containers.each do |c|
-        c.activate unless c.active?
-      end
-    end
-  end
-
   def low_balance_remind
     return (super == 'true') if %w{true false}.include? super
     super
@@ -154,8 +146,18 @@ class User < ActiveRecord::Base
     end
   end
 
+  def activate_containers
+    if credits > 0.0
+      containers.each do |c|
+        c.activate unless c.active?
+      end
+    end
+  end
+
   def disactivate_containers
-    containers.each { |c| c.disactivate }
+    containers.each do |c|
+      c.disactivate if c.active?
+    end
     send_low_balance_container_stop_email
   end
   
