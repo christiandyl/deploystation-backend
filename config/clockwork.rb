@@ -23,7 +23,7 @@ module Clockwork
   every(time.seconds, 'players_online.job')
 
   # Credits charge
-  # every(1.hour, 'charge_credits.job')
+  every(1.minute, 'charge_credits.job')
 
   # Stats workers
   if Rails.env.production?
