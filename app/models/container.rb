@@ -517,23 +517,31 @@ class Container < ActiveRecord::Base
   end
 
   def charge_credits
+    Rails.logger.debug "==================================================="
+    Rails.logger.debug "Charging container(#{id})"
     if [STATUS_ONLINE].include?(status) && !user.low_balance?
       price_per_hour = plan.price_per_hour
+      Rails.logger.debug "price_per_hour = #{price_per_hour}"
 
       if charged_at.nil? || started_at > charged_at
         time_to_charge = (((Time.now.to_f - started_at.to_f) / 60.0) / 60.0)
       else
         time_to_charge = (((Time.now.to_f - charged_at.to_f) / 60.0) / 60.0)
       end
+      Rails.logger.debug "time_to_charge = #{time_to_charge}"
 
       charge_amount = price_per_hour * time_to_charge
+      Rails.logger.debug "charge_amount = #{charge_amount}"
 
       user_credits = (user.credits - charge_amount).round(2)
+      Rails.logger.debug "user_credits = #{user_credits}"
       user_credits = 0 if user_credits < 0
 
-      user.update credits: user_credits
+      user.credits = user_credits
+      user.save
 
       charged_minutes = time_to_charge / 60
+      Rails.logger.debug "charged_minutes = #{charged_minutes}"
       charged_minutes = charged_minutes == 0 ? 1 : charged_minutes
 
       Charge.create(
@@ -545,6 +553,7 @@ class Container < ActiveRecord::Base
       )
 
       self.charged_at = Time.now
+      Rails.logger.debug "charged_at = #{charged_at}"
       save
     end
   end
