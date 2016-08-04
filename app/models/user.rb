@@ -13,18 +13,6 @@ class User < ActiveRecord::Base
   LOW_BALANCE_REMIND_AMOUNT = 2.freeze
 
   #############################################################
-  #### Dirty hack !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  #############################################################
-
-  # def credits_changed?
-  #   if changes[:metadata]
-  #     return changes[:metadata][0][:credits] != changes[:metadata][1][:credits]
-  #   else
-  #     return false
-  #   end
-  # end
-
-  #############################################################
   #### Relations
   #############################################################
 
@@ -51,8 +39,8 @@ class User < ActiveRecord::Base
   after_update     :update_user_data
   after_update     :stop_containers, if: :low_balance?
   after_update     :send_low_balance_remind, if: :ending_balance?
-  after_update     :active_containers, if: :credits_changed?
-  before_save      :reset_reminders, if: :credits_changed?
+  after_update     :active_containers, unless: :low_balance?
+  before_save      :reset_reminders, unless: :low_balance?
 
   #############################################################
   #### Validations
@@ -105,7 +93,10 @@ class User < ActiveRecord::Base
   end
 
   def reset_reminders
-    self.low_balance_remind = false if credits > 0.0
+    if low_balance_remind && credits > 0.0
+      self.low_balance_remind = false
+      save
+    end
   end
 
   def activate_containers
