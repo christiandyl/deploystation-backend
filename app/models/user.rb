@@ -17,8 +17,8 @@ class User < ActiveRecord::Base
   #############################################################
 
   def credits_changed?
-    if user.changes[:metadata]
-      return user.changes[:metadata][0][:credits] != user.changes[:metadata][1][:credits]
+    if changes[:metadata]
+      return changes[:metadata][0][:credits] != changes[:metadata][1][:credits]
     else
       return false
     end
