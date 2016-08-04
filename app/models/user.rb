@@ -16,13 +16,13 @@ class User < ActiveRecord::Base
   #### Dirty hack !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   #############################################################
 
-  def credits_changed?
-    if changes[:metadata]
-      return changes[:metadata][0][:credits] != changes[:metadata][1][:credits]
-    else
-      return false
-    end
-  end
+  # def credits_changed?
+  #   if changes[:metadata]
+  #     return changes[:metadata][0][:credits] != changes[:metadata][1][:credits]
+  #   else
+  #     return false
+  #   end
+  # end
 
   #############################################################
   #### Relations
