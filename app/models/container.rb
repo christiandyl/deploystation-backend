@@ -506,6 +506,17 @@ class Container < ActiveRecord::Base
     return send("command_#{name}", args)
   end
 
+  def activate
+    is_active = true
+    save
+  end
+
+  def disactivate
+    is_active = false
+    save
+    stop unless stopped?
+  end
+
   def charge_credits
     Rails.logger.debug "==================================================="
     Rails.logger.debug "Charging container(#{id})"

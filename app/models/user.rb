@@ -102,10 +102,7 @@ class User < ActiveRecord::Base
   def activate_containers
     if credits > 0.0
       containers.each do |c|
-        unless c.active?
-          c.is_active = true
-          c.save
-        end
+        c.activate unless c.active?
       end
     end
   end
@@ -157,12 +154,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def stop_containers
-    containers.each do |c|
-      c.is_active = false
-      c.save
-      c.stop
-    end
+  def disactivate_containers
+    containers.each { |c| c.disactivate }
     send_low_balance_container_stop_email
   end
   
