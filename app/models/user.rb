@@ -13,6 +13,18 @@ class User < ActiveRecord::Base
   LOW_BALANCE_REMIND_AMOUNT = 2.freeze
 
   #############################################################
+  #### Dirty hack !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  #############################################################
+
+  stored_attributes.each do |store, keys|
+    keys.each do |key|
+      define_method :"#{key}_changed?" do
+        changes[store] && changes[store].map { |v| v.try(:[], key) }.uniq.length > 1
+      end
+    end
+  end
+
+  #############################################################
   #### Relations
   #############################################################
 
