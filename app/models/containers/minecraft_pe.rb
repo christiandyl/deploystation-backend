@@ -336,7 +336,7 @@ module Containers
       config.export_to_database
     end
     
-    def export_env_vars      
+    def export_env_vars
       # Generating file content
       str = ""
       docker_container_env_vars.each { |v| str << "export #{v}\n" }

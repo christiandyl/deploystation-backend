@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
   end
 
   def reset_reminders
-    if low_balance_remind && credits > 0.0
+    if low_balance_remind && credits > LOW_BALANCE_REMIND_AMOUNT
       self.low_balance_remind = false
       save
     end
