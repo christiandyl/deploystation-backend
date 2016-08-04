@@ -535,7 +535,7 @@ class Container < ActiveRecord::Base
       charge_amount = price_per_hour * time_to_charge
       Rails.logger.debug "charge_amount = #{charge_amount}"
 
-      user_credits = (user.credits - charge_amount).round(2)
+      user_credits = user.credits - charge_amount
       Rails.logger.debug "user_credits = #{user_credits}"
       user_credits = 0 if user_credits < 0
 
