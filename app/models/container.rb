@@ -19,7 +19,7 @@ class Container < ActiveRecord::Base
   #### Accessors
   #############################################################
 
-  store_accessor :metadata, :is_paid, :notified_expiration, :is_active, :started_at, :charged_at
+  store_accessor :metadata, :is_paid, :is_active, :started_at, :charged_at
 
   value :players, :type => String, :expiration => 1.hour
 
@@ -31,9 +31,6 @@ class Container < ActiveRecord::Base
   scope :active, -> { where.not(status: STATUS_SUSPENDED) }
   scope :inactive, -> { where(status: STATUS_SUSPENDED) }
   scope :online, -> { where(status: STATUS_ONLINE) }
-  scope(:will_stop, -> do
-    where('metadata @> hstore(:key, :value)', key: 'notified_expiration', value: 'true').active
-  end)
   scope :paid, -> { where('metadata @> hstore(:key, :value)', key: 'is_paid', value: 'true') }
   scope :unpaid, -> { where('metadata @> hstore(:key, :value)', key: 'is_paid', value: 'false') }
   
@@ -56,7 +53,6 @@ class Container < ActiveRecord::Base
   validates :host_id, :presence => true
   validates :is_private, inclusion: { in: [true, false] }
   # validates :is_paid, inclusion: { in: [true, false] }
-  validates :notified_expiration, inclusion: { in: [true, false] }
 
   #############################################################
   #### Callbacks setup
@@ -165,7 +161,6 @@ class Container < ActiveRecord::Base
   def define_default_values
     if self.new_record?
       self.status = STATUS_OFFLINE
-      self.notified_expiration ||= false
       self.is_paid ||= false
       self.is_private ||= false
       self.is_active ||= true
@@ -203,11 +198,6 @@ class Container < ActiveRecord::Base
   def to_game_class
     klass = class_for(plan.game.sname)
     klass.new(attributes)
-  end
-
-  def notified_expiration  
-    return (super == 'true') if %w{true false}.include? super
-    super
   end
 
   def is_paid  

@@ -87,7 +87,7 @@ ActiveAdmin.register Container do
     end
     inputs 'Metadata' do
       input :is_paid, as: :select, collection: [true, false]
-      input :notified_expiration, as: :select, collection: [true, false]
+      # input :notified_expiration, as: :select, collection: [true, false]
     end
     actions
   end
