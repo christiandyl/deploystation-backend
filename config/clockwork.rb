@@ -23,7 +23,7 @@ module Clockwork
   every(time.seconds, 'players_online.job')
 
   # Credits charge
-  every(1.minute, 'charge_credits.job')
+  every(Container.periodic_worker(:charge_credits)::LAUNCH_EVERY, 'charge_credits.job')
 
   # Stats workers
   if Rails.env.production?
