@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   after_update     :update_user_data
   after_update     :stop_containers, if: :low_balance?
   after_update     :send_low_balance_remind, if: :ending_balance?
-  after_update     :active_containers, unless: :low_balance?
+  after_update     :activate_containers, unless: :low_balance?
   before_save      :reset_reminders, unless: :low_balance?
 
   #############################################################
