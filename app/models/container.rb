@@ -55,7 +55,7 @@ class Container < ActiveRecord::Base
   validates :user_id, :presence => true
   validates :host_id, :presence => true
   validates :is_private, inclusion: { in: [true, false] }
-  validates :is_paid, inclusion: { in: [true, false] }
+  # validates :is_paid, inclusion: { in: [true, false] }
   validates :notified_expiration, inclusion: { in: [true, false] }
 
   #############################################################
