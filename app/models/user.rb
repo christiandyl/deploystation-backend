@@ -95,7 +95,7 @@ class User < ActiveRecord::Base
   def reset_reminders
     if low_balance_remind && credits > LOW_BALANCE_REMIND_AMOUNT
       self.low_balance_remind = false
-      update_column(:metadata, user.metadata)
+      update_column(:metadata, metadata)
     end
   end
 
