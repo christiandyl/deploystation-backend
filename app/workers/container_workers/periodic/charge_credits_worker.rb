@@ -12,10 +12,7 @@ module ContainerWorkers
         offset = opts[:offset]
 
         list = limit && offset ? Container.active.limit(limit).offset(offset) : Container.active
-
-        list.each do |c|
-          c.charge_credits
-        end
+        list.each { |c| c.charge_credits }
       end
     end
   end
