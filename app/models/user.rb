@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
       confirmation_required: confirmation_required,
     }
     if layers.include? :private
-      h[:credits] = credits.round(5)
+      h[:credits] = credits.round(2)
     end
 
     h
