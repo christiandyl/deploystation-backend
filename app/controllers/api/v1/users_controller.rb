@@ -73,7 +73,7 @@ module Api
         opts = {
           :auth_token => token.token,
           :expires    => token.expires,
-          :user       => connect.user.to_api
+          :user       => connect.user.to_api(layers: [:private])
         }
         
         render response_ok opts

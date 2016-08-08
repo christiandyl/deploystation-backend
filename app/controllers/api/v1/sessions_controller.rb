@@ -39,7 +39,7 @@ module Api
         data = {
           auth_token: token.token,
           expires: token.expires,
-          user: user.to_api
+          user: user.to_api(layers: [:private])
         }
 
         render response_ok data
