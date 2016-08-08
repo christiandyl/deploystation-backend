@@ -8,7 +8,6 @@ ActiveAdmin.register Container do
   scope :all, default: true
   scope :active
   scope :inactive
-  scope :will_stop
   scope :paid
   scope :unpaid
   
