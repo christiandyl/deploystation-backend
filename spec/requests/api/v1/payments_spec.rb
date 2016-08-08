@@ -34,4 +34,20 @@ describe 'Braintree API', :type => :request do
       expect(response_body['metadata']).to be_a(Hash)
     end
   end
+
+  it 'Allows to send checkout (failure)' do
+    params = {
+      payment: {
+        nonce_from_the_client: "fake-luhn-invalid-nonce",
+        amount: Payment.amounts_list[0][:amount]
+      }
+    }.to_json
+    send :post, payments_path, :token => @context.token, :params => params
+
+    if response_unsuccess?
+      expect(response.code).to eq('406')
+      expect(response_body['code']).to eq(101)
+      expect(response_body['description']).not_to be_empty
+    end
+  end
 end

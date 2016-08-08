@@ -98,7 +98,7 @@ class Payment < ActiveRecord::Base
 
       # Validating transaction and saving payment record
       unless result.success?
-        raise CustomError.new(code: 101, description: 'Braintree transaction is failed')
+        raise CustomError.new(code: 101, description: result.message)
       else
         payment.transaction_id = result.transaction.id
         payment.status = STATUS_PAID

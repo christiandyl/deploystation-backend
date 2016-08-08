@@ -114,6 +114,14 @@ module BaseHelper
     return true
   end
 
+  def response_unsuccess?
+    hs = json_response
+    success = hs['success']
+    expect(success).to be(false)
+
+    return true
+  end
+
   def response_body
     hs = json_response
     expect(hs['result']).not_to be_nil

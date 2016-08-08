@@ -9,11 +9,12 @@ class PermissionDenied < StandardError
 end
 
 class CustomError < StandardError
-  attr_accessor :code, :description
+  attr_accessor :code, :description, :additional_data
 
   def initialize(**args)
     self.code = args[:code]
     self.description = args[:description]
+    self.additional_data = args[:additional_data] || {}
     message = "code: #{code}, description: #{description}"
 
     super(message)
@@ -23,7 +24,7 @@ class CustomError < StandardError
     h = {
       code: code,
       description: description
-    }
+    }.merge(additional_data)
 
     h
   end

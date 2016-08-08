@@ -26,6 +26,8 @@ module UserBraintree
 
   def delete_braintree_customer
     Braintree::Customer.delete(braintree_id)
+    self.braintree_id = nil
+    save!
   end
 
   def braintree_customer
