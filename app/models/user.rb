@@ -73,8 +73,14 @@ class User < ActiveRecord::Base
       confirmation: confirmation,
       confirmation_required: confirmation_required,
     }
-    if layers.include? :private
+    if layers.include?(:private)
       h[:credits] = credits.round(2)
+    end
+
+    if layers.include?(:payment)
+      h[:payment] = {
+        has_valid_credit_card: !braintree_customer.credit_cards.blank? rescue false
+      }
     end
 
     h

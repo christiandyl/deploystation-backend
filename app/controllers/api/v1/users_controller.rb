@@ -151,12 +151,19 @@ module Api
       # @resource /v1/users/me
       # @action GET
       #
+      # @optional [String] layers Additional layers request ()
+      #
       # @response_field [Boolean] success
       # @response_field [Hash] result
       # @response_field [String] result.id User id
       # @response_field [String] result.email User email
       def me
-        render response_ok current_user.to_api(layers: [:private])
+        layers = [:private]
+        unless params[:layers].nil?
+          layers += params[:layers].split(',')
+        end
+
+        render response_ok current_user.to_api(layers: layers)
       end
       
       ##
