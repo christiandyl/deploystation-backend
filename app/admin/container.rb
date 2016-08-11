@@ -57,11 +57,10 @@ ActiveAdmin.register Container do
     end
     actions do |c|
       # str = link_to "Send prolongation", send_prolongation_admin_container_path(c), class: "edit_link member_link"
-      str = ''
       if c.status == "online"
-        str << link_to("Stop", stop_admin_container_path(c), method: :post, class: "edit_link member_link")
+        str = link_to("Stop", stop_admin_container_path(c), method: :post, class: "edit_link member_link")
       else
-        str << link_to("Start", start_admin_container_path(c), method: :post, class: "edit_link member_link")
+        str = link_to("Start", start_admin_container_path(c), method: :post, class: "edit_link member_link")
       end
 
       str << link_to("Destroy", remove_admin_container_path(c), method: :delete, class: "edit_link member_link")
