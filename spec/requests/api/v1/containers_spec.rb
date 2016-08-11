@@ -29,6 +29,7 @@ describe 'Containers API', :type => :request do
     expect(container).not_to be_nil
 
     @context.container_id = container.id
+
     byebug
   end
   

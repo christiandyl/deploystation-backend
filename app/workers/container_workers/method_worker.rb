@@ -2,12 +2,9 @@ module ContainerWorkers
   class MethodWorker
     include Sidekiq::Worker
 
-    def perform(container_id, method_name, **args)
-      method_args = args[:method_args] || {}
-
+    def perform(container_id, method_name, args=[])
       container = Container.find(container_id).to_game_class
-      container.send(method_name, method_args)
+      container.send(method_name, *args)
     end
-
   end
 end

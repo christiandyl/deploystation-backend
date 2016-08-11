@@ -486,21 +486,23 @@ module Api
       # @resource /v1/containers/:container_id/request_plan
       # @action POST
       #
-      # @required [Hash] request_plan
-      # @required [Integer] request_plan.plan_id Plan id
+      # @required [Hash] change_plan
+      # @required [Integer] change_plan.plan_id Plan id
       #
       # @response_field [Boolean] success
       # TODO THERE ARE NO SPEC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      def request_plan
-        opts = params.require(:request_plan)
+      def change_plan
+        opts = params.require(:change_plan)
         plan_id = opts[:plan_id] or raise ArgumentError
-        
-        sr = SubscriptionRequest.create!({
-          :user_id      => current_user.id,
-          :container_id => @container.id,
-          :plan_id      => plan_id,
-          :status       => "new"
-        })
+
+        @container.change_plan(plan_id, delay: true)
+   
+        # sr = SubscriptionRequest.create!({
+        #   :user_id      => current_user.id,
+        #   :container_id => @container.id,
+        #   :plan_id      => plan_id,
+        #   :status       => "new"
+        # })
         
         render response_ok
       end

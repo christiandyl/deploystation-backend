@@ -66,7 +66,7 @@ class Container < ActiveRecord::Base
   # after_create :send_details_email
   before_destroy :destroy_docker_container
   after_initialize :define_default_values
-  after_update :change_container_size, if: Proc.new { |c| c.plan_id_changed? }
+  # after_update :change_container_size, if: Proc.new { |c| c.plan_id_changed? }
 
   #############################################################
   #### API attributes
@@ -179,24 +179,24 @@ class Container < ActiveRecord::Base
     end
   end
 
-  def change_container_size(**opts)
-    now = opts[:now] || false
+  # def change_container_size(**opts)
+  #   now = opts[:now] || false
 
-    unless now
-      method_name = 'change_container_size'
-      method_args = { now: true }
-      ContainerWorkers::MethodWorker.perform_async(id, method_name, method_args)
-    else
-      # TODO
-    end
-  end
+  #   unless now
+  #     method_name = 'change_container_size'
+  #     method_args = { now: true }
+  #     ContainerWorkers::MethodWorker.perform_async(id, method_name, method_args)
+  #   else
+  #     # TODO
+  #   end
+  # end
 
   #############################################################
   #### Helpers
   #############################################################
 
   def to_game_class
-    klass = class_for(plan.game.sname)
+    klass = self.class.class_for(plan.game.sname)
     klass.new(attributes)
   end
 
@@ -204,7 +204,6 @@ class Container < ActiveRecord::Base
     return (super == 'true') if %w{true false}.include? super
     super
   end
-
 
   def is_active
     return (super == 'true') if %w{true false}.include? super
@@ -308,6 +307,15 @@ class Container < ActiveRecord::Base
   
   def docker_container_id
     "container_" + id.to_s
+  end
+
+  def push_websocket_message(channel, **args)
+    success = args[:success] || true
+    data = args[:data] || nil
+    Pusher.trigger("container-#{id}", channel.to_s, { success: success, result: data })
+    true
+  rescue
+    false
   end
 
   #############################################################
@@ -515,6 +523,27 @@ class Container < ActiveRecord::Base
     is_active = false
     save
     stop unless stopped?
+  end
+
+  def change_plan(plan_id, opts={})
+    byebug
+    delay = opts[:delay] || opts['delay'] || false
+    notify = opts[:notify] || opts['notify'] || false
+
+    plan = Plan.find(plan_id)
+
+    if delay
+      method_args = [plan_id, { delay: false, notify: true }]
+      self.class.worker(:method).perform_async(id, :change_plan, method_args)
+    else
+      # TODO change plan logics
+      sleep 3
+      push_websocket_message(:change_plan, success: true) if notify
+    end
+    return self
+  rescue => e
+    push_websocket_message(:change_plan, success: false) if notify
+    raise e
   end
 
   def charge_credits
