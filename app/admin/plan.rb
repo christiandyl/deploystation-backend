@@ -1,5 +1,7 @@
 ActiveAdmin.register Plan do
-  permit_params :name, :max_players, :ram, :storage, :storage_type, :price
+  permit_params :name, :max_players, :ram, :storage, :storage_type, :price, :price_per_hour
+
+  actions :all, :except => [:destroy]
 
   index do
     column :id
@@ -16,6 +18,7 @@ ActiveAdmin.register Plan do
     column :max_players
     column :ram
     column :price
+    column :price_per_hour
     
     actions
   end

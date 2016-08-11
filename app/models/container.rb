@@ -515,12 +515,14 @@ class Container < ActiveRecord::Base
   end
 
   def activate
-    is_active = true
+    self.is_active = true
+    self.is_paid = false
     save
   end
 
   def disactivate
-    is_active = false
+    self.is_active = false
+    self.is_paid = false
     save
     stop unless stopped?
   end

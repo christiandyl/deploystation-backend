@@ -1,6 +1,8 @@
 ActiveAdmin.register Game do
   permit_params :name, :active_until, :is_paid
-  
+
+  actions :all, :except => [:destroy]
+
   index do
     column :id
     column :name

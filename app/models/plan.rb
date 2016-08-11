@@ -17,6 +17,7 @@ class Plan < ActiveRecord::Base
       name: name,
       max_players: max_players,
       price: price,
+      price_per_hour: price_per_hour,
       host_id: host_id
     }
 

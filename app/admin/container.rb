@@ -11,10 +11,10 @@ ActiveAdmin.register Container do
   scope :paid
   scope :unpaid
   
-  member_action :send_prolongation, method: :get do
-    ContainerMailer.delay.container_prolongation_email(resource.id)
-    redirect_to :back, notice: "Done"
-  end
+  # member_action :send_prolongation, method: :get do
+  #   ContainerMailer.delay.container_prolongation_email(resource.id)
+  #   redirect_to :back, notice: "Done"
+  # end
   
   member_action :start, method: :post do
     resource.start
@@ -56,8 +56,8 @@ ActiveAdmin.register Container do
       end
     end
     actions do |c|
-      str = link_to "Send prolongation", send_prolongation_admin_container_path(c), class: "edit_link member_link"
-
+      # str = link_to "Send prolongation", send_prolongation_admin_container_path(c), class: "edit_link member_link"
+      str = ''
       if c.status == "online"
         str << link_to("Stop", stop_admin_container_path(c), method: :post, class: "edit_link member_link")
       else
@@ -73,7 +73,7 @@ ActiveAdmin.register Container do
   filter :name
   filter :game
   filter :status, as: :select, collection: ['online', 'offline']
-  filter :active_until, as: :date_time_picker
+  # filter :active_until, as: :date_time_picker
   filter :owner
   filter :user
   
@@ -82,7 +82,7 @@ ActiveAdmin.register Container do
   form do |f|
     inputs 'Details' do
       input :name
-      input :active_until, as: :date_time_picker
+      # input :active_until, as: :date_time_picker
     end
     inputs 'Metadata' do
       input :is_paid, as: :select, collection: [true, false]
