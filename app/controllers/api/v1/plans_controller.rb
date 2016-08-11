@@ -25,7 +25,7 @@ module Api
         
         data = plans.map { |p| p.to_api }
         
-        render response_ok plans
+        render response_ok data
       end
 
     end
