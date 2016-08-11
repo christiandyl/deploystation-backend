@@ -526,7 +526,6 @@ class Container < ActiveRecord::Base
   end
 
   def change_plan(plan_id, opts={})
-    byebug
     delay = opts[:delay] || opts['delay'] || false
     notify = opts[:notify] || opts['notify'] || false
 
