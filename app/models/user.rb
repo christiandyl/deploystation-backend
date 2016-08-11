@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
 
     if layers.include?(:payment)
       h[:payment] = {
-        has_valid_credit_card: !braintree_customer.credit_cards.blank? rescue false
+        has_valid_credit_card: (!braintree_customer.credit_cards.blank? rescue false)
       }
     end
 
