@@ -160,7 +160,7 @@ module Api
       def me
         layers = [:private]
         unless params[:layers].nil?
-          layers += params[:layers].split(',')
+          layers += params[:layers].split(',').map { |l| l.to_sym }
         end
 
         render response_ok current_user.to_api(layers: layers)
