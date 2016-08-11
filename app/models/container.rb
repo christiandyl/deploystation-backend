@@ -537,6 +537,7 @@ class Container < ActiveRecord::Base
     else
       # TODO change plan logics
       sleep 3
+      Rails.logger.debug "Container(#{id}) is on a new plan"
       push_websocket_message(:change_plan, success: true) if notify
     end
     return self
