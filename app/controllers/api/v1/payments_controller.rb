@@ -22,7 +22,7 @@ module Api
       # @action POST
       #
       # @required [Hash] payment
-      # @required [String] payment.payment_method_nonce
+      # @required [String] payment.nonce_from_the_client
       # @required [Integer] payment.amount
       #
       # @response_field [Array] result

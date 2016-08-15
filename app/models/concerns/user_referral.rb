@@ -48,12 +48,15 @@ module UserReferral
         cid = data["cid"] or raise ArgumentError.new("Container id doesn't exists for this reward")
         container = Container.find(cid) rescue ArgumentError.new("Container id #{cid.to_s} doesn't exists for this reward")
         
-        time_now = Time.now.to_time
-        active_until = container.active_until.to_time
-        time = active_until > time_now ? active_until : time_now
+        # time_now = Time.now.to_time
+        # active_until = container.active_until.to_time
+        # time = active_until > time_now ? active_until : time_now
         
-        active_until = time + container.class::REWARD_HOURS.hours
-        container.update(active_until: active_until)
+        # active_until = time + container.class::REWARD_HOURS.hours
+        # container.update(active_until: active_until)
+
+        self.credits += 2.0
+        save!
         
         true
       else
