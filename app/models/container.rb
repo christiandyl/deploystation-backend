@@ -15,6 +15,8 @@ class Container < ActiveRecord::Base
   
   REWARD_HOURS = 48
 
+  CREATION_CHARGE_AMOUNT = 0.5.freeze
+
   #############################################################
   #### Accessors
   #############################################################
@@ -66,6 +68,7 @@ class Container < ActiveRecord::Base
   # after_create :send_details_email
   before_destroy :destroy_docker_container
   after_initialize :define_default_values
+  after_create :charge_credits
   # after_update :change_container_size, if: Proc.new { |c| c.plan_id_changed? }
 
   #############################################################
@@ -124,7 +127,7 @@ class Container < ActiveRecord::Base
         c.host_id    = host.id
         c.status     = STATUS_CREATED
         c.name       = name
-        c.active_until = TRIAL_DAYS.days.from_now.to_time
+        # c.active_until = TRIAL_DAYS.days.from_now.to_time
         c.is_paid = false
         c.is_private = false
       end
@@ -177,6 +180,10 @@ class Container < ActiveRecord::Base
       docker_container.delete(:force => true)
     rescue
     end
+  end
+
+  def charge_credits
+    user.charge_credits(CREATION_CHARGE_AMOUNT)
   end
 
   # def change_container_size(**opts)

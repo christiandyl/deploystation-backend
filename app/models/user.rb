@@ -194,6 +194,14 @@ class User < ActiveRecord::Base
   def ending_balance?
     credits <= LOW_BALANCE_REMIND_AMOUNT
   end
+
+  def charge_credits(credits)
+    self.credits -= credits.to_f
+    self.credits = credits < 0 ? 0 : credits
+    save!
+
+    credits
+  end
   
   #############################################################
   #### Email confirmation
