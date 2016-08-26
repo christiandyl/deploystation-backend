@@ -5,11 +5,12 @@ require 'rails/all'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-# Bundler.require(:backoffice) if ENV['BACKOFFICE_ENABLED'] == 'true'
+require 'formatters/logger_formatter'
 if ENV['BACKOFFICE_ENABLED'] == 'true'
   require 'activeadmin'
   require 'activeadmin_addons'
   require 'activeadmin_hstore_editor'
+  require 'sidekiq/web'
 end
 
 module Node
@@ -21,6 +22,8 @@ module Node
     else
       config.eager_load_paths.delete_at(0)
     end
+
+    config.autoload_paths << Rails.root.join('config/routes')
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -49,39 +52,6 @@ module Node
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     
-    # Rack cors
-    config.middleware.insert_before 0, "Rack::Cors" do
-      allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :options, :delete, :put, :patch]
-      end
-    end
-    
-    # custom logger formatter
-    class LoggerFormatter
-      USE_HUMOROUS_SEVERITIES = true
-  
-      def call(severity, time, progname, message)
-        direct_prg_line = stack_line = buffer = buffer2 = ""
-
-        message.split("\n").each do |line|
-          next if line == ""
-          line.gsub!(/^Started ([A-Z]+) /, "\033[0;1;34m\\0\033[0m")
-          line = "%s - %s - #%d - %s%s%s\n" % [
-            Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"),
-            severity,
-            $$,
-            direct_prg_line,
-            line,
-            stack_line
-          ]
-
-          buffer += line
-        end
-
-        return buffer
-      end
-    end
-    config.log_formatter = LoggerFormatter.new
+    config.log_formatter = Formatters::LoggerFormatter.new
   end
 end

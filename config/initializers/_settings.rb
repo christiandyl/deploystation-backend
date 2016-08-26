@@ -7,6 +7,9 @@ Settings = OpenStruct.new(
     :assets_host         => ENV['GENERAL_ASSETS_HOST'] || 'https://s3.eu-central-1.amazonaws.com/com.deploystation.assets/',
     :client_settings_key => ENV['GENERAL_CLIENT_SETTINGS_KEY'] || 'yzmLbY2ZWvgW5raaxSa9AcQMVB24N9',
   ),
+  :api => OpenStruct.new(
+    enabled: ENV['API_ENABLED'].present? ? ENV['API_ENABLED'] == 'true' : true,
+  ),
   :backoffice => OpenStruct.new(
     enabled: ENV['BACKOFFICE_ENABLED'] == 'true' || false,
   ),
