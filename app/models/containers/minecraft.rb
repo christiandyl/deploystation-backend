@@ -16,7 +16,7 @@ module Containers
         "Tty"          => true,
         "OpenStdin"    => true,
         'StdinOnce'    => true,
-        "Memory"       => memory * 2,
+        "Memory"       => memory,
         "MemorySwap"   => -1,
         "HostConfig"   => {
           "PortBindings" => {
@@ -27,7 +27,7 @@ module Containers
         "ExposedPorts" => { "25565/tcp": {}, "25565/udp": {} },
         "Env" => [
           "EULA=TRUE",
-          "JVM_OPTS=-Xmx#{ram}M",
+          "JVM_OPTS=",
           "ENABLE_RCON=#{config.get_property_value('enable-rcon')}",
           "RCON_PASSWORD=#{config.get_property_value('rcon.password')}"
         ]
@@ -261,7 +261,7 @@ module Containers
     def change_container_volume
       config.super_access = true
       config.set_property("max-players", plan.max_players)
-      config.export_to_database
+      config.save
     end
   end
 end

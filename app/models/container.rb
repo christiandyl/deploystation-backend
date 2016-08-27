@@ -554,10 +554,21 @@ class Container < ActiveRecord::Base
     else
       # TODO change plan logics
       self.plan_id = new_plan.id
-      change_container_volume
       save!
-      restart(true)
-      # sleep 3
+      change_container_volume
+      sleep 10
+      stop(true)
+      sleep 5
+      start(true)
+      sleep 5
+
+      # Dirty hack
+      self.players = "0/#{plan.max_players}"
+      Pusher.trigger("container-#{id}", "players_online", {
+        success: true,
+        result: { players_online: 0, max_players: plan.max_players }
+      })
+
       Rails.logger.debug "Container(#{id}) is on a new plan"
       push_websocket_message(:change_plan, success: true) if notify
     end

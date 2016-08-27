@@ -213,7 +213,9 @@ module Containers
     end
 
     def change_container_volume
-      
+      config.super_access = true
+      config.set_property("maxplayers", plan.max_players)
+      config.save 
     end
   end
 end
