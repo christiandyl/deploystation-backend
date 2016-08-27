@@ -68,7 +68,7 @@ class Container < ActiveRecord::Base
   # after_create :send_details_email
   before_destroy :destroy_docker_container
   after_initialize :define_default_values
-  after_create :charge_credits
+  after_create :charge_creation_credits
   # after_update :change_container_size, if: Proc.new { |c| c.plan_id_changed? }
 
   #############################################################
@@ -105,6 +105,7 @@ class Container < ActiveRecord::Base
   def logs; raise "SubclassResponsibility"; end
   def started?; raise "SubclassResponsibility"; end
   def starting_progress; raise "SubclassResponsibility"; end
+  def change_container_volume; raise "SubclassResponsibility"; end
 
   #############################################################
   #### Static methods
@@ -182,7 +183,7 @@ class Container < ActiveRecord::Base
     end
   end
 
-  def charge_credits
+  def charge_creation_credits
     user.charge_credits(CREATION_CHARGE_AMOUNT)
   end
 
@@ -204,7 +205,14 @@ class Container < ActiveRecord::Base
 
   def to_game_class
     klass = self.class.class_for(plan.game.sname)
-    klass.new(attributes)
+    klass = klass.new(attributes)
+    klass.new_record = false
+
+    klass
+  end
+
+  def new_record=(yes)
+    @new_record = yes == true
   end
 
   def is_paid  
@@ -534,18 +542,22 @@ class Container < ActiveRecord::Base
     stop unless stopped?
   end
 
-  def change_plan(plan_id, opts={})
+  def change_plan(new_plan_id, opts={})
     delay = opts[:delay] || opts['delay'] || false
     notify = opts[:notify] || opts['notify'] || false
 
-    plan = Plan.find(plan_id)
+    new_plan = Plan.find(new_plan_id)
 
     if delay
-      method_args = [plan_id, { delay: false, notify: true }]
+      method_args = [new_plan_id, { delay: false, notify: true }]
       self.class.worker(:method).perform_async(id, :change_plan, method_args)
     else
       # TODO change plan logics
-      sleep 3
+      self.plan_id = new_plan.id
+      change_container_volume
+      save!
+      restart(true)
+      # sleep 3
       Rails.logger.debug "Container(#{id}) is on a new plan"
       push_websocket_message(:change_plan, success: true) if notify
     end

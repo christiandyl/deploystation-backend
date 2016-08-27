@@ -60,6 +60,10 @@ gem 'dynamoid', '~> 1.1.0'
 # Provides object geocoding
 gem 'geocoder', '~> 1.3.4'
 
+group :development do
+  gem 'foreman'
+end
+
 group :development, :staging do
   gem 'spring'
   
