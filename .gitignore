@@ -29,7 +29,7 @@ public/api_doc
 # Byebug
 .byebug_history
 
-# Local evn vars
+# Local env vars
 /config/local_env.yml
 
 # Chef
@@ -39,3 +39,6 @@ shared/
 lib/docker/
 
 csgoserver
+
+public/assets/
+public/docs/
