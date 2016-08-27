@@ -11,12 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526104614) do
+ActiveRecord::Schema.define(version: 20160722113641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
-  enable_extension "dblink"
 
   create_table "accesses", force: :cascade do |t|
     t.integer "container_id"
@@ -26,6 +25,15 @@ ActiveRecord::Schema.define(version: 20160526104614) do
   create_table "bookmarks", force: :cascade do |t|
     t.integer "container_id"
     t.integer "user_id"
+  end
+
+  create_table "charges", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "type_id"
+    t.float    "amount"
+    t.hstore   "metadata"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "connects", force: :cascade do |t|
@@ -52,8 +60,8 @@ ActiveRecord::Schema.define(version: 20160526104614) do
     t.hstore   "server_config"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.boolean  "is_paid"
     t.hstore   "server_plugins"
+    t.hstore   "metadata"
   end
 
   create_table "devices", force: :cascade do |t|
@@ -92,6 +100,14 @@ ActiveRecord::Schema.define(version: 20160526104614) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.float    "amount"
+    t.hstore   "metadata"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "plans", force: :cascade do |t|
     t.integer  "game_id"
     t.integer  "host_id"
@@ -101,8 +117,9 @@ ActiveRecord::Schema.define(version: 20160526104614) do
     t.integer  "storage"
     t.string   "storage_type"
     t.string   "price"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.float    "price_per_hour"
   end
 
   create_table "rewards", force: :cascade do |t|
@@ -111,6 +128,13 @@ ActiveRecord::Schema.define(version: 20160526104614) do
     t.hstore   "referral_data"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "steam_server_login_tokens", force: :cascade do |t|
@@ -141,6 +165,7 @@ ActiveRecord::Schema.define(version: 20160526104614) do
     t.datetime "updated_at",                   null: false
     t.string   "locale"
     t.boolean  "confirmation", default: false
+    t.hstore   "metadata"
   end
 
 end

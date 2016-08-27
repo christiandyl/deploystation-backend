@@ -7,6 +7,12 @@ Settings = OpenStruct.new(
     :assets_host         => ENV['GENERAL_ASSETS_HOST'] || 'https://s3.eu-central-1.amazonaws.com/com.deploystation.assets/',
     :client_settings_key => ENV['GENERAL_CLIENT_SETTINGS_KEY'] || 'yzmLbY2ZWvgW5raaxSa9AcQMVB24N9',
   ),
+  :api => OpenStruct.new(
+    enabled: ENV['API_ENABLED'].present? ? ENV['API_ENABLED'] == 'true' : true,
+  ),
+  :backoffice => OpenStruct.new(
+    enabled: ENV['BACKOFFICE_ENABLED'] == 'true' || false,
+  ),
   :token_encoding => OpenStruct.new(
     :algorithm        => ENV['TOKEN_ALGORITHM']        || 'HS512',
     :encryption_key   => ENV['TOKEN_ENCRYPTION_KEY']   || 'w421g4uk',
@@ -62,6 +68,7 @@ Settings = OpenStruct.new(
     :pem_path => ENV['APNS_PEM_PATH'] || Rails.root.join('.apns_pem')
   ),
   :braintree => OpenStruct.new(
+    :sandbox     => ENV['BRAINTREE_SANDBOX'] == 'true',
     :merchant_id => ENV['BRAINTREE_MERCHANT_ID'] || '8vz9fygsrydrggqb',
     :public_key  => ENV['BRAINTREE_PUBLIC_KEY']|| 'kprr7gxx549pc7jp',
     :private_key => ENV['BRAINTREE_PRIVATE_KEY'] || 'ffb5fbe45d4ed915ab9c590dba340025'

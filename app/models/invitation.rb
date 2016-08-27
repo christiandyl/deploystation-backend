@@ -5,7 +5,7 @@ class Invitation
   METHODS = ["email"]
   
   def initialize container, method_name, method_data
-    raise "Container object is wrong" unless container.is_a? ApiDeploy::Container
+    raise "Container object is wrong" unless container.is_a? Container
     raise "Invitation method doesn't exists" unless METHODS.include?(method_name.to_s)
     
     self.container   = container
@@ -15,7 +15,7 @@ class Invitation
   
   def send now = false
     unless now          
-      ApiDeploy::InvitationWorker.perform_async(container.id, method_name, method_data)
+      ContainerWorkers::InvitationWorker.perform_async(container.id, method_name, method_data)
       return true
     end
 

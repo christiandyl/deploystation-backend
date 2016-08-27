@@ -1,7 +1,5 @@
 class Plan < ActiveRecord::Base
-  include ApiConverter
-
-  attr_api [:id, :name, :max_players, :price, :host_id]
+  include ApiExtension
 
   belongs_to :game
   belongs_to :host
@@ -11,5 +9,19 @@ class Plan < ActiveRecord::Base
   validates :ram, :presence => true, :numericality => { only_integer: true, :greater_than_or_equal_to => 1 }
   validates :storage, :presence => true, :numericality => { only_integer: true, :greater_than_or_equal_to => 1 }
   validates :storage_type, :presence => true, :inclusion => { in: %w(hdd ssd) }
+  validates :price_per_hour, presence: true, numericality: true
+
+  def api_attributes(_layers)
+    h = {
+      id: id,
+      name: name,
+      max_players: max_players,
+      price: price,
+      price_per_hour: price_per_hour,
+      host_id: host_id
+    }
+
+    h
+  end
 
 end

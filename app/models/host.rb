@@ -1,13 +1,30 @@
 require 'ipaddr'
 
 class Host < ActiveRecord::Base
-  include ApiConverter
-
-  attr_api [:id, :name, :location, :country_code, :plans_list], :private => [:ip, :domain, :created_at, :updated_at]
+  include ApiExtension
 
   has_many :plans
   has_many :containers
-  
+
+  def api_attributes(layers)
+    h = {
+      id: id,
+      name: name,
+      location: location,
+      country_code: country_code,
+      plans_list: plans_list
+    }
+
+    if layers.include? :private
+      h[:ip] = ip
+      h[:domain] = domain,
+      h[:created_at] = created_at
+      h[:updated_at] = updated_at
+    end
+
+    h
+  end
+
   def ip
     return IPAddr.new(super, Socket::AF_INET).to_s
   end
@@ -33,7 +50,7 @@ class Host < ActiveRecord::Base
   end
   
   def plans_list
-    plans.map { |p| p.to_api(:public) }
+    plans.map { |p| p.to_api }
   end
   
   def free_port

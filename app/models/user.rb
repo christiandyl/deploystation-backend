@@ -1,36 +1,113 @@
 class User < ActiveRecord::Base
-  include ApiConverter
+  include ApiExtension
+  include UserStorage
+  include UserReferral
+  include UserBraintree
 
   attr_accessor :current_password, :new_password
 
-  attr_api [:id, :email, :full_name, :avatar_url, :locale, :confirmation, :confirmation_required]
-
-  AWS_FOLDER = "users/:user_id"
-  AVATAR_UPLOAD_TYPES = [:direct_upload, :url]
+  store_accessor :metadata, :credits, :low_balance_remind
 
   EMAIL_CONFIRMATION_PERIOD = 1.day
+  DEFAULT_CREDITS = 5.freeze
+  LOW_BALANCE_REMIND_AMOUNT = 2.freeze
+
+  #############################################################
+  #### Relations
+  #############################################################
 
   has_many :connects
-  has_many :containers, :class_name => "ApiDeploy::Container"
+  has_many :containers
   has_many :shared_containers, through: :accesses, :source => :container
   # has_many :bookmarked_containers, through: :bookmarks, :source => :container
   has_many :bookmarked_containers, through: :bookmarks, :source => :container
   has_many :accesses
   has_many :bookmarks
   has_many :devices
+  has_many :roles
+  has_many :payments
+  has_many :charges
 
-  after_create   :send_welcome_mail
-  after_create   :send_confirmation_mail
-  after_create   :define_s3_bucket
-  after_create   :subscribe_email
-  after_update   :on_after_update
-  before_destroy :on_before_destroy
-  
+  #############################################################
+  #### Callbacks setup
+  #############################################################
+
+  after_initialize :define_default_values
+  after_create     :send_welcome_mail
+  after_create     :send_confirmation_mail
+  after_create     :subscribe_email
+  after_update     :update_user_data
+  after_update     :disactivate_containers, if: :low_balance?
+  after_update     :send_low_balance_remind, if: :ending_balance?
+  after_update     :activate_containers, unless: :low_balance?
+  before_save      :reset_reminders, unless: :low_balance?
+
+  #############################################################
+  #### Validations
+  #############################################################
+
   validates :email, uniqueness: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)*[^@.\s]+\z/ }
   validates :confirmation, allow_nil: true, inclusion: { in: [true, false] }
+  validates :credits, presence: true, length: { in: 0..1000 }
 
-  def after_initialize 
-   self.confirmation ||= false
+  #############################################################
+  #### Scopes
+  #############################################################
+
+  scope(:admins, lambda do
+    joins('INNER JOIN roles ON roles.user_id = users.id')
+      .where('roles.name = ?', Role::ROLE_ADMIN)
+  end)
+
+  #############################################################
+  #### API attributes
+  #############################################################
+
+  def api_attributes(layers)
+    h = {
+      id: id,
+      email: email,
+      full_name: full_name,
+      avatar_url: avatar_url,
+      locale: locale,
+      confirmation: confirmation,
+      confirmation_required: confirmation_required,
+    }
+    if layers.include?(:private)
+      h[:credits] = credits.round(2)
+    end
+
+    if layers.include?(:payment)
+      h[:payment] = {
+        has_valid_credit_card: (!braintree_customer.credit_cards.blank? rescue false)
+      }
+    end
+
+    h
+  end
+
+  #############################################################
+  #### Callbacks
+  #############################################################
+
+  def define_default_values
+    if self.new_record?
+      self.confirmation ||= false
+      self.credits = DEFAULT_CREDITS if credits == 0.0
+      self.low_balance_remind = false
+    end
+  end
+
+  def reset_reminders
+    if low_balance_remind && credits > LOW_BALANCE_REMIND_AMOUNT
+      self.low_balance_remind = false
+      update_column(:metadata, metadata)
+    end
+  end
+
+  def low_balance_remind
+    return (super == 'true') if %w{true false}.include? super
+    super
   end
 
   def send_welcome_mail
@@ -40,89 +117,27 @@ class User < ActiveRecord::Base
   def send_confirmation_mail
     UserMailer.delay.confirmation_email(id)
   end
-  
-  def define_s3_bucket
-    self.s3_region = get_s3_region
-    self.s3_bucket = get_s3_bucket
-    self.save!
+
+  def send_low_balance_remind(**opts)
+    permitted = opts[:force] ? opts[:force] : !low_balance_remind
+    self.low_balance_remind = true
+    update_column(:metadata, metadata)
+    UserMailer.delay.low_balance_remind(id) if permitted
   end
-  
+
+  def send_low_balance_container_stop_email
+    UserMailer.delay.low_balance_container_stop_email(id)
+  end
+
   def subscribe_email
-    ApiBack::UserSubscribeEmail.perform_async(id) unless Rails.env.test?
-  end
-  
-  def avatar_url
-    return nil unless has_avatar?
-    return s3_root_url + "avatar.jpg"
+    UserWorkers::SubscribeEmail.perform_async(id) unless Rails.env.test?
   end
   
   def confirmation_required
     !confirmation && Time.now > (created_at + EMAIL_CONFIRMATION_PERIOD)
   end
   
-  def upload_avatar source, type, now = false    
-    unless now
-      ApiBack::UserUploadAvatarWorker.perform_async(id, source, type)
-      return true
-    end
-    type = type.to_sym
-    
-    if type == AVATAR_UPLOAD_TYPES[0] # direct_upload
-      file_path = source["tmp_file_path"] or raise ArgumentError.new("Tmp file path is absent")
-    elsif type == AVATAR_UPLOAD_TYPES[1] # url
-      url = source["url"] or raise ArgumentError.new("Url is absent")
-      file_path = Settings.general.tmp_path.join("uploaded_files", "avatar_#{SecureRandom.uuid}")
-      open(file_path, 'wb') { |f| f << open(url).read }
-    else
-      raise ArgumentError.new("Type #{type} doesn't exists")
-    end
-
-    raise ArgumentError.new("Tmp file doesn't exists") unless File.exists?(file_path)
-
-    image = MiniMagick::Image.open(file_path)
-    image.resize "200x200"
-    image.format "jpg"
-    image.write file_path
-    
-    obj = s3_obj("avatar.jpg")
-    obj.upload_file(file_path, :acl => 'public-read')
-
-    self.has_avatar = true
-    save!
-    
-    File.delete(file_path)
-    
-    return true
-  end
-  
-  def destroy_avatar now = false
-    unless now          
-      ApiBack::UserDestroyAvatarWorker.perform_async(id)
-      return true
-    end
-    
-    obj = s3_obj("avatar.jpg")
-    # obj.delete
-    
-    self.has_avatar = false
-    save!
-    
-    return true
-  end
-  
-  def is_owner? user
-    id == user.id
-  end
-  
-  def on_before_destroy
-    s3 = Aws::S3::Resource.new region: get_s3_region
-    bucket = s3.bucket(get_s3_bucket)
-    path = AWS_FOLDER.gsub(":user_id", id.to_s)
-
-    bucket.objects.delete("#{id.to_s}/")
-  end
-  
-  def on_after_update
+  def update_user_data
     return if connect_login.nil?
     if email_changed? && email != connect_login.partner_id
       connect_login.update!(partner_id: email)
@@ -136,28 +151,72 @@ class User < ActiveRecord::Base
       self.new_password = nil
     end
   end
-  
-  def connect_login
-    @connect_login ||= ConnectLogin.find_by_user_id(id)
+
+  def activate_containers
+    if credits > 0.0
+      containers.each do |c|
+        c.activate unless c.active?
+      end
+    end
+  end
+
+  def disactivate_containers
+    containers.each do |c|
+      c.disactivate if c.active?
+    end
+    send_low_balance_container_stop_email
   end
   
-  # Email confirmation
+  #############################################################
+  #### Helpers
+  #############################################################
+
+  def credits
+    super.to_f rescue 0
+  end
+
+  def connect_login
+    @connect_login ||= Connects::Login.find_by_user_id(id)
+  end
+
+  def is_owner? user
+    id == user.id
+  end
+
+  def role?(role)
+    roles.exists?(name: role)
+  end
+
+  def low_balance?
+    credits == 0
+  end
+
+  def ending_balance?
+    credits <= LOW_BALANCE_REMIND_AMOUNT
+  end
+
+  def charge_credits(amount)
+    self.credits = credits - amount.to_f
+    self.credits = credits < 0 ? 0 : credits
+    save!
+
+    credits
+  end
   
-  def self.find_by_confirmation_token token, opts={}
+  #############################################################
+  #### Email confirmation
+  #############################################################
+  
+  def self.find_by_confirmation_token(token, opts={})
     opts[:confirm_email] ||= false
     
     begin
       hs = JWT.decode token, Settings.token_encoding.confirmation_key
       user = self.find(hs[0]["id"])
       
-      if user.confirmation == true
-        return false
-      end
+      return false if user.confirmation == true
       
-      if opts[:confirm_email]
-        user.update! confirmation: true
-      end
-      
+      user.update!(confirmation: true) if opts[:confirm_email]
       return user
     rescue
       return false
@@ -166,107 +225,26 @@ class User < ActiveRecord::Base
   
   def confirmation_token
     expires = (90.days.from_now).to_i
-    
-    payload = {
-      :id => id,
-      :exp => expires
-    }
+    payload = { id: id, exp: expires }
     
     token = JWT.encode payload, Settings.token_encoding.confirmation_key, Settings.token_encoding.algorithm
     
     return token
   end
   
-  # Referral
-  
-  def find_by_referral_token token, opts={}
-    opts[:give_reward] ||= false
-    
-    begin
-      hs = JWT.decode token, Settings.token_encoding.referral_key
-      user = User.find(hs[0]["id"])
-      if opts[:give_reward]
-        reward = hs[0]["reward"] || {}
-        status = user.give_reward(reward)
+  #############################################################
+  #### Administration
+  #############################################################
 
-        if status == true
-          Helper::slack_ping("#{full_name} was invited by #{User.find(user.id).full_name}") rescue nil
-          Reward.create!(inviter_id: user.id, invited_id: self.id, referral_data: reward )
-        end
-      end
-      return user
-    rescue
-      return false
-    end
-  end
-  
-  def referral_token payload_extra = {}
-    expires = (Time.now + 5.years).to_i
-    
-    payload = {
-      :id => id,
-      :reward => {},
-      :exp => expires
-    }
-    payload_extra.each { |k,v| payload[k] = v }
-    
-    token = JWT.encode payload, Settings.token_encoding.referral_key, Settings.token_encoding.algorithm
-    
-    return token
-  end
-  
-  def give_reward data = {}
-    type = data["type"] or raise ArgumentError.new("Reward type doesn't exists")
-    
-    status = case type
-      when "time"
-        cid = data["cid"] or raise ArgumentError.new("Container id doesn't exists for this reward")
-        container = ApiDeploy::Container.find(cid) rescue ArgumentError.new("Container id #{cid.to_s} doesn't exists for this reward")
-        
-        time_now = Time.now.to_time
-        active_until = container.active_until.to_time
-        time = active_until > time_now ? active_until : time_now
-        
-        active_until = time + container.class::REWARD_HOURS.hours
-        container.update(active_until: active_until)
-        
-        true
-      else
-        raise ArgumentError.new("Reward type #{type} is incorrect")
-    end
-    
-    return status
-  end
-  
-  # Additional
-  
-  private
-  
-  def s3_root_url
-    path = AWS_FOLDER.gsub(":user_id", id.to_s) + "/"
-    return "https://s3-#{get_s3_region}.amazonaws.com/#{get_s3_bucket}/" + path
-  end
-  
-  def get_s3_region
-    s3_region || Settings.aws.s3.region
-  end
-  
-  def get_s3_bucket
-    s3_bucket || Settings.aws.s3.bucket
-  end
-  
-  def s3_obj file_path
-    region = get_s3_region
-    bucket = get_s3_bucket
-    
-    s3 = Aws::S3::Resource.new region: region
-    bucket = s3.bucket(bucket)
-    
-    path = AWS_FOLDER.gsub(":user_id", id.to_s) + "/" + file_path.to_s
-    
-    obj = bucket.object(path)
-    
-    return obj
-  end
+  def self.create_admin(**args)
+    args[:locale] ||= :en
 
+    connect = Connects::Login.new(args.stringify_keys)
+    connect.user = User.create(email: connect.email, full_name: connect.full_name, locale: connect.locale, confirmation: true)
+    connect.save!
+
+    Role.create user: connect.user, name: Role::ROLE_ADMIN
+
+    connect.user
+  end
 end

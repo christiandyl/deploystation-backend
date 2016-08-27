@@ -11,3 +11,5 @@ ActionMailer::Base.smtp_settings = {
 ActionMailer::Base.default_url_options = {
   :host => Settings.mandrill.smtp_domain
 }
+
+ActionMailer::Base.logger = nil

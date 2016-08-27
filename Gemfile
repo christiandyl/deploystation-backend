@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'local_env', '1.0.0', path: 'lib/gems/local_env', require: 'local_env/rails-now'
+
 gem 'rails', '4.2.6'
 gem 'rails-api', '0.4.0'
 gem 'pg'
@@ -58,6 +60,10 @@ gem 'dynamoid', '~> 1.1.0'
 # Provides object geocoding
 gem 'geocoder', '~> 1.3.4'
 
+group :development do
+  gem 'foreman'
+end
+
 group :development, :staging do
   gem 'spring'
   
@@ -82,10 +88,20 @@ group :test do
   # Poltergeist is a driver for Capybara that allows you to run your tests on a headless WebKit browser
   gem 'poltergeist'
   # Byebug is a Ruby 2 debugger
-  gem 'byebug'
   gem 'pusher-fake'
 end
 
 group :development, :test, :staging do
+  gem 'byebug'
   gem 'awesome_print'
 end
+
+group :assets do
+  gem 'therubyracer'
+  gem 'uglifier'
+end
+
+gem 'sinatra', require: false
+gem 'activeadmin', '~> 1.0.0.pre4', require: false
+gem 'activeadmin_addons', require: false
+gem 'activeadmin_hstore_editor', require: false
