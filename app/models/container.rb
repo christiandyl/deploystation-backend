@@ -136,7 +136,7 @@ class Container < ActiveRecord::Base
       container.save!
       Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.attributes.to_s}"
 
-      charge_creation_credits
+      container.charge_creation_credits
 
       unless now
         ContainerWorkers::CreateWorker.perform_async(container.id)
