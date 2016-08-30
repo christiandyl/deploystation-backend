@@ -36,7 +36,12 @@ ActiveAdmin.register Container do
   index do
     column :id
     column :name
-    column :status
+    column "Status" do |c|
+      color = c.status ==  'online' ? 'green' : 'red'
+      span style: { color: color } do
+        c.status
+      end
+    end
     # column :active_until
     # bool_column :is_paid
     column "Game" do |c|
