@@ -65,6 +65,7 @@ class Charge < ActiveRecord::Base
   def self.types
     [
       { id: 1, name: 'container_charge', details: 'Container charge' }
+      { id: 2, name: 'container_creation_charge', details: 'Container creation charge' }
     ]
   end
 

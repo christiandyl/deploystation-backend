@@ -136,6 +136,14 @@ class Container < ActiveRecord::Base
       container.save!
       Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.attributes.to_s}"
 
+      Charge.create(
+        user: user,
+        container_id: id,
+        amount: CREATION_CHARGE_AMOUNT,
+        type: 'container_creation_charge',
+        comment: "Charged #{CREATION_CHARGE_AMOUNT.to_s}"
+      )
+
       unless now
         ContainerWorkers::CreateWorker.perform_async(container.id)
       else
