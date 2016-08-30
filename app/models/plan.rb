@@ -21,6 +21,10 @@ class Plan < ActiveRecord::Base
       host_id: host_id
     }
 
+    if h[:price_per_hour] < 0.005
+      h[:price_per_hour] = 0.005
+    end
+
     h
   end
 

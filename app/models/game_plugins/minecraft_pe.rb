@@ -27,7 +27,7 @@ module GamePlugins
         :author        => 'fromgate',
         :description   => "DbLib is a library, that allows to get access to database simply",
         :visible       => false,
-        :repo_url      => '',
+        :repo_url      => 'http://nukkit.ru/resources/dblib.14/',
         :download_url  => 'https://s3.eu-central-1.amazonaws.com/com.deploystation.assets/docker/minecraft_pe/plugins/DbLib/DbLib.jar',
         :dependencies  => [],
         :configuration => {}
