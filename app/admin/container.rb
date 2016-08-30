@@ -38,7 +38,7 @@ ActiveAdmin.register Container do
     column :name
     column "Status" do |c|
       color = c.status ==  'online' ? 'green' : 'red'
-      span style: { color: color } do
+      span style: "color: #{color}" do
         c.status
       end
     end
