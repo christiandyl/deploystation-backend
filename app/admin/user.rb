@@ -12,6 +12,10 @@ ActiveAdmin.register User do
     column "Has servers" do |u|
       !Container.where(user_id: u.id).blank?
     end
+    column "Containers counts" do |u|
+      u.containers.count
+    end
+    bool_column :confirmation
     column :credits
     column :created_at
     actions

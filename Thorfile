@@ -20,14 +20,15 @@ class App < Thor
       "git push origin #{git_branch}"
     ]
     
-    unless env == "production"
-      puts "====================== Deploying latest build (#{env})"
-      commands << "cd ../deploystation-devops/mina_back && mina #{env} deploy"
-    else
-      ["http","worker"].each do |suffix|
-        commands << "cd ../deploystation-devops/mina_back && mina production_#{suffix} app:deploy_all"
-      end
-    end
+    # unless env == "production"
+    #   puts "====================== Deploying latest build (#{env})"
+    #   commands << "cd ../deploystation-devops/mina_back && mina #{env} deploy"
+    # else
+    #   ["http","worker"].each do |suffix|
+    #     commands << "cd ../deploystation-devops/mina_back && mina production_#{suffix} app:deploy_all"
+    #   end
+    # end
+    commands << "cd ../deploystation-devops/mina_back && mina production_admin deploy"
     
     commands.each do |cmd|
       puts "========== Executing command \"#{cmd}\""

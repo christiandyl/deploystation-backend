@@ -37,8 +37,8 @@ ActiveAdmin.register Container do
     column :id
     column :name
     column :status
-    column :active_until
-    bool_column :is_paid
+    # column :active_until
+    # bool_column :is_paid
     column "Game" do |c|
       link_to c.game.name, admin_game_path(c.game)
     end
@@ -71,6 +71,7 @@ ActiveAdmin.register Container do
   
   filter :name
   filter :game
+  filter :host
   filter :status, as: :select, collection: ['online', 'offline']
   # filter :active_until, as: :date_time_picker
   filter :owner
