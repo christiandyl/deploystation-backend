@@ -5,11 +5,11 @@ ActiveAdmin.register Container do
   config.clear_action_items!
   config.per_page = 50
   
-  scope :all, default: true
-  scope :active
-  scope :inactive
-  scope :paid
-  scope :unpaid
+  # scope :all, default: true
+  # scope :active
+  # scope :inactive
+  # scope :paid
+  # scope :unpaid
   
   # member_action :send_prolongation, method: :get do
   #   ContainerMailer.delay.container_prolongation_email(resource.id)
@@ -46,6 +46,10 @@ ActiveAdmin.register Container do
     # bool_column :is_paid
     column "Game" do |c|
       link_to c.game.name, admin_game_path(c.game)
+    end
+    column "Plan" do |c|
+      plan = c.plan
+      "#{plan.max_players} / #{plan.price}$"
     end
     column "Owner" do |c|
       begin
