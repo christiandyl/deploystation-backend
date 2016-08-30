@@ -13,7 +13,9 @@ ActiveAdmin.register User do
       !Container.where(user_id: u.id).blank?
     end
     column "Containers counts" do |u|
-      u.containers.count
+      count = u.containers.count.to_s
+      url = "/admin/containers?utf8=✓&q[user_id_eq]=#{u.id}&commit=Filter&order=id_desc"
+      a count, href: url
     end
     bool_column :confirmation
     column :credits
