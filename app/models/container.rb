@@ -619,7 +619,7 @@ class Container < ActiveRecord::Base
       Charge.create(
         user: user,
         container_id: id,
-        amount: charge_amount.round(5),
+        amount: price_per_hour.round(5),
         type: 'container_charge',
         comment: "#{charged_minutes} minutes"
       )
