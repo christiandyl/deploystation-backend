@@ -32,6 +32,7 @@ module Api
       # @response_field [Hash] result.metadata Meta data (only in testing mode)
       def create
         opts = params.require(:payment).permit(Payment::PERMIT)
+        opts[:type] ||= :braintree
         opts[:user] = current_user
         payment = Payment.create_transaction(opts)
 

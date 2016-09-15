@@ -59,6 +59,8 @@ gem 'oj'
 gem 'dynamoid', '~> 1.1.0'
 # Provides object geocoding
 gem 'geocoder', '~> 1.3.4'
+# iTunes In-App Purchase Receipt Verification
+gem 'venice', '~> 0.3.0'
 
 group :development do
   gem 'foreman'
