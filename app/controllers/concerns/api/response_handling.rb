@@ -24,7 +24,7 @@ module Api
       render_args(result, true, 202)
     end
 
-    def response_created(result)
+    def response_created(result = nil)
       render_args(result, true, 201)
     end
 

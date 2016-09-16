@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   has_many :roles
   has_many :payments
   has_many :charges
+  has_many :client_options
 
   #############################################################
   #### Callbacks setup
@@ -81,6 +82,10 @@ class User < ActiveRecord::Base
       h[:payment] = {
         has_valid_credit_card: (!braintree_customer.credit_cards.blank? rescue false)
       }
+    end
+
+    if layers.include?(:client_options)
+      h[:client_options] = client_options.to_api
     end
 
     h

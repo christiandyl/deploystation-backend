@@ -61,6 +61,8 @@ gem 'dynamoid', '~> 1.1.0'
 gem 'geocoder', '~> 1.3.4'
 # iTunes In-App Purchase Receipt Verification
 gem 'venice', '~> 0.3.0'
+# HTTP User Agent parser
+gem 'useragent', '0.16.8'
 
 group :development do
   gem 'foreman'

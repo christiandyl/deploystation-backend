@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160722113641) do
+ActiveRecord::Schema.define(version: 20160916111508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,18 @@ ActiveRecord::Schema.define(version: 20160722113641) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "client_options", id: false, force: :cascade do |t|
+    t.string   "key",        null: false
+    t.integer  "user_id"
+    t.string   "platform"
+    t.string   "vtype"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "client_options", ["key"], name: "index_client_options_on_key", unique: true, using: :btree
 
   create_table "connects", force: :cascade do |t|
     t.integer  "user_id"

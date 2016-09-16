@@ -88,7 +88,7 @@ class Payment < ActiveRecord::Base
           case receipt.original_json_response['status'].to_i
             when 0
               product_id = receipt.original_json_response['receipt']['product_id']
-              md = /com.christiandyl.deploystation.credits_(\d+)/.match(product_id)
+              md = /com.christiandyl.deploystation.[^\s]+_(\d+)/.match(product_id)
               iap_amount = md[1]
               if iap_amount == amount
                 payment.status = STATUS_PAID
