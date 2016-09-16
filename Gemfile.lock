@@ -104,8 +104,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
-    commander (4.4.0)
-      highline (~> 1.7.2)
+    composite_primary_keys (8.1.4)
+      activerecord (~> 4.2.0)
     concurrent-ruby (1.0.2)
     connection_pool (2.2.0)
     cookiejar (0.3.3)
@@ -157,7 +157,6 @@ GEM
     has_scope (0.6.0)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
-    highline (1.7.8)
     http_parser.rb (0.6.0)
     httparty (0.13.7)
       json (~> 1.8)
@@ -380,6 +379,7 @@ DEPENDENCIES
   capybara
   capybara-screenshot
   clockwork
+  composite_primary_keys
   daemons
   database_cleaner
   docker-api (= 1.22.4)

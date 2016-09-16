@@ -63,6 +63,8 @@ gem 'geocoder', '~> 1.3.4'
 gem 'venice', '~> 0.3.0'
 # HTTP User Agent parser
 gem 'useragent', '0.16.8'
+# Composite key support for ActiveRecord
+gem 'composite_primary_keys'
 
 group :development do
   gem 'foreman'
