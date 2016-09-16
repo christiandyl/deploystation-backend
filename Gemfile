@@ -59,6 +59,8 @@ gem 'oj'
 gem 'dynamoid', '~> 1.1.0'
 # Provides object geocoding
 gem 'geocoder', '~> 1.3.4'
+# Composite key support for ActiveRecord
+gem 'composite_primary_keys'
 
 group :development do
   gem 'foreman'
