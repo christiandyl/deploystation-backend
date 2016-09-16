@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   has_many :roles
   has_many :payments
   has_many :charges
+  has_many :client_options
 
   #############################################################
   #### Callbacks setup

@@ -52,5 +52,17 @@ module Api
       }
     end
 
+    def user_agent
+      @user_agent ||= UserAgent.parse(request.user_agent)
+    end
+
+    def client_platform
+      case user_agent.platform
+        when 'iPad' then :ios
+        when 'iPhone' then :ios
+        when 'Android' then :android
+        else :web
+      end
+    end
   end
 end
