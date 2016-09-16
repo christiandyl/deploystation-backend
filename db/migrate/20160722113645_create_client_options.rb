@@ -9,6 +9,7 @@ class CreateClientOptions < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :client_options, [:key], name: :index_client_options_on_key, unique: true, using: :btree
+    execute "ALTER TABLE client_options ADD PRIMARY KEY (key, user_id);"
+    # add_index :client_options, [:key], name: :index_client_options_on_key, unique: true, using: :btree
   end
 end
