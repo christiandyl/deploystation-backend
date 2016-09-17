@@ -26,8 +26,8 @@ module Clockwork
   every(Container.periodic_worker(:charge_credits)::LAUNCH_EVERY, 'charge_credits.job')
 
   # Stats workers
-  if Rails.env.production?
-    every(10.minute, 'minutly_stat.job')
-    every(1.day, 'daily_stat.job', :at => '00:00')
-  end
+  # if Rails.env.production?
+  #   every(10.minute, 'minutly_stat.job')
+  #   every(1.day, 'daily_stat.job', :at => '00:00')
+  # end
 end
