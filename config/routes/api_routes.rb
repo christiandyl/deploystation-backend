@@ -26,7 +26,7 @@ module ApiRoutes
           
           resources :devices, :only => [:create, :destroy]
 
-          resources :client_options
+          resources :client_options, param: :key
 
           resources :containers, :only => [:index, :create, :update, :show, :destroy] do
             member do

@@ -9,9 +9,12 @@ ActiveAdmin.register User do
     column :email
     column :full_name
     column :locale
-    column "Has servers" do |u|
-      !Container.where(user_id: u.id).blank?
+    column "Containers counts" do |u|
+      count = u.containers.count.to_s
+      url = "/admin/containers?utf8=✓&q[user_id_eq]=#{u.id}&commit=Filter&order=id_desc"
+      a count, href: url
     end
+    bool_column :confirmation
     column :credits
     column :created_at
     actions

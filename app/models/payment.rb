@@ -1,7 +1,7 @@
 class Payment < ActiveRecord::Base
   include ApiExtension
 
-  PERMIT = [:nonce_from_the_client, :amount].freeze
+  PERMIT = [:nonce_from_the_client, :amount, :type, :iap_receipt].freeze
 
   STATUS_PAID = 'paid'.freeze
   STATUS_REFUNDED = 'refunded'.freeze
@@ -69,43 +69,71 @@ class Payment < ActiveRecord::Base
     Braintree::ClientToken.generate
   end
 
+  def self.create_iap_transaction(**opts)
+
+  end
+
   def self.create_transaction(opts = {})
     amount = opts[:amount] || opts['amount']
     nonce = opts[:nonce_from_the_client] || opts['nonce_from_the_client'] || nil
     user = opts[:user] || opts['user']
+    type = opts[:type] || opts['type']
+    iap_receipt = opts[:iap_receipt] || opts['iap_receipt']
 
     payment = new(amount: amount, user: user)
 
     if payment.valid?
-      # Default transaction payload
-      transaction_data = {
-        amount: amount,
-        options: {
-          submit_for_settlement: true
+      if type == 'iap'
+        if receipt = Venice::Receipt.verify(iap_receipt)
+          case receipt.original_json_response['status'].to_i
+            when 0
+              product_id = receipt.original_json_response['receipt']['product_id']
+              md = /com.christiandyl.deploystation.[^\s]+_(\d+)/.match(product_id)
+              iap_amount = md[1]
+              if iap_amount == amount
+                payment.status = STATUS_PAID
+                payment.save
+
+                user.credits = user.credits + amount
+                user.save
+              else
+                raise CustomError.new(code: 101, description: 'error')
+              end
+            else
+              raise CustomError.new(code: 101, description: 'error')
+          end
+        end
+      else
+        # Default transaction payload
+        transaction_data = {
+          amount: amount,
+          options: {
+            submit_for_settlement: true
+          }
         }
-      }
 
-      # Looking for braintree customer record (create if doesn't exists)
-      unless user.braintree_customer_exists?
-        user.create_braintree_customer(payment_method_nonce: nonce)
-      else
-        transaction_data[:payment_method_nonce] = nonce if nonce
-      end
-      transaction_data[:customer_id] = user.braintree_customer.id
+        # Looking for braintree customer record (create if doesn't exists)
+        unless user.braintree_customer_exists?
+          user.create_braintree_customer(payment_method_nonce: nonce)
+        else
+          transaction_data[:payment_method_nonce] = nonce if nonce
+        end
+        transaction_data[:customer_id] = user.braintree_customer.id
 
-      # Creating transaction
-      result = Braintree::Transaction.sale(transaction_data)
+        # Creating transaction
+        result = Braintree::Transaction.sale(transaction_data)
 
-      # Validating transaction and saving payment record
-      unless result.success?
-        raise CustomError.new(code: 101, description: result.message)
-      else
-        payment.transaction_id = result.transaction.id
-        payment.status = STATUS_PAID
-        payment.save
+        # Validating transaction and saving payment record
+        unless result.success?
+          raise CustomError.new(code: 101, description: result.message)
+        else
+          payment.transaction_id = result.transaction.id
+          payment.status = STATUS_PAID
+          payment.save
 
-        user.credits = user.credits + amount
-        user.save
+          user.credits = user.credits + amount
+          user.save
+        end
       end
     end
 

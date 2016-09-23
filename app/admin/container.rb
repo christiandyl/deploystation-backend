@@ -5,11 +5,11 @@ ActiveAdmin.register Container do
   config.clear_action_items!
   config.per_page = 50
   
-  scope :all, default: true
-  scope :active
-  scope :inactive
-  scope :paid
-  scope :unpaid
+  # scope :all, default: true
+  # scope :active
+  # scope :inactive
+  # scope :paid
+  # scope :unpaid
   
   # member_action :send_prolongation, method: :get do
   #   ContainerMailer.delay.container_prolongation_email(resource.id)
@@ -36,11 +36,20 @@ ActiveAdmin.register Container do
   index do
     column :id
     column :name
-    column :status
-    column :active_until
-    bool_column :is_paid
+    column "Status" do |c|
+      color = c.status ==  'online' ? 'green' : 'red'
+      span style: "color: #{color}" do
+        c.status
+      end
+    end
+    # column :active_until
+    # bool_column :is_paid
     column "Game" do |c|
       link_to c.game.name, admin_game_path(c.game)
+    end
+    column "Plan" do |c|
+      plan = c.plan
+      "#{plan.max_players} / #{plan.price}$"
     end
     column "Owner" do |c|
       begin
@@ -71,6 +80,7 @@ ActiveAdmin.register Container do
   
   filter :name
   filter :game
+  filter :host
   filter :status, as: :select, collection: ['online', 'offline']
   # filter :active_until, as: :date_time_picker
   filter :owner

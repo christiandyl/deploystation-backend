@@ -68,7 +68,7 @@ class Container < ActiveRecord::Base
   # after_create :send_details_email
   before_destroy :destroy_docker_container
   after_initialize :define_default_values
-  after_create :charge_creation_credits
+  # after_create :charge_creation_credits
   # after_update :change_container_size, if: Proc.new { |c| c.plan_id_changed? }
 
   #############################################################
@@ -136,6 +136,8 @@ class Container < ActiveRecord::Base
       container.save!
       Rails.logger.debug "Container(#{container.id}) record has created, attributes: #{container.attributes.to_s}"
 
+      container.charge_creation_credits
+
       unless now
         ContainerWorkers::CreateWorker.perform_async(container.id)
       else
@@ -185,6 +187,13 @@ class Container < ActiveRecord::Base
 
   def charge_creation_credits
     user.charge_credits(CREATION_CHARGE_AMOUNT)
+    Charge.create(
+      user: user,
+      container_id: id,
+      amount: CREATION_CHARGE_AMOUNT,
+      type: 'container_creation_charge',
+      comment: "Charged #{CREATION_CHARGE_AMOUNT.to_s}"
+    )
   end
 
   # def change_container_size(**opts)
@@ -610,7 +619,7 @@ class Container < ActiveRecord::Base
       Charge.create(
         user: user,
         container_id: id,
-        amount: charge_amount.round(5),
+        amount: price_per_hour.round(5),
         type: 'container_charge',
         comment: "#{charged_minutes} minutes"
       )

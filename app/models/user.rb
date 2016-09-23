@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   store_accessor :metadata, :credits, :low_balance_remind
 
   EMAIL_CONFIRMATION_PERIOD = 1.day
-  DEFAULT_CREDITS = 5.freeze
+  DEFAULT_CREDITS = 1.freeze
   LOW_BALANCE_REMIND_AMOUNT = 2.freeze
 
   #############################################################
@@ -82,6 +82,10 @@ class User < ActiveRecord::Base
       h[:payment] = {
         has_valid_credit_card: (!braintree_customer.credit_cards.blank? rescue false)
       }
+    end
+
+    if layers.include?(:client_options)
+      h[:client_options] = client_options.to_api
     end
 
     h
