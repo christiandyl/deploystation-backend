@@ -90,7 +90,7 @@ class Payment < ActiveRecord::Base
               product_id = receipt.original_json_response['receipt']['product_id']
               md = /com.christiandyl.deploystation.[^\s]+_(\d+)/.match(product_id)
               iap_amount = md[1]
-              if iap_amount == amount
+              if iap_amount.to_i == amount.to_i
                 payment.status = STATUS_PAID
                 payment.save
 
