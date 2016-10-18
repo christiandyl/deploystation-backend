@@ -365,7 +365,7 @@ describe 'Containers API', :type => :request do
   # Config
   
   it 'Allows to get container config list' do
-    send :get, config_path(@context.container_id), :token => @context.token
+    send :get, config_path(@context.container_id), token: @context.token
 
     expect(response.status).to eq(200)
     obj = JSON.parse(response.body)

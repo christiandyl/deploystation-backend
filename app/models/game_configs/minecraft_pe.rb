@@ -249,6 +249,16 @@ module GameConfigs
 
       return true
     end
+
+    def props_to_file(props)
+      file_content = ''
+
+      props.each do |p|
+        file_content << "#{p[:key]}=#{p[:value]}\n"
+      end
+
+      file_content
+    end
     
   end
 end

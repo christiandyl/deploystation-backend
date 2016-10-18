@@ -3,13 +3,21 @@ module Api
     extend ActiveSupport::Concern
 
     def render_args(result, success, code)
-      args = {
-        status: code,
-        json: Oj.dump(
-          success: success,
-          result: result
-        )
-      }
+      args = case params[:format]
+        when 'text'
+          {
+            status: code,
+            plain: result
+          }
+        else
+          {
+            status: code,
+            json: Oj.dump(
+              success: success,
+              result: result
+            )
+          }
+      end
 
       log_response(args)
 

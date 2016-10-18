@@ -85,3 +85,8 @@ Settings = OpenStruct.new(
     )
   )
 )
+
+if Rails.env.development?
+  eth_ip = `ifconfig eth0 | grep "inet addr" | cut -d ':' -f 2 | cut -d ' ' -f 1`
+  Settings.general.host = "http://#{eth_ip}"
+end

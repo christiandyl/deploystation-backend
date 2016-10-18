@@ -51,7 +51,7 @@ describe 'Container(Minecraft PE) API', :type => :request do
   # Config
 
   it 'Allows to get container config list' do
-    send :get, config_path(@context.container_id), :token => @context.token
+    send :get, config_path(@context.container_id), token: @context.token
 
     expect(response.status).to eq(200)
     obj = JSON.parse(response.body)
@@ -67,6 +67,11 @@ describe 'Container(Minecraft PE) API', :type => :request do
     expect(obj['result'][0]['validations']).to be_truthy
 
     @context.config = obj['result']
+  end
+
+  it 'Allows to get container config list (text)' do
+    send :get, config_path(@context.container_id, format: :text), token: @context.token
+    expect(response.status).to eq(200)
   end
 
   it 'Allows to update container config list' do

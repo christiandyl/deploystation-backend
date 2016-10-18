@@ -19,7 +19,10 @@ module Api
       # @response_field [Boolean] result[].is_editable Is editable
       # @response_field [Hash] result[].validations Validations hash
       def show
-        render response_ok @container.config.all(:public)
+        format = params[:format] || 'json'
+        data = @container.config.get_properties(flavor: :public, format: format)
+
+        render response_ok data
       end
       
       ##

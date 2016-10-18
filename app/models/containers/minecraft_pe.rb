@@ -13,39 +13,44 @@ module Containers
       # memory = (ram + 200) * 1000000
       ram = 2048
       
-      api_prefix = Rails.env.production? ? "api" : "api-stage"
-      api_base_url = "http://#{api_prefix}.deploystation.com/v1/"
+      api_prefix = case Rails.env
+        when :development
+          "http://api_local.deploystation.com/v1/"
+        when :staging
+          "http://api-stage.deploystation.com/v1/"
+        when :production
+          "http://api.deploystation.com/v1/"
+      end
       
       return [
         "DS_CONTAINER_ID=#{id.to_s}",
-        "DS_API_ENV=#{Rails.env}",
-        "DS_API_BASE_URL=#{api_base_url}",
+        "DS_API_PATH=#{api_base_url}",
         # "JVM_OPTS=-Xmx#{ram}M -Xms#{ram}M",
         "JVM_OPTS=",
-        "CONFIG_SERVER_NAME=#{name}",
-        "CONFIG_SERVER_PORT=#{port!}",
-        "CONFIG_GAMEMODE=#{config.get_property_value('gamemode')}",
-        "CONFIG_MAX_PLAYERS=#{config.get_property_value('max-players')}",
-        "CONFIG_SPAWN_PROTECTION=#{config.get_property_value('spawn-protection')}",
-        "CONFIG_WHITE_LIST=#{config.get_property_value('white-list')}",
-        "CONFIG_ENABLE_QUERY=#{config.get_property_value('enable-query')}",
-        "CONFIG_ENABLE_RCON=#{config.get_property_value('enable-rcon')}",
-        "CONFIG_MOTD=#{config.get_property_value('motd')}",
-        "CONFIG_ANNOUNCE_PLAYER_ACHIEVEMENTS=#{config.get_property_value('announce-player-achievements')}",
-        "CONFIG_ALLOW_FLIGHT=#{config.get_property_value('allow-flight')}",
-        "CONFIG_SPAWN_ANIMALS=#{config.get_property_value('spawn-animals')}",
-        "CONFIG_SPAWN_MOBS=#{config.get_property_value('spawn-mobs')}",
-        "CONFIG_FORCE_GAMEMODE=#{config.get_property_value('force-gamemode')}",
-        "CONFIG_HARDCORE=#{config.get_property_value('hardcore')}",
-        "CONFIG_PVP=#{config.get_property_value('pvp')}",
-        "CONFIG_DIFFICULTY=#{config.get_property_value('difficulty')}",
-        "CONFIG_GENERATOR_SETTINGS=#{config.get_property_value('generator-settings')}",
-        "CONFIG_LEVEL_NAME=#{config.get_property_value('level-name')}",
-        "CONFIG_LEVEL_SEED=#{config.get_property_value('level-seed')}",
-        "CONFIG_LEVEL_TYPE=#{config.get_property_value('level-type')}",
-        "CONFIG_RCON_PASSWORD=#{config.get_property_value('rcon.password')}",
-        "CONFIG_AUTO_SAVE=#{config.get_property_value('auto-save')}",
-        "UPDATE_LATEST_DEV=YES"
+        # "CONFIG_SERVER_NAME=#{name}",
+        # "CONFIG_SERVER_PORT=#{port!}",
+        # "CONFIG_GAMEMODE=#{config.get_property_value('gamemode')}",
+        # "CONFIG_MAX_PLAYERS=#{config.get_property_value('max-players')}",
+        # "CONFIG_SPAWN_PROTECTION=#{config.get_property_value('spawn-protection')}",
+        # "CONFIG_WHITE_LIST=#{config.get_property_value('white-list')}",
+        # "CONFIG_ENABLE_QUERY=#{config.get_property_value('enable-query')}",
+        # "CONFIG_ENABLE_RCON=#{config.get_property_value('enable-rcon')}",
+        # "CONFIG_MOTD=#{config.get_property_value('motd')}",
+        # "CONFIG_ANNOUNCE_PLAYER_ACHIEVEMENTS=#{config.get_property_value('announce-player-achievements')}",
+        # "CONFIG_ALLOW_FLIGHT=#{config.get_property_value('allow-flight')}",
+        # "CONFIG_SPAWN_ANIMALS=#{config.get_property_value('spawn-animals')}",
+        # "CONFIG_SPAWN_MOBS=#{config.get_property_value('spawn-mobs')}",
+        # "CONFIG_FORCE_GAMEMODE=#{config.get_property_value('force-gamemode')}",
+        # "CONFIG_HARDCORE=#{config.get_property_value('hardcore')}",
+        # "CONFIG_PVP=#{config.get_property_value('pvp')}",
+        # "CONFIG_DIFFICULTY=#{config.get_property_value('difficulty')}",
+        # "CONFIG_GENERATOR_SETTINGS=#{config.get_property_value('generator-settings')}",
+        # "CONFIG_LEVEL_NAME=#{config.get_property_value('level-name')}",
+        # "CONFIG_LEVEL_SEED=#{config.get_property_value('level-seed')}",
+        # "CONFIG_LEVEL_TYPE=#{config.get_property_value('level-type')}",
+        # "CONFIG_RCON_PASSWORD=#{config.get_property_value('rcon.password')}",
+        # "CONFIG_AUTO_SAVE=#{config.get_property_value('auto-save')}",
+        # "UPDATE_LATEST_DEV=YES"
       ]
     end
   

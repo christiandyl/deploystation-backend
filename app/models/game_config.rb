@@ -76,10 +76,31 @@ class GameConfig
   def container
     @container ||= Container.find(self.container_id)
   end
-  
-  def all flavor = :private
-    return flavor == :public ? properties.find_all { |p| p[:is_editable] == true } : properties
+
+  def get_properties(**opts)
+    flavor = opts[:flavor] || :private
+    format = opts[:format] || 'json'
+
+    props = flavor == :public ? properties.find_all { |p| p[:is_editable] == true } : properties
+
+    return case format
+      when 'json' then props
+      when 'text' then props_to_file(props)
+      else props
+    end
   end
+
+  # def all(flavor=:private, opts={})
+  #   format = opts[:format] || 'json'
+
+  #   props = flavor == :public ? properties.find_all { |p| p[:is_editable] == true } : properties
+
+  #   return case format
+  #     when 'json' then props
+  #     when 'text' then props_to_file(props)
+  #     else props
+  #   end
+  # end
   
   def export_to_database
     run_callbacks :export_to_database do
