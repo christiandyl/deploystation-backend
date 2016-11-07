@@ -41,6 +41,8 @@ module Api
         availability = true
         reason = nil
 
+        game = Game.find(params[:game_id])
+
         if Rails.env.production?
           
           # if current_user.confirmation == false
@@ -53,12 +55,15 @@ module Api
             #   reason = I18n.t("games.availability.reason_not_paid")
             # end
           # end
-          
+          if game.sname == 'counter_strike_go'
+            availability = false
+            reason = 'This game is temporary unavailable. We are sorry for the inconvenience caused.'
+          end
         end
         
         data = {
-          :availability => availability,
-          :reason       => reason
+          availability: availability,
+          reason:       => reason
         }
         
         render response_ok data

@@ -211,6 +211,10 @@ else # Development and Testing seeds
 #  hosts = [{ name: 'kharkiv_prod_test', ip: '212.3.116.101', domain: '212.3.116.101', location: 'Kharkiv' }]
 end
 
+Region.delete_all
+region_eu = Region.create(name: 'Europe', location: 'france', status: Region::STATUS_ENABLED)
+region_us = Region.create(name: 'USA', location: 'united states', status: Region::STATUS_ENABLED)
+
 Game.delete_all
 games.each do |attrs|
   Game.create(attrs)
@@ -219,6 +223,7 @@ puts 'Games table is ready'
 
 Host.delete_all
 hosts.each do |attrs|
+  attrs[:region_id] = region_eu.id
   Host.create(attrs)
 end
 puts 'Hosts table is ready'

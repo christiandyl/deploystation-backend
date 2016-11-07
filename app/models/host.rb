@@ -3,6 +3,11 @@ require 'ipaddr'
 class Host < ActiveRecord::Base
   include ApiExtension
 
+  STATUS_ENABLED = 'enabled'
+  STATUS_DISABLED = 'disabled'
+
+  default_scope { where(status: 'enabled') }
+
   has_many :plans
   has_many :containers
 
