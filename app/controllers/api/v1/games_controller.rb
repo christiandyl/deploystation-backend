@@ -63,7 +63,7 @@ module Api
         
         data = {
           availability: availability,
-          reason:       => reason
+          reason: reason
         }
         
         render response_ok data
