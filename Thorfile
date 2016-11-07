@@ -27,8 +27,8 @@ class App < Thor
       ["http","worker"].each do |suffix|
         commands << "cd ../deploystation-devops/mina_back && mina production_#{suffix} app:deploy_all"
       end
+      commands << "cd ../deploystation-devops/mina_back && mina production_admin deploy"
     end
-    commands << "cd ../deploystation-devops/mina_back && mina production_admin deploy"
     
     commands.each do |cmd|
       puts "========== Executing command \"#{cmd}\""
