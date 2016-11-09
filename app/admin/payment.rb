@@ -2,12 +2,8 @@ ActiveAdmin.register Payment do
   index do
     column :id
     column :type
-    column 'Type' do |p|
-      p.type
-    end
-    column 'Status' do |p|
-      p.status
-    end
+    column :status
+    column :amount
     column :created_at
     actions
   end
