@@ -24,17 +24,17 @@ module Api
             location = results.first
           
             if location.country_code == "RU"
-              list = Host.where("country_code = ?", "ua")
+              list = Host.enabled.where("country_code = ?", "ua")
             else
-              list = Host.all
+              list = Host.enabled
               # list = Host.where("country_code <> ?", "us")
             end
           else
             # list = Host.where("country_code <> ?", "us")
-            list = Host.all
+            list = Host.enabled
           end
         rescue
-          list = Host.all
+          list = Host.enabled
         end
 
         render response_ok( list.map { |h| h.to_api } )

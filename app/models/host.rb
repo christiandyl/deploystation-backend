@@ -6,7 +6,7 @@ class Host < ActiveRecord::Base
   STATUS_ENABLED = 'enabled'
   STATUS_DISABLED = 'disabled'
 
-  default_scope { where(status: 'enabled') }
+  scope :enabled, -> { where(status: 'enabled') }
 
   has_many :plans
   has_many :containers
