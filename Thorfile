@@ -24,9 +24,9 @@ class App < Thor
       puts "====================== Deploying latest build (#{env})"
       commands << "cd ../deploystation-devops/mina_back && mina #{env} deploy"
     else
-      ["http","worker"].each do |suffix|
-        commands << "cd ../deploystation-devops/mina_back && mina production_#{suffix} app:deploy_all"
-      end
+      # ["http","worker"].each do |suffix|
+      #   commands << "cd ../deploystation-devops/mina_back && mina production_#{suffix} app:deploy_all"
+      # end
       commands << "cd ../deploystation-devops/mina_back && mina production_admin deploy"
     end
     

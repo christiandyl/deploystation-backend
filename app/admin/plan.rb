@@ -22,4 +22,20 @@ ActiveAdmin.register Plan do
     
     actions
   end
+
+  form do |f|
+    inputs 'General' do
+      input :host
+      input :game, as: :select, collection: Game.available.map { |g| [g.name, g.id] }
+      input :name
+      input :price_per_hour
+    end
+    inputs 'Plan settings' do
+      input :max_players
+      input :ram, as: :select, collection: 21.times.collect { |n| 256 * (n+1) }
+      input :storage, as: :select, collection: 11.times.collect { |n| 1024 * (n+1) }
+      input :storage_type, as: :select, collection: ['ssd', 'hdd']
+    end
+    actions
+  end
 end

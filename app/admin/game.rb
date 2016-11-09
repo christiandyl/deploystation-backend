@@ -13,4 +13,19 @@ ActiveAdmin.register Game do
     actions
   end
 
+  form do |f|
+    inputs 'General' do
+      input :name
+      input :sname
+      input(:status, as: :select, collection: [
+        resource.class::STATUS_ENABLED,
+        resource.class::STATUS_DISABLED,
+        resource.class::STATUS_COMING_SOON
+      ])
+      input :order, as: :number
+      input :features
+    end
+    actions
+  end
+
 end

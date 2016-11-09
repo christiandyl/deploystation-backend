@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu parent: 'Users'
   permit_params :email, :full_name, :credits
-  actions :all, :except => [:destroy]
+  # actions :all, :except => [:destroy]
   config.clear_action_items!
   
   index do
@@ -32,6 +32,18 @@ ActiveAdmin.register User do
       input :credits
     end
     actions
+
+    div do
+      link_to 'Prev user', edit_admin_user_path(id: resource.id - 1)
+    end
+    div do
+      link_to 'Next user', edit_admin_user_path(id: resource.id + 1)
+    end
+    # actions do
+    #   submit, as: :button, label: 'Optional custom label'
+    #   cancel, as: :link # I think could converted to button as submit
+    #   link_to 'Preview', admin_user_path(resource)
+    # end
   end
   
   csv force_quotes: false, col_sep: ',', column_names: true do
