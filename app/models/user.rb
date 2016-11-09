@@ -207,6 +207,11 @@ class User < ActiveRecord::Base
 
     credits
   end
+
+  def country
+    result = Geocoder.search(locale)
+    result[0] ? result[0].country : nil
+  end
   
   #############################################################
   #### Email confirmation
