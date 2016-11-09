@@ -12,7 +12,7 @@ class Payment < ActiveRecord::Base
   #### Accessors
   #############################################################
 
-  store_accessor :metadata, :status, :transaction_id
+  store_accessor :metadata, :status, :transaction_id, :type
 
   #############################################################
   #### Relations
@@ -92,6 +92,7 @@ class Payment < ActiveRecord::Base
               iap_amount = md[1]
               if iap_amount.to_i == amount.to_i
                 payment.status = STATUS_PAID
+                payment.type = 'iap_ios'
                 payment.save
 
                 user.credits = user.credits + amount
@@ -103,6 +104,13 @@ class Payment < ActiveRecord::Base
               raise CustomError.new(code: 101, description: 'error')
           end
         end
+      elsif type == 'iap_android'
+        payment.status = STATUS_PAID
+        payment.type = 'iap_android'
+        payment.save
+
+        user.credits = user.credits + amount
+        user.save
       else
         # Default transaction payload
         transaction_data = {
@@ -129,6 +137,7 @@ class Payment < ActiveRecord::Base
         else
           payment.transaction_id = result.transaction.id
           payment.status = STATUS_PAID
+          payment.type = 'braintree'
           payment.save
 
           user.credits = user.credits + amount
