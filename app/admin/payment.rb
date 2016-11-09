@@ -5,7 +5,7 @@ ActiveAdmin.register Payment do
     column 'Type' do |p|
       p.type
     end
-    column 'Status' |p|
+    column 'Status' do |p|
       p.status
     end
     column :created_at
